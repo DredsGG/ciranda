@@ -1,0 +1,4 @@
+*.bat -text
+*.txt -text
+*.ico binary
+*.png binary

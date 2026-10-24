@@ -1,0 +1,77 @@
+name: Release
+
+# Publish a GitHub Release whose tag is vX.Y.Z (same as VERSAO in
+# ciranda/__init__.py). This job builds Ciranda.exe from lancador/, adds the
+# pinned libmpv-2.dll (checked by SHA-256) and attaches the ready-to-run zip.
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  zip:
+    runs-on: ubuntu-24.04
+    env:
+      TAG: ${{ github.event.release.tag_name }}
+      GH_TOKEN: ${{ github.token }}
+      MPV_URL: https://github.com/shinchiro/mpv-winbuild-cmake/releases/download/20261021/mpv-dev-x86_64-20261021-git-e471496c56.7z
+      MPV_7Z_SHA256: efc719eff3dc5954b4a5efc800632808bcec01cc9034940dd14e5eb7fe9ea633
+      MPV_DLL_SHA256: 04e4d27dc385dc18ddd93fbe69c75e635b864f3c6ec53a9122df54c2f7842f4a
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Check that the tag matches VERSAO
+        run: |
+          VERSAO="$(sed -n 's/^VERSAO = "\(.*\)"/\1/p' ciranda/__init__.py)"
+          if [ "${TAG#v}" != "$VERSAO" ]; then
+            echo "::error::Tag $TAG does not match VERSAO $VERSAO"; exit 1
+          fi
+          if ! grep -q "\"FileVersion\", \"$VERSAO\"" lancador/ciranda.rc; then
+            echo "::error::lancador/ciranda.rc is not at $VERSAO"; exit 1
+          fi
+
+      - name: Install mingw-w64 and 7-Zip
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q --no-install-recommends gcc-mingw-w64-x86-64 binutils-mingw-w64-x86-64 p7zip-full
+
+      - name: Build Ciranda.exe
+        run: |
+          cp ui/ciranda.ico lancador/
+          (cd lancador && x86_64-w64-mingw32-windres ciranda.rc -O coff -o ../r.res)
+          x86_64-w64-mingw32-gcc -O2 -municode -mwindows -s lancador/ciranda.c r.res -o Ciranda.exe -lshlwapi
+          ls -la Ciranda.exe
+
+      - name: Get libmpv-2.dll
+        run: |
+          curl -fsSL -o mpv.7z "$MPV_URL"
+          echo "$MPV_7Z_SHA256  mpv.7z" | sha256sum -c -
+          7z e -y mpv.7z libmpv-2.dll > /dev/null
+          echo "$MPV_DLL_SHA256  libmpv-2.dll" | sha256sum -c -
+
+      - name: Build zip
+        run: |
+          D=out/Ciranda
+          mkdir -p "$D/ciranda" "$D/ui"
+          cp Ciranda.exe libmpv-2.dll app.py requirements.txt LEIA-ME.txt RODAR.bat RESTAURAR.bat MENU-BOTAO-DIREITO.bat LICENSE THIRD-PARTY-NOTICES.md "$D/"
+          cp ciranda/*.py "$D/ciranda/"
+          cp ui/* "$D/ui/"
+          (cd out && zip -r -9 "../ciranda-$TAG.zip" Ciranda)
+          unzip -l "ciranda-$TAG.zip"
+
+      - name: Attach zip and install notes
+        env:
+          NOTES: |
+            ### Install (Windows 10/11)
+            1. Download **ciranda-${{ github.event.release.tag_name }}.zip** below and unzip it anywhere.
+            2. Double-click **Ciranda.exe**. The first time it installs Python 3.12 (via winget) and the dependencies, 1 to 3 minutes, and creates a desktop shortcut.
+            3. Drag folders onto the window.
+        run: |
+          gh release upload "$TAG" "ciranda-$TAG.zip" --clobber
+          gh release view "$TAG" --json body -q .body > old.md
+          { printf '%s\n\n' "$NOTES"; cat old.md; } > notes.md
+          gh release edit "$TAG" --notes-file notes.md

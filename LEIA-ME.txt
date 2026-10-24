@@ -1,0 +1,44 @@
+CIRANDA 1.1.4 - feito por Dreds (github.com/DredsGG)
+Player de fotos e videos: abre uma pasta e TODAS as subpastas numa fila so,
+em ordem ou aleatorio, com repetir.
+
+COMO ABRIR
+  Duplo clique em Ciranda.exe. Na 1a vez ele abre uma janela preta que instala
+  o que falta (1 a 3 minutos) e cria o atalho "Ciranda" na area de trabalho.
+  Depois abre direto. Pode fixar na barra de tarefas ou usar "Abrir com".
+  Opcional: MENU-BOTAO-DIREITO.bat poe "Tocar no Ciranda" no botao direito
+  das pastas (rode de novo para tirar).
+
+COMO USAR
+  - Arraste uma ou varias pastas para a janela (Ctrl ao soltar = juntar a fila).
+  - Aleatorio (S): embaralha tudo, toca cada arquivo uma vez, embaralha de novo.
+  - Repetir (R): desligado -> a fila toda -> so este.
+  - Na fila: Tudo / Fotos / Videos (1 / 2 / 3) escolhe o que toca.
+  - "Foto: 5 s": quanto tempo cada foto fica na tela (+ / -). Video toca ate o fim.
+  - Topo da fila: Abrir (troca a fila), Juntar pasta (soma sem parar o que
+    toca) e Limpar (limpar fila / limpar tudo).
+  - Botao de pasta (canto direito): abrir, juntar pasta, continuar a ultima
+    fila, mostrar no Explorer, limpar fila e LIMPAR TUDO (fila + lista do
+    Continuar; nao apaga nada do PC).
+  - Botao direito no video: atalhos rapidos. Clique no tempo total: mostra
+    quanto falta.
+
+TECLAS
+  Espaco ou K pausa | N ou Page Down proximo | P ou Page Up anterior
+  Setas esquerda/direita: 5 s no video (na foto, troca de foto)
+  Shift + setas: 30 s | Cima/Baixo volume | M mudo
+  F, Enter, F11 ou duplo clique: tela cheia | Esc sai
+  L mostra/esconde a fila | E mostra o arquivo no Explorer | Ctrl+F busca na fila
+  Ctrl+O abrir pasta | Ctrl+Shift+O adicionar pasta
+
+SE DER PROBLEMA
+  - Dentro do app: botao de pasta > Problemas > Restaurar de fabrica.
+  - Se nem abrir: feche o Ciranda e rode RESTAURAR.bat (apaga ajustes e o
+    ambiente instalado; o Ciranda.exe reinstala na proxima vez).
+  Nenhum dos dois apaga fotos ou videos.
+
+ONDE FICAM AS COISAS
+  Ajustes, log e cache das fotos HEIC: %APPDATA%\Ciranda
+  Se nao abrir ou um botao nao responder: %APPDATA%\Ciranda\erro.txt e ciranda.log
+
+Motor: libmpv (mpv-winbuild-cmake 20261021, LGPL/GPL). Interface: PySide6 (LGPL).

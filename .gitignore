@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+libmpv-2.dll
+Ciranda.exe
+*.lnk
+*.res
+*.zip
+*.7z
+.DS_Store
+Thumbs.db
