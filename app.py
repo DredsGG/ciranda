@@ -5,7 +5,8 @@ import os
 import sys
 import traceback
 
-PASTA = os.path.dirname(os.path.abspath(__file__))
+# Empacotado (instalador): os arquivos ficam em sys._MEIPASS (a pasta _internal do PyInstaller).
+PASTA = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, PASTA)
 
 
@@ -27,6 +28,11 @@ def _registrar_erros():
 
 
 def main():
+    autoteste = next((a.split("=", 1)[1] if "=" in a else "autoteste.json"
+                      for a in sys.argv[1:] if a.startswith("--autoteste")), None)
+    if autoteste:
+        from ciranda.autoteste import rodar
+        sys.exit(rodar(os.path.abspath(autoteste)))
     _registrar_erros()
     if sys.platform == "win32":
         try:

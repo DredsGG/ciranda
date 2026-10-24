@@ -10,7 +10,7 @@ A Windows player that takes a folder and **every subfolder inside it** and plays
 ![Windows](https://img.shields.io/badge/Windows-10%20%2F%2011-0078D6?logo=windows&logoColor=white)
 ![Python 3.12](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
 ![mpv](https://img.shields.io/badge/engine-libmpv-691F69?logo=mpv&logoColor=white)
-![Version](https://img.shields.io/badge/version-1.1.4-ff8a3d)
+![Version](https://img.shields.io/badge/version-1.2.0-ff8a3d)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 <img src="docs/ciranda-tocando.png" width="900" alt="Ciranda playing a photo, with the queue on the right showing files from several subfolders">
@@ -57,18 +57,19 @@ VLC can sort of do this (a hidden *subdirectory behavior* option, photos with a 
 
 ## Install
 
-1. Download **ciranda-vX.Y.Z.zip** from the [latest release](https://github.com/DredsGG/ciranda/releases/latest) and unzip it anywhere.
-2. Double-click **`Ciranda.exe`**. The first time it runs `RODAR.bat`, which installs Python 3.12 with `winget` if needed, creates a `.venv`, installs the dependencies (1 to 3 minutes) and puts a **Ciranda** shortcut on the desktop.
-3. After that, `Ciranda.exe` or the shortcut open it straight away, with no console window. You can pin it to the taskbar or use it in *Open with*.
-4. Optional: `MENU-BOTAO-DIREITO.bat` adds *Tocar no Ciranda* to the right-click menu of folders (run it again to remove).
+1. Download **Ciranda-Setup-X.Y.Z.exe** from the [latest release](https://github.com/DredsGG/ciranda/releases/latest) and run it.
+2. No admin rights needed: it installs for your user (`%LOCALAPPDATA%\Programs\Ciranda`), adds **Ciranda** to the Start menu and, if you tick them, a desktop shortcut and a **Tocar no Ciranda** entry when you right-click a folder. Everything is inside the app: no Python, no scripts.
+3. The installer isn't code-signed yet, so the first time Windows may show *"Windows protected your PC"*: click **More info → Run anyway**.
+4. Updating = running the newer setup over it (it closes Ciranda if it's open). Uninstall from **Settings → Apps**; settings stay in `%APPDATA%\Ciranda`.
 
-Settings, log and the HEIC cache live in `%APPDATA%\Ciranda`.
+**Portable alternative:** `ciranda-vX.Y.Z-portatil.zip` from the same release. Unzip, double-click `Ciranda.exe`; the first time it installs Python 3.12 with `winget` and the dependencies (1 to 3 minutes).
 
 ## How it's built
 
 ```
-Ciranda.exe            small C launcher (lancador/): runs pythonw app.py, or RODAR.bat on first run
-app.py                 entry point; takes folders/files as arguments
+instalador/            ciranda.spec (PyInstaller, one folder) + ciranda.iss (Inno Setup) + gerar_versao.py
+Ciranda.exe            in the portable zip: small C launcher (lancador/) that runs pythonw app.py
+app.py                 entry point; takes folders/files as arguments; --autoteste=<file.json> self-test
 ciranda/biblioteca.py  scan: os.scandir with a stack, natural sort, no duplicates, junction-loop guard
 ciranda/fila.py        queue: order, deck shuffle, repeat, filter, add/remove, skip broken (no UI, testable)
 ciranda/janela.py      PySide6 interface with libmpv embedded in a native area
@@ -80,7 +81,8 @@ ciranda/icones.py      hand-made SVG icons
 - **Engine:** `libmpv-2.dll` driven by python-mpv. Videos use `keep-open` and `eof-reached`; photos use `image-display-duration=inf` and the app owns the timer, which is why pause and the photo time work.
 - **Clicks over the video:** mpv creates its own child window, which would swallow mouse and keyboard. The app disables that window (`EnableWindow`) and turns on `input-cursor-passthrough`, so input reaches Qt.
 - **Show in Explorer** uses `SHOpenFolderAndSelectItems`; the title bar follows the Windows 11 dark mode (DWM).
-- The `.dll` isn't in the repo (121 MB). The release workflow downloads a pinned [mpv-winbuild-cmake](https://github.com/shinchiro/mpv-winbuild-cmake) build, checks its SHA-256, builds `Ciranda.exe` with mingw-w64 and zips everything. See [THIRD-PARTY-NOTICES](THIRD-PARTY-NOTICES.md).
+- The `.dll` isn't in the repo (121 MB). The release workflow downloads a pinned [mpv-winbuild-cmake](https://github.com/shinchiro/mpv-winbuild-cmake) build and checks its SHA-256. See [THIRD-PARTY-NOTICES](THIRD-PARTY-NOTICES.md).
+- **The installer is built and tested on a real Windows runner** (`.github/workflows/release.yml`): PyInstaller packages Python, Qt and libmpv into `Ciranda.exe`; the packaged app runs its self-test (it really clicks the folder menu and the *Limpar* menu and checks they appear, then checks the signature); Inno Setup builds the setup; the setup is installed silently, the installed app self-tests again, and the uninstaller must remove the app, the Start menu shortcut and the right-click entry. Only then the setup is attached to the release.
 
 ### Running from a clone
 
@@ -93,6 +95,11 @@ x86_64-w64-mingw32-gcc -O2 -municode -mwindows -s lancador/ciranda.c r.res -o Ci
 ```
 
 ## Tests
+
+```bash
+python app.py --autoteste=result.json        # self-test (the same one the Windows runner uses)
+```
+
 
 ```bash
 python tests/teste_logica.py [media-folder]    # scan + queue, no UI: 377 checks (384 with the media folder)

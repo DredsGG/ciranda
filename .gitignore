@@ -9,3 +9,6 @@ Ciranda.exe
 *.7z
 .DS_Store
 Thumbs.db
+dist/
+build/
+instalador/versao.txt

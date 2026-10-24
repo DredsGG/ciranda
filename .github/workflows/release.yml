@@ -1,24 +1,144 @@
 name: Release
 
-# Publish a GitHub Release whose tag is vX.Y.Z (same as VERSAO in
-# ciranda/__init__.py). This job builds Ciranda.exe from lancador/, adds the
-# pinned libmpv-2.dll (checked by SHA-256) and attaches the ready-to-run zip.
+# Publish a GitHub Release whose tag is vX.Y.Z (same as VERSAO in ciranda/__init__.py):
+#   - "installer" builds Ciranda-Setup-X.Y.Z.exe on a real Windows runner (PyInstaller +
+#     Inno Setup), runs the packaged app's self-test (it clicks the menus and checks they
+#     show up), installs it silently, self-tests the installed copy, uninstalls it and
+#     checks nothing was left behind. Only then the setup is attached to the Release.
+#   - "zip" builds the portable zip (Ciranda.exe launcher + Python on first run).
+# Pushing to the "instalador" branch (or running it by hand) only builds and tests the
+# installer and keeps it as a workflow artifact: nothing is published.
 on:
   release:
     types: [published]
+  push:
+    branches: [instalador]
+  workflow_dispatch:
 
 permissions:
   contents: write
 
+env:
+  MPV_URL: https://github.com/shinchiro/mpv-winbuild-cmake/releases/download/20261021/mpv-dev-x86_64-20261021-git-e471496c56.7z
+  MPV_7Z_SHA256: efc719eff3dc5954b4a5efc800632808bcec01cc9034940dd14e5eb7fe9ea633
+  MPV_DLL_SHA256: 04e4d27dc385dc18ddd93fbe69c75e635b864f3c6ec53a9122df54c2f7842f4a
+
 jobs:
+  installer:
+    runs-on: windows-2025
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'release' && github.event.release.tag_name || github.sha }}
+
+      - name: Read VERSAO (and check the tag on a release)
+        shell: bash
+        run: |
+          VERSAO="$(sed -n 's/^VERSAO = "\(.*\)"/\1/p' ciranda/__init__.py)"
+          echo "VERSAO=$VERSAO" >> "$GITHUB_ENV"
+          if [ "${{ github.event_name }}" = "release" ]; then
+            TAG="${{ github.event.release.tag_name }}"
+            [ "${TAG#v}" = "$VERSAO" ] || { echo "::error::Tag $TAG does not match VERSAO $VERSAO"; exit 1; }
+          fi
+          echo "Building Ciranda $VERSAO"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies (pinned)
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt pyinstaller==6.22.3 pyinstaller-hooks-contrib==2026.8
+
+      - name: Get libmpv-2.dll (checked by SHA-256)
+        shell: bash
+        run: |
+          curl -fsSL -o mpv.7z "$MPV_URL"
+          echo "$MPV_7Z_SHA256  mpv.7z" | sha256sum -c -
+          7z e -y mpv.7z libmpv-2.dll > /dev/null
+          echo "$MPV_DLL_SHA256  libmpv-2.dll" | sha256sum -c -
+
+      - name: Package with PyInstaller
+        shell: bash
+        run: |
+          python instalador/gerar_versao.py
+          pyinstaller instalador/ciranda.spec --noconfirm --distpath dist --workpath build
+          ls dist/Ciranda
+          du -sh dist/Ciranda
+
+      - name: Self-test the packaged app (clicks the menus on real Windows)
+        shell: pwsh
+        run: |
+          $p = Start-Process -FilePath "dist\Ciranda\Ciranda.exe" -ArgumentList "--autoteste=$PWD\autoteste-empacotado.json" -Wait -PassThru
+          Get-Content autoteste-empacotado.json
+          $r = Get-Content autoteste-empacotado.json | ConvertFrom-Json
+          if ($p.ExitCode -ne 0 -or -not $r.passou) { Write-Error "Self-test failed (exit $($p.ExitCode))"; exit 1 }
+
+      - name: Install Inno Setup
+        shell: pwsh
+        run: |
+          choco install innosetup -y --no-progress
+          $iscc = Get-ChildItem "C:\Program Files*\Inno Setup*\ISCC.exe" | Select-Object -First 1
+          if (-not $iscc) { Write-Error "ISCC.exe not found"; exit 1 }
+          "ISCC=$($iscc.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          "Using $($iscc.FullName) $((Get-Item $iscc.FullName).VersionInfo.ProductVersion)"
+
+      - name: Build Ciranda-Setup
+        shell: pwsh
+        run: |
+          & $env:ISCC "/DVersao=$env:VERSAO" instalador\ciranda.iss
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+          Get-Item "dist\Ciranda-Setup-$env:VERSAO.exe" | Format-List Name, Length
+
+      - name: Install silently, self-test the installed app, uninstall
+        shell: pwsh
+        run: |
+          $setup = "dist\Ciranda-Setup-$env:VERSAO.exe"
+          $i = Start-Process $setup -ArgumentList "/VERYSILENT","/SUPPRESSMSGBOXES","/NORESTART","/CURRENTUSER","/TASKS=atalho,menupasta" -Wait -PassThru
+          if ($i.ExitCode -ne 0) { Write-Error "Setup exit $($i.ExitCode)"; exit 1 }
+          $app = Join-Path $env:LOCALAPPDATA "Programs\Ciranda"
+          $exe = Join-Path $app "Ciranda.exe"
+          if (-not (Test-Path $exe)) { Write-Error "Not installed at $exe"; exit 1 }
+          $menu = Join-Path ([Environment]::GetFolderPath("Programs")) "Ciranda.lnk"
+          if (-not (Test-Path $menu)) { Write-Error "No Start menu shortcut at $menu"; exit 1 }
+          $cmd = (Get-ItemProperty "HKCU:\Software\Classes\Directory\shell\Ciranda\command").'(default)'
+          "Folder right-click command: $cmd"
+          if ($cmd -notlike "*Ciranda.exe*%1*") { Write-Error "Right-click entry missing"; exit 1 }
+          $p = Start-Process -FilePath $exe -ArgumentList "--autoteste=$PWD\autoteste-instalado.json" -Wait -PassThru
+          Get-Content autoteste-instalado.json
+          $r = Get-Content autoteste-instalado.json | ConvertFrom-Json
+          if ($p.ExitCode -ne 0 -or -not $r.passou) { Write-Error "Installed self-test failed"; exit 1 }
+          $u = Start-Process (Join-Path $app "unins000.exe") -ArgumentList "/VERYSILENT","/SUPPRESSMSGBOXES","/NORESTART" -Wait -PassThru
+          for ($k = 0; $k -lt 30 -and (Test-Path $exe); $k++) { Start-Sleep -Seconds 1 }
+          if (Test-Path $exe) { Write-Error "Uninstall left Ciranda.exe behind"; exit 1 }
+          if (Test-Path "HKCU:\Software\Classes\Directory\shell\Ciranda") { Write-Error "Uninstall left the right-click entry"; exit 1 }
+          if (Test-Path $menu) { Write-Error "Uninstall left the Start menu shortcut"; exit 1 }
+          "Install, self-test and uninstall: OK"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Ciranda-Setup-${{ env.VERSAO }}
+          path: |
+            dist/Ciranda-Setup-*.exe
+            autoteste-*.json
+          if-no-files-found: ignore
+
+      - name: Attach the setup to the Release
+        if: github.event_name == 'release'
+        shell: bash
+        run: gh release upload "${{ github.event.release.tag_name }}" "dist/Ciranda-Setup-$VERSAO.exe" --clobber
+
   zip:
+    if: github.event_name == 'release'
     runs-on: ubuntu-24.04
     env:
       TAG: ${{ github.event.release.tag_name }}
       GH_TOKEN: ${{ github.token }}
-      MPV_URL: https://github.com/shinchiro/mpv-winbuild-cmake/releases/download/20261021/mpv-dev-x86_64-20261021-git-e471496c56.7z
-      MPV_7Z_SHA256: efc719eff3dc5954b4a5efc800632808bcec01cc9034940dd14e5eb7fe9ea633
-      MPV_DLL_SHA256: 04e4d27dc385dc18ddd93fbe69c75e635b864f3c6ec53a9122df54c2f7842f4a
     steps:
       - uses: actions/checkout@v4
         with:
@@ -39,7 +159,7 @@ jobs:
           sudo apt-get update -q
           sudo apt-get install -y -q --no-install-recommends gcc-mingw-w64-x86-64 binutils-mingw-w64-x86-64 p7zip-full
 
-      - name: Build Ciranda.exe
+      - name: Build Ciranda.exe (portable launcher)
         run: |
           cp ui/ciranda.ico lancador/
           (cd lancador && x86_64-w64-mingw32-windres ciranda.rc -O coff -o ../r.res)
@@ -60,18 +180,33 @@ jobs:
           cp Ciranda.exe libmpv-2.dll app.py requirements.txt LEIA-ME.txt RODAR.bat RESTAURAR.bat MENU-BOTAO-DIREITO.bat LICENSE THIRD-PARTY-NOTICES.md "$D/"
           cp ciranda/*.py "$D/ciranda/"
           cp ui/* "$D/ui/"
-          (cd out && zip -r -9 "../ciranda-$TAG.zip" Ciranda)
-          unzip -l "ciranda-$TAG.zip"
+          (cd out && zip -r -9 "../ciranda-$TAG-portatil.zip" Ciranda)
+          unzip -l "ciranda-$TAG-portatil.zip"
 
-      - name: Attach zip and install notes
-        env:
-          NOTES: |
-            ### Install (Windows 10/11)
-            1. Download **ciranda-${{ github.event.release.tag_name }}.zip** below and unzip it anywhere.
-            2. Double-click **Ciranda.exe**. The first time it installs Python 3.12 (via winget) and the dependencies, 1 to 3 minutes, and creates a desktop shortcut.
-            3. Drag folders onto the window.
+      - name: Attach zip
+        run: gh release upload "$TAG" "ciranda-$TAG-portatil.zip" --clobber
+
+  notes:
+    if: github.event_name == 'release'
+    needs: [installer, zip]
+    runs-on: ubuntu-24.04
+    env:
+      TAG: ${{ github.event.release.tag_name }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Put install instructions on top of the Release notes
         run: |
-          gh release upload "$TAG" "ciranda-$TAG.zip" --clobber
-          gh release view "$TAG" --json body -q .body > old.md
-          { printf '%s\n\n' "$NOTES"; cat old.md; } > notes.md
-          gh release edit "$TAG" --notes-file notes.md
+          V="${TAG#v}"
+          cat > top.md <<EOF
+          ### Install (Windows 10/11)
+          1. Download **Ciranda-Setup-$V.exe** below and run it. No admin rights needed: it installs for your user, adds Ciranda to the Start menu and, if you want, a desktop shortcut and a "Tocar no Ciranda" entry when you right-click a folder.
+          2. The installer is not code-signed yet, so the first time Windows may show **"Windows protected your PC"**: click **More info → Run anyway**.
+          3. Uninstall from **Settings → Apps**. Your settings stay in \`%APPDATA%\\Ciranda\`.
+
+          Portable alternative: **ciranda-$TAG-portatil.zip** (unzip, double-click \`Ciranda.exe\`; it installs Python 3.12 on first run).
+
+          EOF
+          sed -i 's/^          //' top.md
+          gh release view "$TAG" -R "${{ github.repository }}" --json body -q .body > old.md
+          cat top.md old.md > notes.md
+          gh release edit "$TAG" -R "${{ github.repository }}" --notes-file notes.md
