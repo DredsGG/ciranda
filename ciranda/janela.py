@@ -606,6 +606,45 @@ class Janela(QMainWindow):
         if hasattr(self, "_lados"):
             self._ajustar_barra()
 
+    def receber_de_outra_instancia(self, caminhos):
+        """Outro Ciranda foi aberto (dois cliques num arquivo, botão direito numa pasta):
+        mostra aqui. Vários chegando em seguida (vários arquivos selecionados) se juntam."""
+        agora = time.monotonic()
+        juntar = bool(self.fila.itens) and (agora - getattr(self, "_ultimo_recebido", 0.0)) < 1.5
+        self._ultimo_recebido = agora
+        try:
+            self._log.write(f"{time.strftime('%H:%M:%S')} recebido de outra instância: "
+                            f"{len(caminhos)} caminho(s){' (junta)' if juntar else ''}\n")
+            self._log.flush()
+        except Exception:
+            pass
+        if caminhos:
+            self.carregar(caminhos, adicionar=juntar)
+        self.trazer_para_frente()
+
+    def trazer_para_frente(self):
+        if self.isMinimized():
+            self.showNormal()
+        self.show()
+        self.raise_()
+        self.activateWindow()
+        if WINDOWS:
+            try:
+                import ctypes
+                ctypes.windll.user32.SetForegroundWindow(int(self.winId()))
+            except Exception:
+                pass
+
+    def usar_como_padrao(self):
+        """Abre a tela do Windows onde o usuário escolhe o Ciranda como padrão
+        (o Windows não deixa app nenhum fazer isso sozinho)."""
+        for uri in ("ms-settings:defaultapps?registeredAppUser=Ciranda", "ms-settings:defaultapps"):
+            try:
+                os.startfile(uri)
+                return
+            except Exception:
+                continue
+
     def _barra_titulo_escura(self):
         """Windows 11: barra de título escura, da cor do app (DWM)."""
         if not WINDOWS:
@@ -846,6 +885,11 @@ class Janela(QMainWindow):
         tem_historico = bool(self.cfg["ultimas_pastas"]) or bool(self.fila.itens)
         m.linha("limpar", "Limpar tudo", "Fila e a lista do Continuar. Não apaga nada do PC", "",
                 self.limpar_tudo, perigo=True, ativo=tem_historico)
+        if WINDOWS and getattr(sys, "frozen", False):
+            m.titulo("Windows")
+            m.linha("foto", "Usar como app padrão…",
+                    "Abre a tela do Windows para escolher o Ciranda para fotos e vídeos", "",
+                    self.usar_como_padrao)
         m.titulo("Problemas")
         m.linha("repetir", "Restaurar de fábrica…",
                 "Volta todos os ajustes ao padrão e limpa fila, Continuar e cache. Não apaga nada do PC",
@@ -1148,8 +1192,8 @@ class Janela(QMainWindow):
         if not itens and not adicionar:
             self._status("Nenhuma foto ou vídeo nessa pasta nem nas subpastas.")
             return
-        pastas = [p for p in self.pastas_abertas if os.path.exists(p)]
-        if pastas:
+        pastas = [p for p in self.pastas_abertas if os.path.isdir(p)]
+        if pastas:  # abrir só arquivos (dois cliques numa foto) não mexe no Continuar
             self.cfg["ultimas_pastas"] = pastas[:5000]  # a fila inteira, sem corte
             config.salvar(self.cfg)
         if adicionar:
@@ -1323,6 +1367,11 @@ class Janela(QMainWindow):
             self._t_foto.start(max(1, self._foto_restante_ms))
 
     def _foto_acabou(self):
+        if self._item and self._item.tipo == "foto" and len(self.fila) <= 1:
+            # uma foto só (aberta com dois cliques): fica na tela, sem piscar
+            if self.fila.repetir == "nao":
+                self._fim()
+            return
         if self._item and self._item.tipo == "foto":
             self._erros_seguidos = 0
             self.tocar(self.fila.proximo(automatico=True))

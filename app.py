@@ -46,10 +46,20 @@ def main():
 
     app = QApplication(sys.argv)
     app.setApplicationName(NOME)
+    caminhos = [os.path.abspath(a) for a in sys.argv[1:] if not a.startswith("-")]
+
+    # janela única: se já tem um Ciranda aberto, entrega os caminhos para ele e sai
+    from ciranda.instancia import Servidor, enviar_para_aberta
+    if enviar_para_aberta(caminhos):
+        sys.exit(0)
+    servidor = Servidor()
+    if not servidor.escutar() and enviar_para_aberta(caminhos, 1500):
+        sys.exit(0)  # outra instância abriu no mesmo instante e ganhou
+
     app.setStyle("Fusion")
     app.setStyleSheet(QSS)
-    caminhos = [a for a in sys.argv[1:] if not a.startswith("-")]
     j = Janela(caminhos)
+    servidor.recebeu.connect(j.receber_de_outra_instancia)
     j.show()
     sys.exit(app.exec())
 

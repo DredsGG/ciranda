@@ -10,7 +10,7 @@ A Windows player that takes a folder and **every subfolder inside it** and plays
 ![Windows](https://img.shields.io/badge/Windows-10%20%2F%2011-0078D6?logo=windows&logoColor=white)
 ![Python 3.12](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
 ![mpv](https://img.shields.io/badge/engine-libmpv-691F69?logo=mpv&logoColor=white)
-![Version](https://img.shields.io/badge/version-1.2.0-ff8a3d)
+![Version](https://img.shields.io/badge/version-1.3.0-ff8a3d)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 <img src="docs/ciranda-tocando.png" width="900" alt="Ciranda playing a photo, with the queue on the right showing files from several subfolders">
@@ -36,6 +36,8 @@ VLC can sort of do this (a hidden *subdirectory behavior* option, photos with a 
 - **Queue panel (`L`)** with search (`Ctrl+F`), double-click to play, and right-click to show in Explorer, copy the path or remove. The footer counts photos, videos and folders.
 - **Full screen** (`F`, `Enter`, `F11` or double-click), with controls that hide after 2.5 s.
 - Remembers volume, shuffle, repeat, filter, photo time, window size and the last queue (a **Continue** button on the start screen).
+- **Can be your default photo and video app.** The installer registers Ciranda for photos and videos, so it shows up in *Open with* and in **Settings → Apps → Default apps**. Windows doesn't let any app make itself the default, so you pick it once there (the installer and the folder menu have a shortcut to that screen). Double-clicking a file plays just that file.
+- **One window.** Opening another file or folder while Ciranda is open sends it to the open window instead of starting a second one; several files opened together are queued together.
 - **Factory reset** inside the app, plus `RESTAURAR.bat` for when it won't even open. Neither touches your files.
 
 > The interface is in Portuguese, the language I use.
@@ -58,7 +60,7 @@ VLC can sort of do this (a hidden *subdirectory behavior* option, photos with a 
 ## Install
 
 1. Download **Ciranda-Setup-X.Y.Z.exe** from the [latest release](https://github.com/DredsGG/ciranda/releases/latest) and run it.
-2. No admin rights needed: it installs for your user (`%LOCALAPPDATA%\Programs\Ciranda`), adds **Ciranda** to the Start menu and, if you tick them, a desktop shortcut and a **Tocar no Ciranda** entry when you right-click a folder. Everything is inside the app: no Python, no scripts.
+2. No admin rights needed: it installs for your user (`%LOCALAPPDATA%\Programs\Ciranda`), adds **Ciranda** to the Start menu and, if you tick them, a desktop shortcut, a **Tocar no Ciranda** entry when you right-click a folder and the photo/video registration (*Open with* and *Default apps*). To make it the default, tick the last box at the end of the setup, or go to **Settings → Apps → Default apps → Ciranda**. Everything is inside the app: no Python, no scripts.
 3. The installer isn't code-signed yet, so the first time Windows may show *"Windows protected your PC"*: click **More info → Run anyway**.
 4. Updating = running the newer setup over it (it closes Ciranda if it's open). Uninstall from **Settings → Apps**; settings stay in `%APPDATA%\Ciranda`.
 
@@ -82,7 +84,7 @@ ciranda/icones.py      hand-made SVG icons
 - **Clicks over the video:** mpv creates its own child window, which would swallow mouse and keyboard. The app disables that window (`EnableWindow`) and turns on `input-cursor-passthrough`, so input reaches Qt.
 - **Show in Explorer** uses `SHOpenFolderAndSelectItems`; the title bar follows the Windows 11 dark mode (DWM).
 - The `.dll` isn't in the repo (121 MB). The release workflow downloads a pinned [mpv-winbuild-cmake](https://github.com/shinchiro/mpv-winbuild-cmake) build and checks its SHA-256. See [THIRD-PARTY-NOTICES](THIRD-PARTY-NOTICES.md).
-- **The installer is built and tested on a real Windows runner** (`.github/workflows/release.yml`): PyInstaller packages Python, Qt and libmpv into `Ciranda.exe`; the packaged app runs its self-test (it really clicks the folder menu and the *Limpar* menu and checks they appear, then checks the signature); Inno Setup builds the setup; the setup is installed silently, the installed app self-tests again, and the uninstaller must remove the app, the Start menu shortcut and the right-click entry. Only then the setup is attached to the release.
+- **The installer is built and tested on a real Windows runner** (`.github/workflows/release.yml`): PyInstaller packages Python, Qt and libmpv into `Ciranda.exe`; the packaged app runs its self-test (it really clicks the folder menu and the *Limpar* menu and checks they appear, then checks the signature); Inno Setup builds the setup; the setup is installed silently, the photo/video registration is checked, the installed app self-tests again, a second Ciranda must hand its file to the open one and quit (single window), and the uninstaller must remove the app, the Start menu shortcut, the right-click entry and every file-type registration. Only then the setup is attached to the release.
 
 ### Running from a clone
 

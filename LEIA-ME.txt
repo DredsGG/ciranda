@@ -1,4 +1,4 @@
-CIRANDA 1.2.0 - feito por Dreds (github.com/DredsGG)
+CIRANDA 1.3.0 - feito por Dreds (github.com/DredsGG)
 Player de fotos e videos: abre uma pasta e TODAS as subpastas numa fila so,
 em ordem ou aleatorio, com repetir.
 

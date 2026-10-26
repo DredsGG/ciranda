@@ -36,6 +36,8 @@ SolidCompression=yes
 WizardStyle=modern
 ; se o Ciranda estiver aberto numa atualização, fecha e reabre
 CloseApplications=yes
+; avisa o Explorer que as associações mudaram (instalar e desinstalar)
+ChangesAssociations=yes
 RestartApplications=no
 
 [Languages]
@@ -44,6 +46,7 @@ Name: "ptbr"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
 [Tasks]
 Name: "atalho"; Description: "Criar atalho na área de trabalho"; GroupDescription: "Atalhos:"
 Name: "menupasta"; Description: "Pôr ""Tocar no Ciranda"" no botão direito das pastas"; GroupDescription: "Explorer:"
+Name: "associar"; Description: "Registrar o Ciranda para fotos e vídeos (aparece em ""Abrir com"" e nos Aplicativos padrão)"; GroupDescription: "Explorer:"
 
 [Files]
 Source: "..\dist\Ciranda\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
@@ -61,6 +64,9 @@ Root: HKA; Subkey: "Software\Classes\Directory\shell\Ciranda\command"; ValueType
 Root: HKA; Subkey: "Software\Classes\Directory\Background\shell\Ciranda"; ValueType: string; ValueName: ""; ValueData: "Tocar esta pasta no Ciranda"; Flags: uninsdeletekey; Tasks: menupasta
 Root: HKA; Subkey: "Software\Classes\Directory\Background\shell\Ciranda"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\Ciranda.exe"; Tasks: menupasta
 Root: HKA; Subkey: "Software\Classes\Directory\Background\shell\Ciranda\command"; ValueType: string; ValueName: ""; ValueData: """{app}\Ciranda.exe"" ""%V"""; Tasks: menupasta
+; fotos e vídeos: ProgIDs, "Abrir com" e Aplicativos padrão (gerado por gerar_associacoes.py)
+#include "associacoes.iss"
 
 [Run]
 Filename: "{app}\Ciranda.exe"; Description: "Abrir o Ciranda"; Flags: nowait postinstall skipifsilent
+Filename: "ms-settings:defaultapps?registeredAppUser=Ciranda"; Description: "Escolher o Ciranda como app padrão de fotos e vídeos (abre as Configurações do Windows)"; Flags: shellexec nowait postinstall skipifsilent unchecked; Tasks: associar

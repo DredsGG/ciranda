@@ -2,3 +2,4 @@
 *.txt -text
 *.ico binary
 *.png binary
+*.iss -text

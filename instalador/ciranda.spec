@@ -23,8 +23,8 @@ a = Analysis(
     binaries=binarios + heif_bin,
     datas=[(os.path.join(RAIZ, "ui", "ciranda.ico"), "ui"),
            (os.path.join(RAIZ, "ui", "ciranda-256.png"), "ui")] + heif_dados,
-    hiddenimports=["mpv", "ciranda.autoteste", "PySide6.QtTest", "PySide6.QtSvg"] + heif_ocultos,
-    excludes=["tkinter", "unittest", "pydoc", "numpy", "PySide6.QtNetwork", "PySide6.QtQml",
+    hiddenimports=["mpv", "ciranda.autoteste", "ciranda.instancia", "PySide6.QtTest", "PySide6.QtSvg", "PySide6.QtNetwork"] + heif_ocultos,
+    excludes=["tkinter", "unittest", "pydoc", "numpy", "PySide6.QtQml",
               "PySide6.QtQuick", "PySide6.QtOpenGL", "PySide6.QtDBus", "PySide6.QtPdf"],
     noarchive=False,
 )

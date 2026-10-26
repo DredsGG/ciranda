@@ -3,8 +3,10 @@ name: Release
 # Publish a GitHub Release whose tag is vX.Y.Z (same as VERSAO in ciranda/__init__.py):
 #   - "installer" builds Ciranda-Setup-X.Y.Z.exe on a real Windows runner (PyInstaller +
 #     Inno Setup), runs the packaged app's self-test (it clicks the menus and checks they
-#     show up), installs it silently, self-tests the installed copy, uninstalls it and
-#     checks nothing was left behind. Only then the setup is attached to the Release.
+#     show up), installs it silently, checks the photo/video registration ("Open with" and
+#     Default apps), self-tests the installed copy, checks the single window (a second
+#     Ciranda hands its file to the first and quits), uninstalls it and checks nothing was
+#     left behind. Only then the setup is attached to the Release.
 #   - "zip" builds the portable zip (Ciranda.exe launcher + Python on first run).
 # Pushing to the "instalador" branch (or running it by hand) only builds and tests the
 # installer and keeps it as a workflow artifact: nothing is published.
@@ -29,7 +31,7 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.event_name == 'release' && github.event.release.tag_name || github.sha }}
 
@@ -44,7 +46,7 @@ jobs:
           fi
           echo "Building Ciranda $VERSAO"
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
@@ -66,6 +68,8 @@ jobs:
         shell: bash
         run: |
           python instalador/gerar_versao.py
+          python instalador/gerar_associacoes.py
+          git diff --exit-code instalador/associacoes.iss || { echo "::error::instalador/associacoes.iss is out of date: run gerar_associacoes.py"; exit 1; }
           pyinstaller instalador/ciranda.spec --noconfirm --distpath dist --workpath build
           ls dist/Ciranda
           du -sh dist/Ciranda
@@ -98,7 +102,7 @@ jobs:
         shell: pwsh
         run: |
           $setup = "dist\Ciranda-Setup-$env:VERSAO.exe"
-          $i = Start-Process $setup -ArgumentList "/VERYSILENT","/SUPPRESSMSGBOXES","/NORESTART","/CURRENTUSER","/TASKS=atalho,menupasta" -Wait -PassThru
+          $i = Start-Process $setup -ArgumentList "/VERYSILENT","/SUPPRESSMSGBOXES","/NORESTART","/CURRENTUSER","/TASKS=atalho,menupasta,associar" -Wait -PassThru
           if ($i.ExitCode -ne 0) { Write-Error "Setup exit $($i.ExitCode)"; exit 1 }
           $app = Join-Path $env:LOCALAPPDATA "Programs\Ciranda"
           $exe = Join-Path $app "Ciranda.exe"
@@ -108,24 +112,59 @@ jobs:
           $cmd = (Get-ItemProperty "HKCU:\Software\Classes\Directory\shell\Ciranda\command").'(default)'
           "Folder right-click command: $cmd"
           if ($cmd -notlike "*Ciranda.exe*%1*") { Write-Error "Right-click entry missing"; exit 1 }
+          # photos and videos: ProgID, "Open with" and Default apps
+          $foto = (Get-ItemProperty "HKCU:\Software\Classes\Ciranda.Foto\shell\open\command").'(default)'
+          $video = (Get-ItemProperty "HKCU:\Software\Classes\Ciranda.Video\shell\open\command").'(default)'
+          if ($foto -notlike "*Ciranda.exe*%1*" -or $video -notlike "*Ciranda.exe*%1*") { Write-Error "ProgIDs missing"; exit 1 }
+          foreach ($e in ".jpg",".png",".heic",".mp4",".mkv",".mov") {
+            $v = Get-ItemProperty "HKCU:\Software\Classes\$e\OpenWithProgids" -ErrorAction SilentlyContinue
+            if (-not ($v.PSObject.Properties.Name -match "^Ciranda\.(Foto|Video)$")) { Write-Error "$e not in Open with"; exit 1 }
+          }
+          $reg = (Get-ItemProperty "HKCU:\Software\RegisteredApplications").Ciranda
+          $assoc = Get-ItemProperty "HKCU:\Software\Dreds\Ciranda\Capabilities\FileAssociations"
+          "RegisteredApplications: $reg  (.jpg -> $($assoc.'.jpg'), .mp4 -> $($assoc.'.mp4'))"
+          if ($reg -ne "Software\Dreds\Ciranda\Capabilities" -or $assoc.'.jpg' -ne "Ciranda.Foto" -or $assoc.'.mp4' -ne "Ciranda.Video") { Write-Error "Default apps registration missing"; exit 1 }
           $p = Start-Process -FilePath $exe -ArgumentList "--autoteste=$PWD\autoteste-instalado.json" -Wait -PassThru
           Get-Content autoteste-instalado.json
           $r = Get-Content autoteste-instalado.json | ConvertFrom-Json
           if ($p.ExitCode -ne 0 -or -not $r.passou) { Write-Error "Installed self-test failed"; exit 1 }
+          # single window: a second Ciranda hands its file to the open one and quits
+          $foto = Join-Path $PWD "teste-instancia.jpg"
+          python -c "from PIL import Image; Image.new('RGB', (320, 200), (200, 120, 40)).save(r'$foto')"
+          $log = Join-Path $env:APPDATA "Ciranda\ciranda.log"
+          $primeiro = Start-Process -FilePath $exe -PassThru
+          Start-Sleep -Seconds 8
+          $segundo = Start-Process -FilePath $exe -ArgumentList "`"$foto`"" -PassThru
+          if (-not $segundo.WaitForExit(20000)) { Write-Error "Second Ciranda did not quit (opened another window?)"; Stop-Process -Id $segundo.Id -Force; Stop-Process -Id $primeiro.Id -Force; exit 1 }
+          for ($k = 0; $k -lt 20 -and -not (Select-String -Path $log -Pattern "recebido de outra" -Quiet); $k++) { Start-Sleep -Seconds 1 }
+          Select-String -Path $log -Pattern "recebido de outra"
+          $ok = Select-String -Path $log -Pattern "recebido de outra" -Quiet
+          if ($primeiro.HasExited) { Write-Error "First Ciranda closed"; exit 1 }
+          Stop-Process -Id $primeiro.Id -Force
+          Start-Sleep -Seconds 2
+          Copy-Item $log "ciranda-instancia.log" -ErrorAction SilentlyContinue
+          if (-not $ok) { Write-Error "The open Ciranda did not receive the file"; exit 1 }
+          "Single window: OK"
           $u = Start-Process (Join-Path $app "unins000.exe") -ArgumentList "/VERYSILENT","/SUPPRESSMSGBOXES","/NORESTART" -Wait -PassThru
           for ($k = 0; $k -lt 30 -and (Test-Path $exe); $k++) { Start-Sleep -Seconds 1 }
           if (Test-Path $exe) { Write-Error "Uninstall left Ciranda.exe behind"; exit 1 }
           if (Test-Path "HKCU:\Software\Classes\Directory\shell\Ciranda") { Write-Error "Uninstall left the right-click entry"; exit 1 }
           if (Test-Path $menu) { Write-Error "Uninstall left the Start menu shortcut"; exit 1 }
+          if (Test-Path "HKCU:\Software\Classes\Ciranda.Foto") { Write-Error "Uninstall left the photo ProgID"; exit 1 }
+          if (Test-Path "HKCU:\Software\Dreds\Ciranda") { Write-Error "Uninstall left the Capabilities key"; exit 1 }
+          if ((Get-ItemProperty "HKCU:\Software\RegisteredApplications" -ErrorAction SilentlyContinue).Ciranda) { Write-Error "Uninstall left RegisteredApplications"; exit 1 }
+          $v = Get-ItemProperty "HKCU:\Software\Classes\.jpg\OpenWithProgids" -ErrorAction SilentlyContinue
+          if ($v -and ($v.PSObject.Properties.Name -contains "Ciranda.Foto")) { Write-Error "Uninstall left .jpg Open with"; exit 1 }
           "Install, self-test and uninstall: OK"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         if: always()
         with:
           name: Ciranda-Setup-${{ env.VERSAO }}
           path: |
             dist/Ciranda-Setup-*.exe
             autoteste-*.json
+            ciranda-*.log
           if-no-files-found: ignore
 
       - name: Attach the setup to the Release
@@ -140,7 +179,7 @@ jobs:
       TAG: ${{ github.event.release.tag_name }}
       GH_TOKEN: ${{ github.token }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.event.release.tag_name }}
 
