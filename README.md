@@ -61,7 +61,7 @@ VLC can sort of do this (a hidden *subdirectory behavior* option, photos with a 
 
 1. Download **Ciranda-Setup-X.Y.Z.exe** from the [latest release](https://github.com/DredsGG/ciranda/releases/latest) and run it.
 2. No admin rights needed: it installs for your user (`%LOCALAPPDATA%\Programs\Ciranda`), adds **Ciranda** to the Start menu and, if you tick them, a desktop shortcut, a **Tocar no Ciranda** entry when you right-click a folder and the photo/video registration (*Open with* and *Default apps*). To make it the default, tick the last box at the end of the setup, or go to **Settings → Apps → Default apps → Ciranda**. Everything is inside the app: no Python, no scripts.
-3. The installer isn't code-signed yet, so the first time Windows may show *"Windows protected your PC"*: click **More info → Run anyway**.
+3. The installer isn't code-signed, so the first time Windows may show *"Windows protected your PC"*: click **More info → Run anyway**.
 4. Updating = running the newer setup over it (it closes Ciranda if it's open). Uninstall from **Settings → Apps**; settings stay in `%APPDATA%\Ciranda`.
 
 **Portable alternative:** `ciranda-vX.Y.Z-portatil.zip` from the same release. Unzip, double-click `Ciranda.exe`; the first time it installs Python 3.12 with `winget` and the dependencies (1 to 3 minutes).
