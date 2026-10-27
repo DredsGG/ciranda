@@ -150,11 +150,15 @@ jobs:
           Copy-Item $log "ciranda-instancia.log" -ErrorAction SilentlyContinue
           if (-not $ok) { Write-Error "The open Ciranda did not receive the file"; exit 1 }
           "Single window: OK"
-          # update, for real: the installed app finds the latest release, downloads its setup, checks the SHA-256
+          # update, for real: the installed app finds the latest release, downloads its setup, checks the SHA-256;
+          # plus the local test channel (a folder named in %APPDATA%\Ciranda\pasta-de-teste.txt, only on the author's PC)
+          Set-Content -Path (Join-Path $env:APPDATA "Ciranda\pasta-de-teste.txt") -Value (Resolve-Path "dist\proximo").Path -Encoding utf8
           $p = Start-Process -FilePath $exe -ArgumentList "--testar-atualizacao=$PWD\atualizacao-github.json" -Wait -PassThru
           Get-Content atualizacao-github.json
           $r = Get-Content atualizacao-github.json | ConvertFrom-Json
           if ($p.ExitCode -ne 0 -or -not $r.passou) { Write-Error "Update check/download failed"; exit 1 }
+          if (-not $r.canal_teste.disponivel -or -not $r.canal_teste.copiado) { Write-Error "Local test channel did not offer/copy the newer setup"; exit 1 }
+          Remove-Item (Join-Path $env:APPDATA "Ciranda\pasta-de-teste.txt")
           # then a newer setup is applied the way "Atualizar agora" does it: silent install, Ciranda reopens
           $chave = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\{4B485C6B-2F3C-4AB5-8B7E-FBCC96A3752A}_is1"
           "Before update: DisplayVersion=$((Get-ItemProperty $chave).DisplayVersion)"

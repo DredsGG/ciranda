@@ -40,6 +40,21 @@ def _testar_atualizacao(saida: str) -> int:
         os.remove(caminho)
     except Exception as e:
         res["erro"] = f"{e.__class__.__name__}: {e}"
+    # canal de teste (só existe se houver %APPDATA%\\Ciranda\\pasta-de-teste.txt)
+    from ciranda.config import pasta_dados
+    pasta = atualizacao.pasta_teste(pasta_dados())
+    if pasta:
+        try:
+            loc = atualizacao.procurar_local(pasta, VERSAO)
+            res["canal_teste"] = {k: loc[k] for k in ("versao", "disponivel", "notas")} if loc else None
+            if loc:
+                copia = atualizacao.copiar_setup_local(loc["setup"])
+                res["canal_teste"]["copiado"] = os.path.getsize(copia) == loc["setup"]["tamanho"]
+                os.remove(copia)
+            res["passou"] = res["passou"] and bool(loc and loc["disponivel"] and res["canal_teste"]["copiado"])
+        except Exception as e:
+            res["canal_teste"] = {"erro": f"{e.__class__.__name__}: {e}"}
+            res["passou"] = False
     with open(saida, "w", encoding="utf-8") as f:
         json.dump(res, f, ensure_ascii=False, indent=2)
     return 0 if res["passou"] else 1

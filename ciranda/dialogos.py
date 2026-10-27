@@ -48,10 +48,14 @@ class DialogoAtualizacao(QDialog):
         v.setContentsMargins(22, 20, 22, 18)
         v.setSpacing(10)
 
-        t = QLabel(f"Ciranda v{info['versao']} disponível")
+        self.local = bool(info.get("local"))
+        t = QLabel(f"Ciranda v{info['versao']} (teste) disponível" if self.local
+                   else f"Ciranda v{info['versao']} disponível")
         t.setObjectName("grande")
         v.addWidget(t)
-        sub = QLabel(f"Você está na v{VERSAO}.")
+        sub = QLabel(f"Você está na v{VERSAO}." + (" Esta versão veio da sua pasta de teste e ainda não "
+                                                    "está no GitHub." if self.local else ""))
+        sub.setWordWrap(True)
         sub.setObjectName("apagado")
         v.addWidget(sub)
         if info.get("notas"):
@@ -64,7 +68,8 @@ class DialogoAtualizacao(QDialog):
         link = QLabel(f'<a href="{info["pagina"]}" style="color:#ff8a3d; text-decoration:none;">'
                       f'Ver tudo no GitHub</a>')
         link.setOpenExternalLinks(True)
-        v.addWidget(link)
+        if not self.local:
+            v.addWidget(link)
 
         self.barra = QProgressBar()
         self.barra.setTextVisible(False)
@@ -81,7 +86,7 @@ class DialogoAtualizacao(QDialog):
         bot.addStretch(1)
         self.b_depois = QPushButton("Depois")
         self.b_depois.clicked.connect(self.reject)
-        self.pode_instalar = atualizacao.instalado() and bool(info.get("setup"))
+        self.pode_instalar = bool(info.get("setup")) and (atualizacao.instalado() or self.local)
         self.b_ok = QPushButton("Atualizar agora" if self.pode_instalar else "Baixar no GitHub")
         self.b_ok.setObjectName("primario")
         self.b_ok.setDefault(True)
@@ -111,7 +116,7 @@ class DialogoAtualizacao(QDialog):
         self.b_depois.setText("Cancelar")
         self.barra.setRange(0, 0)
         self.barra.show()
-        self.estado.setText("Baixando…")
+        self.estado.setText("Copiando…" if self.local else "Baixando…")
         self.estado.show()
         s = self._sinais = _Sinais()
         s.progresso.connect(self._progresso)
@@ -120,8 +125,8 @@ class DialogoAtualizacao(QDialog):
 
         def trabalho():
             try:
-                caminho = atualizacao.baixar_setup(self.info["setup"], s.progresso.emit,
-                                                   lambda: self._cancelar)
+                fn = atualizacao.copiar_setup_local if self.local else atualizacao.baixar_setup
+                caminho = fn(self.info["setup"], s.progresso.emit, lambda: self._cancelar)
                 s.pronto.emit(caminho)
             except InterruptedError:
                 s.falhou.emit("")
@@ -133,11 +138,12 @@ class DialogoAtualizacao(QDialog):
         if total:
             self.barra.setRange(0, 1000)
             self.barra.setValue(int(feito * 1000 / total))
-            self.estado.setText(f"Baixando… {feito / 1048576:.0f} de {total / 1048576:.0f} MB")
+            self.estado.setText(f"{'Copiando' if self.local else 'Baixando'}… "
+                                f"{feito / 1048576:.0f} de {total / 1048576:.0f} MB")
 
     def _baixou(self, caminho):
         self.barra.setRange(0, 0)
-        self.estado.setText("Conferido (SHA-256 igual ao do GitHub). Instalando…")
+        self.estado.setText("Instalando…" if self.local else "Conferido (SHA-256 igual ao do GitHub). Instalando…")
         try:
             atualizacao.rodar_instalador(caminho, VERSAO)
         except Exception as e:

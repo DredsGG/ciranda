@@ -745,11 +745,23 @@ class Janela(QMainWindow):
         api = os.environ.get("CIRANDA_API_ATUALIZACAO") or atualizacao.API
         ponte = self._ponte_atualizacao
 
+        pasta = atualizacao.pasta_teste(config.pasta_dados()) \
+            if (atualizacao.instalado() or os.environ.get("CIRANDA_CANAL_TESTE_SEMPRE")) else ""
+
         def trabalho():
             try:
                 r = atualizacao.procurar(VERSAO, api)
             except Exception as e:
                 r = e
+            if pasta:  # canal de teste do André: setup mais novo na pasta local ganha
+                try:
+                    loc = atualizacao.procurar_local(pasta, VERSAO)
+                except Exception:
+                    loc = None
+                if loc and loc["disponivel"] and (
+                        isinstance(r, Exception) or not r["disponivel"]
+                        or atualizacao.versao_tupla(loc["versao"]) > atualizacao.versao_tupla(r["versao"])):
+                    r = loc
             ponte.resposta.emit(r, manual)
         if manual:
             self._status("Procurando atualização…")
@@ -763,8 +775,8 @@ class Janela(QMainWindow):
                                         "Não consegui falar com o GitHub agora (sem internet?).\n"
                                         "Tente de novo daqui a pouco.")
             return
-        self._log_linha(f"atualização: GitHub tem v{r['versao']}, aqui v{VERSAO}"
-                        f"{' (nova!)' if r['disponivel'] else ''}")
+        self._log_linha(f"atualização: {'pasta de teste' if r.get('local') else 'GitHub'} tem v{r['versao']}, "
+                        f"aqui v{VERSAO}{' (nova!)' if r['disponivel'] else ''}")
         if not r["disponivel"]:
             if manual:
                 QMessageBox.information(self, "Procurar atualização",
@@ -773,6 +785,9 @@ class Janela(QMainWindow):
         self._info_atualizacao = r
         if manual:
             self._abrir_dialogo_atualizacao()
+        elif r.get("local"):
+            self._mostrar_faixa(f"<b>Ciranda v{r['versao']} (teste)</b> pronto para instalar "
+                                f'<span style="color:{APAGADO}">· da sua pasta de teste · você está na v{VERSAO}</span>')
         else:
             self._mostrar_faixa(f"<b>Ciranda v{r['versao']}</b> disponível "
                                 f'<span style="color:{APAGADO}">· você está na v{VERSAO}</span>')
@@ -797,7 +812,10 @@ class Janela(QMainWindow):
             # o instalador baixado fica na pasta temporária: apaga quando ele já terminou
             QTimer.singleShot(60000, atualizacao.apagar_downloads)
         antes = antes or self.cfg.get("versao_vista") or ""
-        if antes and atualizacao.mais_nova(VERSAO, antes):
+        if antes and atualizacao.versao_tupla(antes) == atualizacao.versao_tupla(VERSAO):
+            self._mostrar_faixa(f"Ciranda reinstalado: <b>v{VERSAO}</b> (versão de teste nova)",
+                                botao=False, some_em_ms=15000)
+        elif antes and atualizacao.mais_nova(VERSAO, antes):
             self._mostrar_faixa(f"Ciranda atualizado: <b>v{antes.lstrip('v')} → v{VERSAO}</b>",
                                 botao=False, some_em_ms=15000)
         if self.cfg.get("versao_vista") != VERSAO:

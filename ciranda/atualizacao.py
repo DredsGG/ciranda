@@ -7,6 +7,11 @@
   GitHub informa (`digest`) e roda o instalador em silêncio; o app fecha, o instalador
   troca os arquivos e reabre o Ciranda já na versão nova.
 Sem conta, sem token, sem mandar nada do usuário: é só uma leitura pública do GitHub.
+
+Canal de teste (só no PC do André): se existir %APPDATA%\\Ciranda\\pasta-de-teste.txt com o
+caminho de uma pasta, o Ciranda instalado também olha essa pasta. Um Ciranda-Setup-X.Y.Z.exe
+mais novo do que o instalado aparece na mesma faixa, com o mesmo Atualizar agora. No PC de
+quem baixou do GitHub esse arquivo não existe e nada muda.
 """
 
 from __future__ import annotations
@@ -100,6 +105,101 @@ def pasta_downloads() -> str:
 def apagar_downloads():
     import shutil
     shutil.rmtree(pasta_downloads(), ignore_errors=True)
+
+
+# ---------- canal de teste (pasta local) ----------
+ARQ_PASTA_TESTE = "pasta-de-teste.txt"
+_NOME_SETUP = re.compile(r"Ciranda-Setup-(\d+\.\d+\.\d+)\.exe", re.IGNORECASE)
+
+
+def pasta_teste(pasta_dados: str) -> str:
+    """Pasta do canal de teste, ou "" se não houver (o normal)."""
+    try:
+        with open(os.path.join(pasta_dados, ARQ_PASTA_TESTE), encoding="utf-8-sig") as f:
+            p = f.readline().strip().strip('"')
+    except OSError:
+        return ""
+    return p if p and os.path.isdir(p) else ""
+
+
+def instalado_em() -> float:
+    """Quando o Ciranda foi instalado pela última vez (o instalador regrava o unins000.dat)."""
+    try:
+        return os.path.getmtime(os.path.join(os.path.dirname(sys.executable), "unins000.dat"))
+    except OSError:
+        return 0.0
+
+
+def procurar_local(pasta: str, versao_local: str, quando_instalou: float | None = None) -> dict | None:
+    """Setup mais novo da pasta de teste. Versão maior = disponível; mesma versão = disponível
+    só se o arquivo é mais novo que a última instalação (uma versão de teste refeita)."""
+    melhor = None
+    try:
+        nomes = os.listdir(pasta)
+    except OSError:
+        return None
+    for nome in nomes:
+        m = _NOME_SETUP.fullmatch(nome)
+        caminho = os.path.join(pasta, nome)
+        if not m or not os.path.isfile(caminho):
+            continue
+        chave = (versao_tupla(m.group(1)), os.path.getmtime(caminho))
+        if melhor is None or chave > melhor[0]:
+            melhor = (chave, m.group(1), nome, caminho)
+    if melhor is None:
+        return None
+    (_, mtime), versao, nome, caminho = melhor
+    if quando_instalou is None:
+        quando_instalou = instalado_em()
+    disponivel = mais_nova(versao, versao_local) or (
+        versao_tupla(versao) == versao_tupla(versao_local) and mtime > quando_instalou + 60)
+    notas = []
+    try:
+        with open(caminho[:-4] + ".txt", encoding="utf-8-sig") as f:
+            notas = itens_das_notas(f.read())
+    except OSError:
+        pass
+    return {
+        "versao": versao,
+        "disponivel": disponivel,
+        "notas": notas or ["Versão de teste: ainda não publicada no GitHub."],
+        "pagina": "",
+        "local": True,
+        "setup": {"nome": nome, "caminho": caminho, "tamanho": os.path.getsize(caminho), "local": True},
+    }
+
+
+def copiar_setup_local(setup: dict, progresso=None, cancelado=lambda: False) -> str:
+    """Copia o setup da pasta de teste para a pasta temporária (o original fica na pasta).
+    Se houver <setup>.sha256 ao lado, confere."""
+    origem = setup["caminho"]
+    destino = os.path.join(pasta_downloads(), setup["nome"])
+    os.makedirs(os.path.dirname(destino), exist_ok=True)
+    h = hashlib.sha256()
+    total = os.path.getsize(origem)
+    feito = 0
+    with open(origem, "rb") as r, open(destino + ".part", "wb") as f:
+        while True:
+            if cancelado():
+                raise InterruptedError("cópia cancelada")
+            bloco = r.read(1024 * 1024)
+            if not bloco:
+                break
+            f.write(bloco)
+            h.update(bloco)
+            feito += len(bloco)
+            if progresso:
+                progresso(feito, total)
+    try:
+        with open(origem + ".sha256", encoding="utf-8") as f:
+            esperado = f.read().split()[0].lower()
+    except (OSError, IndexError):
+        esperado = ""
+    if feito != total or (esperado and h.hexdigest() != esperado):
+        os.remove(destino + ".part")
+        raise ValueError("o instalador da pasta de teste está incompleto ou não confere com o .sha256")
+    os.replace(destino + ".part", destino)
+    return destino
 
 
 def baixar_setup(setup: dict, progresso=None, cancelado=lambda: False) -> str:
