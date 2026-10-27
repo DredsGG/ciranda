@@ -51,7 +51,7 @@ QLabel#tempo {{ font-size: 11.5px; color: {APAGADO}; }}
 QLabel#tituloPainel {{ font-size: 16px; font-weight: 600; }}
 QFrame#sep {{ background: {LINHA}; }}
 QLabel#apagado {{ color: {APAGADO}; }}
-QLabel#assinatura {{ color: #6f717c; font-size: 11.5px; }}
+QLabel#assinatura, QLabel#acoesRodape {{ color: #6f717c; font-size: 11.5px; }}
 QLabel#titulo {{ font-size: 14px; font-weight: 600; }}
 QLabel#grande {{ font-size: 22px; font-weight: 600; }}
 QToolButton {{ background: transparent; border: none; border-radius: 8px; padding: 6px; }}
@@ -359,7 +359,15 @@ class Vazio(QWidget):
         self.status.setObjectName("apagado")
         self.status.setAlignment(Qt.AlignCenter)
         self.assinatura = assinatura(self)
-        self.assinatura.setAlignment(Qt.AlignCenter)
+        self.acoes = acoes_rodape(janela, self)
+        rodape = QHBoxLayout()
+        rodape.setAlignment(Qt.AlignCenter)
+        rodape.setSpacing(0)
+        separador = QLabel(" · ")
+        separador.setObjectName("assinatura")
+        rodape.addWidget(self.acoes)
+        rodape.addWidget(separador)
+        rodape.addWidget(self.assinatura)
         lay.addWidget(self.logo)
         lay.addSpacing(6)
         lay.addWidget(self.titulo)
@@ -369,7 +377,7 @@ class Vazio(QWidget):
         lay.addSpacing(8)
         lay.addWidget(self.status)
         lay.addSpacing(30)
-        lay.addWidget(self.assinatura)
+        lay.addLayout(rodape)
 
     def destacar(self, ligado):
         self.setProperty("arrastando", bool(ligado))
@@ -390,6 +398,29 @@ class Vazio(QWidget):
 
 
 GITHUB = "https://github.com/DredsGG"
+
+
+def acoes_rodape(janela, pai=None) -> QLabel:
+    """Rodapé padrão (regra 9, itens a e b): "Relatar bug · Procurar atualização".
+    Links internos: chamam a janela, não abrem navegador."""
+    lab = QLabel(pai)
+    lab.setObjectName("acoesRodape")
+    lab.setTextFormat(Qt.RichText)
+    estilo = f"color:{APAGADO}; text-decoration:none;"
+    lab.setText(f'<a href="acao:bug" style="{estilo}">Relatar bug</a>'
+                f'<span style="color:#4a4c55"> · </span>'
+                f'<a href="acao:atualizar" style="{estilo}">Procurar atualização</a>')
+    lab.setOpenExternalLinks(False)
+    lab.setTextInteractionFlags(Qt.LinksAccessibleByMouse | Qt.LinksAccessibleByKeyboard)
+    lab.setCursor(Qt.PointingHandCursor)
+
+    def clicou(href):
+        if href == "acao:bug":
+            QTimer.singleShot(0, janela.relatar_bug)
+        elif href == "acao:atualizar":
+            QTimer.singleShot(0, lambda: janela.procurar_atualizacao(manual=True))
+    lab.linkActivated.connect(clicou)
+    return lab
 
 
 def assinatura(pai=None) -> QLabel:
@@ -1168,6 +1199,9 @@ class Janela(QMainWindow):
         self.l_resumo.setObjectName("apagado")
         self.l_resumo.setWordWrap(True)
         v.addWidget(self.l_resumo)
+        # rodapé padrão (regra 9): Relatar bug · Procurar atualização, e a assinatura
+        self.acoes_fila = acoes_rodape(self, painel)
+        v.addWidget(self.acoes_fila)
         self.assinatura_fila = assinatura(painel)
         v.addWidget(self.assinatura_fila)
         return painel

@@ -84,6 +84,9 @@ def rodar(saida: str) -> int:
         ok["limpar_fila_funcionou"] = len(j.fila) == 0
         txt = j.assinatura_fila.text()
         ok["assinatura"] = (f"· v{VERSAO}" in txt and GITHUB in txt and j.assinatura_fila.openExternalLinks())
+        acoes = j.acoes_fila.text()
+        ok["rodape_bug_e_atualizacao"] = ("acao:bug" in acoes and "acao:atualizar" in acoes
+                                          and j.acoes_fila.isVisible())
         clique(j.b_abrir)
         QTimer.singleShot(700, etapa5)
 

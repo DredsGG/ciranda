@@ -214,12 +214,38 @@ def etapa_bug():
     ok("Teste: a foto não passou" in QApplication.clipboard().text(), "copiar")
     d.reject()
     log.append(f"Relatar bug pelo menu ok (url {len(abertos[-1])} caracteres, sem nomes)")
+    # rodapé padrão (regra 9) na fila: clique de verdade em "Relatar bug"
+    r = j.acoes_fila
+    ok(r.isVisible() and "Relatar bug" in r.text() and "Procurar atualização" in r.text(), r.text())
+    ok("feito por" in j.assinatura_fila.text() and f"v{VERSAO}" in j.assinatura_fila.text(), "assinatura")
+    j._dlg_bug = None
+    QTest.mouseClick(r, Qt.LeftButton, Qt.NoModifier, QPoint(12, r.height() // 2))
+
+
+def etapa_rodape_bug():
+    d = getattr(j, "_dlg_bug", None)
+    ok(d is not None and d.isVisible(), "clique em 'Relatar bug' no rodapé não abriu")
+    d.reject()
+    r = j.acoes_fila
+    fm = r.fontMetrics()
+    x = fm.horizontalAdvance("Relatar bug · Procurar atualiza")  # dentro do 2º link
+    j._dlg_atualizacao = None
+    QTest.mouseClick(r, Qt.LeftButton, Qt.NoModifier, QPoint(x, r.height() // 2))
+
+
+def etapa_rodape_atualizacao():
+    d = j._dlg_atualizacao
+    ok(d is not None and d.isVisible(), "clique em 'Procurar atualização' no rodapé não abriu a janela")
+    os.system(f"import -window root '{os.path.join(SAIDA, 'rodape-atualizacao.png')}'")
+    d.reject()
+    log.append("rodapé: Relatar bug e Procurar atualização respondem ao clique")
     print("\n".join(log))
     print(f"ATUALIZACAO PASSOU ({n} checagens)")
     app.quit()
 
 
-passos = [(1500, etapa_aviso), (4500, etapa_faixa), (1000, etapa_dialogo), (1500, etapa_bug)]
+passos = [(1500, etapa_aviso), (4500, etapa_faixa), (1000, etapa_dialogo), (1500, etapa_bug),
+          (1000, etapa_rodape_bug), (2500, etapa_rodape_atualizacao)]
 
 
 def rodar(i=0):
