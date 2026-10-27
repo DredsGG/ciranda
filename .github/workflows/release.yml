@@ -275,7 +275,7 @@ jobs:
           cat > top.md <<EOF
           ### Install (Windows 10/11)
           1. Download **Ciranda-Setup-$V.exe** below and run it. No admin rights needed: it installs for your user, adds Ciranda to the Start menu and, if you want, a desktop shortcut and a "Tocar no Ciranda" entry when you right-click a folder.
-          2. The installer is not code-signed yet, so the first time Windows may show **"Windows protected your PC"**: click **More info → Run anyway**.
+          2. The installer is not code-signed, so the first time Windows may show **"Windows protected your PC"**: click **More info → Run anyway**.
           3. Uninstall from **Settings → Apps**. Your settings stay in \`%APPDATA%\\Ciranda\`.
 
           Portable alternative: **ciranda-$TAG-portatil.zip** (unzip, double-click \`Ciranda.exe\`; it installs Python 3.12 on first run).

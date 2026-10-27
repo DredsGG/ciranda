@@ -1397,6 +1397,7 @@ class Janela(QMainWindow):
         self._parar_motor()
         self.fila.limpar()
         self._item = None
+        self.b_play.setIcon(icone("play", "#1a0f07", 22))
         self.pastas_abertas = []
         self._atualizar_lista()
         self.palco.setCurrentWidget(self.vazio)
@@ -1799,7 +1800,9 @@ class Janela(QMainWindow):
                                  else fmt_tempo(self._duracao))
 
     def _recebeu_pausa(self, pausado):
-        self.b_play.setIcon(icone("play" if pausado else "pause", "#1a0f07", 22))
+        # sem nada tocando o mpv fica ocioso com pause=no: o botão tem que mostrar "tocar"
+        tocando = not pausado and self._item is not None and not self._fim_da_fila
+        self.b_play.setIcon(icone("pause" if tocando else "play", "#1a0f07", 22))
 
     def _tique(self):
         """Barra de progresso da foto (contagem até a próxima)."""
