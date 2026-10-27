@@ -26,10 +26,32 @@ import sys
 import tempfile
 import urllib.request
 
+from .textos import t
+
 REPO = "DredsGG/ciranda"
 API = f"https://api.github.com/repos/{REPO}/releases/latest"
 PAGINA = f"https://github.com/{REPO}/releases/latest"
 BASE_DOWNLOAD = f"https://github.com/{REPO}/releases/download/"
+# arquivo de novidades (PT/EN/ES) da versão publicada, lido da tag do Release
+RAW_NOVIDADES = f"https://raw.githubusercontent.com/{REPO}/{{tag}}/ciranda/novidades.json"
+ARQ_NOVIDADES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "novidades.json")
+
+
+def novidades_locais() -> dict:
+    """Changelog que vem dentro do app: {"1.3.0": {"pt": [...], "en": [...], "es": [...]}}."""
+    try:
+        with open(ARQ_NOVIDADES, encoding="utf-8") as f:
+            d = json.load(f)
+        return d if isinstance(d, dict) else {}
+    except (OSError, ValueError):
+        return {}
+
+
+def notas_no_idioma(info: dict, idioma: str) -> list:
+    """Notas da versão no idioma da interface; sem tradução, as notas do Release."""
+    nov = info.get("novidades") or {}
+    itens = nov.get(idioma) or nov.get("en")
+    return list(itens) if itens else list(info.get("notas") or [])
 
 
 def versao_tupla(v: str) -> tuple:
@@ -78,12 +100,19 @@ def _abrir(url, timeout=20):
     return urllib.request.urlopen(req, timeout=timeout, context=_contexto_ssl())
 
 
-def procurar(versao_local: str, api: str = API) -> dict:
+def procurar(versao_local: str, api: str = API, raw: str = RAW_NOVIDADES) -> dict:
     """Consulta o último Release. Devolve um dicionário com o que a tela precisa."""
     with _abrir(api) as r:
         d = json.loads(r.read().decode("utf-8"))
     tag = d.get("tag_name", "")
     remota = tag.lstrip("v")
+    novidades = None
+    if mais_nova(remota, versao_local):
+        try:  # novidades nos três idiomas (versões publicadas a partir da 1.3.0)
+            with _abrir(raw.format(tag=tag), timeout=10) as r:
+                novidades = (json.loads(r.read().decode("utf-8")) or {}).get(remota)
+        except Exception:
+            novidades = None
     setup = None
     for a in d.get("assets", []):
         if re.fullmatch(r"Ciranda-Setup-\d+\.\d+\.\d+\.exe", a.get("name", "")):
@@ -93,6 +122,7 @@ def procurar(versao_local: str, api: str = API) -> dict:
         "versao": remota,
         "disponivel": mais_nova(remota, versao_local),
         "notas": itens_das_notas(d.get("body", "")),
+        "novidades": novidades if isinstance(novidades, dict) else None,
         "pagina": d.get("html_url") or PAGINA,
         "setup": setup,
     }
@@ -159,10 +189,18 @@ def procurar_local(pasta: str, versao_local: str, quando_instalou: float | None 
             notas = itens_das_notas(f.read())
     except OSError:
         pass
+    # versão de teste: as novidades dela vêm do novidades.json gravado ao lado, se houver
+    novidades = None
+    try:
+        with open(os.path.join(pasta, "novidades.json"), encoding="utf-8") as f:
+            novidades = (json.load(f) or {}).get(versao)
+    except (OSError, ValueError):
+        pass
     return {
         "versao": versao,
         "disponivel": disponivel,
-        "notas": notas or ["Versão de teste: ainda não publicada no GitHub."],
+        "notas": notas or [t("notas_teste")],
+        "novidades": novidades if isinstance(novidades, dict) else None,
         "pagina": "",
         "local": True,
         "setup": {"nome": nome, "caminho": caminho, "tamanho": os.path.getsize(caminho), "local": True},
@@ -197,7 +235,7 @@ def copiar_setup_local(setup: dict, progresso=None, cancelado=lambda: False) -> 
         esperado = ""
     if feito != total or (esperado and h.hexdigest() != esperado):
         os.remove(destino + ".part")
-        raise ValueError("o instalador da pasta de teste está incompleto ou não confere com o .sha256")
+        raise ValueError(t("erro_local"))
     os.replace(destino + ".part", destino)
     return destino
 
@@ -206,10 +244,10 @@ def baixar_setup(setup: dict, progresso=None, cancelado=lambda: False) -> str:
     """Baixa o instalador para a pasta temporária e confere o SHA-256. Devolve o caminho."""
     url = setup["url"]
     if not url.startswith(BASE_DOWNLOAD):
-        raise ValueError("endereço do instalador fora do repositório do Ciranda")
+        raise ValueError(t("erro_endereco"))
     esperado = setup.get("digest", "")
     if not esperado.startswith("sha256:"):
-        raise ValueError("o GitHub não informou o SHA-256 do instalador")
+        raise ValueError(t("erro_sem_sha"))
     destino = os.path.join(pasta_downloads(), setup["nome"])
     os.makedirs(os.path.dirname(destino), exist_ok=True)
     h = hashlib.sha256()
@@ -229,7 +267,7 @@ def baixar_setup(setup: dict, progresso=None, cancelado=lambda: False) -> str:
                 progresso(feito, total)
     if h.hexdigest() != esperado.split(":", 1)[1].lower():
         os.remove(destino + ".part")
-        raise ValueError("o instalador baixado não confere com o SHA-256 do GitHub")
+        raise ValueError(t("erro_sha"))
     os.replace(destino + ".part", destino)
     return destino
 

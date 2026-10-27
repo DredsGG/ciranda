@@ -3,6 +3,8 @@ todos os itens, confere que cada tipo abriu e tira prints.
     CIRANDA_VO=x11 xvfb-run -a -s "-screen 0 1400x860x24" python testes/teste_janela.py <pasta> <saida>"""
 
 import os
+os.environ.setdefault("CIRANDA_IDIOMA_SISTEMA", "pt")  # textos dos testes em português
+os.environ.setdefault("CIRANDA_SEM_QUADROS", "1")  # tutorial/novidades têm teste próprio
 import sys
 
 

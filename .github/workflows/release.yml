@@ -107,7 +107,7 @@ jobs:
         shell: pwsh
         run: |
           $setup = "dist\Ciranda-Setup-$env:VERSAO.exe"
-          $i = Start-Process $setup -ArgumentList "/VERYSILENT","/SUPPRESSMSGBOXES","/NORESTART","/CURRENTUSER","/TASKS=atalho,menupasta,associar" -Wait -PassThru
+          $i = Start-Process $setup -ArgumentList "/VERYSILENT","/SUPPRESSMSGBOXES","/NORESTART","/CURRENTUSER","/TASKS=atalho,menupasta,associar","/LANG=es" -Wait -PassThru
           if ($i.ExitCode -ne 0) { Write-Error "Setup exit $($i.ExitCode)"; exit 1 }
           $app = Join-Path $env:LOCALAPPDATA "Programs\Ciranda"
           $exe = Join-Path $app "Ciranda.exe"
@@ -117,6 +117,10 @@ jobs:
           $cmd = (Get-ItemProperty "HKCU:\Software\Classes\Directory\shell\Ciranda\command").'(default)'
           "Folder right-click command: $cmd"
           if ($cmd -notlike "*Ciranda.exe*%1*") { Write-Error "Right-click entry missing"; exit 1 }
+          # installer in three languages: installed with /LANG=es, the right-click entry is in Spanish
+          $nome = (Get-ItemProperty "HKCU:\Software\Classes\Directory\shell\Ciranda").'(default)'
+          "Right-click name (es): $nome"
+          if ($nome -ne "Reproducir en Ciranda") { Write-Error "Installer text not in Spanish: $nome"; exit 1 }
           # photos and videos: ProgID, "Open with" and Default apps
           $foto = (Get-ItemProperty "HKCU:\Software\Classes\Ciranda.Foto\shell\open\command").'(default)'
           $video = (Get-ItemProperty "HKCU:\Software\Classes\Ciranda.Video\shell\open\command").'(default)'
@@ -183,6 +187,8 @@ jobs:
           if (-not $okLog) { Write-Error "The reopened Ciranda did not start normally"; exit 1 }
           if (-not (Test-Path "HKCU:\Software\Classes\Directory\shell\Ciranda")) { Write-Error "The update lost the right-click entry (tasks)"; exit 1 }
           if (-not (Test-Path "HKCU:\Software\Classes\Ciranda.Foto")) { Write-Error "The update lost the photo/video registration (tasks)"; exit 1 }
+          $nome = (Get-ItemProperty "HKCU:\Software\Classes\Directory\shell\Ciranda").'(default)'
+          if ($nome -ne "Reproducir en Ciranda") { Write-Error "The silent update did not keep the install language: $nome"; exit 1 }
           "Update: OK"
           $u = Start-Process (Join-Path $app "unins000.exe") -ArgumentList "/VERYSILENT","/SUPPRESSMSGBOXES","/NORESTART" -Wait -PassThru
           for ($k = 0; $k -lt 30 -and (Test-Path $exe); $k++) { Start-Sleep -Seconds 1 }

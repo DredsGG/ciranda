@@ -1,15 +1,15 @@
 ﻿; GERADO por instalador/gerar_associacoes.py: não editar à mão
 
-Root: HKA; Subkey: "Software\Classes\Ciranda.Foto"; ValueType: string; ValueName: ""; ValueData: "Foto (Ciranda)"; Flags: uninsdeletekey; Tasks: associar
+Root: HKA; Subkey: "Software\Classes\Ciranda.Foto"; ValueType: string; ValueName: ""; ValueData: "{cm:TipoFoto}"; Flags: uninsdeletekey; Tasks: associar
 Root: HKA; Subkey: "Software\Classes\Ciranda.Foto\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\Ciranda.exe,0"; Tasks: associar
 Root: HKA; Subkey: "Software\Classes\Ciranda.Foto\shell\open"; ValueType: string; ValueName: "FriendlyAppName"; ValueData: "Ciranda"; Tasks: associar
 Root: HKA; Subkey: "Software\Classes\Ciranda.Foto\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\Ciranda.exe"" ""%1"""; Tasks: associar
-Root: HKA; Subkey: "Software\Classes\Ciranda.Video"; ValueType: string; ValueName: ""; ValueData: "Vídeo (Ciranda)"; Flags: uninsdeletekey; Tasks: associar
+Root: HKA; Subkey: "Software\Classes\Ciranda.Video"; ValueType: string; ValueName: ""; ValueData: "{cm:TipoVideo}"; Flags: uninsdeletekey; Tasks: associar
 Root: HKA; Subkey: "Software\Classes\Ciranda.Video\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\Ciranda.exe,0"; Tasks: associar
 Root: HKA; Subkey: "Software\Classes\Ciranda.Video\shell\open"; ValueType: string; ValueName: "FriendlyAppName"; ValueData: "Ciranda"; Tasks: associar
 Root: HKA; Subkey: "Software\Classes\Ciranda.Video\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\Ciranda.exe"" ""%1"""; Tasks: associar
 Root: HKA; Subkey: "Software\Dreds\Ciranda\Capabilities"; ValueType: string; ValueName: "ApplicationName"; ValueData: "Ciranda"; Flags: uninsdeletekey; Tasks: associar
-Root: HKA; Subkey: "Software\Dreds\Ciranda\Capabilities"; ValueType: string; ValueName: "ApplicationDescription"; ValueData: "Fotos e vídeos de uma pasta e de todas as subpastas, numa fila só"; Tasks: associar
+Root: HKA; Subkey: "Software\Dreds\Ciranda\Capabilities"; ValueType: string; ValueName: "ApplicationDescription"; ValueData: "{cm:DescricaoApp}"; Tasks: associar
 Root: HKA; Subkey: "Software\Dreds\Ciranda\Capabilities"; ValueType: string; ValueName: "ApplicationIcon"; ValueData: "{app}\Ciranda.exe,0"; Tasks: associar
 Root: HKA; Subkey: "Software\Dreds"; Flags: uninsdeletekeyifempty; Tasks: associar
 Root: HKA; Subkey: "Software\Dreds\Ciranda"; Flags: uninsdeletekey; Tasks: associar

@@ -19,6 +19,7 @@ sys.path.insert(0, RAIZ)
 PASTA, SAIDA = sys.argv[1], sys.argv[2]
 os.environ["APPDATA"] = os.path.join(SAIDA, "appdata-atualizacao")
 os.environ["no_proxy"] = os.environ["NO_PROXY"] = "127.0.0.1,localhost"
+os.environ.setdefault("CIRANDA_IDIOMA_SISTEMA", "pt")
 os.makedirs(os.path.join(os.environ["APPDATA"], "Ciranda"), exist_ok=True)
 
 from ciranda import VERSAO, atualizacao as A, relato as R  # noqa: E402
@@ -88,6 +89,14 @@ class H(http.server.SimpleHTTPRequestHandler):
         pass
 
     def do_GET(self):
+        if self.path.startswith("/raw/v9.9.9/"):  # novidades.json da tag (três idiomas)
+            d = json.dumps({"9.9.9": {"pt": ["Novidade em português"], "en": ["News in English"],
+                                      "es": ["Novedad en español"]}}).encode()
+            self.send_response(200)
+            self.send_header("Content-Length", str(len(d)))
+            self.end_headers()
+            self.wfile.write(d)
+            return
         if self.path.startswith("/latest"):
             d = json.dumps({"tag_name": "v9.9.9", "html_url": "https://github.com/DredsGG/ciranda/releases/tag/v9.9.9",
                             "body": "### Install\nx\nPortable alternative: y\n\n- Novidade A\n- Novidade B",
@@ -108,7 +117,9 @@ threading.Thread(target=srv.serve_forever, daemon=True).start()
 BASE = f"http://127.0.0.1:{srv.server_address[1]}/"
 A.BASE_DOWNLOAD = BASE  # o teste baixa do servidor local
 
-info = A.procurar(VERSAO, BASE + "latest")
+info = A.procurar(VERSAO, BASE + "latest", BASE + "raw/{tag}/novidades.json")
+ok(A.notas_no_idioma(info, "es") == ["Novedad en español"], info.get("novidades"))
+ok(A.notas_no_idioma(dict(info, novidades=None), "es") == ["Novidade A", "Novidade B"], "sem novidades: notas do Release")
 ok(info["disponivel"] and info["versao"] == "9.9.9" and info["notas"] == ["Novidade A", "Novidade B"], info)
 prog = []
 caminho = A.baixar_setup(info["setup"], lambda f, t: prog.append((f, t)))
@@ -137,6 +148,7 @@ print(f"ok: parte 1 ({n} checagens)")
 with open(os.path.join(os.environ["APPDATA"], "Ciranda", "config.json"), "w", encoding="utf-8") as f:
     json.dump({"versao_vista": "1.2.0"}, f)
 os.environ["CIRANDA_API_ATUALIZACAO"] = BASE + "latest"
+os.environ["CIRANDA_RAW_NOVIDADES"] = BASE + "raw/{tag}/novidades.json"
 os.environ.pop("CIRANDA_SEM_ATUALIZACAO", None)
 
 from PySide6.QtCore import QPoint, Qt, QTimer  # noqa: E402
@@ -162,31 +174,47 @@ def clique(w):
 
 
 def etapa_aviso():
-    ok(j.faixa.isVisible() and "1.2.0" in j.l_faixa.text() and VERSAO in j.l_faixa.text(),
-       f"aviso de atualizado: {j.l_faixa.text()!r}")
-    ok(config.carregar()["versao_vista"] == VERSAO, "versao_vista salva")
-    log.append("aviso 'atualizado v1.2.0 → v" + VERSAO + "' ok")
+    q = j.quadro
+    ok(q.isVisible() and q.tipo == "novidades" and VERSAO in q.l_titulo.text(), f"novidades: {q.l_titulo.text()!r}")
+    ok("1.2.0" in q.l_corpo.text() and "Uma janela só" in q.l_corpo.text(), q.l_corpo.text()[:200])
+    os.system(f"import -window root '{os.path.join(SAIDA, 'quadro-novidades.png')}'")
+    QTest.keyClick(q, Qt.Key_Escape)
+    ok(not q.isVisible(), "Esc não fechou o quadro")
+    c = config.carregar()
+    ok(c["versao_vista"] == VERSAO and c["novidades_vista"] == VERSAO, "versão vista salva")
+    log.append("novidades da v" + VERSAO + " (veio da 1.2.0) ok, Esc fecha")
 
 
 def etapa_faixa():
-    ok(j.faixa.isVisible() and "9.9.9" in j.l_faixa.text() and j.b_faixa.isVisible(),
-       f"faixa de versão nova: {j.l_faixa.text()!r}")
-    os.system(f"import -window root '{os.path.join(SAIDA, 'faixa-atualizacao.png')}'")
-    clique(j.b_faixa)
+    q = j.quadro
+    ok(q.isVisible() and q.tipo == "nova" and "9.9.9" in q.l_titulo.text(), f"quadro nova versão: {q.l_titulo.text()!r}")
+    ok("Novidade em português" in q.l_corpo.text(), f"novidades da tag no idioma: {q.l_corpo.text()[:200]}")
+    os.system(f"import -window root '{os.path.join(SAIDA, 'quadro-nova-versao.png')}'")
+    clique(q.botoes()[-1])  # Atualizar
 
 
 def etapa_dialogo():
     d = j._dlg_atualizacao
     ok(d is not None and d.isVisible(), "janela de atualização não abriu")
-    ok(not j.faixa.isVisible(), "faixa continuou")
+    ok(not j.quadro.isVisible(), "quadro continuou")
     ok(d.b_ok.text() == "Baixar no GitHub", f"rodando pelo código: {d.b_ok.text()}")
     os.system(f"import -window root '{os.path.join(SAIDA, 'dialogo-atualizacao.png')}'")
     clique(d.b_ok)
     ok(abertos and abertos[-1].endswith("v9.9.9") and not d.isVisible(), f"página: {abertos}")
-    log.append("faixa → janela → Baixar no GitHub ok")
+    log.append("quadro → Atualizar → janela → Baixar no GitHub ok")
+    # o X esconde o aviso desta versão até sair uma mais nova
+    j._mostrar_quadro(j._quadro_nova_versao)
+    clique(j.quadro.b_x)
+    ok(config.carregar()["aviso_dispensado"] == "9.9.9", "X não guardou a versão dispensada")
+    j.procurar_atualizacao(abertura=True)
+
+
+def etapa_dispensa():
+    ok(not j.quadro.isVisible() and not j.faixa.isVisible(), "aviso voltou depois do X")
+    log.append("X esconde o aviso da v9.9.9 nas próximas aberturas")
     j._montar_menu_abrir()
     nomes = [a.text().split("\t")[0] for a in j.menu_abrir.actions()]
-    ok("Procurar atualização" in nomes and "Relatar bug…" in nomes, f"menu: {nomes}")
+    ok("Procurar atualização" in nomes and "Relatar bug…" in nomes and "Como usar" in nomes, f"menu: {nomes}")
     clique(j.b_abrir)  # pastinha da barra, como o usuário
 
     def no_menu():
@@ -244,7 +272,7 @@ def etapa_rodape_atualizacao():
     app.quit()
 
 
-passos = [(1500, etapa_aviso), (4500, etapa_faixa), (1000, etapa_dialogo), (1500, etapa_bug),
+passos = [(1500, etapa_aviso), (4500, etapa_faixa), (1000, etapa_dialogo), (2000, etapa_dispensa), (1500, etapa_bug),
           (1000, etapa_rodape_bug), (2500, etapa_rodape_atualizacao)]
 
 

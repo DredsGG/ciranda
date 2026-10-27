@@ -17,6 +17,10 @@ PADRAO = {
     "ultimas_pastas": [],
     "geometria": None,
     "versao_vista": "",  # para avisar "atualizado: vX → vY"
+    "idioma": "",  # "pt", "en" ou "es" escolhido no seletor; vazio = o do sistema
+    "aviso_dispensado": "",  # versão nova cujo aviso a pessoa fechou no X
+    "novidades_vista": "",  # última versão cujo quadro de novidades já apareceu
+    "tutorial_visto": False,
 }
 
 
@@ -29,6 +33,11 @@ def pasta_dados() -> str:
 
 def _arquivo() -> str:
     return os.path.join(pasta_dados(), "config.json")
+
+
+def existe() -> bool:
+    """Já houve um Ciranda neste PC (para saber se é instalação nova ou atualização)."""
+    return os.path.exists(_arquivo())
 
 
 def carregar() -> dict:

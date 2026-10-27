@@ -15,6 +15,7 @@ import re
 import urllib.parse
 
 from . import VERSAO
+from .textos import t
 
 REPO = "DredsGG/ciranda"
 NOVO = f"https://github.com/{REPO}/issues/new"
@@ -99,20 +100,20 @@ def _ultimo_erro(caminho: str) -> str:
 def diagnostico(info: dict, pasta_dados: str, linhas_log: int = 60) -> str:
     """Texto do diagnóstico. `info` vem da janela (estado do player, sem nomes)."""
     linhas = [
-        f"Ciranda: v{VERSAO} ({'instalado' if info.get('instalado') else 'pelo código / zip'})",
-        f"Sistema: {platform.platform()}",
+        f"Ciranda: v{VERSAO} ({t('diag_instalado') if info.get('instalado') else t('diag_codigo')})",
+        f"{t('diag_sistema')}: {platform.platform()}",
     ]
-    for chave, rotulo in (("qt", "Qt"), ("mpv", "mpv"), ("telas", "Telas"),
-                          ("fila", "Fila"), ("modos", "Modos"), ("atual", "Na tela")):
+    for chave, rotulo in (("qt", "Qt"), ("mpv", "mpv"), ("telas", t("diag_telas")),
+                          ("fila", t("diag_fila")), ("modos", t("diag_modos")), ("atual", t("diag_atual"))):
         if info.get(chave):
             linhas.append(f"{rotulo}: {info[chave]}")
     erro = _ultimo_erro(os.path.join(pasta_dados, "erro.txt"))
     log = _ultimas_linhas(os.path.join(pasta_dados, "ciranda.log"), linhas_log)
     corpo = "\n".join(linhas)
     if erro:
-        corpo += "\n\nÚltimo erro (erro.txt):\n" + erro
+        corpo += "\n\n" + t("diag_ultimo_erro") + "\n" + erro
     if log:
-        corpo += "\n\nFim do log (ciranda.log):\n" + "\n".join(log)
+        corpo += "\n\n" + t("diag_fim_log") + "\n" + "\n".join(log)
     return limpar_texto(corpo)
 
 
@@ -121,10 +122,10 @@ def montar(oque: str, diag: str) -> tuple[str, str]:
     oque = (oque or "").strip()
     primeira = limpar_texto(oque.splitlines()[0] if oque else "")
     titulo = f"[Bug] {primeira[:70]}" if primeira else f"[Bug] Ciranda v{VERSAO}"
-    corpo = "### O que aconteceu\n" + (limpar_texto(oque) or "_(não escrito)_")
+    corpo = t("bug_o_que") + "\n" + (limpar_texto(oque) or t("bug_nao_escrito"))
     if diag:
-        corpo += "\n\n### Diagnóstico\n```\n" + diag + "\n```"
-    corpo += f"\n\n_Enviado pelo botão \"Relatar bug\" do Ciranda v{VERSAO}._"
+        corpo += "\n\n" + t("bug_diag") + "\n```\n" + diag + "\n```"
+    corpo += "\n\n" + t("bug_enviado", versao=VERSAO)
     return titulo, corpo
 
 
@@ -137,19 +138,18 @@ def url_github(titulo: str, corpo: str, limite: int = LIMITE_URL) -> tuple[str, 
     u = url(corpo)
     if len(u) <= limite:
         return u, False
-    marca = "Fim do log (ciranda.log):\n"
+    marca = t("diag_fim_log") + "\n"
     if marca in corpo:
         antes, depois = corpo.split(marca, 1)
         log, _, fim = depois.partition("\n```")
         linhas = log.splitlines()
         while linhas:
             linhas.pop(0)
-            c = antes + marca + "(começo cortado; o completo vai no \"Copiar relatório\")\n" \
+            c = antes + marca + t("log_cortado") + "\n" \
                 + "\n".join(linhas) + "\n```" + fim
             u = url(c)
             if len(u) <= limite:
                 return u, True
     # ainda grande (erro enorme): manda só o texto e pede para colar o resto
-    c = corpo.split("### Diagnóstico", 1)[0] + \
-        "### Diagnóstico\n_(grande demais para o endereço: foi copiado; cole aqui com Ctrl+V)_"
+    c = corpo.split(t("bug_diag"), 1)[0] + t("bug_diag") + "\n" + t("diag_grande")
     return url(c)[:limite], True

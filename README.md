@@ -38,11 +38,12 @@ VLC can sort of do this (a hidden *subdirectory behavior* option, photos with a 
 - Remembers volume, shuffle, repeat, filter, photo time, window size and the last queue (a **Continue** button on the start screen).
 - **Can be your default photo and video app.** The installer registers Ciranda for photos and videos, so it shows up in *Open with* and in **Settings → Apps → Default apps**. Windows doesn't let any app make itself the default, so you pick it once there (the installer and the folder menu have a shortcut to that screen). Double-clicking a file plays just that file.
 - **One window.** Opening another file or folder while Ciranda is open sends it to the open window instead of starting a second one; several files opened together are queued together.
-- **Updates itself.** When a new version is out on GitHub, a bar at the top says so (checked when Ciranda opens and every 6 hours, or by hand with *Procurar atualização*, next to *Relatar bug*). *Atualizar agora* downloads the setup from the release, checks it against the SHA-256 GitHub publishes for that file, installs it silently and reopens Ciranda on the new version. Your settings stay. Nothing about you is sent: it's a public read of the latest release.
-- **Report a bug from inside the app** (*Relatar bug* at the bottom of the queue panel and of the start screen, or in the folder menu): you write what happened, see a diagnostic (versions, settings, end of the log) with every folder name, file name, user name and PC name removed (only the extension stays), and it opens a new GitHub issue already filled in. Nothing is sent until you click there. No GitHub account? *Copiar relatório* copies it.
-- **Factory reset** inside the app, plus `RESTAURAR.bat` for when it won't even open. Neither touches your files.
+- **Updates itself.** When a new version is out on GitHub, a small card in the middle of the window says so when Ciranda opens, with what changed (a slim bar at the top if it shows up while you're watching; it's checked every 6 hours, or by hand with *Check for updates* in the footer). The card's X hides that version until a newer one comes out. *Update* downloads the setup from the release, checks it against the SHA-256 GitHub publishes for that file, installs it silently and reopens Ciranda on the new version. Your settings stay. Nothing about you is sent: it's a public read of the latest release.
+- **Report a bug from inside the app** (*Report a bug* at the bottom of the queue panel and of the start screen, or in the folder menu): you write what happened, see a diagnostic (versions, settings, end of the log) with every folder name, file name, user name and PC name removed (only the extension stays), and it opens a new GitHub issue already filled in. Nothing is sent until you click there. No GitHub account? *Copy report* copies it.
+- **Portuguese, English and Spanish.** The first time, Ciranda follows the Windows display language (anything else falls back to English); the **PT · EN · ES** switch in the footer changes it on the spot and is remembered. The installer follows Windows too.
+- **First-run tutorial and "What's new".** A short tutorial shows up the first time (the **?** in the footer brings it back), and after each update a "What's new in vX.Y.Z" card lists the changes once. Neither one stops playback; X or Esc closes them.
+- **Factory reset** inside the app, plus `RESTAURAR.bat` in the portable zip for when it won't even open. Neither touches your files.
 
-> The interface is in Portuguese, the language I use.
 
 ### Keys
 
@@ -62,7 +63,7 @@ VLC can sort of do this (a hidden *subdirectory behavior* option, photos with a 
 ## Install
 
 1. Download **Ciranda-Setup-X.Y.Z.exe** from the [latest release](https://github.com/DredsGG/ciranda/releases/latest) and run it.
-2. No admin rights needed: it installs for your user (`%LOCALAPPDATA%\Programs\Ciranda`), adds **Ciranda** to the Start menu and, if you tick them, a desktop shortcut, a **Tocar no Ciranda** entry when you right-click a folder and the photo/video registration (*Open with* and *Default apps*). To make it the default, tick the last box at the end of the setup, or go to **Settings → Apps → Default apps → Ciranda**. Everything is inside the app: no Python, no scripts.
+2. No admin rights needed: it installs for your user (`%LOCALAPPDATA%\Programs\Ciranda`), adds **Ciranda** to the Start menu and, if you tick them, a desktop shortcut, a **Play in Ciranda** entry when you right-click a folder and the photo/video registration (*Open with* and *Default apps*). To make it the default, tick the last box at the end of the setup, or go to **Settings → Apps → Default apps → Ciranda**. Everything is inside the app: no Python, no scripts.
 3. The installer isn't code-signed, so the first time Windows may show *"Windows protected your PC"*: click **More info → Run anyway**.
 4. Updating: Ciranda tells you when there's a new version and updates itself (or run the newer setup over it). Uninstall from **Settings → Apps**; settings stay in `%APPDATA%\Ciranda`.
 
@@ -82,6 +83,9 @@ ciranda/config.py      %APPDATA%\Ciranda\config.json
 ciranda/atualizacao.py update: latest release from the GitHub API, download, SHA-256 check, silent setup
 ciranda/relato.py      bug report: diagnostic without personal data, prefilled issues/new link
 ciranda/dialogos.py    update and bug report windows
+ciranda/quadro.py      the card in the middle of the window: new version, what's new, tutorial
+ciranda/textos.py      every text in Portuguese, English and Spanish; Windows display language detection
+ciranda/novidades.json "What's new" per version, in the three languages (also read from the release tag)
 ciranda/icones.py      hand-made SVG icons
 ```
 
@@ -114,6 +118,7 @@ python tests/teste_logica.py [media-folder]    # scan + queue, no UI: 377 checks
 CIRANDA_VO=x11 xvfb-run -a python tests/teste_assinatura.py <out>
 CIRANDA_VO=x11 xvfb-run -a python tests/teste_restaurar.py <media-folder> <out>
 CIRANDA_VO=x11 xvfb-run -a python tests/teste_atualizacao.py <media-folder> <out>   # update + bug report, fake GitHub
+CIRANDA_VO=x11 xvfb-run -a python tests/teste_idiomas.py <media-folder> <out>       # PT/EN/ES, tutorial, what's new
 ```
 
 Covered: natural order, a shuffle that never repeats within 50 rounds, repeat-one, filters, broken files, adding and removing, 84 loose folders and a 400-level-deep tree, an end-to-end run through MP4, MOV, WebM, AVI, MKV, GIF, HEIC, EXIF-rotated JPG, PNG, WebP and BMP with a corrupted file skipped, real clicks on the queue buttons and menus, the update bar and window against a fake GitHub (including a download whose SHA-256 doesn't match, which must be refused), and the bug report never carrying folder or file names. The logic and UI tests run on Linux; the app itself is used on Windows.

@@ -30,9 +30,13 @@ def _gerar_midia(pasta: str) -> int:
 
 
 def rodar(saida: str) -> int:
+    from .textos import idioma_do_sistema
+    sistema = idioma_do_sistema()  # o de verdade (Windows: GetUserPreferredUILanguages), antes de forçar pt
     base = tempfile.mkdtemp(prefix="ciranda-autoteste-")
     os.environ["APPDATA"] = os.path.join(base, "appdata")  # ajustes do usuário intocados
     os.environ["CIRANDA_SEM_ATUALIZACAO"] = "1"  # a atualização tem teste próprio
+    os.environ["CIRANDA_IDIOMA_SISTEMA"] = "pt"  # o autoteste procura os textos em português
+    os.environ["CIRANDA_SEM_QUADROS"] = "1"  # o tutorial é aberto de propósito no fim
     midia = os.path.join(base, "midia")
     total = _gerar_midia(midia)
 
@@ -47,7 +51,8 @@ def rodar(saida: str) -> int:
     app.setApplicationName(NOME)
     app.setStyle("Fusion")
     app.setStyleSheet(QSS)
-    res = {"versao": VERSAO, "plataforma": app.platformName(), "checagens": {}, "erro": None}
+    res = {"versao": VERSAO, "plataforma": app.platformName(), "idioma_do_sistema": sistema,
+           "checagens": {}, "erro": None}
     ok = res["checagens"]
     j = Janela([midia])
     j.resize(1280, 760)
@@ -105,6 +110,31 @@ def rodar(saida: str) -> int:
             x.lower() in diag.lower() for x in (base, "ciranda-autoteste", "viagem", os.environ.get("USERNAME") or "\0"))
         if d:
             d.reject()
+        # idioma (regra 13): clique de verdade no EN do rodapé da fila
+        import re
+        lab = j.seletor_fila
+        plano = re.sub("<[^>]+>", "", lab.text()).replace("&nbsp;", " ")
+        x = lab.fontMetrics().horizontalAdvance(plano[:plano.index("EN")]) + 6
+        QTest.mouseClick(lab, Qt.LeftButton, Qt.NoModifier, QPoint(x, lab.height() // 2))
+        QTimer.singleShot(500, etapa7)
+
+    def etapa7():
+        ok["idioma_en_no_clique"] = (j.b_p_juntar.text() == "Add folder" and "Report a bug" in j.acoes_fila.text()
+                                     and "made by" in j.assinatura_fila.text())
+        j.mudar_idioma("pt")
+        ok["idioma_pt_de_novo"] = j.b_p_juntar.text() == "Juntar pasta"
+        # tutorial (regras 12 e 14): quadro no meio da janela, por cima, fecha no Esc
+        j.mostrar_tutorial()
+        QTimer.singleShot(500, etapa8)
+
+    def etapa8():
+        q = j.quadro
+        g, jg = q.frameGeometry(), j.frameGeometry()
+        ok["tutorial_no_meio"] = (q.isVisible() and q.isWindow() and jg.contains(g.center())
+                                  and abs(g.center().x() - jg.center().x()) < 40)
+        res["quadro_geometria"] = [g.x(), g.y(), g.width(), g.height(), jg.x(), jg.y(), jg.width(), jg.height()]
+        QTest.keyClick(q, Qt.Key_Escape)
+        ok["tutorial_fecha_no_esc"] = not q.isVisible()
         terminar()
 
     def terminar():
@@ -128,7 +158,8 @@ def rodar(saida: str) -> int:
                 falhou(e)
         return w
 
-    etapa1, etapa2, etapa3, etapa4, etapa5, etapa6 = map(protegido, (etapa1, etapa2, etapa3, etapa4, etapa5, etapa6))
+    etapa1, etapa2, etapa3, etapa4, etapa5, etapa6, etapa7, etapa8 = map(
+        protegido, (etapa1, etapa2, etapa3, etapa4, etapa5, etapa6, etapa7, etapa8))
     QTimer.singleShot(3000, etapa1)
     QTimer.singleShot(60000, lambda: falhou(TimeoutError("autoteste passou de 60 s")))
     t0 = time.monotonic()

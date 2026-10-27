@@ -2,6 +2,8 @@
 Abrir, Juntar pasta, Limpar (menu) e o botão de pasta da barra (menu).
     xvfb-run -a python testes/teste_botoes.py <pasta> <saida>"""
 import os, sys
+os.environ.setdefault("CIRANDA_IDIOMA_SISTEMA", "pt")  # textos dos testes em português
+os.environ.setdefault("CIRANDA_SEM_QUADROS", "1")  # tutorial/novidades têm teste próprio
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 PASTA, SAIDA = sys.argv[1], sys.argv[2]
 os.environ["APPDATA"] = os.path.join(SAIDA, "appdata-botoes")

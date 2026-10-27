@@ -2,6 +2,8 @@
 versão igual à constante VERSAO e clique em "Dreds" abrindo o GitHub.
     xvfb-run -a python testes/teste_assinatura.py <saida>"""
 import os, sys
+os.environ.setdefault("CIRANDA_IDIOMA_SISTEMA", "pt")  # textos dos testes em português
+os.environ.setdefault("CIRANDA_SEM_QUADROS", "1")  # tutorial/novidades têm teste próprio
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 os.environ["APPDATA"] = os.path.join(sys.argv[1], "appdata-assinatura")
 from PySide6.QtCore import QObject, QPoint, Qt, QTimer, Slot, QUrl

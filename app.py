@@ -119,8 +119,13 @@ if __name__ == "__main__":
             traceback.print_exc(file=f)
         try:
             import ctypes
-            ctypes.windll.user32.MessageBoxW(
-                0, "O Ciranda não conseguiu abrir.\nDetalhes em %APPDATA%\\Ciranda\\erro.txt", "Ciranda", 0x10)
+            try:
+                from ciranda import config as _cfg, textos as _txt
+                _txt.iniciar(_cfg.carregar())
+                msg = _txt.t("nao_abriu_app")
+            except Exception:
+                msg = "Ciranda couldn't open.\nDetails in %APPDATA%\\Ciranda\\erro.txt"
+            ctypes.windll.user32.MessageBoxW(0, msg, "Ciranda", 0x10)
         except Exception:
             pass
         raise

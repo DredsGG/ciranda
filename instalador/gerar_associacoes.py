@@ -23,10 +23,10 @@ def progid(nome, descricao):
 
 
 linhas = ["; GERADO por instalador/gerar_associacoes.py: não editar à mão", ""]
-linhas += progid("Ciranda.Foto", "Foto (Ciranda)") + progid("Ciranda.Video", "Vídeo (Ciranda)")
+linhas += progid("Ciranda.Foto", "{cm:TipoFoto}") + progid("Ciranda.Video", "{cm:TipoVideo}")
 linhas += [
     f'Root: HKA; Subkey: "{CAP}"; ValueType: string; ValueName: "ApplicationName"; ValueData: "Ciranda"; Flags: uninsdeletekey; {T}',
-    f'Root: HKA; Subkey: "{CAP}"; ValueType: string; ValueName: "ApplicationDescription"; ValueData: "Fotos e vídeos de uma pasta e de todas as subpastas, numa fila só"; {T}',
+    f'Root: HKA; Subkey: "{CAP}"; ValueType: string; ValueName: "ApplicationDescription"; ValueData: "{{cm:DescricaoApp}}"; {T}',
     f'Root: HKA; Subkey: "{CAP}"; ValueType: string; ValueName: "ApplicationIcon"; ValueData: "{{app}}\\Ciranda.exe,0"; {T}',
     f'Root: HKA; Subkey: "Software\\Dreds"; Flags: uninsdeletekeyifempty; {T}',
     f'Root: HKA; Subkey: "Software\\Dreds\\Ciranda"; Flags: uninsdeletekey; {T}',

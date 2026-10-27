@@ -3,6 +3,8 @@ arquivo; vários arquivos abertos em seguida se juntam; o Continuar não é apag
     CIRANDA_VO=x11 xvfb-run -a python testes/teste_instancia.py <pasta-de-midia> <saida>"""
 import json
 import os
+os.environ.setdefault("CIRANDA_IDIOMA_SISTEMA", "pt")  # textos dos testes em português
+os.environ.setdefault("CIRANDA_SEM_QUADROS", "1")  # tutorial/novidades têm teste próprio
 import subprocess
 import sys
 import time

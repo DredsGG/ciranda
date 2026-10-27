@@ -19,7 +19,8 @@ from PySide6.QtWidgets import (QAbstractItemView, QApplication, QButtonGroup, QF
                                QInputDialog, QStackedWidget, QStyle, QStyledItemDelegate,
                                QToolButton, QVBoxLayout, QWidget)
 
-from . import NOME, VERSAO, atualizacao, config, fotos, relato
+from . import NOME, VERSAO, atualizacao, config, fotos, relato, textos
+from .textos import t
 from .biblioteca import Item, varrer_varios
 from .fila import Fila
 from .icones import icone
@@ -167,7 +168,7 @@ class Ponte(QObject):
 
 
 class PonteAtualizacao(QObject):
-    resposta = Signal(object, bool)   # (dicionário do atualizacao.procurar ou Exception, manual)
+    resposta = Signal(object, str)   # (dicionário do atualizacao.procurar ou Exception, modo)
 
 
 class Varredor(QThread):
@@ -284,7 +285,7 @@ class Delegado(QStyledItemDelegate):
         p.setPen(QColor(APAGADO))
         pasta = item.pasta_rel or os.path.basename(item.raiz) or item.raiz
         if item.falhou:
-            pasta = "não abriu · " + pasta
+            pasta = t("nao_abriu_pasta") + pasta
         pasta = QFontMetrics(f2).elidedText(pasta, Qt.ElideLeft, w)
         p.drawText(QRect(x, r.top() + 22, w, 18), Qt.AlignLeft | Qt.AlignVCenter, pasta)
         p.restore()
@@ -339,16 +340,15 @@ class Vazio(QWidget):
         png = os.path.join(PASTA_APP, "ui", "ciranda-256.png")
         if os.path.exists(png):
             self.logo.setPixmap(QPixmap(png).scaled(112, 112, Qt.KeepAspectRatio, Qt.SmoothTransformation))
-        self.titulo = QLabel("Arraste pastas aqui")
+        self.titulo = QLabel()
         self.titulo.setObjectName("grande")
         self.titulo.setAlignment(Qt.AlignCenter)
-        self.sub = QLabel("Fotos e vídeos da pasta e de todas as subpastas entram numa fila só.\n"
-                          "Segure Ctrl ao soltar para juntar à fila atual.")
+        self.sub = QLabel()
         self.sub.setObjectName("apagado")
         self.sub.setAlignment(Qt.AlignCenter)
         botoes = QHBoxLayout()
         botoes.setAlignment(Qt.AlignCenter)
-        self.b_abrir = QPushButton(icone("pasta", "#1a0f07", 18), "  Abrir pasta")
+        self.b_abrir = QPushButton(icone("pasta", "#1a0f07", 18), "")
         self.b_abrir.setObjectName("primario")
         self.b_abrir.clicked.connect(janela.abrir_pasta)
         self.b_continuar = QPushButton()
@@ -368,6 +368,8 @@ class Vazio(QWidget):
         rodape.addWidget(self.acoes)
         rodape.addWidget(separador)
         rodape.addWidget(self.assinatura)
+        self.seletor = seletor_idioma(janela, self)
+        self.seletor.setAlignment(Qt.AlignCenter)
         lay.addWidget(self.logo)
         lay.addSpacing(6)
         lay.addWidget(self.titulo)
@@ -378,20 +380,35 @@ class Vazio(QWidget):
         lay.addWidget(self.status)
         lay.addSpacing(30)
         lay.addLayout(rodape)
+        lay.addWidget(self.seletor)
+        self._pastas = []
+        self._ligado = False
+        self.retraduzir()
+
+    def retraduzir(self):
+        self.titulo.setText(t("solte_para_tocar") if self._ligado else t("arraste_aqui"))
+        self.sub.setText(t("vazio_sub"))
+        self.b_abrir.setText("  " + t("abrir_pasta"))
+        self.acoes.retraduzir()
+        self.assinatura.retraduzir()
+        self.seletor.retraduzir()
+        self.atualizar_continuar(self._pastas)
 
     def destacar(self, ligado):
         self.setProperty("arrastando", bool(ligado))
-        self.titulo.setText("Solte para tocar" if ligado else "Arraste pastas aqui")
+        self._ligado = bool(ligado)
+        self.titulo.setText(t("solte_para_tocar") if ligado else t("arraste_aqui"))
         self.style().unpolish(self)
         self.style().polish(self)
 
     def atualizar_continuar(self, pastas):
+        self._pastas = list(pastas)
         if pastas:
             if len(pastas) == 1:
                 nomes = os.path.basename(pastas[0].rstrip("\\/")) or pastas[0]
             else:
-                nomes = f"{len(pastas)} pastas"
-            self.b_continuar.setText(f"Continuar a última fila ({nomes})")
+                nomes = t("n_pastas", n=len(pastas))
+            self.b_continuar.setText(t("continuar_ultima", nomes=nomes))
             self.b_continuar.show()
         else:
             self.b_continuar.hide()
@@ -407,9 +424,13 @@ def acoes_rodape(janela, pai=None) -> QLabel:
     lab.setObjectName("acoesRodape")
     lab.setTextFormat(Qt.RichText)
     estilo = f"color:{APAGADO}; text-decoration:none;"
-    lab.setText(f'<a href="acao:bug" style="{estilo}">Relatar bug</a>'
-                f'<span style="color:#4a4c55"> · </span>'
-                f'<a href="acao:atualizar" style="{estilo}">Procurar atualização</a>')
+
+    def retraduzir():
+        lab.setText(f'<a href="acao:bug" style="{estilo}">{t("relatar_bug")}</a>'
+                    f'<span style="color:#4a4c55"> · </span>'
+                    f'<a href="acao:atualizar" style="{estilo}">{t("procurar_atualizacao")}</a>')
+    lab.retraduzir = retraduzir
+    retraduzir()
     lab.setOpenExternalLinks(False)
     lab.setTextInteractionFlags(Qt.LinksAccessibleByMouse | Qt.LinksAccessibleByKeyboard)
     lab.setCursor(Qt.PointingHandCursor)
@@ -423,14 +444,52 @@ def acoes_rodape(janela, pai=None) -> QLabel:
     return lab
 
 
+def seletor_idioma(janela, pai=None) -> QLabel:
+    """Rodapé (regra 13): "?  ·  PT · EN · ES". O ? abre o tutorial; o idioma atual fica em laranja."""
+    lab = QLabel(pai)
+    lab.setObjectName("acoesRodape")
+    lab.setTextFormat(Qt.RichText)
+    lab.setOpenExternalLinks(False)
+    lab.setTextInteractionFlags(Qt.LinksAccessibleByMouse | Qt.LinksAccessibleByKeyboard)
+    lab.setCursor(Qt.PointingHandCursor)
+
+    def retraduzir():
+        partes = []
+        for i in textos.IDIOMAS:
+            if i == textos.atual():
+                partes.append(f'<a href="idioma:{i}" style="color:{DESTAQUE}; text-decoration:none;">'
+                              f'<b>{textos.NOMES[i]}</b></a>')
+            else:
+                partes.append(f'<a href="idioma:{i}" style="color:{APAGADO}; text-decoration:none;">'
+                              f'{textos.NOMES[i]}</a>')
+        sep = '<span style="color:#4a4c55"> · </span>'
+        lab.setText(f'<a href="acao:tutorial" style="color:{APAGADO}; text-decoration:none;"><b>?</b></a>'
+                    f'<span style="color:#4a4c55">&nbsp;&nbsp;·&nbsp;&nbsp;</span>' + sep.join(partes))
+        lab.setToolTip(f"? = {t('como_usar')} · {t('idioma')}: PT · EN · ES")
+    lab.retraduzir = retraduzir
+    retraduzir()
+
+    def clicou(href):
+        if href.startswith("idioma:"):
+            QTimer.singleShot(0, lambda: janela.mudar_idioma(href.split(":", 1)[1]))
+        elif href == "acao:tutorial":
+            QTimer.singleShot(0, janela.mostrar_tutorial)
+    lab.linkActivated.connect(clicou)
+    return lab
+
+
 def assinatura(pai=None) -> QLabel:
     """Rodapé padrão de todo projeto do André (regra 9): "feito por Dreds · vX.Y.Z",
     com "Dreds" abrindo o GitHub no navegador padrão. Versão sempre da constante VERSAO."""
     lab = QLabel(pai)
     lab.setObjectName("assinatura")
     lab.setTextFormat(Qt.RichText)
-    lab.setText(f'feito por <a href="{GITHUB}" style="color:{DESTAQUE}; text-decoration:none;">'
-                f'<b>Dreds</b></a> · v{VERSAO}')
+
+    def retraduzir():
+        lab.setText(f'{t("feito_por")} <a href="{GITHUB}" style="color:{DESTAQUE}; text-decoration:none;">'
+                    f'<b>Dreds</b></a> · v{VERSAO}')
+    lab.retraduzir = retraduzir
+    retraduzir()
     lab.setOpenExternalLinks(True)  # QDesktopServices.openUrl -> navegador padrão
     lab.setTextInteractionFlags(Qt.LinksAccessibleByMouse | Qt.LinksAccessibleByKeyboard)
     lab.setToolTip(GITHUB)
@@ -512,8 +571,7 @@ class BotaoTempoFoto(QToolButton):
         self.setCursor(Qt.PointingHandCursor)
         self.setFocusPolicy(Qt.NoFocus)
         self.setPopupMode(QToolButton.InstantPopup)
-        self.setToolTip("Tempo de cada foto na tela antes de passar para a próxima.\n"
-                        "Vídeo sempre toca até o fim. Atalho: + e −")
+        self.setToolTip(t("dica_tempo_foto"))
         self.menu_ = MenuRico(self)
         self.menu_.aboutToShow.connect(self._montar)
         self.setMenu(self.menu_)
@@ -521,6 +579,10 @@ class BotaoTempoFoto(QToolButton):
 
     def _fmt(self, v):
         return f"{v // 60} min" if v >= 60 and v % 60 == 0 else f"{v} s"
+
+    def retraduzir(self):
+        self.setToolTip(t("dica_tempo_foto"))
+        self._atualizar_texto()
 
     def compacto(self, sim: bool):
         self._compacto = sim
@@ -530,15 +592,15 @@ class BotaoTempoFoto(QToolButton):
         if getattr(self, "_compacto", False):
             self.setText(f"{self._fmt(self._v)} ▾")
         else:
-            self.setText(f"Foto: {self._fmt(self._v)}  ▾")
+            self.setText(t("foto_rotulo", tempo=self._fmt(self._v)) + "  ▾")
         # o Qt não soma o padding do estilo: largura = texto + ícone + respiro
         self.setMinimumWidth(QFontMetrics(self.font()).horizontalAdvance(self.text()) + 17 + 38)
 
     def _montar(self):
         m = self.menu_
         m.clear()
-        m.titulo("Tempo de cada foto")
-        m.explica("Vídeo não usa: sempre toca até o fim")
+        m.titulo(t("tempo_de_cada_foto"))
+        m.explica(t("video_nao_usa"))
         grupo = QActionGroup(m)
         for v in self.OPCOES:
             a = m.addAction(self._fmt(v))
@@ -547,13 +609,13 @@ class BotaoTempoFoto(QToolButton):
             grupo.addAction(a)
             a.triggered.connect(lambda _=False, v=v: self.setValue(v))
         m.addSeparator()
-        outro = m.addAction("Outro tempo…")
+        outro = m.addAction(t("outro_tempo"))
         if self._v not in self.OPCOES:
-            outro.setText(f"Outro tempo… (agora {self._fmt(self._v)})")
+            outro.setText(t("outro_tempo_agora", tempo=self._fmt(self._v)))
         outro.triggered.connect(self._outro)
 
     def _outro(self):
-        v, ok = QInputDialog.getInt(self.window(), "Tempo de cada foto", "Segundos:", self._v, 1, 600)
+        v, ok = QInputDialog.getInt(self.window(), t("tempo_de_cada_foto"), t("segundos"), self._v, 1, 600)
         if ok:
             self.setValue(v)
 
@@ -572,7 +634,10 @@ class BotaoTempoFoto(QToolButton):
 class Janela(QMainWindow):
     def __init__(self, caminhos_iniciais=None):
         super().__init__()
+        self._config_existia = config.existe()
         self.cfg = config.carregar()
+        textos.iniciar(self.cfg)
+        self._fixos = []  # textos fixos da tela, refeitos quando o idioma muda
         self.fila = Fila()
         self.fila.aleatorio = bool(self.cfg["aleatorio"])
         self.fila.repetir = self.cfg["repetir"] if self.cfg["repetir"] in ("nao", "tudo", "um") else "tudo"
@@ -635,9 +700,49 @@ class Janela(QMainWindow):
         self._t_atualizacao = QTimer(self, interval=6 * 3600 * 1000)
         self._t_atualizacao.timeout.connect(lambda: self.procurar_atualizacao(manual=False))
         if not os.environ.get("CIRANDA_SEM_ATUALIZACAO"):
-            QTimer.singleShot(4000, lambda: self.procurar_atualizacao(manual=False))
+            QTimer.singleShot(4000, lambda: self.procurar_atualizacao(manual=False, abertura=True))
             self._t_atualizacao.start()
+
+        # quadro no meio da janela: tutorial, novidades e nova versão (regras 12 e 14)
+        from .quadro import Quadro
+        self.quadro = Quadro(self)
+        self.quadro.fechou.connect(self._quadro_fechou)
+        self._quadro_render = None
+        self._quadros_na_fila = []
+        self._tut_passo = 0
         self._avisar_se_atualizou()
+
+    # ----- idioma (regra 13) -----
+    def _fixo(self, fn):
+        """Registra um texto fixo da tela (aplica agora e de novo quando o idioma muda)."""
+        self._fixos.append(fn)
+        fn()
+
+    def mudar_idioma(self, idioma):
+        if idioma not in textos.IDIOMAS:
+            return
+        textos.definir(idioma)
+        self.cfg["idioma"] = idioma
+        config.salvar(self.cfg)
+        self.retraduzir()
+        self._log_linha(f"idioma: {idioma}")
+
+    def retraduzir(self):
+        for fn in self._fixos:
+            fn()
+        self.vazio.retraduzir()
+        self.s_foto.retraduzir()
+        self._aplicar_modos_na_tela()
+        self._atualizar_lista()
+        if self._item is not None:
+            self._atualizar_info()
+        elif self.palco.currentWidget() is self.vazio:
+            self.l_nome.setText(t("nada_tocando"))
+            self.l_info.setText(t("arraste_para_janela"))
+        if self.faixa.isVisible() and self._faixa_render:
+            self._faixa_render()
+        if self.quadro.isVisible() and self._quadro_render:
+            self._quadro_render()
 
     def _ajustar_barra(self):
         """Barra responsiva: em janela estreita o controle de volume vira só o ícone
@@ -653,6 +758,13 @@ class Janela(QMainWindow):
         super().resizeEvent(e)
         if hasattr(self, "_lados"):
             self._ajustar_barra()
+        if getattr(self, "quadro", None) is not None and self.quadro.isVisible():
+            self.quadro.reposicionar()
+
+    def moveEvent(self, e):
+        super().moveEvent(e)
+        if getattr(self, "quadro", None) is not None and self.quadro.isVisible():
+            self.quadro.reposicionar()
 
     def receber_de_outra_instancia(self, caminhos):
         """Outro Ciranda foi aberto (dois cliques num arquivo, botão direito numa pasta):
@@ -704,21 +816,30 @@ class Janela(QMainWindow):
         ic.setPixmap(icone("atualizar", DESTAQUE, 16).pixmap(16, 16))
         self.l_faixa = QLabel()
         self.l_faixa.setTextFormat(Qt.RichText)
-        self.b_faixa = QPushButton("Ver e atualizar")
+        self.b_faixa = QPushButton()
+        self._fixo(lambda: self.b_faixa.setText(t("ver_e_atualizar")))
         self.b_faixa.setObjectName("primario")
         self.b_faixa.clicked.connect(self._abrir_dialogo_atualizacao)
-        fechar = self._botao("fechar", "Depois", self._fechar_faixa, tam=14)
+        fechar = self._botao("fechar", "", self._fechar_faixa, tam=14)
+        self._fixo(lambda: fechar.setToolTip(t("depois")))
         h.addWidget(ic)
         h.addWidget(self.l_faixa, 1)
         h.addWidget(self.b_faixa)
         h.addWidget(fechar)
         self.faixa.hide()
         self._faixa_pendente = False
+        self._faixa_render = None
         self._t_faixa = QTimer(self, singleShot=True)
         self._t_faixa.timeout.connect(self._fechar_faixa)
         return self.faixa
 
     def _mostrar_faixa(self, texto, botao=True, some_em_ms=0):
+        """`texto` pode ser uma função (refeita quando o idioma muda)."""
+        if callable(texto):
+            self._faixa_render = lambda: self.l_faixa.setText(texto())
+            texto = texto()
+        else:
+            self._faixa_render = None
         self.l_faixa.setText(texto)
         self.b_faixa.setVisible(botao)
         self._faixa_pendente = True
@@ -741,16 +862,19 @@ class Janela(QMainWindow):
             pass
 
     # ----- atualização sozinha -----
-    def procurar_atualizacao(self, manual=False):
+    def procurar_atualizacao(self, manual=False, abertura=False):
+        """manual: botão (abre a janela). abertura: ao abrir o Ciranda (quadro no meio).
+        Senão é a conferida a cada 6 h (faixa discreta no topo, não cobre o vídeo)."""
         api = os.environ.get("CIRANDA_API_ATUALIZACAO") or atualizacao.API
+        raw = os.environ.get("CIRANDA_RAW_NOVIDADES") or atualizacao.RAW_NOVIDADES
         ponte = self._ponte_atualizacao
-
+        modo = "manual" if manual else ("abertura" if abertura else "periodica")
         pasta = atualizacao.pasta_teste(config.pasta_dados()) \
             if (atualizacao.instalado() or os.environ.get("CIRANDA_CANAL_TESTE_SEMPRE")) else ""
 
         def trabalho():
             try:
-                r = atualizacao.procurar(VERSAO, api)
+                r = atualizacao.procurar(VERSAO, api, raw)
             except Exception as e:
                 r = e
             if pasta:  # canal de teste do André: setup mais novo na pasta local ganha
@@ -762,64 +886,166 @@ class Janela(QMainWindow):
                         isinstance(r, Exception) or not r["disponivel"]
                         or atualizacao.versao_tupla(loc["versao"]) > atualizacao.versao_tupla(r["versao"])):
                     r = loc
-            ponte.resposta.emit(r, manual)
+            ponte.resposta.emit(r, modo)
         if manual:
-            self._status("Procurando atualização…")
+            self._status(t("procurando"))
         threading.Thread(target=trabalho, daemon=True).start()
 
-    def _resposta_atualizacao(self, r, manual):
+    def _resposta_atualizacao(self, r, modo):
+        manual = modo == "manual"
         if isinstance(r, Exception):
             self._log_linha(f"atualização: não deu para conferir ({r.__class__.__name__})")
             if manual:
-                QMessageBox.information(self, "Procurar atualização",
-                                        "Não consegui falar com o GitHub agora (sem internet?).\n"
-                                        "Tente de novo daqui a pouco.")
+                QMessageBox.information(self, t("procurar_atualizacao"), t("sem_github"))
             return
         self._log_linha(f"atualização: {'pasta de teste' if r.get('local') else 'GitHub'} tem v{r['versao']}, "
                         f"aqui v{VERSAO}{' (nova!)' if r['disponivel'] else ''}")
         if not r["disponivel"]:
             if manual:
-                QMessageBox.information(self, "Procurar atualização",
-                                        f"Você já está na versão mais nova (v{VERSAO}).")
+                QMessageBox.information(self, t("procurar_atualizacao"), t("ja_mais_nova", versao=VERSAO))
             return
         self._info_atualizacao = r
         if manual:
             self._abrir_dialogo_atualizacao()
-        elif r.get("local"):
-            self._mostrar_faixa(f"<b>Ciranda v{r['versao']} (teste)</b> pronto para instalar "
-                                f'<span style="color:{APAGADO}">· da sua pasta de teste · você está na v{VERSAO}</span>')
+            return
+        # o X do aviso esconde esta versão até sair uma mais nova
+        if self.cfg.get("aviso_dispensado") == r["versao"] and not r.get("local"):
+            self._log_linha(f"atualização: aviso da v{r['versao']} dispensado antes")
+            return
+        if modo == "abertura":
+            self._mostrar_quadro(self._quadro_nova_versao)
         else:
-            self._mostrar_faixa(f"<b>Ciranda v{r['versao']}</b> disponível "
-                                f'<span style="color:{APAGADO}">· você está na v{VERSAO}</span>')
+            self._mostrar_faixa(lambda: self._texto_faixa(r))
 
-    def _abrir_dialogo_atualizacao(self):
+    def _texto_faixa(self, r):
+        if r.get("local"):
+            return (t("faixa_teste", versao=r["versao"]) + f' <span style="color:{APAGADO}">· '
+                    f'{t("da_pasta_teste")} · {t("voce_esta_na", versao=VERSAO)}</span>')
+        return t("faixa_nova", versao=r["versao"]) + f' <span style="color:{APAGADO}">· ' \
+            f'{t("voce_esta_na", versao=VERSAO)}</span>'
+
+    def _abrir_dialogo_atualizacao(self, ja_atualizar=False):
         if not self._info_atualizacao:
             return
         from .dialogos import DialogoAtualizacao
         self._fechar_faixa()
         self._dlg_atualizacao = d = DialogoAtualizacao(self, self._info_atualizacao, self._sair_para_atualizar)
         d.open()
+        if ja_atualizar and d.pode_instalar:
+            d._atualizar()
 
     def _sair_para_atualizar(self):
         self._log_linha("atualização: instalador rodando, fechando o Ciranda")
         self.close()
         QApplication.instance().quit()
 
-    def _avisar_se_atualizou(self):
-        antes = next((a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--atualizado-de=")), "")
+    # ----- quadro no meio da janela -----
+    def _mostrar_quadro(self, render):
+        if self.quadro.isVisible():
+            self._quadros_na_fila.append(render)
+            return
+        self._quadro_render = render
+        render()
+
+    def _quadro_fechou(self, como):
+        tipo, _, jeito = como.partition(":")
+        if tipo == "nova" and jeito == "x" and self._info_atualizacao:
+            self.cfg["aviso_dispensado"] = self._info_atualizacao["versao"]
+            config.salvar(self.cfg)
+        if tipo == "tutorial":
+            self.cfg["tutorial_visto"] = True
+            config.salvar(self.cfg)
+        self._quadro_render = None
+        if self._quadros_na_fila:
+            QTimer.singleShot(300, lambda: self._mostrar_quadro(self._quadros_na_fila.pop(0)))
+
+    @staticmethod
+    def _lista_html(itens):
+        esc = [str(x).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;") for x in itens]
+        return "<br>".join(f"• {x}" for x in esc)
+
+    def _quadro_nova_versao(self):
+        r = self._info_atualizacao
+        if not r:
+            return
+        itens = atualizacao.notas_no_idioma(r, textos.atual())[:6]
+        corpo = f'<span style="color:{APAGADO}">{t("voce_esta_na_frase", versao=VERSAO)}' \
+                f'{t("veio_pasta_teste") if r.get("local") else ""}</span>'
+        if itens:
+            corpo += f"<br><br><b>{t('o_que_mudou')}</b><br>" + self._lista_html(itens)
+        self.quadro.mostrar("nova", t("nova_versao_teste" if r.get("local") else "nova_versao", versao=r["versao"]),
+                            corpo, [(t("atualizar"), self._atualizar_pelo_quadro, True)])
+
+    def _atualizar_pelo_quadro(self):
+        self.quadro.fechar("botao")
+        self._abrir_dialogo_atualizacao(ja_atualizar=True)
+
+    def _quadro_novidades(self, antes):
+        itens = (atualizacao.novidades_locais().get(VERSAO) or {})
+        itens = itens.get(textos.atual()) or itens.get("en") or []
+        corpo = ""
         if antes:
-            self._log_linha(f"aberto pelo instalador depois de atualizar (antes v{antes.lstrip('v')}, agora v{VERSAO})")
+            corpo = f'<span style="color:{APAGADO}">{t("atualizado_de", antes=antes, agora=VERSAO)}</span><br><br>'
+        corpo += self._lista_html(itens)
+        self.quadro.mostrar("novidades", t("novidades_da", versao=VERSAO), corpo,
+                            [(t("entendi"), lambda: self.quadro.fechar("botao"), True)])
+
+    PASSOS_TUTORIAL = 5
+
+    def mostrar_tutorial(self):
+        self._tut_passo = 0
+        if self.quadro.isVisible() and self.quadro.tipo != "tutorial":
+            self.quadro.fechar("botao")
+        self._quadros_na_fila = [q for q in self._quadros_na_fila if q != self._quadro_tutorial]
+        self._mostrar_quadro(self._quadro_tutorial)
+
+    def _quadro_tutorial(self):
+        n = self._tut_passo
+        total = self.PASSOS_TUTORIAL
+        botoes = [(t("pular"), lambda: self.quadro.fechar("botao"), False)]
+        if n > 0:
+            botoes.append((t("voltar"), lambda: self._tutorial_ir(-1), False))
+        if n < total - 1:
+            botoes.append((t("proximo"), lambda: self._tutorial_ir(1), True))
+        else:
+            botoes = [(t("voltar"), lambda: self._tutorial_ir(-1), False),
+                      (t("entendi"), lambda: self.quadro.fechar("botao"), True)]
+        self.quadro.mostrar("tutorial", t(f"tut{n + 1}_t"), t(f"tut{n + 1}"), botoes,
+                            passos=t("passo_n", n=n + 1, total=total))
+
+    def _tutorial_ir(self, delta):
+        self._tut_passo = max(0, min(self.PASSOS_TUTORIAL - 1, self._tut_passo + delta))
+        self._quadro_render = self._quadro_tutorial
+        self._quadro_tutorial()
+
+    def _avisar_se_atualizou(self):
+        """Primeira abertura: tutorial. Depois de atualizar: Novidades da vX.Y.Z (uma vez por versão)."""
+        arg = next((a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--atualizado-de=")), "")
+        if arg:
+            self._log_linha(f"aberto pelo instalador depois de atualizar (antes v{arg.lstrip('v')}, agora v{VERSAO})")
             # o instalador baixado fica na pasta temporária: apaga quando ele já terminou
             QTimer.singleShot(60000, atualizacao.apagar_downloads)
-        antes = antes or self.cfg.get("versao_vista") or ""
-        if antes and atualizacao.versao_tupla(antes) == atualizacao.versao_tupla(VERSAO):
-            self._mostrar_faixa(f"Ciranda reinstalado: <b>v{VERSAO}</b> (versão de teste nova)",
-                                botao=False, some_em_ms=15000)
-        elif antes and atualizacao.mais_nova(VERSAO, antes):
-            self._mostrar_faixa(f"Ciranda atualizado: <b>v{antes.lstrip('v')} → v{VERSAO}</b>",
-                                botao=False, some_em_ms=15000)
+        antes = (arg or self.cfg.get("versao_vista") or "").lstrip("v")
+        sem_quadros = os.environ.get("CIRANDA_SEM_QUADROS")  # autoteste e testes antigos
+        if arg and atualizacao.versao_tupla(arg) == atualizacao.versao_tupla(VERSAO):
+            self._mostrar_faixa(lambda: t("reinstalado", agora=VERSAO), botao=False, some_em_ms=15000)
+        elif not sem_quadros and self.cfg.get("novidades_vista") != VERSAO and self._config_existia \
+                and (not antes or atualizacao.mais_nova(VERSAO, antes)):
+            # quem já usava (a 1.2.0 não gravava a versão vista) e acabou de atualizar
+            QTimer.singleShot(600, lambda: self._mostrar_quadro(lambda: self._quadro_novidades(antes)))
+        elif not sem_quadros and not self._config_existia and not self.cfg.get("tutorial_visto"):
+            QTimer.singleShot(600, self.mostrar_tutorial)
+        mudou = False
         if self.cfg.get("versao_vista") != VERSAO:
             self.cfg["versao_vista"] = VERSAO
+            mudou = True
+        if self.cfg.get("novidades_vista") != VERSAO:
+            self.cfg["novidades_vista"] = VERSAO
+            mudou = True
+        if not self._config_existia:
+            self.cfg["tutorial_visto"] = True  # aparece uma vez; o ? do rodapé reabre
+            mudou = True
+        if mudou:
             config.salvar(self.cfg)
 
     # ----- relatar bug -----
@@ -843,18 +1069,17 @@ class Janela(QMainWindow):
             pass
         itens = self.fila.itens
         nf = sum(1 for i in itens if i.tipo == "foto")
-        info["fila"] = (f"{len(itens)} itens ({nf} fotos, {len(itens) - nf} vídeos), "
-                        f"{len(self.pastas_abertas)} pastas abertas, {self._pastas_lidas} pastas lidas, "
-                        f"{self._ignorados} arquivos de outros tipos")
-        info["modos"] = (f"aleatório {'sim' if self.fila.aleatorio else 'não'}, repetir {self.fila.repetir}, "
-                         f"filtro {self.fila.filtro}, foto {self.s_foto.value()} s, "
-                         f"volume {self.volume.value()}{' (mudo)' if self.cfg.get('mudo') else ''}, "
-                         f"tela cheia {'sim' if self.isFullScreen() else 'não'}")
+        info["fila"] = t("diag_fila_txt", itens=len(itens), fotos=nf, videos=len(itens) - nf,
+                         abertas=len(self.pastas_abertas), lidas=self._pastas_lidas, outros=self._ignorados)
+        info["modos"] = t("diag_modos_txt", aleatorio=t("sim") if self.fila.aleatorio else t("nao"),
+                          repetir=self.fila.repetir, filtro=self.fila.filtro, foto=self.s_foto.value(),
+                          volume=self.volume.value(), mudo=t("diag_mudo") if self.cfg.get("mudo") else "",
+                          cheia=t("sim") if self.isFullScreen() else t("nao"), idioma=textos.atual())
         if self._item is not None:
             ext = os.path.splitext(self._item.caminho)[1].lower() or "?"
-            pos = f" em {fmt_tempo(self.busca.value() * self._duracao / 1000)} de {fmt_tempo(self._duracao)}" \
+            pos = t("diag_em", pos=fmt_tempo(self.busca.value() * self._duracao / 1000), total=fmt_tempo(self._duracao)) \
                 if self._item.tipo == "video" and self._duracao else ""
-            info["atual"] = f"{self._item.tipo} {ext}{pos}{' (falhou)' if self._item.falhou else ''}"
+            info["atual"] = f"{self._item.tipo} {ext}{pos}{t('diag_falhou') if self._item.falhou else ''}"
         return info
 
     def relatar_bug(self):
@@ -930,7 +1155,7 @@ class Janela(QMainWindow):
 
         # esquerda: o que está tocando (clique = mostra na fila)
         esq = Clicavel()
-        esq.setToolTip("Mostrar na fila")
+        self._fixo(lambda: esq.setToolTip(t("mostrar_na_fila")))
         esq.clicked.connect(lambda: (self._mostrar_painel(True), self._rolar_para_atual()))
         el = QHBoxLayout(esq)
         el.setContentsMargins(0, 0, 0, 0)
@@ -943,10 +1168,10 @@ class Janela(QMainWindow):
         col = QVBoxLayout()
         col.setSpacing(1)
         col.setContentsMargins(0, 2, 0, 2)
-        self.l_nome = QLabel("Nada tocando")
+        self.l_nome = QLabel(t("nada_tocando"))
         self.l_nome.setObjectName("nome")
         self.l_nome.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Preferred)
-        self.l_info = QLabel("Arraste pastas para a janela")
+        self.l_info = QLabel(t("arraste_para_janela"))
         self.l_info.setObjectName("sub")
         self.l_info.setTextFormat(Qt.RichText)
         self.l_info.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Preferred)
@@ -960,12 +1185,12 @@ class Janela(QMainWindow):
         cv = QVBoxLayout(cen)
         cv.setContentsMargins(0, 0, 0, 0)
         cv.setSpacing(2)
-        self.b_ant = self._botao("anterior", "Anterior (P)", self.anterior)
-        self.b_play = self._botao("play", "Tocar / pausar (Espaço)", self.alternar_pausa, tam=22)
+        self.b_ant = self._botao("anterior", "", self.anterior)
+        self.b_play = self._botao("play", "", self.alternar_pausa, tam=22)
         self.b_play.setObjectName("play")
         self.b_play.setIcon(icone("play", "#1a0f07", 22))
-        self.b_prox = self._botao("proximo", "Próximo (N)", lambda: self.proximo(False))
-        self.b_alea = self._botao("aleatorio", "Aleatório (S)", self.alternar_aleatorio, checavel=True, tam=18)
+        self.b_prox = self._botao("proximo", "", lambda: self.proximo(False))
+        self.b_alea = self._botao("aleatorio", "", self.alternar_aleatorio, checavel=True, tam=18)
         self.b_rep = self._botao("repetir", "", self.ciclar_repetir, checavel=True, tam=18)
         tr = QHBoxLayout()
         tr.setSpacing(10)
@@ -983,7 +1208,7 @@ class Janela(QMainWindow):
         self.l_total = Clicavel(rotulo="0:00")
         self.l_total.texto.setObjectName("tempo")
         self.l_total.setMinimumWidth(44)
-        self.l_total.setToolTip("Clique: tempo total / tempo que falta")
+        self._fixo(lambda: self.l_total.setToolTip(t("dica_total")))
         self.l_total.clicked.connect(self._alternar_restante)
         self._mostrar_restante = False
         self.busca = QSlider(Qt.Horizontal)
@@ -1004,7 +1229,7 @@ class Janela(QMainWindow):
         dl.setSpacing(4)
         self.s_foto = BotaoTempoFoto(int(self.cfg["segundos_foto"]), self)
         self.s_foto.valueChanged.connect(self._mudou_tempo_foto)
-        self.b_vol = self._botao("volume", "Mudo (M)", self.alternar_mudo, tam=18)
+        self.b_vol = self._botao("volume", "", self.alternar_mudo, tam=18)
         self.volume = QSlider(Qt.Horizontal)
         self.volume.setRange(0, 100)
         self.volume.setFixedWidth(84)
@@ -1015,11 +1240,17 @@ class Janela(QMainWindow):
         sep = QFrame()
         sep.setObjectName("sep")
         sep.setFixedSize(1, 22)
-        self.b_abrir = self._botao("pasta", "Pastas: abrir, juntar, limpar (Ctrl+O abre direto)",
-                                   lambda: self._abrir_menu_pastas(self.b_abrir), tam=19)
+        self.b_abrir = self._botao("pasta", "", lambda: self._abrir_menu_pastas(self.b_abrir), tam=19)
         self.menu_abrir = MenuRico(self)
-        self.b_painel = self._botao("lista", "Fila (L)", self.alternar_painel, checavel=True, tam=19)
-        self.b_tela = self._botao("telacheia", "Tela cheia (F / duplo clique)", self.alternar_tela_cheia, tam=19)
+        self.b_painel = self._botao("lista", "", self.alternar_painel, checavel=True, tam=19)
+        self.b_tela = self._botao("telacheia", "", self.alternar_tela_cheia, tam=19)
+
+        def dicas_barra():
+            for b, chave in ((self.b_ant, "dica_anterior"), (self.b_play, "dica_play"), (self.b_prox, "dica_proximo"),
+                             (self.b_alea, "dica_aleatorio"), (self.b_vol, "dica_mudo"), (self.b_abrir, "dica_pastas"),
+                             (self.b_painel, "dica_fila"), (self.b_tela, "dica_tela_cheia")):
+                b.setToolTip(t(chave))
+        self._fixo(dicas_barra)
         dl.addStretch(1)
         dl.addWidget(self.s_foto)
         dl.addSpacing(10)
@@ -1072,9 +1303,9 @@ class Janela(QMainWindow):
 
     def _abrir_menu_limpar(self, botao):
         m = MenuRico(self)
-        m.linha("limpar", "Limpar fila", "Esvazia a fila. O Continuar fica guardado", "",
+        m.linha("limpar", t("limpar_fila"), t("limpar_fila_desc"), "",
                 self.limpar, perigo=True, ativo=bool(self.fila.itens))
-        m.linha("limpar", "Limpar tudo", "Fila e a lista do Continuar. Não apaga nada do PC", "",
+        m.linha("limpar", t("limpar_tudo"), t("limpar_tudo_desc"), "",
                 self.limpar_tudo, perigo=True)
         self._menu_limpar = m  # segura a referência enquanto aberto
         self._popup_acima(m, botao, alinhar_direita=False)
@@ -1082,42 +1313,37 @@ class Janela(QMainWindow):
     def _montar_menu_abrir(self):
         m = self.menu_abrir
         m.clear()
-        m.titulo("Abrir")
-        m.linha("pasta", "Abrir pasta", "Toca a pasta e todas as subpastas (troca a fila)",
-                "Ctrl+O", self.abrir_pasta)
-        m.linha("pastamais", "Juntar outra pasta", "Soma mais uma pasta à fila, sem parar o que toca",
-                "Ctrl+Shift+O", self.adicionar_pasta)
-        m.linha("foto", "Abrir arquivos", "Escolher fotos ou vídeos soltos", "", self.abrir_arquivos)
+        m.titulo(t("m_abrir"))
+        m.linha("pasta", t("abrir_pasta"), t("abrir_pasta_desc"), "Ctrl+O", self.abrir_pasta)
+        m.linha("pastamais", t("juntar_outra"), t("juntar_desc"), "Ctrl+Shift+O", self.adicionar_pasta)
+        m.linha("foto", t("abrir_arquivos"), t("abrir_arquivos_desc"), "", self.abrir_arquivos)
         ultimas = [p for p in self.cfg["ultimas_pastas"] if os.path.exists(p)]
         if ultimas:
-            m.titulo("Última fila")
+            m.titulo(t("ultima_fila"))
             nomes = ", ".join(os.path.basename(p.rstrip("\\/")) or p for p in ultimas[:3])
             if len(ultimas) > 3:
-                nomes += f" e mais {len(ultimas) - 3}"
-            m.linha("repetir", f"Continuar ({len(ultimas)} pasta{'s' if len(ultimas) > 1 else ''})",
+                nomes += t("e_mais", n=len(ultimas) - 3)
+            m.linha("repetir", t("continuar_1" if len(ultimas) == 1 else "continuar_n", n=len(ultimas)),
                     nomes, "", self.continuar_ultimas)
-        m.titulo("Arquivo na tela")
-        m.linha("explorer", "Mostrar no Explorer", "Abre a pasta onde ele está", "E",
+        m.titulo(t("arquivo_na_tela"))
+        m.linha("explorer", t("mostrar_explorer"), t("mostrar_explorer_desc"), "E",
                 self.mostrar_atual_no_explorer, ativo=self._item is not None)
-        m.titulo("Limpar")
-        m.linha("limpar", "Limpar fila", "Esvazia a fila. O Continuar fica guardado", "",
+        m.titulo(t("limpar"))
+        m.linha("limpar", t("limpar_fila"), t("limpar_fila_desc"), "",
                 self.limpar, perigo=True, ativo=bool(self.fila.itens))
         tem_historico = bool(self.cfg["ultimas_pastas"]) or bool(self.fila.itens)
-        m.linha("limpar", "Limpar tudo", "Fila e a lista do Continuar. Não apaga nada do PC", "",
+        m.linha("limpar", t("limpar_tudo"), t("limpar_tudo_desc"), "",
                 self.limpar_tudo, perigo=True, ativo=tem_historico)
         if WINDOWS and getattr(sys, "frozen", False):
             m.titulo("Windows")
-            m.linha("foto", "Usar como app padrão…",
-                    "Abre a tela do Windows para escolher o Ciranda para fotos e vídeos", "",
+            m.linha("foto", t("usar_padrao"), t("usar_padrao_desc"), "",
                     self.usar_como_padrao)
         m.titulo("Ciranda")
-        m.linha("atualizar", "Procurar atualização", f"Você está na v{VERSAO}. Confere se saiu versão nova "
-                "no GitHub (o Ciranda também confere sozinho ao abrir)", "",
+        m.linha("atualizar", t("procurar_atualizacao"), t("procurar_desc", versao=VERSAO), "",
                 lambda: self.procurar_atualizacao(manual=True))
-        m.linha("bug", "Relatar bug…", "Abre o relato no GitHub já preenchido, sem nomes de pastas e arquivos",
-                "", self.relatar_bug)
-        m.linha("repetir", "Restaurar de fábrica…",
-                "Volta todos os ajustes ao padrão e limpa fila, Continuar e cache. Não apaga nada do PC",
+        m.linha("bug", t("relatar_bug") + "…", t("relatar_bug_desc"), "", self.relatar_bug)
+        m.linha("buscar", t("como_usar"), t("como_usar_desc"), "", self.mostrar_tutorial)
+        m.linha("repetir", t("restaurar"), t("restaurar_desc"),
                 "", self.restaurar_fabrica, perigo=True)
 
     def _montar_painel(self) -> QFrame:
@@ -1128,11 +1354,12 @@ class Janela(QMainWindow):
         v.setContentsMargins(14, 14, 10, 12)
         v.setSpacing(10)
         topo = QHBoxLayout()
-        t = QLabel("Fila")
-        t.setObjectName("tituloPainel")
+        tit = QLabel()
+        tit.setObjectName("tituloPainel")
+        self._fixo(lambda: tit.setText(t("fila")))
         self.l_contagem = QLabel("")
         self.l_contagem.setObjectName("apagado")
-        topo.addWidget(t)
+        topo.addWidget(tit)
         topo.addSpacing(6)
         topo.addWidget(self.l_contagem, 0, Qt.AlignBottom)
         topo.addStretch(1)
@@ -1141,27 +1368,28 @@ class Janela(QMainWindow):
         acoes = QHBoxLayout()
         acoes.setSpacing(6)
 
-        def pilula(nome_icone, texto, dica, slot):
+        def pilula(nome_icone, chave_texto, chave_dica, slot):
             b = QToolButton()
             b.setObjectName("pilula")
-            b.setText(texto)
             b.setIcon(icone(nome_icone, TEXTO, 16))
             b.setIconSize(QSize(16, 16))
             b.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
             b.setCursor(Qt.PointingHandCursor)
             b.setFocusPolicy(Qt.NoFocus)
-            b.setToolTip(dica)
             b.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-            # o Qt não soma o padding do estilo: largura = texto + ícone + respiro
-            b.setMinimumWidth(QFontMetrics(b.font()).horizontalAdvance(texto) + 16 + 34)
+
+            def textos_pilula():
+                b.setText(t(chave_texto))
+                b.setToolTip(t(chave_dica))
+                # o Qt não soma o padding do estilo: largura = texto + ícone + respiro
+                b.setMinimumWidth(QFontMetrics(b.font()).horizontalAdvance(b.text()) + 16 + 34)
+            self._fixo(textos_pilula)
             b.clicked.connect(slot)
             acoes.addWidget(b)
             return b
-        self.b_p_abrir = pilula("pasta", "Abrir", "Abrir pasta: troca a fila (Ctrl+O)", self.abrir_pasta)
-        self.b_p_juntar = pilula("pastamais", "Juntar pasta",
-                                 "Soma mais uma pasta à fila, sem parar o que toca (Ctrl+Shift+O)",
-                                 self.adicionar_pasta)
-        self.b_p_limpar = pilula("limpar", "Limpar", "Limpar fila ou limpar tudo", lambda: None)
+        self.b_p_abrir = pilula("pasta", "pil_abrir", "pil_abrir_dica", self.abrir_pasta)
+        self.b_p_juntar = pilula("pastamais", "pil_juntar", "pil_juntar_dica", self.adicionar_pasta)
+        self.b_p_limpar = pilula("limpar", "limpar", "pil_limpar_dica", lambda: None)
         self.b_p_limpar.clicked.disconnect()
         self.b_p_limpar.clicked.connect(lambda: self._abrir_menu_limpar(self.b_p_limpar))
         acoes.addStretch(1)
@@ -1173,14 +1401,14 @@ class Janela(QMainWindow):
         sl.setContentsMargins(3, 3, 3, 3)
         sl.setSpacing(2)
         self.g_filtro = QButtonGroup(self)
-        for chave, texto, dica in (("tudo", "Tudo", "Fotos e vídeos (1)"), ("fotos", "Fotos", "Só fotos (2)"),
-                                   ("videos", "Vídeos", "Só vídeos (3)")):
-            pb = QPushButton(texto)
+        for chave in ("tudo", "fotos", "videos"):
+            pb = QPushButton()
             pb.setObjectName("segmento")
             pb.setCheckable(True)
             pb.setCursor(Qt.PointingHandCursor)
             pb.setFocusPolicy(Qt.NoFocus)
-            pb.setToolTip(dica)
+            self._fixo(lambda pb=pb, chave=chave: (pb.setText(t(f"filtro_{chave}")),
+                                                   pb.setToolTip(t(f"filtro_{chave}_dica"))))
             pb.setProperty("filtro", chave)
             pb.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
             self.g_filtro.addButton(pb)
@@ -1189,7 +1417,7 @@ class Janela(QMainWindow):
         v.addWidget(seg)
 
         self.filtro_txt = QLineEdit()
-        self.filtro_txt.setPlaceholderText("Buscar na fila (nome ou pasta)")
+        self._fixo(lambda: self.filtro_txt.setPlaceholderText(t("buscar_fila")))
         self.filtro_txt.addAction(icone("buscar", APAGADO, 16), QLineEdit.LeadingPosition)
         self.filtro_txt.setClearButtonEnabled(True)
         v.addWidget(self.filtro_txt)
@@ -1220,8 +1448,16 @@ class Janela(QMainWindow):
         # rodapé padrão (regra 9): Relatar bug · Procurar atualização, e a assinatura
         self.acoes_fila = acoes_rodape(self, painel)
         v.addWidget(self.acoes_fila)
+        linha2 = QHBoxLayout()
+        linha2.setSpacing(0)
         self.assinatura_fila = assinatura(painel)
-        v.addWidget(self.assinatura_fila)
+        self.seletor_fila = seletor_idioma(self, painel)
+        linha2.addWidget(self.assinatura_fila)
+        linha2.addStretch(1)
+        linha2.addWidget(self.seletor_fila)
+        v.addLayout(linha2)
+        self._fixo(lambda: (self.acoes_fila.retraduzir(), self.assinatura_fila.retraduzir(),
+                            self.seletor_fila.retraduzir()))
         return painel
 
     def _atalhos(self):
@@ -1239,7 +1475,7 @@ class Janela(QMainWindow):
         a("Down", lambda: self.mudar_volume(-5))
         a("M", self.alternar_mudo)
         a(["F", "F11", "Return"], self.alternar_tela_cheia)
-        a("Escape", self.sair_tela_cheia)
+        a("Escape", lambda: self.quadro.fechar("x") if self.quadro.isVisible() else self.sair_tela_cheia())
         a("S", self.alternar_aleatorio)
         a("R", self.ciclar_repetir)
         a("L", self.alternar_painel)
@@ -1355,12 +1591,12 @@ class Janela(QMainWindow):
 
     def _escolher_pasta(self, adicionar: bool):
         inicio = self.pastas_abertas[-1] if self.pastas_abertas else os.path.expanduser("~")
-        p = QFileDialog.getExistingDirectory(self, "Adicionar pasta à fila" if adicionar else "Abrir pasta", inicio)
+        p = QFileDialog.getExistingDirectory(self, t("dlg_adicionar_pasta") if adicionar else t("abrir_pasta"), inicio)
         if p:
             self.carregar([p], adicionar=adicionar)
 
     def abrir_arquivos(self):
-        arqs, _ = QFileDialog.getOpenFileNames(self, "Abrir fotos e vídeos", os.path.expanduser("~"))
+        arqs, _ = QFileDialog.getOpenFileNames(self, t("dlg_abrir_arquivos"), os.path.expanduser("~"))
         if arqs:
             self.carregar(arqs, adicionar=False)
 
@@ -1380,10 +1616,10 @@ class Janela(QMainWindow):
             self.pastas_abertas = list(caminhos)
         else:
             self.pastas_abertas += [c for c in caminhos if c not in self.pastas_abertas]
-        self._status(f"Lendo {self._nome_curto(caminhos)}…")
+        self._status(t("lendo", nome=self._nome_curto(caminhos)))
         self.varredor = Varredor(caminhos, adicionar and bool(self.fila.itens))
         self.varredor.progresso.connect(
-            lambda n, p: self._status(f"Lendo… {n:,} arquivos".replace(",", ".") + (f"  ·  {p}" if p else "")))
+            lambda n, p: self._status(t("lendo_n", n=f"{n:,}".replace(",", ".")) + (f"  ·  {p}" if p else "")))
         self.varredor.pronto.connect(self._varredura_pronta)
         self.varredor.start()
 
@@ -1418,7 +1654,7 @@ class Janela(QMainWindow):
         stats = stats or {}
         self._registrar_varredura(itens, stats)
         if not itens and not adicionar:
-            self._status("Nenhuma foto ou vídeo nessa pasta nem nas subpastas.")
+            self._status(t("nenhuma_midia"))
             return
         pastas = [p for p in self.pastas_abertas if os.path.isdir(p)]
         if pastas:  # abrir só arquivos (dois cliques numa foto) não mexe no Continuar
@@ -1454,8 +1690,8 @@ class Janela(QMainWindow):
         self._atualizar_lista()
         self.palco.setCurrentWidget(self.vazio)
         self.vazio.atualizar_continuar([p for p in self.cfg["ultimas_pastas"] if os.path.exists(p)])
-        self.l_nome.setText("Nada tocando")
-        self.l_info.setText("Arraste pastas para a janela")
+        self.l_nome.setText(t("nada_tocando"))
+        self.l_info.setText(t("arraste_para_janela"))
         self.l_tipo.setPixmap(icone("pasta", APAGADO, 20).pixmap(20, 20))
         self.l_tempo.setText("0:00")
         self.l_total.setText("0:00")
@@ -1467,8 +1703,7 @@ class Janela(QMainWindow):
         cache, log e ajustes ficam; nunca mexe nas fotos e vídeos do PC."""
         if confirmar and self.cfg["ultimas_pastas"]:
             r = QMessageBox.question(
-                self, "Limpar tudo",
-                "Limpar a fila e a lista do \"Continuar\"?\n\nNenhuma foto ou vídeo do PC é apagado.",
+                self, t("limpar_tudo"), t("limpar_tudo_confirma"),
                 QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
             if r != QMessageBox.Yes:
                 return
@@ -1476,18 +1711,14 @@ class Janela(QMainWindow):
         config.salvar(self.cfg)
         self.limpar()
         self.vazio.atualizar_continuar([])
-        self.vazio.status.setText("Fila e Continuar limpos. Arraste pastas para começar.")
+        self.vazio.status.setText(t("limpos"))
 
     def restaurar_fabrica(self, confirmar=True):
         """Como recém-instalado: ajustes no padrão, fila e Continuar vazios, cache apagado.
         Mantém o erro.txt (diagnóstico). Nunca mexe nas fotos e vídeos do PC."""
         if confirmar:
             r = QMessageBox.question(
-                self, "Restaurar de fábrica",
-                "Voltar o Ciranda ao estado de recém-instalado?\n\n"
-                "• Ajustes voltam ao padrão (volume, aleatório, repetir, tempo da foto, filtro, janela)\n"
-                "• Fila, Continuar e cache das fotos HEIC são limpos\n\n"
-                "Nenhuma foto ou vídeo do PC é apagado.",
+                self, t("restaurar_titulo"), t("restaurar_confirma"),
                 QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
             if r != QMessageBox.Yes:
                 return
@@ -1498,6 +1729,9 @@ class Janela(QMainWindow):
         self.cfg = dict(config.PADRAO)
         self.cfg["ultimas_pastas"] = []
         self.cfg["versao_vista"] = VERSAO
+        self.cfg["novidades_vista"] = VERSAO
+        self.cfg["tutorial_visto"] = True
+        textos.definir(textos.idioma_do_sistema())  # idioma volta ao do sistema
         config.salvar(self.cfg)
         # aplica o padrão na tela e no motor
         self.fila.aleatorio = bool(self.cfg["aleatorio"])
@@ -1522,7 +1756,8 @@ class Janela(QMainWindow):
         self._aplicar_modos_na_tela()
         self._atualizar_lista()
         self.vazio.atualizar_continuar([])
-        self.vazio.status.setText("Ciranda restaurado de fábrica. Arraste pastas para começar.")
+        self.retraduzir()
+        self.vazio.status.setText(t("restaurado"))
         try:
             self._log.write(f"{time.strftime('%H:%M:%S')} restaurado de fábrica\n")
             self._log.flush()
@@ -1626,11 +1861,12 @@ class Janela(QMainWindow):
         self._log.write(f"não abriu: {self._item.caminho}\n")
         self._erros_seguidos += 1
         if self._erros_seguidos >= max(1, len(self.fila)):
-            self._fim("Nenhum arquivo da fila abriu.")
+            self._fim(t("nenhum_abriu"))
             return
         QTimer.singleShot(50, lambda: self.tocar(self.fila.proximo(automatico=False)))
 
-    def _fim(self, msg="Fim da fila. Aperte ▶ para começar de novo."):
+    def _fim(self, msg=None):
+        msg = msg or t("fim_fila")
         self._t_foto.stop()
         self._fim_da_fila = True
         try:
@@ -1653,20 +1889,19 @@ class Janela(QMainWindow):
     def _menu_video(self, pos):
         m = MenuRico(self)
         pausado = bool(self.mpv.pause) if self._item else True
-        m.linha("play" if pausado else "pause", "Tocar" if pausado else "Pausar", "", "Espaço", self.alternar_pausa)
-        m.linha("proximo", "Próximo", "", "N", lambda: self.proximo(False))
-        m.linha("aleatorio", "Aleatório: " + ("ligado" if self.fila.aleatorio else "desligado"), "", "S",
+        m.linha("play" if pausado else "pause", t("tocar") if pausado else t("pausar"), "", t("tecla_espaco"),
+                self.alternar_pausa)
+        m.linha("proximo", t("proximo"), "", "N", lambda: self.proximo(False))
+        m.linha("aleatorio", t("aleatorio_ligado") if self.fila.aleatorio else t("aleatorio_desligado"), "", "S",
                 self.alternar_aleatorio)
-        rep = {"nao": "desligado", "tudo": "a fila toda", "um": "só este"}[self.fila.repetir]
-        m.linha("repetir", f"Repetir: {rep}", "", "R", self.ciclar_repetir)
-        m.titulo("Pastas")
-        m.linha("pastamais", "Juntar outra pasta", "Soma à fila sem parar o que toca", "Ctrl+Shift+O",
-                self.adicionar_pasta)
-        m.linha("pasta", "Abrir pasta", "Troca a fila", "Ctrl+O", self.abrir_pasta)
-        m.titulo("Arquivo na tela")
-        m.linha("explorer", "Mostrar no Explorer", "Abre a pasta onde ele está", "E",
+        m.linha("repetir", t(f"repetir_{self.fila.repetir}"), "", "R", self.ciclar_repetir)
+        m.titulo(t("m_pastas"))
+        m.linha("pastamais", t("juntar_outra"), t("juntar_desc_curta"), "Ctrl+Shift+O", self.adicionar_pasta)
+        m.linha("pasta", t("abrir_pasta"), t("abrir_desc_curta"), "Ctrl+O", self.abrir_pasta)
+        m.titulo(t("arquivo_na_tela"))
+        m.linha("explorer", t("mostrar_explorer"), t("mostrar_explorer_desc"), "E",
                 self.mostrar_atual_no_explorer, ativo=self._item is not None)
-        m.linha("telacheia", "Sair da tela cheia" if self.isFullScreen() else "Tela cheia", "", "F",
+        m.linha("telacheia", t("sair_tela_cheia") if self.isFullScreen() else t("tela_cheia"), "", "F",
                 self.alternar_tela_cheia)
         m.exec(pos)
 
@@ -1737,7 +1972,7 @@ class Janela(QMainWindow):
 
     def mudar_volume(self, delta):
         self.volume.setValue(max(0, min(100, self.volume.value() + delta)))
-        self._aviso(f"Volume {self.volume.value()}%")
+        self._aviso(t("osd_volume", v=self.volume.value()))
 
     def _mudou_volume(self, v):
         try:
@@ -1755,13 +1990,13 @@ class Janela(QMainWindow):
         except Exception:
             pass
         self.b_vol.setIcon(icone("mudo" if self.cfg["mudo"] else "volume", TEXTO, 18))
-        self._aviso("Sem som" if self.cfg["mudo"] else "Som ligado")
+        self._aviso(t("osd_sem_som") if self.cfg["mudo"] else t("osd_som"))
 
     def alternar_aleatorio(self):
         self.fila.definir_aleatorio(not self.fila.aleatorio)
         self.cfg["aleatorio"] = self.fila.aleatorio
         self._aplicar_modos_na_tela()
-        self._aviso("Aleatório ligado" if self.fila.aleatorio else "Em ordem")
+        self._aviso(t("osd_aleatorio") if self.fila.aleatorio else t("osd_em_ordem"))
         self._atualizar_lista()
         self._atualizar_info()
 
@@ -1769,8 +2004,7 @@ class Janela(QMainWindow):
         self.fila.proximo_modo_repetir()
         self.cfg["repetir"] = self.fila.repetir
         self._aplicar_modos_na_tela()
-        self._aviso({"nao": "Repetir desligado", "tudo": "Repetir a fila toda",
-                     "um": "Repetir só este"}[self.fila.repetir])
+        self._aviso(t(f"osd_repetir_{self.fila.repetir}"))
         item = self._item
         if item is None:
             return
@@ -1795,7 +2029,7 @@ class Janela(QMainWindow):
             return
         continua = self.fila.definir_filtro(filtro)
         self.cfg["filtro"] = filtro
-        self._aviso({"tudo": "Mostrando fotos e vídeos", "fotos": "Só fotos", "videos": "Só vídeos"}[filtro])
+        self._aviso(t(f"osd_filtro_{filtro}"))
         self._aplicar_modos_na_tela()
         self._atualizar_lista()
         if self.fila.itens and not continua:
@@ -1803,7 +2037,7 @@ class Janela(QMainWindow):
             if item is None:
                 self._parar_motor()
                 self._item = None
-                self.l_info.setText(f'<span style="color:{APAGADO}">Nada na fila com esse filtro.</span>')
+                self.l_info.setText(f'<span style="color:{APAGADO}">{t("nada_com_filtro")}</span>')
             else:
                 self.tocar(item)
         self._atualizar_info()
@@ -1814,15 +2048,14 @@ class Janela(QMainWindow):
         rep = self.fila.repetir
         self.b_rep.setChecked(rep != "nao")
         self.b_rep.setIcon(icone("repetir1" if rep == "um" else "repetir", DESTAQUE if rep != "nao" else TEXTO, 18))
-        self.b_rep.setToolTip({"nao": "Repetir: desligado (R)", "tudo": "Repetir: a fila toda (R)",
-                               "um": "Repetir: só este (R)"}[rep])
+        self.b_rep.setToolTip(t(f"dica_repetir_{rep}"))
         for pb in self.g_filtro.buttons():
             pb.setChecked(pb.property("filtro") == self.fila.filtro)
         self.b_vol.setIcon(icone("mudo" if self.cfg["mudo"] else "volume", TEXTO, 18))
 
     def _mudou_tempo_foto(self, v):
         self.cfg["segundos_foto"] = v
-        self._aviso(f"Cada foto: {v} s")
+        self._aviso(t("osd_cada_foto", v=v))
         if self._item and self._item.tipo == "foto" and self._t_foto.isActive():
             passado = (self._foto_total_ms - self._foto_restante_ms) + self._foto_relogio.elapsed()
             self._iniciar_relogio_foto(max(300, v * 1000 - passado))
@@ -1887,14 +2120,15 @@ class Janela(QMainWindow):
         n_pastas = len({os.path.dirname(i.caminho) for i in itens})
         def n(x):
             return f"{x:,}".replace(",", ".")
-        txt = f"{n(len(self.fila))} na fila · {n(nf)} fotos · {n(nv)} vídeos"
-        txt += f"\nde {n(n_pastas)} pastas com mídia ({n(len(self.pastas_abertas))} aberta{'s' if len(self.pastas_abertas) != 1 else ''}, {n(self._pastas_lidas)} lidas)"
+        txt = t("resumo", fila=n(len(self.fila)), fotos=n(nf), videos=n(nv))
+        txt += "\n" + t("resumo_pastas_1" if len(self.pastas_abertas) == 1 else "resumo_pastas_n",
+                        pastas=n(n_pastas), abertas=n(len(self.pastas_abertas)), lidas=n(self._pastas_lidas))
         if self._ignorados:
-            txt += f" · {n(self._ignorados)} arquivos de outros tipos"
+            txt += t("outros_tipos", n=n(self._ignorados))
         falhas = sum(1 for i in itens if i.falhou)
         if falhas:
-            txt += " · 1 não abriu" if falhas == 1 else f" · {n(falhas)} não abriram"
-        self.l_resumo.setText(txt if itens else "Fila vazia. Arraste pastas para a janela.")
+            txt += t("um_nao_abriu") if falhas == 1 else t("n_nao_abriram", n=n(falhas))
+        self.l_resumo.setText(txt if itens else t("fila_vazia"))
         self.l_contagem.setText(n(len(self.fila)) if itens else "")
         self._rolar_para_atual()
 
@@ -1921,12 +2155,12 @@ class Janela(QMainWindow):
             sel = [alvo]
         item = self.fila.itens[alvo]
         m = QMenu(self)
-        m.addAction(icone("play", TEXTO, 16), "Tocar agora", lambda: self._lista_duplo(idx))
-        m.addAction(icone("explorer", TEXTO, 16), "Mostrar no Explorer", lambda: mostrar_no_explorer(item.caminho))
-        m.addAction("Copiar caminho", lambda: QGuiApplication.clipboard().setText(item.caminho))
+        m.addAction(icone("play", TEXTO, 16), t("tocar_agora"), lambda: self._lista_duplo(idx))
+        m.addAction(icone("explorer", TEXTO, 16), t("mostrar_explorer"), lambda: mostrar_no_explorer(item.caminho))
+        m.addAction(t("copiar_caminho"), lambda: QGuiApplication.clipboard().setText(item.caminho))
         m.addSeparator()
         m.addAction(icone("limpar", TEXTO, 16),
-                    "Tirar da fila" if len(sel) == 1 else f"Tirar {len(sel)} da fila",
+                    t("tirar_da_fila") if len(sel) == 1 else t("tirar_n_da_fila", n=len(sel)),
                     lambda: self._tirar_da_fila(sel))
         m.exec(self.lista.viewport().mapToGlobal(pos))
 
@@ -1963,11 +2197,11 @@ class Janela(QMainWindow):
         n, total = self.fila.posicao()
         pasta = item.pasta_rel or (os.path.basename(item.raiz.rstrip("\\/")) or item.raiz)
         pasta = pasta.replace("&", "&amp;").replace("<", "&lt;")
-        extra = " · convertendo HEIC…" if carregando else ""
+        extra = t("convertendo_heic") if carregando else ""
         fm = QFontMetrics(self.l_nome.font())
         self.l_nome.setText(fm.elidedText(item.nome, Qt.ElideMiddle, max(60, self.l_nome.width())))
         self.l_nome.setToolTip(item.caminho)
-        self.l_info.setText(f'{pasta} · {n} de {total}{extra}')
+        self.l_info.setText(f'{pasta} · {t("n_de_total", n=n, total=total)}{extra}')
         self.l_info.setToolTip(item.caminho)
         cor = "#c35b5b" if item.falhou else DESTAQUE
         self.l_tipo.setPixmap(icone("foto" if item.tipo == "foto" else "video", cor, 20).pixmap(20, 20))
@@ -2036,6 +2270,7 @@ class Janela(QMainWindow):
 
     # ----- fechar -----
     def closeEvent(self, e):
+        self.quadro.hide()
         if self.isFullScreen():
             self.showNormal()
         self.cfg["geometria"] = bytes(self.saveGeometry().toBase64()).decode()

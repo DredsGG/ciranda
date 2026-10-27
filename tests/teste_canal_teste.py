@@ -3,6 +3,8 @@ na faixa e o "Atualizar agora" copia e instala, sem apagar o original da pasta.
     CIRANDA_VO=x11 xvfb-run -a python testes/teste_canal_teste.py <pasta-de-midia> <saida>"""
 import json
 import os
+os.environ.setdefault("CIRANDA_IDIOMA_SISTEMA", "pt")  # textos dos testes em português
+os.environ.setdefault("CIRANDA_SEM_QUADROS", "1")  # tutorial/novidades têm teste próprio
 import sys
 import tempfile
 import time
@@ -38,6 +40,10 @@ def setup(pasta, versao, idade_s=0, conteudo=b"MZ setup de teste"):
 
 
 # ---------- sem o arquivo de configuração: nada muda (PC de quem baixou do GitHub) ----------
+import shutil  # noqa: E402
+for velho in os.listdir(dados):  # saída reaproveitada de outra rodada
+    caminho_velho = os.path.join(dados, velho)
+    shutil.rmtree(caminho_velho) if os.path.isdir(caminho_velho) else os.remove(caminho_velho)
 ok(A.pasta_teste(dados) == "", "sem pasta-de-teste.txt tem que dar vazio")
 with open(os.path.join(dados, A.ARQ_PASTA_TESTE), "w", encoding="utf-8") as f:
     f.write(r"C:\não\existe" + "\n")
@@ -108,16 +114,16 @@ def clique(w):
 
 
 def etapa_faixa():
-    ok(j.faixa.isVisible() and "9.9.8 (teste)" in j.l_faixa.text(), f"faixa: {j.l_faixa.text()!r}")
-    os.system(f"import -window root '{os.path.join(SAIDA, 'canal-teste-faixa.png')}'")
-    clique(j.b_faixa)
+    q = j.quadro
+    ok(q.isVisible() and q.tipo == "nova" and "9.9.8" in q.l_titulo.text(), f"quadro: {q.l_titulo.text()!r}")
+    ok("Canal de teste" in q.l_corpo.text(), q.l_corpo.text())
+    os.system(f"import -window root '{os.path.join(SAIDA, 'canal-teste-quadro.png')}'")
+    clique(q.botoes()[-1])  # Atualizar: abre a janela e já começa
 
 
 def etapa_dialogo():
     d = j._dlg_atualizacao
-    ok(d and d.isVisible() and d.b_ok.text() == "Atualizar agora", "janela do canal de teste")
-    os.system(f"import -window root '{os.path.join(SAIDA, 'canal-teste-janela.png')}'")
-    clique(d.b_ok)
+    ok(d is not None, "janela do canal de teste")
 
 
 def conferir_depois():

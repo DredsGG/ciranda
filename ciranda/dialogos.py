@@ -9,7 +9,8 @@ from PySide6.QtGui import QDesktopServices, QGuiApplication
 from PySide6.QtWidgets import (QCheckBox, QDialog, QHBoxLayout, QLabel, QPlainTextEdit,
                                QProgressBar, QPushButton, QVBoxLayout)
 
-from . import VERSAO, atualizacao, relato
+from . import VERSAO, atualizacao, relato, textos
+from .textos import t
 
 QSS_DIALOGO = """
 QDialog { background: #16171c; }
@@ -41,7 +42,7 @@ class DialogoAtualizacao(QDialog):
         self._sair = sair
         self._cancelar = False
         self._baixando = False
-        self.setWindowTitle("Atualização do Ciranda")
+        self.setWindowTitle(t("dlg_atualizacao"))
         self.setStyleSheet(QSS_DIALOGO)
         self.setMinimumWidth(460)
         v = QVBoxLayout(self)
@@ -49,24 +50,23 @@ class DialogoAtualizacao(QDialog):
         v.setSpacing(10)
 
         self.local = bool(info.get("local"))
-        t = QLabel(f"Ciranda v{info['versao']} (teste) disponível" if self.local
-                   else f"Ciranda v{info['versao']} disponível")
-        t.setObjectName("grande")
-        v.addWidget(t)
-        sub = QLabel(f"Você está na v{VERSAO}." + (" Esta versão veio da sua pasta de teste e ainda não "
-                                                    "está no GitHub." if self.local else ""))
+        tit = QLabel(t("disponivel_teste" if self.local else "disponivel", versao=info["versao"]))
+        tit.setObjectName("grande")
+        v.addWidget(tit)
+        sub = QLabel(t("voce_esta_na_frase", versao=VERSAO) + (t("veio_pasta_teste") if self.local else ""))
         sub.setWordWrap(True)
         sub.setObjectName("apagado")
         v.addWidget(sub)
-        if info.get("notas"):
+        itens = atualizacao.notas_no_idioma(info, textos.atual())
+        if itens:
             v.addSpacing(4)
-            v.addWidget(QLabel("<b>O que mudou</b>"))
-            notas = QLabel("<br>".join(f"• {self._esc(n)}" for n in info["notas"]))
+            v.addWidget(QLabel(f"<b>{t('o_que_mudou')}</b>"))
+            notas = QLabel("<br>".join(f"• {self._esc(n)}" for n in itens))
             notas.setWordWrap(True)
             notas.setTextFormat(Qt.RichText)
             v.addWidget(notas)
         link = QLabel(f'<a href="{info["pagina"]}" style="color:#ff8a3d; text-decoration:none;">'
-                      f'Ver tudo no GitHub</a>')
+                      f'{t("ver_tudo_github")}</a>')
         link.setOpenExternalLinks(True)
         if not self.local:
             v.addWidget(link)
@@ -84,10 +84,10 @@ class DialogoAtualizacao(QDialog):
         v.addSpacing(6)
         bot = QHBoxLayout()
         bot.addStretch(1)
-        self.b_depois = QPushButton("Depois")
+        self.b_depois = QPushButton(t("depois"))
         self.b_depois.clicked.connect(self.reject)
         self.pode_instalar = bool(info.get("setup")) and (atualizacao.instalado() or self.local)
-        self.b_ok = QPushButton("Atualizar agora" if self.pode_instalar else "Baixar no GitHub")
+        self.b_ok = QPushButton(t("atualizar_agora") if self.pode_instalar else t("baixar_github"))
         self.b_ok.setObjectName("primario")
         self.b_ok.setDefault(True)
         self.b_ok.clicked.connect(self._atualizar)
@@ -95,9 +95,9 @@ class DialogoAtualizacao(QDialog):
         bot.addWidget(self.b_ok)
         v.addLayout(bot)
         if self.pode_instalar:
-            dica = QLabel("O Ciranda fecha, instala sozinho e abre de novo. Seus ajustes ficam.")
+            dica = QLabel(t("dica_instala"))
         else:
-            dica = QLabel("Este Ciranda não veio do instalador: baixe a versão nova na página.")
+            dica = QLabel(t("dica_zip"))
         dica.setObjectName("apagado")
         dica.setWordWrap(True)
         v.addWidget(dica)
@@ -113,10 +113,10 @@ class DialogoAtualizacao(QDialog):
             return
         self._baixando = True
         self.b_ok.setEnabled(False)
-        self.b_depois.setText("Cancelar")
+        self.b_depois.setText(t("cancelar"))
         self.barra.setRange(0, 0)
         self.barra.show()
-        self.estado.setText("Copiando…" if self.local else "Baixando…")
+        self.estado.setText(t("copiando") if self.local else t("baixando"))
         self.estado.show()
         s = self._sinais = _Sinais()
         s.progresso.connect(self._progresso)
@@ -138,16 +138,16 @@ class DialogoAtualizacao(QDialog):
         if total:
             self.barra.setRange(0, 1000)
             self.barra.setValue(int(feito * 1000 / total))
-            self.estado.setText(f"{'Copiando' if self.local else 'Baixando'}… "
-                                f"{feito / 1048576:.0f} de {total / 1048576:.0f} MB")
+            self.estado.setText(t("copiando_mb" if self.local else "baixando_mb",
+                                  feito=f"{feito / 1048576:.0f}", total=f"{total / 1048576:.0f}"))
 
     def _baixou(self, caminho):
         self.barra.setRange(0, 0)
-        self.estado.setText("Instalando…" if self.local else "Conferido (SHA-256 igual ao do GitHub). Instalando…")
+        self.estado.setText(t("instalando") if self.local else t("conferido_instalando"))
         try:
             atualizacao.rodar_instalador(caminho, VERSAO)
         except Exception as e:
-            self._falhou(f"não consegui abrir o instalador ({e})")
+            self._falhou(t("erro_abrir_instalador", erro=e))
             return
         self._baixando = False
         QTimer.singleShot(600, self._sair)
@@ -156,10 +156,9 @@ class DialogoAtualizacao(QDialog):
         self._baixando = False
         self.barra.hide()
         self.b_ok.setEnabled(True)
-        self.b_ok.setText("Tentar de novo")
-        self.b_depois.setText("Depois")
-        self.estado.setText("Download cancelado." if not msg else
-                            f"Não deu para atualizar: {msg}. Tente de novo ou baixe na página.")
+        self.b_ok.setText(t("tentar_de_novo"))
+        self.b_depois.setText(t("depois"))
+        self.estado.setText(t("download_cancelado") if not msg else t("nao_deu_atualizar", msg=msg))
 
     def reject(self):
         if self._baixando:
@@ -175,21 +174,21 @@ class DialogoBug(QDialog):
     def __init__(self, pai, diag: str):
         super().__init__(pai)
         self.diag = diag
-        self.setWindowTitle("Relatar bug")
+        self.setWindowTitle(t("relatar_bug"))
         self.setStyleSheet(QSS_DIALOGO)
         self.resize(560, 560)
         v = QVBoxLayout(self)
         v.setContentsMargins(22, 20, 22, 18)
         v.setSpacing(8)
-        t = QLabel("Relatar bug")
-        t.setObjectName("grande")
-        v.addWidget(t)
-        v.addWidget(QLabel("O que aconteceu? O que você estava fazendo?"))
+        tit = QLabel(t("relatar_bug"))
+        tit.setObjectName("grande")
+        v.addWidget(tit)
+        v.addWidget(QLabel(t("bug_pergunta")))
         self.texto = QPlainTextEdit()
-        self.texto.setPlaceholderText("Ex.: abri uma pasta com vídeos .mov e a tela ficou preta")
+        self.texto.setPlaceholderText(t("bug_exemplo"))
         self.texto.setFixedHeight(110)
         v.addWidget(self.texto)
-        self.incluir = QCheckBox("Incluir diagnóstico (versões, ajustes, fim do log)")
+        self.incluir = QCheckBox(t("incluir_diag"))
         self.incluir.setChecked(True)
         v.addWidget(self.incluir)
         self.previa = QPlainTextEdit(diag)
@@ -197,9 +196,7 @@ class DialogoBug(QDialog):
         self.previa.setProperty("readOnly", True)
         v.addWidget(self.previa, 1)
         self.incluir.toggled.connect(self.previa.setVisible)
-        aviso = QLabel("Nomes de pastas, arquivos, do usuário e do PC são tirados: fica só a extensão. "
-                       "Nada é enviado sozinho: o GitHub abre no navegador e você confere antes de enviar "
-                       "(precisa de conta no GitHub; sem conta, use Copiar relatório).")
+        aviso = QLabel(t("bug_aviso"))
         aviso.setObjectName("apagado")
         aviso.setWordWrap(True)
         v.addWidget(aviso)
@@ -208,11 +205,11 @@ class DialogoBug(QDialog):
         self.estado.setWordWrap(True)
         v.addWidget(self.estado)
         bot = QHBoxLayout()
-        b_cancel = QPushButton("Cancelar")
+        b_cancel = QPushButton(t("cancelar"))
         b_cancel.clicked.connect(self.reject)
-        self.b_copiar = QPushButton("Copiar relatório")
+        self.b_copiar = QPushButton(t("copiar_relatorio"))
         self.b_copiar.clicked.connect(self.copiar)
-        self.b_git = QPushButton("Abrir no GitHub")
+        self.b_git = QPushButton(t("abrir_github"))
         self.b_git.setObjectName("primario")
         self.b_git.clicked.connect(self.abrir_github)
         bot.addWidget(b_cancel)
@@ -228,7 +225,7 @@ class DialogoBug(QDialog):
     def copiar(self):
         titulo, corpo = self._partes()
         QGuiApplication.clipboard().setText(f"{titulo}\n\n{corpo}")
-        self.estado.setText("Copiado. Cole em github.com/DredsGG/ciranda/issues ou mande para o Dreds.")
+        self.estado.setText(t("copiado"))
 
     def abrir_github(self):
         titulo, corpo = self._partes()
@@ -237,6 +234,4 @@ class DialogoBug(QDialog):
         if cortado:
             QGuiApplication.clipboard().setText(f"{titulo}\n\n{corpo}")
         _abrir_url(url)
-        self.estado.setText("Abri o GitHub no navegador. Confira o texto e envie lá."
-                            + (" O log era grande: o relatório completo foi copiado (Ctrl+V para colar)."
-                               if cortado else ""))
+        self.estado.setText(t("abri_github") + (t("log_grande") if cortado else ""))

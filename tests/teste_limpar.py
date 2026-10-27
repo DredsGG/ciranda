@@ -1,6 +1,8 @@
 """Limpar tudo: some a fila e a lista do Continuar; ficam cache, ajustes e os arquivos originais.
     CIRANDA_VO=x11 xvfb-run -a python testes/teste_limpar.py <pasta> <saida>"""
 import json, os, sys
+os.environ.setdefault("CIRANDA_IDIOMA_SISTEMA", "pt")  # textos dos testes em português
+os.environ.setdefault("CIRANDA_SEM_QUADROS", "1")  # tutorial/novidades têm teste próprio
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 PASTA, SAIDA = sys.argv[1], sys.argv[2]
 os.environ["APPDATA"] = os.path.join(SAIDA, "appdata-limpar")
