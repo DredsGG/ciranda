@@ -123,6 +123,8 @@ def procurar(versao_local: str, api: str = API, raw: str = RAW_NOVIDADES) -> dic
         "disponivel": mais_nova(remota, versao_local),
         "notas": itens_das_notas(d.get("body", "")),
         "novidades": novidades if isinstance(novidades, dict) else None,
+        # Release com "URGENTE" no título (o André marca para bug grave): quadro sem X, player pausado
+        "urgente": "URGENTE" in (d.get("name") or "").upper(),
         "pagina": d.get("html_url") or PAGINA,
         "setup": setup,
     }

@@ -64,19 +64,24 @@ class Quadro(QFrame):
         self.tipo = ""
 
     def keyPressEvent(self, e):
-        if e.key() == Qt.Key_Escape:
+        if e.key() == Qt.Key_Escape and self.b_x.isVisible():
             self.fechar("x")
             return
         super().keyPressEvent(e)
 
-    def mostrar(self, tipo, titulo, corpo_html, botoes, passos=""):
+    def mostrar(self, tipo, titulo, corpo_html, botoes, passos="", fechavel=True):
         """botoes: lista de (texto, função, primário). A função recebe nada; para fechar o
         quadro ela mesma chama fechar("botao") (ou troca o conteúdo, como no tutorial)."""
         self.tipo = tipo
         self.l_titulo.setText(titulo)
         self.l_corpo.setText(corpo_html)
+        # texto que quebra linha: o Qt erra a altura no adjustSize e corta a última linha
+        largura = self.width() - 22 - 14
+        self.l_corpo.setMinimumHeight(self.l_corpo.heightForWidth(largura))
+        self.l_titulo.setMinimumHeight(self.l_titulo.heightForWidth(largura - 30))
         self.l_passos.setText(passos)
         self.b_x.setToolTip(t("fechar_esc"))
+        self.b_x.setVisible(fechavel)  # versão urgente: sem X e sem Esc
         for b in self._botoes:
             self.rodape.removeWidget(b)
             b.deleteLater()
@@ -107,7 +112,7 @@ class Quadro(QFrame):
         return list(self._botoes)
 
     def fechar(self, como="x"):
-        if not self.isVisible():
+        if not self.isVisible() or (como == "x" and not self.b_x.isVisible()):
             return
         tipo = self.tipo
         self.hide()

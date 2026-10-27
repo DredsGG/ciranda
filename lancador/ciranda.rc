@@ -1,8 +1,8 @@
 #include <winver.h>
 1 ICON "ciranda.ico"
 1 VERSIONINFO
-FILEVERSION 1,3,0,0
-PRODUCTVERSION 1,3,0,0
+FILEVERSION 1,3,1,0
+PRODUCTVERSION 1,3,1,0
 BEGIN
   BLOCK "StringFileInfo"
   BEGIN
@@ -10,9 +10,9 @@ BEGIN
     BEGIN
       VALUE "CompanyName", "Dreds"
       VALUE "FileDescription", "Ciranda - player de fotos e videos"
-      VALUE "FileVersion", "1.3.0"
+      VALUE "FileVersion", "1.3.1"
       VALUE "ProductName", "Ciranda"
-      VALUE "ProductVersion", "1.3.0"
+      VALUE "ProductVersion", "1.3.1"
       VALUE "LegalCopyright", "feito por Dreds"
       VALUE "OriginalFilename", "Ciranda.exe"
     END

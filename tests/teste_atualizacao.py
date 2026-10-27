@@ -12,6 +12,7 @@ import os
 import sys
 import tempfile
 import threading
+import time
 import urllib.parse
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -176,7 +177,8 @@ def clique(w):
 def etapa_aviso():
     q = j.quadro
     ok(q.isVisible() and q.tipo == "novidades" and VERSAO in q.l_titulo.text(), f"novidades: {q.l_titulo.text()!r}")
-    ok("1.2.0" in q.l_corpo.text() and "Uma janela só" in q.l_corpo.text(), q.l_corpo.text()[:200])
+    primeira = A.novidades_locais()[VERSAO]["pt"][0]
+    ok("1.2.0" in q.l_corpo.text() and primeira[:30] in q.l_corpo.text(), q.l_corpo.text()[:200])
     os.system(f"import -window root '{os.path.join(SAIDA, 'quadro-novidades.png')}'")
     QTest.keyClick(q, Qt.Key_Escape)
     ok(not q.isVisible(), "Esc não fechou o quadro")
@@ -202,16 +204,17 @@ def etapa_dialogo():
     clique(d.b_ok)
     ok(abertos and abertos[-1].endswith("v9.9.9") and not d.isVisible(), f"página: {abertos}")
     log.append("quadro → Atualizar → janela → Baixar no GitHub ok")
-    # o X esconde o aviso desta versão até sair uma mais nova
+    # o X adia o aviso (1 h): a conferida seguinte não mostra de novo antes disso
     j._mostrar_quadro(j._quadro_nova_versao)
     clique(j.quadro.b_x)
-    ok(config.carregar()["aviso_dispensado"] == "9.9.9", "X não guardou a versão dispensada")
-    j.procurar_atualizacao(abertura=True)
+    c = config.carregar()
+    ok(c["aviso_adiado_versao"] == "9.9.9" and c["aviso_adiado_ate"] > time.time() + 3000, "X não adiou por 1 h")
+    j.procurar_atualizacao()
 
 
 def etapa_dispensa():
     ok(not j.quadro.isVisible() and not j.faixa.isVisible(), "aviso voltou depois do X")
-    log.append("X esconde o aviso da v9.9.9 nas próximas aberturas")
+    log.append("X adia o aviso da v9.9.9 (a conferida seguinte não mostra)")
     j._montar_menu_abrir()
     nomes = [a.text().split("\t")[0] for a in j.menu_abrir.actions()]
     ok("Procurar atualização" in nomes and "Relatar bug…" in nomes and "Como usar" in nomes, f"menu: {nomes}")

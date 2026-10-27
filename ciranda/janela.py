@@ -692,13 +692,22 @@ class Janela(QMainWindow):
             QTimer.singleShot(0, lambda: self.carregar(caminhos_iniciais, adicionar=False))
         QTimer.singleShot(0, self._barra_titulo_escura)
 
-        # atualização sozinha: confere ao abrir (depois de 4 s) e a cada 6 horas
+        # atualização sozinha (regra 14): confere ao abrir (depois de 4 s), a cada 30 min e quando a
+        # pessoa volta para a janela (no máximo 1 vez a cada 10 min). Os tempos mudam por variável só nos testes.
         self._info_atualizacao = None
         self._dlg_atualizacao = None
+        self._urgente = False
+        self._conferidas = 0
+        self._ultima_conferida = time.monotonic()  # a 1ª é a da abertura, logo abaixo
+        self._intervalo_s = float(os.environ.get("CIRANDA_INTERVALO_ATUALIZACAO_S") or 30 * 60)
+        self._foco_min_s = float(os.environ.get("CIRANDA_FOCO_MIN_S") or 10 * 60)
+        self._adiamento_s = float(os.environ.get("CIRANDA_ADIAMENTO_S") or 60 * 60)
         self._ponte_atualizacao = PonteAtualizacao()
         self._ponte_atualizacao.resposta.connect(self._resposta_atualizacao)
-        self._t_atualizacao = QTimer(self, interval=6 * 3600 * 1000)
+        self._t_atualizacao = QTimer(self, interval=int(self._intervalo_s * 1000))
         self._t_atualizacao.timeout.connect(lambda: self.procurar_atualizacao(manual=False))
+        self._t_adiamento = QTimer(self, singleShot=True)
+        self._t_adiamento.timeout.connect(lambda: self.procurar_atualizacao(manual=False, adiado=True))
         if not os.environ.get("CIRANDA_SEM_ATUALIZACAO"):
             QTimer.singleShot(4000, lambda: self.procurar_atualizacao(manual=False, abertura=True))
             self._t_atualizacao.start()
@@ -760,6 +769,13 @@ class Janela(QMainWindow):
             self._ajustar_barra()
         if getattr(self, "quadro", None) is not None and self.quadro.isVisible():
             self.quadro.reposicionar()
+
+    def changeEvent(self, e):
+        super().changeEvent(e)
+        from PySide6.QtCore import QEvent
+        if e.type() == QEvent.ActivationChange and self.isActiveWindow() and hasattr(self, "_ultima_conferida") \
+                and not os.environ.get("CIRANDA_SEM_ATUALIZACAO"):
+            self.procurar_atualizacao(foco=True)  # voltou para a janela (no máximo 1 vez a cada 10 min)
 
     def moveEvent(self, e):
         super().moveEvent(e)
@@ -862,13 +878,17 @@ class Janela(QMainWindow):
             pass
 
     # ----- atualização sozinha -----
-    def procurar_atualizacao(self, manual=False, abertura=False):
-        """manual: botão (abre a janela). abertura: ao abrir o Ciranda (quadro no meio).
-        Senão é a conferida a cada 6 h (faixa discreta no topo, não cobre o vídeo)."""
+    def procurar_atualizacao(self, manual=False, abertura=False, foco=False, adiado=False):
+        """manual: botão do rodapé (abre a janela). Os outros (abertura, a cada 30 min, volta para a
+        janela, fim do adiamento) mostram o quadro "Nova versão" no meio da janela, na hora."""
+        if foco and time.monotonic() - self._ultima_conferida < self._foco_min_s:
+            return
+        self._ultima_conferida = time.monotonic()
+        self._conferidas += 1
         api = os.environ.get("CIRANDA_API_ATUALIZACAO") or atualizacao.API
         raw = os.environ.get("CIRANDA_RAW_NOVIDADES") or atualizacao.RAW_NOVIDADES
         ponte = self._ponte_atualizacao
-        modo = "manual" if manual else ("abertura" if abertura else "periodica")
+        modo = "manual" if manual else ("abertura" if abertura else ("foco" if foco else ("adiado" if adiado else "periodica")))
         pasta = atualizacao.pasta_teste(config.pasta_dados()) \
             if (atualizacao.instalado() or os.environ.get("CIRANDA_CANAL_TESTE_SEMPRE")) else ""
 
@@ -905,18 +925,53 @@ class Janela(QMainWindow):
                 QMessageBox.information(self, t("procurar_atualizacao"), t("ja_mais_nova", versao=VERSAO))
             return
         self._info_atualizacao = r
+        if r.get("urgente"):
+            self._travar_urgente()
+            return
         if manual:
             self._abrir_dialogo_atualizacao()
             return
-        # o X do aviso esconde esta versão até sair uma mais nova
-        if self.cfg.get("aviso_dispensado") == r["versao"] and not r.get("local"):
-            self._log_linha(f"atualização: aviso da v{r['versao']} dispensado antes")
+        # o X só adia: volta depois de 1 h ou na próxima abertura, até atualizar
+        adiado = self.cfg.get("aviso_adiado_versao") == r["versao"] and time.time() < float(self.cfg.get("aviso_adiado_ate") or 0)
+        if adiado and modo != "abertura":
+            self._log_linha(f"atualização: aviso da v{r['versao']} adiado")
             return
-        # ao abrir, ou parado na tela inicial: quadro no meio; tocando, faixa fina no topo (não cobre o vídeo)
-        if modo == "abertura" or (self._item is None and not self.isFullScreen()):
-            self._mostrar_quadro(self._quadro_nova_versao)
-        else:
-            self._mostrar_faixa(lambda: self._texto_faixa(r))
+        if self.quadro.isVisible() and self.quadro.tipo == "nova":
+            self._quadro_nova_versao()  # já na tela: só atualiza o conteúdo
+            return
+        self._mostrar_quadro(self._quadro_nova_versao)
+
+    # ----- versão urgente: quadro sem X e player pausado até atualizar -----
+    def _travar_urgente(self):
+        primeira = not self._urgente
+        self._urgente = True
+        if primeira:
+            self._log_linha(f"atualização: v{self._info_atualizacao['versao']} URGENTE, player pausado até atualizar")
+        self._pausar_por_urgencia()
+        if self.isFullScreen():
+            self.sair_tela_cheia()
+        if self.quadro.isVisible() and self.quadro.tipo != "nova":
+            self.quadro.hide()  # tutorial/novidades saem da frente
+        self._quadros_na_fila = []
+        self._quadro_render = self._quadro_nova_versao
+        self._quadro_nova_versao()
+
+    def _pausar_por_urgencia(self):
+        self._t_foto.stop()
+        try:
+            if self._item is not None and not self.mpv.pause:
+                self.mpv.pause = True
+        except Exception:
+            pass
+
+    def _bloqueado(self):
+        """True (e mostra o quadro de novo) enquanto houver versão urgente sem atualizar."""
+        if self._urgente:
+            self._pausar_por_urgencia()
+            self._quadro_render = self._quadro_nova_versao
+            self._quadro_nova_versao()
+            return True
+        return False
 
     def _texto_faixa(self, r):
         if r.get("local"):
@@ -951,8 +1006,12 @@ class Janela(QMainWindow):
     def _quadro_fechou(self, como):
         tipo, _, jeito = como.partition(":")
         if tipo == "nova" and jeito == "x" and self._info_atualizacao:
-            self.cfg["aviso_dispensado"] = self._info_atualizacao["versao"]
+            # o X só adia por 1 h (a próxima abertura mostra de novo)
+            self.cfg["aviso_adiado_versao"] = self._info_atualizacao["versao"]
+            self.cfg["aviso_adiado_ate"] = time.time() + self._adiamento_s
             config.salvar(self.cfg)
+            self._t_adiamento.start(int(self._adiamento_s * 1000) + 500)
+            self._log_linha(f"atualização: aviso da v{self._info_atualizacao['versao']} adiado")
         if tipo == "tutorial":
             self.cfg["tutorial_visto"] = True
             config.salvar(self.cfg)
@@ -974,10 +1033,19 @@ class Janela(QMainWindow):
                 f'{t("veio_pasta_teste") if r.get("local") else ""}</span>'
         if itens:
             corpo += f"<br><br><b>{t('o_que_mudou')}</b><br>" + self._lista_html(itens)
-        self.quadro.mostrar("nova", t("nova_versao_teste" if r.get("local") else "nova_versao", versao=r["versao"]),
-                            corpo, [(t("atualizar"), self._atualizar_pelo_quadro, True)])
+        urgente = bool(r.get("urgente"))
+        if urgente:
+            corpo = f'<b style="color:{DESTAQUE}">{t("urgente_explica")}</b><br><br>' + corpo
+            titulo = t("nova_versao_urgente", versao=r["versao"])
+        else:
+            titulo = t("nova_versao_teste" if r.get("local") else "nova_versao", versao=r["versao"])
+        self.quadro.mostrar("nova", titulo, corpo, [(t("atualizar"), self._atualizar_pelo_quadro, True)],
+                            fechavel=not urgente)
 
     def _atualizar_pelo_quadro(self):
+        if self._urgente:  # urgente: o quadro fica (sem X) até o instalador fechar o Ciranda
+            self._abrir_dialogo_atualizacao(ja_atualizar=True)
+            return
         self.quadro.fechar("botao")
         self._abrir_dialogo_atualizacao(ja_atualizar=True)
 
@@ -1775,6 +1843,9 @@ class Janela(QMainWindow):
 
     def tocar(self, item: Item | None):
         self._t_foto.stop()
+        if self._urgente and item is not None:
+            self._bloqueado()
+            return
         if item is None:
             self._fim()
             return
@@ -1908,6 +1979,8 @@ class Janela(QMainWindow):
 
     # ----- controles -----
     def alternar_pausa(self):
+        if self._bloqueado():
+            return
         if not self.fila.itens:
             self.abrir_pasta()
             return
@@ -1929,7 +2002,7 @@ class Janela(QMainWindow):
                     self._t_foto.start(max(1, self._foto_restante_ms))
 
     def proximo(self, automatico=False):
-        if not self.fila.itens:
+        if not self.fila.itens or self._bloqueado():
             return
         self._erros_seguidos = 0
         item = self.fila.proximo(automatico)

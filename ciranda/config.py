@@ -18,7 +18,8 @@ PADRAO = {
     "geometria": None,
     "versao_vista": "",  # para avisar "atualizado: vX → vY"
     "idioma": "",  # "pt", "en" ou "es" escolhido no seletor; vazio = o do sistema
-    "aviso_dispensado": "",  # versão nova cujo aviso a pessoa fechou no X
+    "aviso_adiado_versao": "",  # versão nova cujo aviso a pessoa adiou no X
+    "aviso_adiado_ate": 0,  # até quando (o X adia 1 h; a próxima abertura mostra de novo)
     "novidades_vista": "",  # última versão cujo quadro de novidades já apareceu
     "tutorial_visto": False,
 }
