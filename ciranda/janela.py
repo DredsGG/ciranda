@@ -912,7 +912,8 @@ class Janela(QMainWindow):
         if self.cfg.get("aviso_dispensado") == r["versao"] and not r.get("local"):
             self._log_linha(f"atualização: aviso da v{r['versao']} dispensado antes")
             return
-        if modo == "abertura":
+        # ao abrir, ou parado na tela inicial: quadro no meio; tocando, faixa fina no topo (não cobre o vídeo)
+        if modo == "abertura" or (self._item is None and not self.isFullScreen()):
             self._mostrar_quadro(self._quadro_nova_versao)
         else:
             self._mostrar_faixa(lambda: self._texto_faixa(r))
