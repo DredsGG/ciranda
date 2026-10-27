@@ -18,6 +18,11 @@ on:
   push:
     branches: [instalador]
   workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing release tag to attach the setup to (and add the install notes), e.g. v1.3.0. Empty = build and test only."
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -157,6 +162,12 @@ jobs:
           # update, for real: the installed app finds the latest release, downloads its setup, checks the SHA-256;
           # plus the local test channel (a folder named in %APPDATA%\Ciranda\pasta-de-teste.txt, only on the author's PC)
           Set-Content -Path (Join-Path $env:APPDATA "Ciranda\pasta-de-teste.txt") -Value (Resolve-Path "dist\proximo").Path -Encoding utf8
+          # on a release the newest release has no setup yet (it's attached at the end of this job):
+          # test against the newest release that already has one
+          $rels = gh api "repos/$env:GITHUB_REPOSITORY/releases?per_page=20" | ConvertFrom-Json
+          $alvo = $rels | Where-Object { $_.assets.name -match '^Ciranda-Setup-\d+\.\d+\.\d+\.exe$' } | Select-Object -First 1
+          $env:CIRANDA_API_ATUALIZACAO = "https://api.github.com/repos/$env:GITHUB_REPOSITORY/releases/$($alvo.id)"
+          "Update test against $($alvo.tag_name)"
           $p = Start-Process -FilePath $exe -ArgumentList "--testar-atualizacao=$PWD\atualizacao-github.json" -Wait -PassThru
           Get-Content atualizacao-github.json
           $r = Get-Content atualizacao-github.json | ConvertFrom-Json
@@ -214,9 +225,12 @@ jobs:
           if-no-files-found: ignore
 
       - name: Attach the setup to the Release
-        if: github.event_name == 'release'
+        if: github.event_name == 'release' || inputs.tag != ''
         shell: bash
-        run: gh release upload "${{ github.event.release.tag_name }}" "dist/Ciranda-Setup-$VERSAO.exe" --clobber
+        run: |
+          TAG="${{ github.event.release.tag_name || inputs.tag }}"
+          [ "${TAG#v}" = "$VERSAO" ] || { echo "::error::Tag $TAG does not match VERSAO $VERSAO"; exit 1; }
+          gh release upload "$TAG" "dist/Ciranda-Setup-$VERSAO.exe" --clobber
 
   zip:
     if: github.event_name == 'release'
@@ -272,11 +286,12 @@ jobs:
         run: gh release upload "$TAG" "ciranda-$TAG-portatil.zip" --clobber
 
   notes:
-    if: github.event_name == 'release'
+    # after a release, or after attaching the setup to an existing release by hand (workflow_dispatch with a tag)
+    if: always() && needs.installer.result == 'success' && (github.event_name == 'release' && needs.zip.result == 'success' || inputs.tag != '')
     needs: [installer, zip]
     runs-on: ubuntu-24.04
     env:
-      TAG: ${{ github.event.release.tag_name }}
+      TAG: ${{ github.event.release.tag_name || inputs.tag }}
       GH_TOKEN: ${{ github.token }}
     steps:
       - name: Put install instructions on top of the Release notes
@@ -284,7 +299,7 @@ jobs:
           V="${TAG#v}"
           cat > top.md <<EOF
           ### Install (Windows 10/11)
-          1. Download **Ciranda-Setup-$V.exe** below and run it. No admin rights needed: it installs for your user, adds Ciranda to the Start menu and, if you want, a desktop shortcut and a "Tocar no Ciranda" entry when you right-click a folder.
+          1. Download **Ciranda-Setup-$V.exe** below and run it. No admin rights needed: it installs for your user, adds Ciranda to the Start menu and, if you want, a desktop shortcut, a "Play in Ciranda" entry when you right-click a folder and the photo/video registration. The installer follows the Windows language (English, Portuguese or Spanish).
           2. The installer is not code-signed, so the first time Windows may show **"Windows protected your PC"**: click **More info → Run anyway**.
           3. Uninstall from **Settings → Apps**. Your settings stay in \`%APPDATA%\\Ciranda\`.
 
