@@ -31,6 +31,9 @@ SVG = {
     "explorer": f'<g {_T}><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"/></g>',
     "limpar": f'<g {_T}><path d="M4 7h16"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12"/><path d="M9 7V4h6v3"/></g>',
     "seta": f'<g {_T}><path d="M6 9l6 6 6-6"/></g>',
+    "atualizar": f'<g {_T}><path d="M21 12a9 9 0 0 1-15.5 6.2"/><path d="M3 12A9 9 0 0 1 18.5 5.8"/><path d="M18.5 2v3.8h-3.8"/><path d="M5.5 22v-3.8h3.8"/></g>',
+    "bug": f'<g {_T}><rect x="7" y="7" width="10" height="13" rx="5"/><path d="M9.5 7V5.5a2.5 2.5 0 0 1 5 0V7"/><path d="M12 11v9"/><path d="M3 13h4"/><path d="M17 13h4"/><path d="M4 8l3 2"/><path d="M20 8l-3 2"/><path d="M4 19l3-2"/><path d="M20 19l-3-2"/></g>',
+    "fechar": f'<g {_T}><path d="M6 6l12 12"/><path d="M18 6L6 18"/></g>',
 }
 
 _cache: dict = {}

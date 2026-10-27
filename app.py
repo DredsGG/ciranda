@@ -27,12 +27,42 @@ def _registrar_erros():
     sys.excepthook = gancho
 
 
+def _testar_atualizacao(saida: str) -> int:
+    import json
+    from ciranda import VERSAO, atualizacao
+    res = {"versao_app": VERSAO, "passou": False}
+    try:
+        r = atualizacao.procurar("0.0.1", os.environ.get("CIRANDA_API_ATUALIZACAO") or atualizacao.API)
+        res.update(versao_github=r["versao"], setup=r["setup"], notas=r["notas"])
+        caminho = atualizacao.baixar_setup(r["setup"])  # confere o SHA-256 do GitHub
+        res["baixado"] = os.path.getsize(caminho)
+        res["passou"] = res["baixado"] == r["setup"]["tamanho"]
+        os.remove(caminho)
+    except Exception as e:
+        res["erro"] = f"{e.__class__.__name__}: {e}"
+    with open(saida, "w", encoding="utf-8") as f:
+        json.dump(res, f, ensure_ascii=False, indent=2)
+    return 0 if res["passou"] else 1
+
+
 def main():
     autoteste = next((a.split("=", 1)[1] if "=" in a else "autoteste.json"
                       for a in sys.argv[1:] if a.startswith("--autoteste")), None)
     if autoteste:
         from ciranda.autoteste import rodar
         sys.exit(rodar(os.path.abspath(autoteste)))
+    teste = next((a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--testar-atualizacao=")), None)
+    if teste:  # usado pelo teste no Windows do GitHub: procura e baixa o Release de verdade
+        sys.exit(_testar_atualizacao(os.path.abspath(teste)))
+    aplicar = next((a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--aplicar-atualizacao=")), None)
+    if aplicar:  # mesmo caminho do botão "Atualizar agora", sem a parte do download
+        import re
+        from ciranda import VERSAO
+        from ciranda.atualizacao import rodar_instalador
+        if not re.fullmatch(r"Ciranda-Setup-\d+\.\d+\.\d+\.exe", os.path.basename(aplicar)):
+            sys.exit(2)
+        rodar_instalador(os.path.abspath(aplicar), VERSAO)
+        sys.exit(0)
     _registrar_erros()
     if sys.platform == "win32":
         try:

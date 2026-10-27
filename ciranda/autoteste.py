@@ -32,6 +32,7 @@ def _gerar_midia(pasta: str) -> int:
 def rodar(saida: str) -> int:
     base = tempfile.mkdtemp(prefix="ciranda-autoteste-")
     os.environ["APPDATA"] = os.path.join(base, "appdata")  # ajustes do usuário intocados
+    os.environ["CIRANDA_SEM_ATUALIZACAO"] = "1"  # a atualização tem teste próprio
     midia = os.path.join(base, "midia")
     total = _gerar_midia(midia)
 
@@ -65,6 +66,8 @@ def rodar(saida: str) -> int:
         m = j.menu_abrir
         ok["menu_pastinha_visivel"] = m.isVisible()
         ok["menu_pastinha_itens"] = len(m.actions())
+        nomes = [a.text().split("\t")[0] for a in m.actions()]
+        ok["menu_tem_atualizacao_e_bug"] = "Procurar atualização" in nomes and "Relatar bug…" in nomes
         m.close()
         clique(j.b_p_limpar)
         QTimer.singleShot(700, etapa3)
@@ -81,6 +84,24 @@ def rodar(saida: str) -> int:
         ok["limpar_fila_funcionou"] = len(j.fila) == 0
         txt = j.assinatura_fila.text()
         ok["assinatura"] = (f"· v{VERSAO}" in txt and GITHUB in txt and j.assinatura_fila.openExternalLinks())
+        clique(j.b_abrir)
+        QTimer.singleShot(700, etapa5)
+
+    def etapa5():
+        m = j.menu_abrir
+        alvo = [a for a in m.actions() if a.text().startswith("Relatar bug")][0]
+        QTest.mouseClick(m, Qt.LeftButton, Qt.NoModifier, m.actionGeometry(alvo).center())
+        QTimer.singleShot(900, etapa6)
+
+    def etapa6():
+        d = getattr(j, "_dlg_bug", None)
+        ok["relatar_bug_abriu"] = bool(d and d.isVisible())
+        diag = d.previa.toPlainText() if d else ""
+        res["diagnostico"] = diag[:600]
+        ok["relatar_bug_sem_nomes"] = bool(diag) and not any(
+            x.lower() in diag.lower() for x in (base, "ciranda-autoteste", "viagem", os.environ.get("USERNAME") or "\0"))
+        if d:
+            d.reject()
         terminar()
 
     def terminar():
@@ -104,7 +125,7 @@ def rodar(saida: str) -> int:
                 falhou(e)
         return w
 
-    etapa1, etapa2, etapa3, etapa4 = map(protegido, (etapa1, etapa2, etapa3, etapa4))
+    etapa1, etapa2, etapa3, etapa4, etapa5, etapa6 = map(protegido, (etapa1, etapa2, etapa3, etapa4, etapa5, etapa6))
     QTimer.singleShot(3000, etapa1)
     QTimer.singleShot(60000, lambda: falhou(TimeoutError("autoteste passou de 60 s")))
     t0 = time.monotonic()

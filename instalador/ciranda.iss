@@ -69,4 +69,12 @@ Root: HKA; Subkey: "Software\Classes\Directory\Background\shell\Ciranda\command"
 
 [Run]
 Filename: "{app}\Ciranda.exe"; Description: "Abrir o Ciranda"; Flags: nowait postinstall skipifsilent
+; atualização pelo próprio app (/RELANCAR=1 /DE=<versão antiga>): reabre o Ciranda no fim, mesmo em silêncio
+Filename: "{app}\Ciranda.exe"; Parameters: "--atualizado-de={param:DE|}"; Flags: nowait; Check: DeveRelancar
 Filename: "ms-settings:defaultapps?registeredAppUser=Ciranda"; Description: "Escolher o Ciranda como app padrão de fotos e vídeos (abre as Configurações do Windows)"; Flags: shellexec nowait postinstall skipifsilent unchecked; Tasks: associar
+
+[Code]
+function DeveRelancar: Boolean;
+begin
+  Result := ExpandConstant('{param:RELANCAR|0}') = '1';
+end;

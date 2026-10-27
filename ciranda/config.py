@@ -16,6 +16,7 @@ PADRAO = {
     "painel": True,
     "ultimas_pastas": [],
     "geometria": None,
+    "versao_vista": "",  # para avisar "atualizado: vX → vY"
 }
 
 

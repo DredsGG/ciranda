@@ -13,13 +13,13 @@ from PySide6.QtCore import (QAbstractListModel, QByteArray, QElapsedTimer, QMode
                             QThread, QTimer, Signal)
 from PySide6.QtGui import (QActionGroup, QColor, QCursor, QFont, QFontMetrics, QGuiApplication,
                            QIcon, QKeySequence, QPainter, QPixmap, QShortcut)
-from PySide6.QtWidgets import (QAbstractItemView, QButtonGroup, QFileDialog, QMessageBox,
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QButtonGroup, QFileDialog, QMessageBox,
                                QFrame, QHBoxLayout, QLabel, QLineEdit, QListView,
                                QMainWindow, QMenu, QPushButton, QSizePolicy, QSlider,
                                QInputDialog, QStackedWidget, QStyle, QStyledItemDelegate,
                                QToolButton, QVBoxLayout, QWidget)
 
-from . import NOME, VERSAO, config, fotos
+from . import NOME, VERSAO, atualizacao, config, fotos, relato
 from .biblioteca import Item, varrer_varios
 from .fila import Fila
 from .icones import icone
@@ -68,6 +68,7 @@ QPushButton#primario:hover {{ background: #ff9b57; }}
 QPushButton#segmento {{ background: transparent; border: none; border-radius: 6px; padding: 6px 10px; color: {APAGADO}; }}
 QPushButton#segmento:hover {{ color: {TEXTO}; }}
 QPushButton#segmento:checked {{ background: #2b2e36; color: {TEXTO}; }}
+QFrame#faixa {{ background: #1f1812; border-bottom: 1px solid #3a2a1d; }}
 QFrame#segmentos {{ background: #1d1f25; border: 1px solid {LINHA}; border-radius: 8px; }}
 QSlider {{ min-height: 18px; }}
 QSlider::groove:horizontal {{ height: 4px; background: #2c2f37; border-radius: 2px; }}
@@ -163,6 +164,10 @@ class Ponte(QObject):
     duracao = Signal(float)
     pausa = Signal(bool)
     heic_pronto = Signal(int, str)
+
+
+class PonteAtualizacao(QObject):
+    resposta = Signal(object, bool)   # (dicionário do atualizacao.procurar ou Exception, manual)
 
 
 class Varredor(QThread):
@@ -591,6 +596,18 @@ class Janela(QMainWindow):
             QTimer.singleShot(0, lambda: self.carregar(caminhos_iniciais, adicionar=False))
         QTimer.singleShot(0, self._barra_titulo_escura)
 
+        # atualização sozinha: confere ao abrir (depois de 4 s) e a cada 6 horas
+        self._info_atualizacao = None
+        self._dlg_atualizacao = None
+        self._ponte_atualizacao = PonteAtualizacao()
+        self._ponte_atualizacao.resposta.connect(self._resposta_atualizacao)
+        self._t_atualizacao = QTimer(self, interval=6 * 3600 * 1000)
+        self._t_atualizacao.timeout.connect(lambda: self.procurar_atualizacao(manual=False))
+        if not os.environ.get("CIRANDA_SEM_ATUALIZACAO"):
+            QTimer.singleShot(4000, lambda: self.procurar_atualizacao(manual=False))
+            self._t_atualizacao.start()
+        self._avisar_se_atualizou()
+
     def _ajustar_barra(self):
         """Barra responsiva: em janela estreita o controle de volume vira só o ícone
         (a roda do mouse no vídeo e as setas continuam mudando o volume)."""
@@ -645,6 +662,158 @@ class Janela(QMainWindow):
             except Exception:
                 continue
 
+    # ----- faixa de aviso no topo (versão nova / atualizado) -----
+    def _montar_faixa(self) -> QFrame:
+        self.faixa = QFrame()
+        self.faixa.setObjectName("faixa")
+        h = QHBoxLayout(self.faixa)
+        h.setContentsMargins(16, 7, 10, 7)
+        h.setSpacing(10)
+        ic = QLabel()
+        ic.setPixmap(icone("atualizar", DESTAQUE, 16).pixmap(16, 16))
+        self.l_faixa = QLabel()
+        self.l_faixa.setTextFormat(Qt.RichText)
+        self.b_faixa = QPushButton("Ver e atualizar")
+        self.b_faixa.setObjectName("primario")
+        self.b_faixa.clicked.connect(self._abrir_dialogo_atualizacao)
+        fechar = self._botao("fechar", "Depois", self._fechar_faixa, tam=14)
+        h.addWidget(ic)
+        h.addWidget(self.l_faixa, 1)
+        h.addWidget(self.b_faixa)
+        h.addWidget(fechar)
+        self.faixa.hide()
+        self._faixa_pendente = False
+        self._t_faixa = QTimer(self, singleShot=True)
+        self._t_faixa.timeout.connect(self._fechar_faixa)
+        return self.faixa
+
+    def _mostrar_faixa(self, texto, botao=True, some_em_ms=0):
+        self.l_faixa.setText(texto)
+        self.b_faixa.setVisible(botao)
+        self._faixa_pendente = True
+        if not self.isFullScreen():
+            self.faixa.show()
+        if some_em_ms:
+            self._t_faixa.start(some_em_ms)
+        else:
+            self._t_faixa.stop()
+
+    def _fechar_faixa(self):
+        self._faixa_pendente = False
+        self.faixa.hide()
+
+    def _log_linha(self, texto):
+        try:
+            self._log.write(f"{time.strftime('%H:%M:%S')} {texto}\n")
+            self._log.flush()
+        except Exception:
+            pass
+
+    # ----- atualização sozinha -----
+    def procurar_atualizacao(self, manual=False):
+        api = os.environ.get("CIRANDA_API_ATUALIZACAO") or atualizacao.API
+        ponte = self._ponte_atualizacao
+
+        def trabalho():
+            try:
+                r = atualizacao.procurar(VERSAO, api)
+            except Exception as e:
+                r = e
+            ponte.resposta.emit(r, manual)
+        if manual:
+            self._status("Procurando atualização…")
+        threading.Thread(target=trabalho, daemon=True).start()
+
+    def _resposta_atualizacao(self, r, manual):
+        if isinstance(r, Exception):
+            self._log_linha(f"atualização: não deu para conferir ({r.__class__.__name__})")
+            if manual:
+                QMessageBox.information(self, "Procurar atualização",
+                                        "Não consegui falar com o GitHub agora (sem internet?).\n"
+                                        "Tente de novo daqui a pouco.")
+            return
+        self._log_linha(f"atualização: GitHub tem v{r['versao']}, aqui v{VERSAO}"
+                        f"{' (nova!)' if r['disponivel'] else ''}")
+        if not r["disponivel"]:
+            if manual:
+                QMessageBox.information(self, "Procurar atualização",
+                                        f"Você já está na versão mais nova (v{VERSAO}).")
+            return
+        self._info_atualizacao = r
+        if manual:
+            self._abrir_dialogo_atualizacao()
+        else:
+            self._mostrar_faixa(f"<b>Ciranda v{r['versao']}</b> disponível "
+                                f'<span style="color:{APAGADO}">· você está na v{VERSAO}</span>')
+
+    def _abrir_dialogo_atualizacao(self):
+        if not self._info_atualizacao:
+            return
+        from .dialogos import DialogoAtualizacao
+        self._fechar_faixa()
+        self._dlg_atualizacao = d = DialogoAtualizacao(self, self._info_atualizacao, self._sair_para_atualizar)
+        d.open()
+
+    def _sair_para_atualizar(self):
+        self._log_linha("atualização: instalador rodando, fechando o Ciranda")
+        self.close()
+        QApplication.instance().quit()
+
+    def _avisar_se_atualizou(self):
+        antes = next((a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--atualizado-de=")), "")
+        if antes:
+            self._log_linha(f"aberto pelo instalador depois de atualizar (antes v{antes.lstrip('v')}, agora v{VERSAO})")
+            # o instalador baixado fica na pasta temporária: apaga quando ele já terminou
+            QTimer.singleShot(60000, atualizacao.apagar_downloads)
+        antes = antes or self.cfg.get("versao_vista") or ""
+        if antes and atualizacao.mais_nova(VERSAO, antes):
+            self._mostrar_faixa(f"Ciranda atualizado: <b>v{antes.lstrip('v')} → v{VERSAO}</b>",
+                                botao=False, some_em_ms=15000)
+        if self.cfg.get("versao_vista") != VERSAO:
+            self.cfg["versao_vista"] = VERSAO
+            config.salvar(self.cfg)
+
+    # ----- relatar bug -----
+    def info_diagnostico(self) -> dict:
+        """Estado do player para o relato: só números, modos e extensões (sem nomes)."""
+        info = {"instalado": atualizacao.instalado()}
+        try:
+            from PySide6 import __version__ as pyside
+            from PySide6.QtCore import qVersion
+            info["qt"] = f"{qVersion()} (PySide6 {pyside})"
+        except Exception:
+            pass
+        try:
+            info["mpv"] = str(self.mpv.mpv_version)
+        except Exception:
+            pass
+        try:
+            info["telas"] = ", ".join(f"{t.size().width()}x{t.size().height()} @{t.devicePixelRatio():g}"
+                                      for t in QGuiApplication.screens())
+        except Exception:
+            pass
+        itens = self.fila.itens
+        nf = sum(1 for i in itens if i.tipo == "foto")
+        info["fila"] = (f"{len(itens)} itens ({nf} fotos, {len(itens) - nf} vídeos), "
+                        f"{len(self.pastas_abertas)} pastas abertas, {self._pastas_lidas} pastas lidas, "
+                        f"{self._ignorados} arquivos de outros tipos")
+        info["modos"] = (f"aleatório {'sim' if self.fila.aleatorio else 'não'}, repetir {self.fila.repetir}, "
+                         f"filtro {self.fila.filtro}, foto {self.s_foto.value()} s, "
+                         f"volume {self.volume.value()}{' (mudo)' if self.cfg.get('mudo') else ''}, "
+                         f"tela cheia {'sim' if self.isFullScreen() else 'não'}")
+        if self._item is not None:
+            ext = os.path.splitext(self._item.caminho)[1].lower() or "?"
+            pos = f" em {fmt_tempo(self.busca.value() * self._duracao / 1000)} de {fmt_tempo(self._duracao)}" \
+                if self._item.tipo == "video" and self._duracao else ""
+            info["atual"] = f"{self._item.tipo} {ext}{pos}{' (falhou)' if self._item.falhou else ''}"
+        return info
+
+    def relatar_bug(self):
+        from .dialogos import DialogoBug
+        diag = relato.diagnostico(self.info_diagnostico(), config.pasta_dados())
+        self._dlg_bug = d = DialogoBug(self, diag)
+        d.open()
+
     def _barra_titulo_escura(self):
         """Windows 11: barra de título escura, da cor do app (DWM)."""
         if not WINDOWS:
@@ -684,6 +853,8 @@ class Janela(QMainWindow):
         v = QVBoxLayout(raiz)
         v.setContentsMargins(0, 0, 0, 0)
         v.setSpacing(0)
+
+        v.addWidget(self._montar_faixa())
 
         meio = QHBoxLayout()
         meio.setContentsMargins(0, 0, 0, 0)
@@ -890,7 +1061,12 @@ class Janela(QMainWindow):
             m.linha("foto", "Usar como app padrão…",
                     "Abre a tela do Windows para escolher o Ciranda para fotos e vídeos", "",
                     self.usar_como_padrao)
-        m.titulo("Problemas")
+        m.titulo("Ciranda")
+        m.linha("atualizar", "Procurar atualização", f"Você está na v{VERSAO}. Confere se saiu versão nova "
+                "no GitHub (o Ciranda também confere sozinho ao abrir)", "",
+                lambda: self.procurar_atualizacao(manual=True))
+        m.linha("bug", "Relatar bug…", "Abre o relato no GitHub já preenchido, sem nomes de pastas e arquivos",
+                "", self.relatar_bug)
         m.linha("repetir", "Restaurar de fábrica…",
                 "Volta todos os ajustes ao padrão e limpa fila, Continuar e cache. Não apaga nada do PC",
                 "", self.restaurar_fabrica, perigo=True)
@@ -1268,6 +1444,7 @@ class Janela(QMainWindow):
         fotos.apagar_cache()
         self.cfg = dict(config.PADRAO)
         self.cfg["ultimas_pastas"] = []
+        self.cfg["versao_vista"] = VERSAO
         config.salvar(self.cfg)
         # aplica o padrão na tela e no motor
         self.fila.aleatorio = bool(self.cfg["aleatorio"])
@@ -1748,6 +1925,7 @@ class Janela(QMainWindow):
         elif self.fila.itens:
             self._painel_antes_tela_cheia = self.painel.isVisible()
             self.painel.hide()
+            self.faixa.hide()
             self.showFullScreen()
             self.b_tela.setIcon(icone("sairtela", TEXTO, 19))
             self._cursor_antes = QCursor.pos()
@@ -1764,6 +1942,8 @@ class Janela(QMainWindow):
         self.tela.unsetCursor()
         self.painel.setVisible(self._painel_antes_tela_cheia)
         self.b_tela.setIcon(icone("telacheia", TEXTO, 19))
+        if self._faixa_pendente:
+            self.faixa.show()
 
     def _vigiar_cursor(self):
         pos = QCursor.pos()

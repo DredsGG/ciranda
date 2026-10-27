@@ -5,8 +5,10 @@ name: Release
 #     Inno Setup), runs the packaged app's self-test (it clicks the menus and checks they
 #     show up), installs it silently, checks the photo/video registration ("Open with" and
 #     Default apps), self-tests the installed copy, checks the single window (a second
-#     Ciranda hands its file to the first and quits), uninstalls it and checks nothing was
-#     left behind. Only then the setup is attached to the Release.
+#     Ciranda hands its file to the first and quits), runs the update path for real (the
+#     installed app finds the latest release on GitHub, downloads its setup and checks the
+#     SHA-256; then a newer test setup is applied the way "Atualizar agora" does it and
+#     Ciranda must reopen on it), uninstalls it and checks nothing was left behind. Only then the setup is attached to the Release.
 #   - "zip" builds the portable zip (Ciranda.exe launcher + Python on first run).
 # Pushing to the "instalador" branch (or running it by hand) only builds and tests the
 # installer and keeps it as a workflow artifact: nothing is published.
@@ -96,6 +98,9 @@ jobs:
         run: |
           & $env:ISCC "/DVersao=$env:VERSAO" instalador\ciranda.iss
           if ($LASTEXITCODE -ne 0) { exit 1 }
+          # test only (never published): a "newer" setup to exercise the self-update
+          & $env:ISCC "/DVersao=9.9.9" "/Odist\proximo" instalador\ciranda.iss
+          if ($LASTEXITCODE -ne 0) { exit 1 }
           Get-Item "dist\Ciranda-Setup-$env:VERSAO.exe" | Format-List Name, Length
 
       - name: Install silently, self-test the installed app, uninstall
@@ -145,6 +150,36 @@ jobs:
           Copy-Item $log "ciranda-instancia.log" -ErrorAction SilentlyContinue
           if (-not $ok) { Write-Error "The open Ciranda did not receive the file"; exit 1 }
           "Single window: OK"
+          # update, for real: the installed app finds the latest release, downloads its setup, checks the SHA-256
+          $p = Start-Process -FilePath $exe -ArgumentList "--testar-atualizacao=$PWD\atualizacao-github.json" -Wait -PassThru
+          Get-Content atualizacao-github.json
+          $r = Get-Content atualizacao-github.json | ConvertFrom-Json
+          if ($p.ExitCode -ne 0 -or -not $r.passou) { Write-Error "Update check/download failed"; exit 1 }
+          # then a newer setup is applied the way "Atualizar agora" does it: silent install, Ciranda reopens
+          $chave = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\{4B485C6B-2F3C-4AB5-8B7E-FBCC96A3752A}_is1"
+          "Before update: DisplayVersion=$((Get-ItemProperty $chave).DisplayVersion)"
+          $proximo = (Resolve-Path "dist\proximo\Ciranda-Setup-9.9.9.exe").Path
+          $a = Start-Process -FilePath $exe -ArgumentList "--aplicar-atualizacao=`"$proximo`"" -PassThru
+          if (-not $a.WaitForExit(20000)) { Write-Error "Ciranda did not quit to let the setup run"; exit 1 }
+          $novo = $null; $ver = ""
+          for ($k = 0; $k -lt 150; $k++) {
+            $ver = (Get-ItemProperty $chave -ErrorAction SilentlyContinue).DisplayVersion
+            $novo = Get-CimInstance Win32_Process -Filter "Name='Ciranda.exe'" | Where-Object { $_.CommandLine -like "*--atualizado-de=$env:VERSAO*" }
+            if ($ver -eq "9.9.9" -and $novo) { break }
+            Start-Sleep -Seconds 1
+          }
+          "After update: DisplayVersion=$ver, reopened: $($novo.CommandLine)"
+          if ($ver -ne "9.9.9") { Write-Error "The update did not install"; exit 1 }
+          if (-not $novo) { Write-Error "Ciranda did not reopen after the update"; exit 1 }
+          for ($k = 0; $k -lt 30 -and -not (Select-String -Path $log -Pattern "aberto pelo instalador" -Quiet); $k++) { Start-Sleep -Seconds 1 }
+          $okLog = Select-String -Path $log -Pattern "aberto pelo instalador" -Quiet
+          Copy-Item $log "ciranda-atualizado.log" -ErrorAction SilentlyContinue
+          $novo | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }
+          Start-Sleep -Seconds 2
+          if (-not $okLog) { Write-Error "The reopened Ciranda did not start normally"; exit 1 }
+          if (-not (Test-Path "HKCU:\Software\Classes\Directory\shell\Ciranda")) { Write-Error "The update lost the right-click entry (tasks)"; exit 1 }
+          if (-not (Test-Path "HKCU:\Software\Classes\Ciranda.Foto")) { Write-Error "The update lost the photo/video registration (tasks)"; exit 1 }
+          "Update: OK"
           $u = Start-Process (Join-Path $app "unins000.exe") -ArgumentList "/VERYSILENT","/SUPPRESSMSGBOXES","/NORESTART" -Wait -PassThru
           for ($k = 0; $k -lt 30 -and (Test-Path $exe); $k++) { Start-Sleep -Seconds 1 }
           if (Test-Path $exe) { Write-Error "Uninstall left Ciranda.exe behind"; exit 1 }
@@ -164,6 +199,7 @@ jobs:
           path: |
             dist/Ciranda-Setup-*.exe
             autoteste-*.json
+            atualizacao-*.json
             ciranda-*.log
           if-no-files-found: ignore
 
