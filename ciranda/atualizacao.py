@@ -1,11 +1,11 @@
 """Atualização sozinha (igual aos outros projetos do André, adaptado para app):
 
-- procura versão nova nos Releases do GitHub (ao abrir, a cada 6 h e no botão
-  "Procurar atualização");
-- mostra o que mudou e os botões Atualizar / Depois;
-- Atualizar: baixa o Ciranda-Setup-X.Y.Z.exe do Release, confere o SHA-256 com o que o
-  GitHub informa (`digest`) e roda o instalador em silêncio; o app fecha, o instalador
-  troca os arquivos e reabre o Ciranda já na versão nova.
+- procura versão nova nos Releases do GitHub (ao abrir, a cada 30 min, ao voltar para a
+  janela e no botão "Procurar atualização");
+- desde a 1.4.0, no Ciranda instalado, baixa o Ciranda-Setup-X.Y.Z.exe do Release sozinho,
+  confere o SHA-256 com o que o GitHub informa (`digest`) e instala em silêncio na primeira
+  pausa (nada tocando, pausado, fim do arquivo ou ao fechar); o instalador troca os arquivos e
+  reabre o Ciranda na versão nova, de onde parou (a janela cuida do momento e do "de onde parou").
 Sem conta, sem token, sem mandar nada do usuário: é só uma leitura pública do GitHub.
 
 Canal de teste (só no PC do André): se existir %APPDATA%\\Ciranda\\pasta-de-teste.txt com o
@@ -24,6 +24,7 @@ import ssl
 import subprocess
 import sys
 import tempfile
+import threading
 import urllib.request
 
 from .textos import t
@@ -215,10 +216,11 @@ def copiar_setup_local(setup: dict, progresso=None, cancelado=lambda: False) -> 
     origem = setup["caminho"]
     destino = os.path.join(pasta_downloads(), setup["nome"])
     os.makedirs(os.path.dirname(destino), exist_ok=True)
+    parte = f"{destino}.{os.getpid()}-{threading.get_ident()}.part"  # baixar sozinho e o botão ao mesmo tempo não se atropelam
     h = hashlib.sha256()
     total = os.path.getsize(origem)
     feito = 0
-    with open(origem, "rb") as r, open(destino + ".part", "wb") as f:
+    with open(origem, "rb") as r, open(parte, "wb") as f:
         while True:
             if cancelado():
                 raise InterruptedError("cópia cancelada")
@@ -236,9 +238,9 @@ def copiar_setup_local(setup: dict, progresso=None, cancelado=lambda: False) -> 
     except (OSError, IndexError):
         esperado = ""
     if feito != total or (esperado and h.hexdigest() != esperado):
-        os.remove(destino + ".part")
+        os.remove(parte)
         raise ValueError(t("erro_local"))
-    os.replace(destino + ".part", destino)
+    os.replace(parte, destino)
     return destino
 
 
@@ -252,9 +254,12 @@ def baixar_setup(setup: dict, progresso=None, cancelado=lambda: False) -> str:
         raise ValueError(t("erro_sem_sha"))
     destino = os.path.join(pasta_downloads(), setup["nome"])
     os.makedirs(os.path.dirname(destino), exist_ok=True)
+    parte = f"{destino}.{os.getpid()}-{threading.get_ident()}.part"  # baixar sozinho e o botão ao mesmo tempo não se atropelam
+    if os.path.isfile(destino) and sha256_arquivo(destino) == esperado.split(":", 1)[1].lower():
+        return destino  # já baixado e conferido antes (ex.: baixou sozinho e a pessoa clicou em Atualizar)
     h = hashlib.sha256()
     feito = 0
-    with _abrir(url, timeout=60) as r, open(destino + ".part", "wb") as f:
+    with _abrir(url, timeout=60) as r, open(parte, "wb") as f:
         total = int(r.headers.get("Content-Length") or setup.get("tamanho") or 0)
         while True:
             if cancelado():
@@ -268,17 +273,26 @@ def baixar_setup(setup: dict, progresso=None, cancelado=lambda: False) -> str:
             if progresso:
                 progresso(feito, total)
     if h.hexdigest() != esperado.split(":", 1)[1].lower():
-        os.remove(destino + ".part")
+        os.remove(parte)
         raise ValueError(t("erro_sha"))
-    os.replace(destino + ".part", destino)
+    os.replace(parte, destino)
     return destino
 
 
-def rodar_instalador(caminho: str, versao_atual: str):
-    """Roda o instalador em silêncio e reabre o Ciranda no fim (o app deve sair logo depois).
-    /RELANCAR=1 faz o instalador abrir o Ciranda no fim (seção [Run] do ciranda.iss)."""
+def sha256_arquivo(caminho: str) -> str:
+    h = hashlib.sha256()
+    with open(caminho, "rb") as f:
+        for bloco in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(bloco)
+    return h.hexdigest()
+
+
+def rodar_instalador(caminho: str, versao_atual: str, relancar: bool = True):
+    """Roda o instalador em silêncio (o app deve sair logo depois).
+    relancar: /RELANCAR=1 faz o instalador abrir o Ciranda no fim (seção [Run] do ciranda.iss);
+    sem ele (atualização na hora de fechar o Ciranda) só instala."""
     args = [caminho, "/SILENT", "/SUPPRESSMSGBOXES", "/NORESTART", "/CLOSEAPPLICATIONS",
-            "/RELANCAR=1", f"/DE={versao_atual}"]
+            f"/RELANCAR={1 if relancar else 0}", f"/DE={versao_atual}"]
     flags = 0
     if sys.platform == "win32":
         flags = getattr(subprocess, "DETACHED_PROCESS", 0) | getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0)

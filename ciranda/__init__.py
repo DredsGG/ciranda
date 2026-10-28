@@ -4,4 +4,4 @@ Feito por Dreds.
 """
 
 NOME = "Ciranda"
-VERSAO = "1.3.1"
+VERSAO = "1.4.0"

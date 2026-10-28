@@ -169,6 +169,8 @@ class Ponte(QObject):
 
 class PonteAtualizacao(QObject):
     resposta = Signal(object, str)   # (dicionário do atualizacao.procurar ou Exception, modo)
+    baixou = Signal(str, str)        # (versão, caminho do setup conferido) — download sozinho
+    nao_baixou = Signal(str, str)    # (versão, erro)
 
 
 class Varredor(QThread):
@@ -704,6 +706,18 @@ class Janela(QMainWindow):
         self._adiamento_s = float(os.environ.get("CIRANDA_ADIAMENTO_S") or 60 * 60)
         self._ponte_atualizacao = PonteAtualizacao()
         self._ponte_atualizacao.resposta.connect(self._resposta_atualizacao)
+        self._ponte_atualizacao.baixou.connect(self._baixou_sozinho)
+        self._ponte_atualizacao.nao_baixou.connect(self._nao_baixou_sozinho)
+        # atualização sozinha (1.4.0): baixa em segundo plano e instala na primeira pausa
+        self._setup_pronto = None    # (versão, caminho) já baixado e conferido
+        self._baixando_auto = ""     # versão sendo baixada agora
+        self._instalando = False     # o instalador já foi chamado: o Ciranda está saindo
+        self._retomar = None         # onde voltar depois de atualizar (lido do config)
+        self._retomar_pos = 0.0
+        self._retomar_pausado = False
+        self._t_pausa_instala = QTimer(self, singleShot=True, interval=int(
+            float(os.environ.get("CIRANDA_PAUSA_INSTALA_S") or 2) * 1000))
+        self._t_pausa_instala.timeout.connect(self._instalar_se_livre)
         self._t_atualizacao = QTimer(self, interval=int(self._intervalo_s * 1000))
         self._t_atualizacao.timeout.connect(lambda: self.procurar_atualizacao(manual=False))
         self._t_adiamento = QTimer(self, singleShot=True)
@@ -925,11 +939,18 @@ class Janela(QMainWindow):
                 QMessageBox.information(self, t("procurar_atualizacao"), t("ja_mais_nova", versao=VERSAO))
             return
         self._info_atualizacao = r
+        sozinho = self._pode_instalar_sozinho(r)
         if r.get("urgente"):
             self._travar_urgente()
+            if sozinho:
+                self._baixar_sozinho(r)
             return
         if manual:
             self._abrir_dialogo_atualizacao()
+            return
+        if sozinho:
+            # Ciranda instalado: baixa e confere em segundo plano, sem perguntar; instala na primeira pausa
+            self._baixar_sozinho(r)
             return
         # o X só adia: volta depois de 1 h ou na próxima abertura, até atualizar
         adiado = self.cfg.get("aviso_adiado_versao") == r["versao"] and time.time() < float(self.cfg.get("aviso_adiado_ate") or 0)
@@ -940,6 +961,158 @@ class Janela(QMainWindow):
             self._quadro_nova_versao()  # já na tela: só atualiza o conteúdo
             return
         self._mostrar_quadro(self._quadro_nova_versao)
+
+    # ----- atualização sozinha (1.4.0): baixa, confere e instala na primeira pausa -----
+    @staticmethod
+    def _pode_instalar_sozinho(r):
+        return bool(r.get("setup")) and (atualizacao.instalado() or bool(r.get("local")))
+
+    def _baixar_sozinho(self, r):
+        versao = r["versao"]
+        if self._setup_pronto and self._setup_pronto[0] == versao:
+            self._tentar_instalar()
+            return
+        if self._baixando_auto == versao or self._instalando:
+            return
+        self._baixando_auto = versao
+        self._log_linha(f"atualização: baixando a v{versao} sozinho"
+                        f"{' (pasta de teste)' if r.get('local') else ''}")
+        ponte = self._ponte_atualizacao
+        setup, local = r["setup"], bool(r.get("local"))
+
+        def trabalho():
+            try:
+                fn = atualizacao.copiar_setup_local if local else atualizacao.baixar_setup
+                ponte.baixou.emit(versao, fn(setup))
+            except Exception as e:
+                ponte.nao_baixou.emit(versao, str(e) or e.__class__.__name__)
+        threading.Thread(target=trabalho, daemon=True).start()
+
+    def _baixou_sozinho(self, versao, caminho):
+        self._baixando_auto = ""
+        r = self._info_atualizacao
+        if not r or r["versao"] != versao:
+            return
+        self._setup_pronto = (versao, caminho)
+        self._log_linha(f"atualização: v{versao} baixada e conferida (SHA-256), instala na primeira pausa")
+        self._tentar_instalar()
+
+    def _nao_baixou_sozinho(self, versao, erro):
+        self._baixando_auto = ""
+        self._log_linha(f"atualização: não deu para baixar a v{versao} sozinho ({erro}); fica o aviso com Atualizar")
+        if self._urgente:
+            return  # o quadro urgente já está na tela, com Atualizar
+        if self.quadro.isVisible() and self.quadro.tipo == "nova":
+            return
+        self._mostrar_quadro(self._quadro_nova_versao)  # reserva: o jeito da 1.3.1, com o botão
+
+    def _livre(self):
+        """Dá para fechar e atualizar agora sem atrapalhar: nada tocando (fila vazia, pausado ou fim
+        da fila), sem janela aberta por cima e sem pasta sendo lida."""
+        if QApplication.activeModalWidget() is not None:
+            return False
+        if self.varredor and self.varredor.isRunning():
+            return False
+        if self._item is None or self._fim_da_fila:
+            return True
+        try:
+            return bool(self.mpv.pause)
+        except Exception:
+            return False
+
+    def _tentar_instalar(self):
+        """Chamado quando o setup fica pronto (e a cada nova conferida). Livre → instala já;
+        tocando → avisa no quadro e instala na próxima pausa (fim do arquivo, pausa ou ao fechar)."""
+        if not self._setup_pronto or self._instalando:
+            return
+        if self._urgente or self._livre():
+            self._instalar_agora()
+            return
+        if self.quadro.isVisible() and self.quadro.tipo == "pronta":
+            return
+        r = self._info_atualizacao
+        adiado = r and self.cfg.get("aviso_adiado_versao") == r["versao"] \
+            and time.time() < float(self.cfg.get("aviso_adiado_ate") or 0)
+        if not adiado:
+            self._mostrar_quadro(self._quadro_pronta)
+
+    def _instalar_se_livre(self):
+        if self._setup_pronto and not self._instalando and self._livre():
+            self._instalar_agora()
+
+    def _guardar_retomar(self, item=None):
+        """Guarda onde a pessoa está, para o Ciranda novo voltar dali (só depois de atualizar)."""
+        mesmo = item is None or item is self._item
+        item = self._item if item is None else item
+        caminhos = [c for c in self.pastas_abertas if os.path.exists(c)]
+        if item is None or not caminhos:
+            self.cfg["retomar"] = {}
+        else:
+            pausado = False
+            pos = 0.0
+            if mesmo:
+                try:
+                    pausado = bool(self.mpv.pause) or self._fim_da_fila
+                except Exception:
+                    pausado = False
+                if item.tipo == "video":
+                    pos = float(getattr(self, "_t_atual", 0.0) or 0.0)
+            self.cfg["retomar"] = {"caminhos": caminhos[:5000], "arquivo": item.caminho, "pos": round(pos, 2),
+                                   "pausado": pausado, "tela_cheia": self.isFullScreen(),
+                                   "de": VERSAO, "quando": time.time()}
+        config.salvar(self.cfg)
+
+    def _instalar_agora(self, proximo=None):
+        """Fecha e instala em silêncio; o instalador reabre o Ciranda, que volta de onde parou.
+        proximo: o arquivo que ia começar (fim natural do anterior) — volta nele, do começo."""
+        if not self._setup_pronto or self._instalando:
+            return
+        versao, caminho = self._setup_pronto
+        self._guardar_retomar(proximo)
+        try:
+            atualizacao.rodar_instalador(caminho, VERSAO)
+        except Exception as e:
+            self._log_linha(f"atualização: não deu para abrir o instalador ({e})")
+            self.cfg["retomar"] = {}
+            config.salvar(self.cfg)
+            self._setup_pronto = None
+            self._mostrar_quadro(self._quadro_nova_versao)
+            return
+        self._instalando = True
+        self._log_linha(f"atualização: instalando a v{versao} sozinho (volta de onde parou)")
+        if self._item is not None and self.palco.currentWidget() is self.tela:
+            self._aviso(t("atualizando_ja", versao=versao))
+        self._t_foto.stop()
+        try:
+            self.mpv.pause = True
+        except Exception:
+            pass
+        QTimer.singleShot(int(os.environ.get("CIRANDA_ESPERA_SAIR_MS") or 700), self._sair_para_atualizar)
+
+    def _quadro_pronta(self):
+        r = self._info_atualizacao
+        if not r or not self._setup_pronto:
+            return
+        itens = atualizacao.notas_no_idioma(r, textos.atual())[:6]
+        corpo = f'<span style="color:{APAGADO}">{t("pronta_corpo")}{t("veio_pasta_teste") if r.get("local") else ""}</span>'
+        if itens:
+            corpo += f"<br><br><b>{t('o_que_mudou')}</b><br>" + self._lista_html(itens)
+        self.quadro.mostrar("pronta", t("pronta_titulo", versao=r["versao"]), corpo,
+                            [(t("atualizar_agora"), lambda: self._instalar_agora(), True)])
+
+    def _retomar_depois_de_atualizar(self):
+        """Abriu pelo instalador: volta para a fila, o arquivo e o ponto em que estava."""
+        r = self.cfg.get("retomar") or {}
+        self.cfg["retomar"] = {}
+        config.salvar(self.cfg)
+        if not r or time.time() - float(r.get("quando") or 0) > 1800:
+            return
+        caminhos = [c for c in r.get("caminhos") or [] if os.path.exists(c)]
+        if not caminhos:
+            return
+        self._retomar = r
+        self._log_linha("atualização: voltando de onde parou")
+        self.carregar(caminhos, adicionar=False)
 
     # ----- versão urgente: quadro sem X e player pausado até atualizar -----
     def _travar_urgente(self):
@@ -991,6 +1164,9 @@ class Janela(QMainWindow):
             d._atualizar()
 
     def _sair_para_atualizar(self):
+        if not self._instalando:  # veio pela janela de atualização (botão): guarda onde estava
+            self._instalando = True
+            self._guardar_retomar()
         self._log_linha("atualização: instalador rodando, fechando o Ciranda")
         self.close()
         QApplication.instance().quit()
@@ -1005,12 +1181,13 @@ class Janela(QMainWindow):
 
     def _quadro_fechou(self, como):
         tipo, _, jeito = como.partition(":")
-        if tipo == "nova" and jeito == "x" and self._info_atualizacao:
+        if tipo in ("nova", "pronta") and jeito == "x" and self._info_atualizacao:
             # o X só adia por 1 h (a próxima abertura mostra de novo)
             self.cfg["aviso_adiado_versao"] = self._info_atualizacao["versao"]
             self.cfg["aviso_adiado_ate"] = time.time() + self._adiamento_s
             config.salvar(self.cfg)
-            self._t_adiamento.start(int(self._adiamento_s * 1000) + 500)
+            if tipo == "nova":
+                self._t_adiamento.start(int(self._adiamento_s * 1000) + 500)
             self._log_linha(f"atualização: aviso da v{self._info_atualizacao['versao']} adiado")
         if tipo == "tutorial":
             self.cfg["tutorial_visto"] = True
@@ -1043,6 +1220,9 @@ class Janela(QMainWindow):
                             fechavel=not urgente)
 
     def _atualizar_pelo_quadro(self):
+        if self._setup_pronto and not self._instalando:  # já baixado sozinho: instala direto
+            self._instalar_agora()
+            return
         if self._urgente:  # urgente: o quadro fica (sem X) até o instalador fechar o Ciranda
             self._abrir_dialogo_atualizacao(ja_atualizar=True)
             return
@@ -1094,6 +1274,7 @@ class Janela(QMainWindow):
             self._log_linha(f"aberto pelo instalador depois de atualizar (antes v{arg.lstrip('v')}, agora v{VERSAO})")
             # o instalador baixado fica na pasta temporária: apaga quando ele já terminou
             QTimer.singleShot(60000, atualizacao.apagar_downloads)
+            QTimer.singleShot(0, self._retomar_depois_de_atualizar)
         antes = (arg or self.cfg.get("versao_vista") or "").lstrip("v")
         sem_quadros = os.environ.get("CIRANDA_SEM_QUADROS")  # autoteste e testes antigos
         if arg and atualizacao.versao_tupla(arg) == atualizacao.versao_tupla(VERSAO):
@@ -1739,7 +1920,22 @@ class Janela(QMainWindow):
         self._atualizar_lista()
         self._fim_da_fila = False
         self._erros_seguidos = 0
-        item = self.fila.proximo()
+        retomar, self._retomar = self._retomar, None
+        item = None
+        if retomar:  # voltou de uma atualização: o mesmo arquivo, no mesmo ponto
+            idx = next((i for i, it in enumerate(self.fila.itens) if it.caminho == retomar.get("arquivo")), None)
+            item = self.fila.ir_para(idx) if idx is not None else None
+            if item is not None and item.tipo == "video":
+                self._retomar_pos = float(retomar.get("pos") or 0)
+            if item is not None and retomar.get("pausado"):
+                if item.tipo == "video":
+                    self._retomar_pausado = True  # abre o vídeo já pausado, sem andar nada
+                else:
+                    QTimer.singleShot(300, lambda: (not self.mpv.pause) and self.alternar_pausa())
+            if retomar.get("tela_cheia"):
+                QTimer.singleShot(400, lambda: (not self.isFullScreen()) and self.alternar_tela_cheia())
+        if item is None:
+            item = self.fila.proximo()
         if item is None and self.fila.filtro != "tudo" and self.fila.itens:
             # filtro escondeu tudo (ex.: "Vídeos" numa pasta só de fotos)
             self.definir_filtro("tudo")
@@ -1849,6 +2045,10 @@ class Janela(QMainWindow):
         if item is None:
             self._fim()
             return
+        if self._setup_pronto and not self._instalando and self._item is not None:
+            # versão nova já baixada: a troca de arquivo é a pausa natural; volta neste, do começo
+            self._instalar_agora(proximo=item)
+            return
         self._fim_da_fila = False
         self._token += 1
         self._item = item
@@ -1885,8 +2085,13 @@ class Janela(QMainWindow):
         rep_um = self.fila.repetir == "um"
         try:
             self.mpv["loop-file"] = "inf" if (item.animada or (item.tipo == "video" and rep_um)) else "no"
+            pos, self._retomar_pos = self._retomar_pos, 0.0
+            try:
+                self.mpv["start"] = f"{pos:.2f}" if pos > 1 else "none"  # volta de onde parou (só depois de atualizar)
+            except Exception:
+                pass
             self.mpv.command("loadfile", caminho, "replace")
-            self.mpv.pause = False
+            self.mpv.pause, self._retomar_pausado = self._retomar_pausado, False
         except Exception as e:
             self._log.write(f"loadfile falhou: {e}\n")
             self._arquivo_falhou()
@@ -2162,6 +2367,11 @@ class Janela(QMainWindow):
         # sem nada tocando o mpv fica ocioso com pause=no: o botão tem que mostrar "tocar"
         tocando = not pausado and self._item is not None and not self._fim_da_fila
         self.b_play.setIcon(icone("pause" if tocando else "play", "#1a0f07", 22))
+        if self._setup_pronto and not self._instalando:
+            if pausado:
+                self._t_pausa_instala.start()  # pausou (ou a fila acabou): instala se continuar pausado
+            else:
+                self._t_pausa_instala.stop()
 
     def _tique(self):
         """Barra de progresso da foto (contagem até a próxima)."""
@@ -2344,6 +2554,14 @@ class Janela(QMainWindow):
 
     # ----- fechar -----
     def closeEvent(self, e):
+        if self._setup_pronto and not self._instalando:
+            # versão nova baixada: instala ao fechar, sem reabrir (a próxima abertura já é a nova)
+            self._instalando = True
+            try:
+                atualizacao.rodar_instalador(self._setup_pronto[1], VERSAO, relancar=False)
+                self._log_linha(f"atualização: instalando a v{self._setup_pronto[0]} ao fechar")
+            except Exception as ex:
+                self._log_linha(f"atualização: não deu para instalar ao fechar ({ex})")
         self.quadro.hide()
         if self.isFullScreen():
             self.showNormal()

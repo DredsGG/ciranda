@@ -1,5 +1,6 @@
-"""Canal de teste (só no PC do André): um Ciranda-Setup mais novo na pasta de teste aparece
-na faixa e o "Atualizar agora" copia e instala, sem apagar o original da pasta.
+"""Canal de teste (só no PC do André): um Ciranda-Setup mais novo na pasta de teste é copiado
+sozinho (1.4.0), aparece no quadro "baixada" (tocando) e o "Atualizar agora" instala, sem apagar o
+original da pasta.
     CIRANDA_VO=x11 xvfb-run -a python testes/teste_canal_teste.py <pasta-de-midia> <saida>"""
 import json
 import os
@@ -99,7 +100,7 @@ from PySide6.QtWidgets import QApplication  # noqa: E402
 from ciranda.janela import QSS, Janela  # noqa: E402
 
 rodou = []
-A.rodar_instalador = lambda caminho, versao: rodou.append((caminho, versao))  # não roda .exe no teste
+A.rodar_instalador = lambda caminho, versao, relancar=True: rodou.append((caminho, versao))  # não roda .exe no teste
 app = QApplication(sys.argv)
 app.setStyle("Fusion")
 app.setStyleSheet(QSS)
@@ -115,27 +116,23 @@ def clique(w):
 
 def etapa_faixa():
     q = j.quadro
-    ok(q.isVisible() and q.tipo == "nova" and "9.9.8" in q.l_titulo.text(), f"quadro: {q.l_titulo.text()!r}")
+    ok(q.isVisible() and q.tipo == "pronta" and "9.9.8" in q.l_titulo.text(), f"quadro: {q.l_titulo.text()!r}")
     ok("Canal de teste" in q.l_corpo.text(), q.l_corpo.text())
+    ok(not rodou, "instalou no meio do que está tocando")
     os.system(f"import -window root '{os.path.join(SAIDA, 'canal-teste-quadro.png')}'")
-    clique(q.botoes()[-1])  # Atualizar: abre a janela e já começa
-
-
-def etapa_dialogo():
-    d = j._dlg_atualizacao
-    ok(d is not None, "janela do canal de teste")
+    clique(q.botoes()[-1])  # Atualizar agora: instala já (o setup já foi copiado sozinho)
 
 
 def conferir_depois():
     ok(rodou and rodou[-1][0].endswith("Ciranda-Setup-9.9.8.exe") and rodou[-1][1] == VERSAO, rodou)
     ok(os.path.dirname(rodou[-1][0]) == A.pasta_downloads(), "roda a cópia da pasta temporária")
     ok(os.path.exists(nova), "o setup da pasta de teste continua lá")
-    log.append("faixa (teste) → janela → Atualizar agora → copiou e chamou o instalador")
+    log.append("pasta de teste → copiou sozinho → quadro 'baixada' → Atualizar agora → chamou o instalador")
     print("\n".join(log))
     print(f"CANAL TESTE PASSOU ({n} checagens)")
 
 
-passos = [(5500, etapa_faixa), (1000, etapa_dialogo)]
+passos = [(5500, etapa_faixa)]
 
 
 def rodar(i=0):
