@@ -19,5 +19,6 @@ Ciranda's own code is under the [MIT License](LICENSE). The release zip also shi
 | [python-mpv](https://github.com/jaseg/python-mpv) | 1.0.8 | GPL-2.0+ or LGPL-2.1+ (same as libmpv) |
 | [Pillow](https://pypi.org/project/pillow/) | 12.3.0 | MIT-CMU |
 | [pillow-heif](https://pypi.org/project/pillow-heif/) | 1.8.0 | BSD-3-Clause (bundles libheif, LGPL) |
+| [segno](https://pypi.org/project/segno/) | 1.6.6 | BSD-3-Clause (QR code of the Support ♥ card) |
 
 Check each project for the exact terms.

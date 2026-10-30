@@ -34,6 +34,13 @@ SVG = {
     "atualizar": f'<g {_T}><path d="M21 12a9 9 0 0 1-15.5 6.2"/><path d="M3 12A9 9 0 0 1 18.5 5.8"/><path d="M18.5 2v3.8h-3.8"/><path d="M5.5 22v-3.8h3.8"/></g>',
     "bug": f'<g {_T}><rect x="7" y="7" width="10" height="13" rx="5"/><path d="M9.5 7V5.5a2.5 2.5 0 0 1 5 0V7"/><path d="M12 11v9"/><path d="M3 13h4"/><path d="M17 13h4"/><path d="M4 8l3 2"/><path d="M20 8l-3 2"/><path d="M4 19l3-2"/><path d="M20 19l-3-2"/></g>',
     "fechar": f'<g {_T}><path d="M6 6l12 12"/><path d="M18 6L6 18"/></g>',
+    "copiar": f'<g {_T}><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V5.5a2 2 0 0 0-2-2h-8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h3"/></g>',
+    "globo": f'<g {_T}><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18"/><path d="M12 3a14 14 0 0 0 0 18"/></g>',
+    # bandeira do Brasil desenhada (o Windows não mostra a bandeira em emoji); cores fixas
+    "bandeira_br": ('<rect x="1" y="4.5" width="22" height="15" rx="2.2" fill="#009c3b"/>'
+                    '<path d="M12 6.4 21 12l-9 5.6L3 12z" fill="#ffdf00"/>'
+                    '<circle cx="12" cy="12" r="3.6" fill="#002776"/>'
+                    '<path d="M8.6 11.2a7 3.6 0 0 1 6.8 1.4" fill="none" stroke="#ffffff" stroke-width="0.8"/>'),
 }
 
 _cache: dict = {}

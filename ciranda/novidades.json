@@ -1,4 +1,15 @@
 {
+  "1.4.1": {
+    "pt": [
+      "Novo botão Apoiar ♥ no rodapé, opcional: Pix (Brasil) ou GitHub Sponsors (outros países). Não muda nada no Ciranda."
+    ],
+    "en": [
+      "New Support ♥ button in the footer, optional: Pix (Brazil) or GitHub Sponsors (other countries). It changes nothing in Ciranda."
+    ],
+    "es": [
+      "Nuevo botón Apoyar ♥ en el pie, opcional: Pix (Brasil) o GitHub Sponsors (otros países). No cambia nada en Ciranda."
+    ]
+  },
   "1.4.0": {
     "pt": [
       "Atualiza sozinho: quando sai versão nova, o Ciranda já baixa e confere, sem você clicar em nada.",

@@ -22,7 +22,8 @@ PADRAO = {
     "aviso_adiado_ate": 0,  # até quando (o X adia 1 h; a próxima abertura mostra de novo)
     "novidades_vista": "",  # última versão cujo quadro de novidades já apareceu
     "tutorial_visto": False,
-    "retomar": {},  # onde estava quando fechou para atualizar (o Ciranda novo volta dali)
+    "retomar": {},
+    "apoio_escolha": "",  # "br" ou "fora": o quadro Apoiar abre no mesmo lugar da última vez  # onde estava quando fechou para atualizar (o Ciranda novo volta dali)
 }
 
 

@@ -135,6 +135,20 @@ def rodar(saida: str) -> int:
         res["quadro_geometria"] = [g.x(), g.y(), g.width(), g.height(), jg.x(), jg.y(), jg.width(), jg.height()]
         QTest.keyClick(q, Qt.Key_Escape)
         ok["tutorial_fecha_no_esc"] = not q.isVisible()
+        # Apoiar ♥ (regra 16): rodapé, quadro no meio, Pix de R$ 10 com o QR feito aqui (segno empacotado)
+        ok["rodape_apoiar"] = "acao:apoiar" in j.acoes_fila.text()
+        j.acoes_fila.linkActivated.emit("acao:apoiar")
+        QTimer.singleShot(600, etapa9)
+
+    def etapa9():
+        a = j._apoio
+        ok["apoiar_abriu"] = bool(a and a.isVisible() and a.pilha.currentIndex() == 0)
+        a.ir("br", salvar=False)
+        ok["apoiar_pix_r10"] = a.codigo.endswith("6304DCD7") and "540510.00" in a.codigo
+        pm = a.qr.pixmap()
+        ok["apoiar_qr"] = bool(pm and not pm.isNull() and pm.width() >= 200)
+        QTest.keyClick(a, Qt.Key_Escape)
+        ok["apoiar_fecha_no_esc"] = not a.isVisible()
         terminar()
 
     def terminar():
@@ -158,8 +172,8 @@ def rodar(saida: str) -> int:
                 falhou(e)
         return w
 
-    etapa1, etapa2, etapa3, etapa4, etapa5, etapa6, etapa7, etapa8 = map(
-        protegido, (etapa1, etapa2, etapa3, etapa4, etapa5, etapa6, etapa7, etapa8))
+    etapa1, etapa2, etapa3, etapa4, etapa5, etapa6, etapa7, etapa8, etapa9 = map(
+        protegido, (etapa1, etapa2, etapa3, etapa4, etapa5, etapa6, etapa7, etapa8, etapa9))
     QTimer.singleShot(3000, etapa1)
     QTimer.singleShot(60000, lambda: falhou(TimeoutError("autoteste passou de 60 s")))
     t0 = time.monotonic()

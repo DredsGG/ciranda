@@ -420,17 +420,21 @@ GITHUB = "https://github.com/DredsGG"
 
 
 def acoes_rodape(janela, pai=None) -> QLabel:
-    """Rodapé padrão (regra 9, itens a e b): "Relatar bug · Procurar atualização".
+    """Rodapé padrão (regras 9 e 16): "Relatar bug · Procurar atualização · Apoiar ♥".
     Links internos: chamam a janela, não abrem navegador."""
     lab = QLabel(pai)
     lab.setObjectName("acoesRodape")
     lab.setTextFormat(Qt.RichText)
+    lab.setWordWrap(True)  # em fonte maior ou idioma mais comprido, quebra em vez de cortar
     estilo = f"color:{APAGADO}; text-decoration:none;"
 
     def retraduzir():
         lab.setText(f'<a href="acao:bug" style="{estilo}">{t("relatar_bug")}</a>'
                     f'<span style="color:#4a4c55"> · </span>'
-                    f'<a href="acao:atualizar" style="{estilo}">{t("procurar_atualizacao")}</a>')
+                    f'<a href="acao:atualizar" style="{estilo}">{t("procurar_atualizacao")}</a>'
+                    f'<span style="color:#4a4c55"> · </span>'
+                    f'<a href="acao:apoiar" style="{estilo}">{t("apoiar").replace("♥", "")}'
+                    f'<span style="color:{DESTAQUE}">♥</span></a>')
     lab.retraduzir = retraduzir
     retraduzir()
     lab.setOpenExternalLinks(False)
@@ -442,6 +446,8 @@ def acoes_rodape(janela, pai=None) -> QLabel:
             QTimer.singleShot(0, janela.relatar_bug)
         elif href == "acao:atualizar":
             QTimer.singleShot(0, lambda: janela.procurar_atualizacao(manual=True))
+        elif href == "acao:apoiar":
+            QTimer.singleShot(0, janela.apoiar)
     lab.linkActivated.connect(clicou)
     return lab
 
@@ -732,6 +738,7 @@ class Janela(QMainWindow):
         self.quadro.fechou.connect(self._quadro_fechou)
         self._quadro_render = None
         self._quadros_na_fila = []
+        self._apoio = None  # quadro Apoiar ♥, criado no primeiro clique
         self._tut_passo = 0
         self._avisar_se_atualizou()
 
@@ -766,6 +773,19 @@ class Janela(QMainWindow):
             self._faixa_render()
         if self.quadro.isVisible() and self._quadro_render:
             self._quadro_render()
+        if self._apoio is not None and self._apoio.isVisible():
+            self._apoio.retraduzir()
+            self._apoio.adjustSize()
+            self._apoio.reposicionar()
+
+    # ----- Apoiar ♥ (regra 16): só abre pelo rodapé, nunca sozinho -----
+    def apoiar(self):
+        if self._apoio is None:
+            from .apoio import QuadroApoio
+            self._apoio = QuadroApoio(self, self.cfg)
+        if self.isFullScreen():
+            self.sair_tela_cheia()
+        self._apoio.abrir()
 
     def _ajustar_barra(self):
         """Barra responsiva: em janela estreita o controle de volume vira só o ícone
@@ -783,6 +803,8 @@ class Janela(QMainWindow):
             self._ajustar_barra()
         if getattr(self, "quadro", None) is not None and self.quadro.isVisible():
             self.quadro.reposicionar()
+        if getattr(self, "_apoio", None) is not None and self._apoio.isVisible():
+            self._apoio.reposicionar()
 
     def changeEvent(self, e):
         super().changeEvent(e)
@@ -795,6 +817,8 @@ class Janela(QMainWindow):
         super().moveEvent(e)
         if getattr(self, "quadro", None) is not None and self.quadro.isVisible():
             self.quadro.reposicionar()
+        if getattr(self, "_apoio", None) is not None and self._apoio.isVisible():
+            self._apoio.reposicionar()
 
     def receber_de_outra_instancia(self, caminhos):
         """Outro Ciranda foi aberto (dois cliques num arquivo, botão direito numa pasta):
