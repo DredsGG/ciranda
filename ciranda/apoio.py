@@ -401,8 +401,15 @@ class QuadroApoio(QFrame):
     def _atualizar_qr(self):
         self._codigo = pix.br_code(self._valor)
         pm = QPixmap()
-        pm.loadFromData(pix.qr_png(self._codigo, tamanho=232))
-        self.qr.setPixmap(pm)
+        try:
+            pm.loadFromData(pix.qr_png(self._codigo, tamanho=232))
+            self.qr.setPixmap(pm)
+            self.qr.setStyleSheet("")
+        except Exception:  # sem o segno (cópia antiga do código): o copia e cola continua funcionando
+            self.qr.clear()
+            self.qr.setWordWrap(True)
+            self.qr.setStyleSheet("color: #1a1a1a; padding: 18px;")
+            self.qr.setText(t("apoio_sem_qr"))
         alt = t("apoio_qr_alt", valor=self.valor_texto())
         self.qr.setAccessibleName(alt)
         self.qr.setToolTip(alt)

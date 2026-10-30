@@ -28,11 +28,11 @@ if not exist ".venv\Scripts\python.exe" (
   echo Criando o ambiente do Ciranda ^(so na primeira vez^)...
   %PY% -m venv .venv || (echo Falhou ao criar o ambiente. & pause & exit /b 1)
 )
-if not exist ".venv\pronto-1.0.txt" (
+if not exist ".venv\pronto-1.4.1.txt" (
   echo Instalando o que o Ciranda precisa ^(so na primeira vez, 1 a 3 minutos^)...
   ".venv\Scripts\python.exe" -m pip install --upgrade pip -q
   ".venv\Scripts\python.exe" -m pip install -r requirements.txt -q || (echo Falhou a instalacao. & pause & exit /b 1)
-  echo ok> ".venv\pronto-1.0.txt"
+  echo ok> ".venv\pronto-1.4.1.txt"
 )
 
 rem atalho com icone na area de trabalho e na pasta (abre sem a janela preta)

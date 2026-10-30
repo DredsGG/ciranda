@@ -195,7 +195,13 @@ def p_pix():
     q.campo.clear()
     QTest.keyClicks(q.campo, "10")
     ok(q.b_copiar.isEnabled() and q.codigo == REF[10], "10 digitado = R$ 10")
+    orig = pix.qr_png
+    pix.qr_png = lambda *a, **k: (_ for _ in ()).throw(ImportError("sem segno"))
+    q.escolher_valor(25)
+    ok(q.codigo == REF[25] and "Copiar código Pix" in q.qr.text(), "sem segno: avisa e o copia e cola segue")
+    pix.qr_png = orig
     clicar(q.b_valores[10])
+    ok(qr_atual() == REF[10], "QR volta depois do aviso")
     clicar(q.b_copiar)
     ok(QGuiApplication.clipboard().text() == REF[10] and q.l_copiado.text() == "Copiado!", "copiar código")
     clicar(q.b_chave)
