@@ -164,6 +164,7 @@ class Ponte(QObject):
     tempo = Signal(float)
     duracao = Signal(float)
     pausa = Signal(bool)
+    giro_pronto = Signal(int, str)
 
 
 class PonteAtualizacao(QObject):
@@ -1862,6 +1863,7 @@ class Janela(QMainWindow):
         ponte.fim_video.connect(self._video_acabou)
         ponte.erro_arquivo.connect(self._arquivo_falhou)
         ponte.pausa.connect(self._recebeu_pausa)
+        ponte.giro_pronto.connect(self._giro_pronto)
         QTimer.singleShot(400, lambda: desarmar_janelas_filhas(int(self.tela.winId())))
 
     # ----- abrir pastas -----
@@ -2087,17 +2089,30 @@ class Janela(QMainWindow):
         self._duracao = 0.0
         self.b_play.setIcon(icone("pause", "#1a0f07", 22))
         self.palco.setCurrentWidget(self.tela)
-        self._carregar_no_motor(item.caminho)
+        if item.ext in heif.EXTENSOES:  # ler o cabeçalho pode demorar (NAS, foto só na nuvem): fora da interface
+            threading.Thread(target=self._ler_giro, args=(self._token, item.caminho), daemon=True).start()
+        else:
+            self._carregar_no_motor(item.caminho)
         self._atualizar_info()
         self.modelo.dataChanged.emit(self.modelo.index(0), self.modelo.index(self.modelo.rowCount() - 1))
         self._rolar_para_atual()
 
-    def _carregar_no_motor(self, caminho):
+    def _ler_giro(self, token, caminho):
+        filtro = heif.filtro_de_giro(caminho)
+        try:
+            self.ponte.giro_pronto.emit(token, filtro)
+        except RuntimeError:  # a janela fechou enquanto lia
+            pass
+
+    def _giro_pronto(self, token, filtro):
+        if token == self._token and self._item is not None:
+            self._carregar_no_motor(self._item.caminho, filtro)
+
+    def _carregar_no_motor(self, caminho, filtro=""):
         item = self._item
         rep_um = self.fila.repetir == "um"
         try:
             self.mpv["loop-file"] = "inf" if (item.animada or (item.tipo == "video" and rep_um)) else "no"
-            filtro = heif.filtro_de_giro(caminho) if item.ext in heif.EXTENSOES else ""
             if filtro != self._filtro_giro:  # trocar o filtro refaz a cadeia de vídeo: só quando muda
                 self.mpv["vf"] = filtro
                 self._filtro_giro = filtro

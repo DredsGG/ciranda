@@ -70,7 +70,8 @@ falhas = []
 casos = [(n, "warn") for n in gerar_heic.CASOS if n != CONHECIDO]
 
 for nome, nivel in casos:
-    _fn, _args, final, giro, fonte = gerar_heic.CASOS[nome]
+    caso = gerar_heic.CASOS[nome]
+    final, giro, fonte = caso[2:5]
     seg, img, tam, avisos = tocar(os.path.join(pasta_heic, nome), nivel)
     if img is None:
         falhas.append(f"{nome} ({nivel}): sem quadro em {LIMITE_S} s; {tam}; {avisos[:6]}")
@@ -83,6 +84,8 @@ for nome, nivel in casos:
     ref = QImage(ref_png)
     if giro:
         ref = ref.transformed(QTransform().rotate(giro))
+    if len(caso) > 5:
+        ref = ref.mirrored(True, False)
     dif = diferenca(img, ref)
     ok_tam = (img.width(), img.height()) == final
     ok = ok_tam and dif <= TOLERANCIA

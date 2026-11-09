@@ -1,8 +1,8 @@
-"""Rotação da foto HEIC em grade (é assim que o iPhone grava).
+"""Rotação e espelho da foto HEIC em grade (é assim que o iPhone grava).
 
-O mpv 0.42 monta a grade de blocos, mas não aplica o `irot` dela: a foto tirada em pé
+O mpv 0.42 monta a grade de blocos, mas não aplica `irot` nem `imir` dela: a foto tirada em pé
 apareceria deitada. Foto HEIC sem grade ele gira sozinho, então aqui só a grade conta.
-Lê apenas o cabeçalho do contêiner (ISO/IEC 23008-12) e nunca falha: na dúvida, devolve 0.
+Lê apenas o cabeçalho do contêiner (ISO/IEC 23008-12) e nunca falha: na dúvida, não muda nada.
 """
 
 from __future__ import annotations
@@ -42,7 +42,7 @@ def _ler_meta(f) -> bytes | None:
             tam = struct.unpack_from(">Q", cab, 8)[0]
             ini = 16
         if tipo == b"meta":
-            if tam == 0 or tam > _LIMITE_META:
+            if tam <= ini or tam > _LIMITE_META:
                 return None
             f.seek(pos + ini)
             return f.read(tam - ini)
@@ -99,20 +99,23 @@ def _propriedades_do_item(dados: bytes, ini: int, fim: int, alvo: int) -> list[i
     return achou
 
 
+_GIRO = {1: "transpose=cclock", 2: "hflip,vflip", 3: "transpose=clock"}  # irot: 90 graus anti-horários x valor
+_ESPELHO = {0: "vflip", 1: "hflip"}  # imir, conferido contra o libheif
+
+
 def filtro_de_giro(caminho: str) -> str:
-    """O filtro de vídeo que põe a grade em pé, ou "" se não precisa.
+    """O filtro de vídeo que põe a grade em pé (giro e espelho, na ordem do arquivo), ou "" se não precisa.
     Tem que ser filtro: o video-rotate do mpv não chega na grade já montada."""
-    return {90: "lavfi=[transpose=clock]", 180: "lavfi=[hflip,vflip]",
-            270: "lavfi=[transpose=cclock]"}.get(giro_da_grade(caminho), "")
+    partes = _transformacoes_da_grade(caminho)
+    return f"lavfi=[{','.join(partes)}]" if partes else ""
 
 
-def giro_da_grade(caminho: str) -> int:
-    """Graus no sentido horário que a foto em grade precisa girar (0, 90, 180 ou 270)."""
+def _transformacoes_da_grade(caminho: str) -> list[str]:
     try:
         with open(caminho, "rb") as f:
             meta = _ler_meta(f)
         if not meta:
-            return 0
+            return []
         primario = iinf = iprp = None
         for tipo, a, b in _caixas(meta, 4, len(meta)):
             if tipo == b"pitm":
@@ -125,9 +128,9 @@ def giro_da_grade(caminho: str) -> int:
             elif tipo == b"iprp":
                 iprp = (a, b)
         if primario is None or not iinf or not iprp:
-            return 0
+            return []
         if _tipo_do_item(meta, iinf[0], iinf[1], primario) != b"grid":
-            return 0
+            return []
         props: list[tuple[bytes, int]] = []
         ipma = None
         for tipo, a, b in _caixas(meta, iprp[0], iprp[1]):
@@ -136,10 +139,16 @@ def giro_da_grade(caminho: str) -> int:
             elif tipo == b"ipma":
                 ipma = (a, b)
         if not ipma:
-            return 0
+            return []
+        partes = []
         for idx in _propriedades_do_item(meta, ipma[0], ipma[1], primario):
-            if 1 <= idx <= len(props) and props[idx - 1][0] == b"irot":
-                return (360 - (meta[props[idx - 1][1]] & 3) * 90) % 360  # irot é anti-horário
-        return 0
+            if not 1 <= idx <= len(props):
+                continue
+            tipo, pos = props[idx - 1]
+            if tipo == b"irot" and meta[pos] & 3:
+                partes.append(_GIRO[meta[pos] & 3])
+            elif tipo == b"imir":
+                partes.append(_ESPELHO[meta[pos] & 1])
+        return partes
     except (OSError, struct.error, IndexError, ValueError):
-        return 0
+        return []

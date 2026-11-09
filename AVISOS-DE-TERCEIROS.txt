@@ -2,8 +2,9 @@ AVISOS DE TERCEIROS DA CIRANDA 1.5.0
 Atualizado em 2026-11-09.
 
 O código da Ciranda é distribuído sob a licença MIT (arquivo LICENSE).
-Os componentes abaixo vêm junto e mantêm as próprias licenças. Os textos estão
-na pasta licenses\. Nenhum deles foi modificado pela Ciranda.
+Os componentes abaixo vêm junto e mantêm as próprias licenças. Os textos das
+licenças indicadas em cada item estão na pasta licenses\. Nenhum deles foi
+modificado pela Ciranda.
 
 1) libmpv-2.dll (motor de reprodução)
    Origem: arquivo oficial do projeto mpv, versão 0.42.0, sem alterações:
@@ -31,7 +32,8 @@ na pasta licenses\. Nenhum deles foi modificado pela Ciranda.
    A DLL também traz, compiladas dentro dela, bibliotecas com licenças próprias
    (entre elas libass, FreeType, HarfBuzz, FriBidi, Fontconfig, libplacebo, dav1d,
    libaom, libvpx, libwebp, libjxl, Opus, Vorbis, LAME, zlib e libbluray).
-   A lista e as versões estão na receita do FFmpeg-Builds acima.
+   Os textos dessas licenças estão nos projetos de origem. A compilação usou a
+   imagem "latest" do FFmpeg-Builds na data do build do mpv 0.42.0 (2026-11-04).
 
    A DLL é um arquivo separado: quem recebe a Ciranda pode trocá-la por outra
    libmpv compatível.
@@ -51,8 +53,11 @@ na pasta licenses\. Nenhum deles foi modificado pela Ciranda.
    Fonte: https://github.com/heuer/segno
 
 5) Só no instalador (Ciranda-Setup):
-   - Python 3.12: licença PSF-2.0, com os avisos das bibliotecas que o acompanham.
-     Texto: licenses\Python-PSF-2.0.txt. Fonte: https://www.python.org
+   - Python 3.12: licença PSF-2.0. Texto: licenses\Python-PSF-2.0.txt.
+     Fonte: https://www.python.org
+   - OpenSSL 3 (libssl e libcrypto, que vêm com o Python e com o PySide6):
+     licença Apache-2.0. Texto: licenses\Apache-2.0.txt.
+     Fonte: https://www.openssl.org
    - Carregador do PyInstaller (o Ciranda.exe do instalador): GPL-2.0 ou posterior
      COM a exceção do bootloader, que permite distribuir o carregador junto de
      qualquer programa sem as restrições da GPL.

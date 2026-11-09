@@ -83,7 +83,7 @@ def _codificar(filtro: str, quadros: int) -> tuple[bytes, list[bytes]]:
 
 
 def _montar(hvcc: bytes, blocos: list[bytes], ispe_bloco: tuple[int, int], primario_grade: dict | None,
-            irot: int | None) -> bytes:
+            irot: int | None, imir: int | None = None) -> bytes:
     ftyp = _box(b"ftyp", b"heic", struct.pack(">I", 0), b"mif1", b"heic")
     mdat_corpo = b"".join(blocos)
     idat = b""
@@ -125,6 +125,9 @@ def _montar(hvcc: bytes, blocos: list[bytes], ispe_bloco: tuple[int, int], prima
         if irot is not None:
             props.append(_box(b"irot", bytes([irot & 3])))
             do_prim.append(0x80 | len(props))
+        if imir is not None:
+            props.append(_box(b"imir", bytes([imir & 1])))
+            do_prim.append(0x80 | len(props))
         assoc.append(struct.pack(">HB", id_prim, len(do_prim)) + bytes(do_prim))
         ipma = _fullbox(b"ipma", 0, 0, struct.pack(">I", len(assoc)), *assoc)
         partes.append(_box(b"iprp", _box(b"ipco", *props), ipma))
@@ -143,14 +146,14 @@ def simples(destino: str, largura: int, altura: int, irot: int | None = None):
 
 
 def grade(destino: str, colunas: int, linhas: int, largura: int, altura: int, irot: int | None = None,
-          bloco: int = 512):
+          bloco: int = 512, imir: int | None = None):
     """Grade colunas x linhas de blocos quadrados. largura/altura são o tamanho final (o iPhone corta a sobra)."""
     filtro = (f"{_fonte(colunas * bloco, linhas * bloco)},trim=end_frame=1,loop=loop={colunas * linhas - 1}:size=1,"
               f"crop={bloco}:{bloco}:x='mod(n,{colunas})*{bloco}':y='floor(n/{colunas})*{bloco}'{_PARA_YUV}")
     hvcc, blocos = _codificar(filtro, colunas * linhas)
     with open(destino, "wb") as f:
         f.write(_montar(hvcc, blocos, (bloco, bloco),
-                        {"linhas": linhas, "colunas": colunas, "largura": largura, "altura": altura}, irot))
+                        {"linhas": linhas, "colunas": colunas, "largura": largura, "altura": altura}, irot, imir))
 
 
 def referencia(destino: str, largura_total: int, altura_total: int, largura: int, altura: int):
@@ -167,6 +170,8 @@ CASOS = {
     "grade-2-1024x512.heic": (grade, (2, 1, 1024, 512), (1024, 512), 0, (1024, 512)),
     "giro-simples-640x480.heic": (simples, (640, 480, 3), (480, 640), 90, (640, 480)),
     "giro-grade-48-4032x3024.heic": (grade, (8, 6, 4032, 3024, 3), (3024, 4032), 90, (4096, 3072)),
+    # selfie espelhada: o último campo diz como a referência é espelhada (imir 1 = esquerda/direita, conferido no libheif)
+    "espelho-grade-12-2048x1536.heic": (grade, (4, 3, 2048, 1536, None, 512, 1), (2048, 1536), 0, (2048, 1536), "h"),
 }
 
 
