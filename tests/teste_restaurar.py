@@ -10,9 +10,18 @@ os.environ["APPDATA"] = os.path.join(SAIDA, "appdata-restaurar")
 from PySide6.QtCore import QPoint, Qt, QTimer
 from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QApplication, QMessageBox
-from ciranda import config, fotos
+from ciranda import config
 from ciranda.janela import QSS, Janela
 QMessageBox.question = staticmethod(lambda *a, **k: QMessageBox.Yes)
+cache = os.path.join(config.pasta_dados(), "cache-heic")
+
+
+def criar_cache_antigo():
+    os.makedirs(cache, exist_ok=True)
+    open(os.path.join(cache, "antigo.jpg"), "w").write("cache da 1.4.1")
+
+
+criar_cache_antigo()  # a primeira abertura da 1.5.0 tem que apagar
 app = QApplication(sys.argv); app.setStyle("Fusion"); app.setStyleSheet(QSS)
 j = Janela([PASTA]); j.resize(1360, 800); j.show()
 erro = os.path.join(config.pasta_dados(), "erro.txt")
@@ -27,7 +36,8 @@ def baguncar():
     open(erro, "w").write("erro de teste")
 
 def clicar_menu():
-    assert fotos.tem_cache(), "antes: cache existe"
+    assert not os.path.exists(cache), "a primeira abertura não apagou o cache-heic antigo"
+    criar_cache_antigo()  # o Restaurar de fábrica também apaga, se a pasta existir
     QTest.mouseClick(j.b_abrir, Qt.LeftButton, Qt.NoModifier, QPoint(10, 10))
     QTimer.singleShot(600, clicar_item)
 
@@ -46,7 +56,7 @@ def conferir():
     assert j.volume.value() == config.PADRAO["volume"] and j.s_foto.value() == config.PADRAO["segundos_foto"]
     assert j.fila.aleatorio == config.PADRAO["aleatorio"] and j.fila.repetir == config.PADRAO["repetir"]
     assert j.fila.filtro == "tudo" and len(j.fila) == 0 and j._item is None
-    assert not fotos.tem_cache(), "cache não foi apagado"
+    assert not os.path.exists(cache), "cache-heic não foi apagado"
     assert os.path.exists(erro), "erro.txt deveria ficar"
     print("RESTAURAR PASSOU"); app.quit()
 

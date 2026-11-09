@@ -3,7 +3,6 @@
 # Saída: dist/Ciranda/Ciranda.exe (+ _internal/ com Python, Qt, libmpv e ícones).
 import os
 import sys
-from PyInstaller.utils.hooks import collect_all
 
 RAIZ = os.path.abspath(os.path.join(SPECPATH, ".."))
 WIN = sys.platform == "win32"
@@ -15,17 +14,15 @@ if WIN:
         raise SystemExit("Falta libmpv-2.dll na raiz do projeto")
     binarios.append((mpv_dll, "."))
 
-heif_dados, heif_bin, heif_ocultos = collect_all("pillow_heif")
-
 a = Analysis(
     [os.path.join(RAIZ, "app.py")],
     pathex=[RAIZ],
-    binaries=binarios + heif_bin,
+    binaries=binarios,
     datas=[(os.path.join(RAIZ, "ui", "ciranda.ico"), "ui"),
            (os.path.join(RAIZ, "ui", "ciranda-256.png"), "ui"),
-           (os.path.join(RAIZ, "ciranda", "novidades.json"), "ciranda")] + heif_dados,
-    hiddenimports=["mpv", "ciranda.autoteste", "ciranda.instancia", "PySide6.QtTest", "PySide6.QtSvg", "PySide6.QtNetwork", "segno"] + heif_ocultos,
-    excludes=["tkinter", "unittest", "pydoc", "numpy", "PySide6.QtQml",
+           (os.path.join(RAIZ, "ciranda", "novidades.json"), "ciranda")],
+    hiddenimports=["mpv", "ciranda.autoteste", "ciranda.instancia", "PySide6.QtTest", "PySide6.QtSvg", "PySide6.QtNetwork", "segno"],
+    excludes=["tkinter", "unittest", "pydoc", "numpy", "PIL", "pillow_heif", "PySide6.QtQml",
               "PySide6.QtQuick", "PySide6.QtOpenGL", "PySide6.QtDBus", "PySide6.QtPdf"],
     noarchive=False,
 )

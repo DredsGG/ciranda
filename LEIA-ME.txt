@@ -1,4 +1,4 @@
-CIRANDA 1.3.0 - feito por Dreds (github.com/DredsGG)
+CIRANDA 1.5.0 - feito por Dreds (github.com/DredsGG)
 Player de fotos e videos: abre uma pasta e TODAS as subpastas numa fila so,
 em ordem ou aleatorio, com repetir.
 
@@ -38,7 +38,7 @@ SE DER PROBLEMA
   Nenhum dos dois apaga fotos ou videos.
 
 ONDE FICAM AS COISAS
-  Ajustes, log e cache das fotos HEIC: %APPDATA%\Ciranda
+  Ajustes e log: %APPDATA%\Ciranda
   Se nao abrir ou um botao nao responder: %APPDATA%\Ciranda\erro.txt e ciranda.log
 
-Motor: libmpv (mpv-winbuild-cmake 20261021, LGPL/GPL). Interface: PySide6 (LGPL).
+Codigo da Ciranda: MIT (arquivo LICENSE). Motor: libmpv oficial do mpv 0.42.0 (LGPL; ver AVISOS-DE-TERCEIROS.txt). Interface: PySide6 (LGPL).

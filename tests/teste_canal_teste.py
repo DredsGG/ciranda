@@ -116,6 +116,10 @@ def clique(w):
 
 def etapa_faixa():
     q = j.quadro
+    limite = time.monotonic() + 20  # no Windows, conexão recusada leva alguns segundos para voltar
+    while not q.isVisible() and time.monotonic() < limite:
+        app.processEvents()
+        time.sleep(0.05)
     ok(q.isVisible() and q.tipo == "pronta" and "9.9.8" in q.l_titulo.text(), f"quadro: {q.l_titulo.text()!r}")
     ok("Canal de teste" in q.l_corpo.text(), q.l_corpo.text())
     ok(not rodou, "instalou no meio do que está tocando")

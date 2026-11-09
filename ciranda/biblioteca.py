@@ -30,7 +30,6 @@ PASTAS_IGNORADAS = {
     ".thumbnails", ".trash", ".trashes", ".spotlight-v100", ".fseventsd",
 }
 FOTOS_ANIMADAS = {".gif"}  # tratadas como foto, mas animando em loop
-HEIC = {".heic", ".heif"}
 
 
 @dataclass(slots=True)
@@ -46,10 +45,6 @@ class Item:
     @property
     def animada(self) -> bool:
         return self.ext in FOTOS_ANIMADAS
-
-    @property
-    def heic(self) -> bool:
-        return self.ext in HEIC
 
 
 def tipo_do_arquivo(nome: str) -> str | None:

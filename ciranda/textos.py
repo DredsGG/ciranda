@@ -38,7 +38,6 @@ T = {
     "dica_repetir_tudo": ("Repetir: a fila toda (R)", "Repeat: whole queue (R)", "Repetir: toda la cola (R)"),
     "dica_repetir_um": ("Repetir: só este (R)", "Repeat: this one (R)", "Repetir: solo este (R)"),
     "n_de_total": ("{n} de {total}", "{n} of {total}", "{n} de {total}"),
-    "convertendo_heic": (" · convertendo HEIC…", " · converting HEIC…", " · convirtiendo HEIC…"),
 
     # ---------- tempo da foto ----------
     "dica_tempo_foto": ("Tempo de cada foto na tela antes de passar para a próxima.\n"
@@ -120,9 +119,9 @@ T = {
                          "Abre el informe en GitHub ya completado, sin nombres de carpetas ni archivos"),
     "como_usar_desc": ("Mostra o tutorial de novo", "Shows the tutorial again", "Muestra el tutorial otra vez"),
     "restaurar": ("Restaurar de fábrica…", "Factory reset…", "Restablecer de fábrica…"),
-    "restaurar_desc": ("Volta todos os ajustes ao padrão e limpa fila, Continuar e cache. Não apaga nada do PC",
-                       "Resets all settings and clears the queue, Continue and cache. Nothing on your PC is deleted",
-                       "Restablece todos los ajustes y limpia la cola, Continuar y la caché. "
+    "restaurar_desc": ("Volta todos os ajustes ao padrão e limpa fila e Continuar. Não apaga nada do PC",
+                       "Resets all settings and clears the queue and Continue. Nothing on your PC is deleted",
+                       "Restablece todos los ajustes y limpia la cola y Continuar. "
                        "No se borra nada del PC"),
     "m_pastas": ("Pastas", "Folders", "Carpetas"),
     "juntar_desc_curta": ("Soma à fila sem parar o que toca", "Adds to the queue without stopping",
@@ -194,16 +193,16 @@ T = {
     "restaurar_titulo": ("Restaurar de fábrica", "Factory reset", "Restablecer de fábrica"),
     "restaurar_confirma": ("Voltar o Ciranda ao estado de recém-instalado?\n\n"
                            "• Ajustes voltam ao padrão (volume, aleatório, repetir, tempo da foto, filtro, janela)\n"
-                           "• Fila, Continuar e cache das fotos HEIC são limpos\n\n"
+                           "• Fila e Continuar são limpos\n\n"
                            "Nenhuma foto ou vídeo do PC é apagado.",
                            "Put Ciranda back as if it was just installed?\n\n"
                            "• Settings go back to default (volume, shuffle, repeat, photo time, filter, window)\n"
-                           "• The queue, Continue and the HEIC photo cache are cleared\n\n"
+                           "• The queue and Continue are cleared\n\n"
                            "No photo or video on your PC is deleted.",
                            "¿Dejar Ciranda como recién instalado?\n\n"
                            "• Los ajustes vuelven a los valores de fábrica (volumen, aleatorio, repetir, "
                            "tiempo por foto, filtro, ventana)\n"
-                           "• Se limpian la cola, Continuar y la caché de fotos HEIC\n\n"
+                           "• Se limpian la cola y Continuar\n\n"
                            "No se borra ninguna foto ni video del PC."),
     "restaurado": ("Ciranda restaurado de fábrica. Arraste pastas para começar.",
                    "Ciranda was reset. Drag folders to start.",

@@ -1,0 +1,62 @@
+AVISOS DE TERCEIROS DA CIRANDA 1.5.0
+Atualizado em 2026-11-09.
+
+O código da Ciranda é distribuído sob a licença MIT (arquivo LICENSE).
+Os componentes abaixo vêm junto e mantêm as próprias licenças. Os textos estão
+na pasta licenses\. Nenhum deles foi modificado pela Ciranda.
+
+1) libmpv-2.dll (motor de reprodução)
+   Origem: arquivo oficial do projeto mpv, versão 0.42.0, sem alterações:
+   https://github.com/mpv-player/mpv/releases/download/v0.42.0/libmpv-v0.42.0-x86_64-w64-mingw32-lgpl.zip
+   SHA-256 do zip: 8e5f77430efc53ef175804ba6618527e3af0448a0dcabf04d3cc72659d1a6fce
+   SHA-256 da DLL: 94fb87247732c59915cd59808bc582e843a71c22214b7b6c1e5563aa8149cef4
+
+   Licenças:
+   - mpv: GNU LGPL versão 2.1 ou posterior (compilado com -Dgpl=false).
+     Texto: licenses\LGPL-2.1.txt
+   - FFmpeg, dentro da DLL: compilado com --enable-version3 e sem --enable-gpl,
+     portanto sob a GNU LGPL versão 3 ou posterior.
+     Textos: licenses\LGPL-3.0.txt e licenses\GPL-3.0.txt (a LGPLv3 depende dela).
+   Como a DLL junta os dois, o conjunto segue a LGPL versão 3 ou posterior.
+
+   Código-fonte correspondente:
+   - mpv, tag v0.42.0: https://github.com/mpv-player/mpv/tree/v0.42.0
+   - FFmpeg, commit baa68e6 (git-2026-11-04-baa68e6):
+     https://github.com/FFmpeg/FFmpeg/commit/baa68e68b34e2de912eb7e94342cebd2545f05ed
+   - Receita da compilação: ci/build-mingw64-full.sh do mpv, em cima da imagem
+     ghcr.io/btbn/ffmpeg-builds/win64-lgpl do projeto FFmpeg-Builds:
+     https://github.com/mpv-player/mpv/blob/v0.42.0/ci/build-mingw64-full.sh
+     https://github.com/FFmpeg-Builds/FFmpeg-Builds
+
+   A DLL também traz, compiladas dentro dela, bibliotecas com licenças próprias
+   (entre elas libass, FreeType, HarfBuzz, FriBidi, Fontconfig, libplacebo, dav1d,
+   libaom, libvpx, libwebp, libjxl, Opus, Vorbis, LAME, zlib e libbluray).
+   A lista e as versões estão na receita do FFmpeg-Builds acima.
+
+   A DLL é um arquivo separado: quem recebe a Ciranda pode trocá-la por outra
+   libmpv compatível.
+   Projeto mpv: https://mpv.io  ·  FFmpeg: https://ffmpeg.org
+
+2) PySide6-Essentials e shiboken6 6.12.0 / Qt 6 (interface)
+   Usados sob a GNU LGPL versão 3. Textos: licenses\LGPL-3.0.txt e licenses\GPL-3.0.txt.
+   As DLLs do Qt são arquivos separados e podem ser trocadas.
+   Fonte: https://code.qt.io/cgit/pyside/pyside-setup.git/ e https://www.qt.io
+
+3) python-mpv 1.0.8
+   Licença dupla (GPL-2.0+ ou LGPL-2.1+). A Ciranda usa a opção LGPL-2.1 ou posterior.
+   Texto: licenses\LGPL-2.1.txt. Fonte: https://github.com/jaseg/python-mpv
+
+4) segno 1.6.6 (QR Code do Apoiar)
+   Licença BSD de 3 cláusulas. Texto: licenses\segno-BSD-3-Clause.txt.
+   Fonte: https://github.com/heuer/segno
+
+5) Só no instalador (Ciranda-Setup):
+   - Python 3.12: licença PSF-2.0, com os avisos das bibliotecas que o acompanham.
+     Texto: licenses\Python-PSF-2.0.txt. Fonte: https://www.python.org
+   - Carregador do PyInstaller (o Ciranda.exe do instalador): GPL-2.0 ou posterior
+     COM a exceção do bootloader, que permite distribuir o carregador junto de
+     qualquer programa sem as restrições da GPL.
+     Texto: licenses\PyInstaller-bootloader-exception.txt.
+     Fonte: https://github.com/pyinstaller/pyinstaller
+
+No zip portátil, os itens 2, 3 e 4 são baixados do PyPI na primeira abertura.

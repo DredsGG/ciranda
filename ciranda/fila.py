@@ -177,12 +177,6 @@ class Fila:
         self._pos = self._ordem.index(indice_item)
         return self.itens[indice_item]
 
-    def espiar_proximo(self) -> Item | None:
-        """O item que vem depois, sem andar a fila (para preparar HEIC antes)."""
-        if self._pos + 1 < len(self._ordem):
-            return self.itens[self._ordem[self._pos + 1]]
-        return None
-
     def remover(self, indices_itens):
         """Tira itens da fila (não apaga arquivo nenhum)."""
         tirar = set(indices_itens)

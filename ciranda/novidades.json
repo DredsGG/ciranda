@@ -1,4 +1,21 @@
 {
+  "1.5.0": {
+    "pt": [
+      "Motor novo: mpv 0.42, na versão oficial LGPL.",
+      "Fotos HEIC do iPhone abrem direto no motor, sem conversão e sem ocupar espaço com cache.",
+      "Licenças: o Ciranda agora traz os avisos e os textos das licenças de tudo o que vem junto."
+    ],
+    "en": [
+      "New engine: mpv 0.42, in its official LGPL build.",
+      "iPhone HEIC photos open directly in the engine, with no conversion and no cache taking up space.",
+      "Licenses: Ciranda now ships the notices and the license texts for everything bundled with it."
+    ],
+    "es": [
+      "Motor nuevo: mpv 0.42, en su versión oficial LGPL.",
+      "Las fotos HEIC del iPhone se abren directo en el motor, sin conversión y sin ocupar espacio con caché.",
+      "Licencias: Ciranda ahora incluye los avisos y los textos de las licencias de todo lo que viene con él."
+    ]
+  },
   "1.4.1": {
     "pt": [
       "Novo botão Apoiar ♥ no rodapé, opcional: Pix (Brasil) ou GitHub Sponsors (outros países). Não muda nada no Ciranda."

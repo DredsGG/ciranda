@@ -109,8 +109,17 @@ Name: "atalho"; Description: "{cm:TarefaAtalho}"; GroupDescription: "{cm:GrupoAt
 Name: "menupasta"; Description: "{cm:TarefaMenuPasta}"; GroupDescription: "{cm:GrupoExplorer}"
 Name: "associar"; Description: "{cm:TarefaAssociar}"; GroupDescription: "{cm:GrupoExplorer}"
 
+[InstallDelete]
+; a atualização não deixa para trás bibliotecas da versão anterior (até a 1.4.1: pillow-heif com o libx265, GPL)
+Type: filesandordirs; Name: "{app}\_internal"
+
 [Files]
 Source: "..\dist\Ciranda\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+; licença do código, avisos de terceiros e textos das licenças (MIT, LGPL)
+Source: "..\LICENSE"; DestDir: "{app}"; DestName: "LICENSE.txt"; Flags: ignoreversion
+Source: "..\AVISOS-DE-TERCEIROS.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\THIRD-PARTY-NOTICES.md"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\licenses\*"; DestDir: "{app}\licenses"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{autoprograms}\Ciranda"; Filename: "{app}\Ciranda.exe"; AppUserModelID: "Dreds.Ciranda"; Comment: "{cm:Comentario}"

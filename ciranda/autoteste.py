@@ -9,6 +9,7 @@ Não mexe nos ajustes do usuário: usa um APPDATA temporário.
 
 from __future__ import annotations
 
+import base64
 import json
 import os
 import sys
@@ -17,16 +18,26 @@ import time
 import traceback
 
 
+HEIC_NOME = "iphone-em-pe.heic"
+HEIC_TAMANHO = (128, 192)  # grade 3 x 2 de blocos 64 x 64 (192 x 128) gravada em pé: aparece 128 x 192
+
+
 def _gerar_midia(pasta: str) -> int:
-    from PIL import Image
+    from PySide6.QtGui import QColor, QImage
+
+    from .autoteste_heic import HEIC_B64
     n = 0
     for sub, cor in (("", (40, 90, 160)), ("viagem", (200, 120, 40)), ("viagem/dia 2", (60, 140, 60))):
         d = os.path.join(pasta, sub)
         os.makedirs(d, exist_ok=True)
         for k in range(2):
-            Image.new("RGB", (640, 400), cor).save(os.path.join(d, f"foto{k}.jpg"))
+            imagem = QImage(640, 400, QImage.Format_RGB32)
+            imagem.fill(QColor(*cor))
+            imagem.save(os.path.join(d, f"foto{k}.jpg"))
             n += 1
-    return n
+    with open(os.path.join(pasta, HEIC_NOME), "wb") as f:
+        f.write(base64.b64decode(HEIC_B64))
+    return n + 1
 
 
 def rodar(saida: str) -> int:
@@ -64,6 +75,16 @@ def rodar(saida: str) -> int:
     def etapa1():
         ok["fila_carregada"] = len(j.fila) == total
         ok["motor"] = str(getattr(j.mpv, "mpv_version", ""))
+        alvo = [i for i, it in enumerate(j.fila.itens) if it.nome == HEIC_NOME]
+        ok["heic_na_fila"] = bool(alvo)
+        j.tocar(j.fila.ir_para(alvo[0]))
+        QTimer.singleShot(1800, etapa_heic)
+
+    def etapa_heic():
+        # HEIC direto no motor (1.5.0): a foto aparece em pé, com a largura e a altura certas
+        res["heic"] = {"largura": j.mpv.dwidth, "altura": j.mpv.dheight, "item": j._item.nome}
+        ok["heic_apareceu"] = bool(j.mpv.vo_configured) and j._item.nome == HEIC_NOME and not j._item.falhou
+        ok["heic_largura_altura"] = (j.mpv.dwidth, j.mpv.dheight) == HEIC_TAMANHO
         clique(j.b_abrir)
         QTimer.singleShot(700, etapa2)
 
@@ -172,8 +193,8 @@ def rodar(saida: str) -> int:
                 falhou(e)
         return w
 
-    etapa1, etapa2, etapa3, etapa4, etapa5, etapa6, etapa7, etapa8, etapa9 = map(
-        protegido, (etapa1, etapa2, etapa3, etapa4, etapa5, etapa6, etapa7, etapa8, etapa9))
+    etapa1, etapa_heic, etapa2, etapa3, etapa4, etapa5, etapa6, etapa7, etapa8, etapa9 = map(
+        protegido, (etapa1, etapa_heic, etapa2, etapa3, etapa4, etapa5, etapa6, etapa7, etapa8, etapa9))
     QTimer.singleShot(3000, etapa1)
     QTimer.singleShot(60000, lambda: falhou(TimeoutError("autoteste passou de 60 s")))
     t0 = time.monotonic()

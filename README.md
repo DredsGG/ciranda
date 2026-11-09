@@ -31,7 +31,7 @@ VLC can sort of do this (a hidden *subdirectory behavior* option, photos with a 
 - **Shuffle like a deck of cards (`S`):** every file plays once per round, then it reshuffles, and the last one of a round never opens the next.
 - **Repeat (`R`):** off → whole queue → this one.
 - **Photos, videos or both** (`1` / `2` / `3`), and a photo timer (5 s by default, `+` / `−`) that pauses with the player.
-- **Plays what mpv plays:** MP4, MKV, MOV, AVI, WMV, WebM, MPEG-TS, 3GP and many more; JPG, PNG, WebP, GIF (animated), BMP, TIFF, AVIF, JXL. iPhone **HEIC/HEIF** photos are converted once to a cache, ahead of time. Phone photos taken sideways are rotated from EXIF.
+- **Plays what mpv plays:** MP4, MKV, MOV, AVI, WMV, WebM, MPEG-TS, 3GP and many more; JPG, PNG, WebP, GIF (animated), BMP, TIFF, AVIF, JXL. iPhone **HEIC/HEIF** photos open directly in the engine, upright. Phone photos taken sideways are rotated from EXIF.
 - **Broken files don't stop the show:** a file that won't open is marked in red in the queue and skipped.
 - **Queue panel (`L`)** with search (`Ctrl+F`), double-click to play, and right-click to show in Explorer, copy the path or remove. The footer counts photos, videos and folders.
 - **Full screen** (`F`, `Enter`, `F11` or double-click), with controls that hide after 2.5 s.
@@ -83,7 +83,6 @@ VLC can sort of do this (a hidden *subdirectory behavior* option, photos with a 
 - The installer isn't code-signed, so SmartScreen warns on the first run (see above).
 - Windows doesn't let apps make themselves the default: you pick Ciranda once in *Default apps* (or *Open with → Always*).
 - No subtitles menu, playlists or editing: it's a "play this whole folder tree" player.
-- The first time an iPhone HEIC photo shows up it takes a moment to convert; after that it comes from the cache (`%APPDATA%\Ciranda\cache-heic`, trimmed to 1 GB when Ciranda closes).
 - The portable zip needs internet and `winget` on the first run.
 
 ## How it's built
@@ -95,7 +94,7 @@ app.py                 entry point; takes folders/files as arguments; --autotest
 ciranda/biblioteca.py  scan: os.scandir with a stack, natural sort, no duplicates, junction-loop guard
 ciranda/fila.py        queue: order, deck shuffle, repeat, filter, add/remove, skip broken (no UI, testable)
 ciranda/janela.py      PySide6 interface with libmpv embedded in a native area
-ciranda/fotos.py       HEIC → JPEG cache
+ciranda/heif.py        reads the rotation of tile-grid HEIC photos (mpv 0.42 assembles the grid but doesn't rotate it)
 ciranda/config.py      %APPDATA%\Ciranda\config.json (settings, language, what's-new and tutorial seen)
 ciranda/autoteste.py   the self-test: sample photos, real clicks on the menus, language switch, tutorial card
 ciranda/atualizacao.py update: latest release from the GitHub API, download, SHA-256 check, silent setup
@@ -110,7 +109,7 @@ ciranda/icones.py      hand-made SVG icons
 - **Engine:** `libmpv-2.dll` driven by python-mpv. Videos use `keep-open` and `eof-reached`; photos use `image-display-duration=inf` and the app owns the timer, which is why pause and the photo time work.
 - **Clicks over the video:** mpv creates its own child window, which would swallow mouse and keyboard. The app disables that window (`EnableWindow`) and turns on `input-cursor-passthrough`, so input reaches Qt.
 - **Show in Explorer** uses `SHOpenFolderAndSelectItems`; the title bar follows the Windows 11 dark mode (DWM).
-- The `.dll` isn't in the repo (121 MB). The release workflow downloads a pinned [mpv-winbuild-cmake](https://github.com/shinchiro/mpv-winbuild-cmake) build and checks its SHA-256. See [THIRD-PARTY-NOTICES](THIRD-PARTY-NOTICES.md).
+- The `.dll` isn't in the repo (126 MB). The release workflow downloads the official LGPL libmpv from the [mpv 0.42.0 release](https://github.com/mpv-player/mpv/releases/tag/v0.42.0) and checks its SHA-256. See [THIRD-PARTY-NOTICES](THIRD-PARTY-NOTICES.md).
 - **The installer is built and tested on a real Windows runner** (`.github/workflows/release.yml`): PyInstaller packages Python, Qt and libmpv into `Ciranda.exe`; the packaged app runs its self-test (it really clicks the folder menu and the *Clear* menu, switches the language, opens the tutorial card and checks the signature); Inno Setup builds the setup; the setup is installed silently (in Spanish, to check the three installer languages), the photo/video registration is checked, the installed app self-tests again, a second Ciranda must hand its file to the open one and quit (single window), the update path runs for real (the installed app finds the latest release, downloads its setup and checks the SHA-256, then Ciranda is opened with nothing playing and a newer setup waiting: it must copy it, check it, install it with no click and reopen in the same install language), and the uninstaller must remove the app, the Start menu shortcut, the right-click entry and every file-type registration. Only then the setup is attached to the release.
 
 ### Running from a clone

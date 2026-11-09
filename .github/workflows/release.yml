@@ -28,9 +28,9 @@ permissions:
   contents: write
 
 env:
-  MPV_URL: https://github.com/shinchiro/mpv-winbuild-cmake/releases/download/20261021/mpv-dev-x86_64-20261021-git-e471496c56.7z
-  MPV_7Z_SHA256: efc719eff3dc5954b4a5efc800632808bcec01cc9034940dd14e5eb7fe9ea633
-  MPV_DLL_SHA256: 04e4d27dc385dc18ddd93fbe69c75e635b864f3c6ec53a9122df54c2f7842f4a
+  MPV_URL: https://github.com/mpv-player/mpv/releases/download/v0.42.0/libmpv-v0.42.0-x86_64-w64-mingw32-lgpl.zip
+  MPV_ZIP_SHA256: 8e5f77430efc53ef175804ba6618527e3af0448a0dcabf04d3cc72659d1a6fce
+  MPV_DLL_SHA256: 94fb87247732c59915cd59808bc582e843a71c22214b7b6c1e5563aa8149cef4
 
 jobs:
   installer:
@@ -63,12 +63,12 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt pyinstaller==6.22.3 pyinstaller-hooks-contrib==2026.8
 
-      - name: Get libmpv-2.dll (checked by SHA-256)
+      - name: Get libmpv-2.dll (official LGPL build, checked by SHA-256)
         shell: bash
         run: |
-          curl -fsSL -o mpv.7z "$MPV_URL"
-          echo "$MPV_7Z_SHA256  mpv.7z" | sha256sum -c -
-          7z e -y mpv.7z libmpv-2.dll > /dev/null
+          curl -fsSL -o mpv.zip "$MPV_URL"
+          echo "$MPV_ZIP_SHA256  mpv.zip" | sha256sum -c -
+          7z e -y mpv.zip libmpv-2.dll > /dev/null
           echo "$MPV_DLL_SHA256  libmpv-2.dll" | sha256sum -c -
 
       - name: Package with PyInstaller
@@ -144,7 +144,7 @@ jobs:
           if ($p.ExitCode -ne 0 -or -not $r.passou) { Write-Error "Installed self-test failed"; exit 1 }
           # single window: a second Ciranda hands its file to the open one and quits
           $foto = Join-Path $PWD "teste-instancia.jpg"
-          python -c "from PIL import Image; Image.new('RGB', (320, 200), (200, 120, 40)).save(r'$foto')"
+          python -c "from PySide6.QtGui import QColor, QImage; i = QImage(320, 200, QImage.Format_RGB32); i.fill(QColor(200, 120, 40)); i.save(r'$foto')"
           $log = Join-Path $env:APPDATA "Ciranda\ciranda.log"
           $primeiro = Start-Process -FilePath $exe -PassThru
           Start-Sleep -Seconds 8
@@ -268,19 +268,20 @@ jobs:
           x86_64-w64-mingw32-gcc -O2 -municode -mwindows -s lancador/ciranda.c r.res -o Ciranda.exe -lshlwapi
           ls -la Ciranda.exe
 
-      - name: Get libmpv-2.dll
+      - name: Get libmpv-2.dll (official LGPL build)
         run: |
-          curl -fsSL -o mpv.7z "$MPV_URL"
-          echo "$MPV_7Z_SHA256  mpv.7z" | sha256sum -c -
-          7z e -y mpv.7z libmpv-2.dll > /dev/null
+          curl -fsSL -o mpv.zip "$MPV_URL"
+          echo "$MPV_ZIP_SHA256  mpv.zip" | sha256sum -c -
+          7z e -y mpv.zip libmpv-2.dll > /dev/null
           echo "$MPV_DLL_SHA256  libmpv-2.dll" | sha256sum -c -
 
       - name: Build zip
         run: |
           D=out/Ciranda
           mkdir -p "$D/ciranda" "$D/ui"
-          cp Ciranda.exe libmpv-2.dll app.py requirements.txt LEIA-ME.txt RODAR.bat RESTAURAR.bat MENU-BOTAO-DIREITO.bat LICENSE THIRD-PARTY-NOTICES.md "$D/"
-          cp ciranda/*.py "$D/ciranda/"
+          cp Ciranda.exe libmpv-2.dll app.py requirements.txt LEIA-ME.txt RODAR.bat RESTAURAR.bat MENU-BOTAO-DIREITO.bat LICENSE THIRD-PARTY-NOTICES.md AVISOS-DE-TERCEIROS.txt "$D/"
+          cp -r licenses "$D/"
+          cp ciranda/*.py ciranda/novidades.json "$D/ciranda/"
           cp ui/* "$D/ui/"
           (cd out && zip -r -9 "../ciranda-$TAG-portatil.zip" Ciranda)
           unzip -l "ciranda-$TAG-portatil.zip"

@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (QAbstractItemView, QApplication, QButtonGroup, QF
                                QInputDialog, QStackedWidget, QStyle, QStyledItemDelegate,
                                QToolButton, QVBoxLayout, QWidget)
 
-from . import NOME, VERSAO, atualizacao, config, fotos, relato, textos
+from . import NOME, VERSAO, atualizacao, config, heif, relato, textos
 from .textos import t
 from .biblioteca import Item, varrer_varios
 from .fila import Fila
@@ -164,7 +164,6 @@ class Ponte(QObject):
     tempo = Signal(float)
     duracao = Signal(float)
     pausa = Signal(bool)
-    heic_pronto = Signal(int, str)
 
 
 class PonteAtualizacao(QObject):
@@ -644,6 +643,8 @@ class Janela(QMainWindow):
         super().__init__()
         self._config_existia = config.existe()
         self.cfg = config.carregar()
+        threading.Thread(target=config.apagar_cache_heic_antigo, daemon=True).start()
+        self._filtro_giro = ""  # filtro de vídeo pedido ao motor para a foto atual (heif.py)
         textos.iniciar(self.cfg)
         self._fixos = []  # textos fixos da tela, refeitos quando o idioma muda
         self.fila = Fila()
@@ -1291,6 +1292,13 @@ class Janela(QMainWindow):
         self._quadro_render = self._quadro_tutorial
         self._quadro_tutorial()
 
+    def _trazer_de_volta(self):
+        """Aberta pelo instalador, às vezes a janela nasce minimizada (visto em atualizações reais)."""
+        if self.isMinimized():
+            self.showNormal()
+            self.raise_()
+            self.activateWindow()
+
     def _avisar_se_atualizou(self):
         """Primeira abertura: tutorial. Depois de atualizar: Novidades da vX.Y.Z (uma vez por versão)."""
         arg = next((a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--atualizado-de=")), "")
@@ -1299,6 +1307,7 @@ class Janela(QMainWindow):
             # o instalador baixado fica na pasta temporária: apaga quando ele já terminou
             QTimer.singleShot(60000, atualizacao.apagar_downloads)
             QTimer.singleShot(0, self._retomar_depois_de_atualizar)
+            QTimer.singleShot(1200, self._trazer_de_volta)
         antes = (arg or self.cfg.get("versao_vista") or "").lstrip("v")
         sem_quadros = os.environ.get("CIRANDA_SEM_QUADROS")  # autoteste e testes antigos
         if arg and atualizacao.versao_tupla(arg) == atualizacao.versao_tupla(VERSAO):
@@ -1853,7 +1862,6 @@ class Janela(QMainWindow):
         ponte.fim_video.connect(self._video_acabou)
         ponte.erro_arquivo.connect(self._arquivo_falhou)
         ponte.pausa.connect(self._recebeu_pausa)
-        ponte.heic_pronto.connect(self._heic_pronto)
         QTimer.singleShot(400, lambda: desarmar_janelas_filhas(int(self.tela.winId())))
 
     # ----- abrir pastas -----
@@ -1989,7 +1997,7 @@ class Janela(QMainWindow):
 
     def limpar_tudo(self, confirmar=True):
         """Limpa a fila e a "Última fila" (a lista do Continuar). Só isso:
-        cache, log e ajustes ficam; nunca mexe nas fotos e vídeos do PC."""
+        log e ajustes ficam; nunca mexe nas fotos e vídeos do PC."""
         if confirmar and self.cfg["ultimas_pastas"]:
             r = QMessageBox.question(
                 self, t("limpar_tudo"), t("limpar_tudo_confirma"),
@@ -2014,7 +2022,7 @@ class Janela(QMainWindow):
         if self.isFullScreen():
             self.sair_tela_cheia()
         self.limpar()
-        fotos.apagar_cache()
+        config.apagar_cache_heic_antigo()
         self.cfg = dict(config.PADRAO)
         self.cfg["ultimas_pastas"] = []
         self.cfg["versao_vista"] = VERSAO
@@ -2079,36 +2087,20 @@ class Janela(QMainWindow):
         self._duracao = 0.0
         self.b_play.setIcon(icone("pause", "#1a0f07", 22))
         self.palco.setCurrentWidget(self.tela)
-        if item.heic:
-            token = self._token
-            threading.Thread(target=lambda: self.ponte.heic_pronto.emit(
-                token, fotos.heic_para_jpeg(item.caminho) or ""), daemon=True).start()
-        else:
-            self._carregar_no_motor(item.caminho)
-        self._preparar_proximo_heic()
-        self._atualizar_info(carregando=item.heic)
+        self._carregar_no_motor(item.caminho)
+        self._atualizar_info()
         self.modelo.dataChanged.emit(self.modelo.index(0), self.modelo.index(self.modelo.rowCount() - 1))
         self._rolar_para_atual()
-
-    def _heic_pronto(self, token, caminho):
-        if token != self._token or self._item is None:
-            return
-        if not caminho:
-            self._arquivo_falhou()
-            return
-        self._carregar_no_motor(caminho)
-        self._atualizar_info()
-
-    def _preparar_proximo_heic(self):
-        prox = self.fila.espiar_proximo()
-        if prox is not None and prox.heic:
-            threading.Thread(target=fotos.heic_para_jpeg, args=(prox.caminho,), daemon=True).start()
 
     def _carregar_no_motor(self, caminho):
         item = self._item
         rep_um = self.fila.repetir == "um"
         try:
             self.mpv["loop-file"] = "inf" if (item.animada or (item.tipo == "video" and rep_um)) else "no"
+            filtro = heif.filtro_de_giro(caminho) if item.ext in heif.EXTENSOES else ""
+            if filtro != self._filtro_giro:  # trocar o filtro refaz a cadeia de vídeo: só quando muda
+                self.mpv["vf"] = filtro
+                self._filtro_giro = filtro
             pos, self._retomar_pos = self._retomar_pos, 0.0
             try:
                 self.mpv["start"] = f"{pos:.2f}" if pos > 1 else "none"  # volta de onde parou (só depois de atualizar)
@@ -2498,18 +2490,17 @@ class Janela(QMainWindow):
             self.sair_tela_cheia()  # senão o Explorer abre atrás da tela cheia
         mostrar_no_explorer(self._item.caminho)
 
-    def _atualizar_info(self, carregando=False):
+    def _atualizar_info(self):
         item = self._item
         if not item:
             return
         n, total = self.fila.posicao()
         pasta = item.pasta_rel or (os.path.basename(item.raiz.rstrip("\\/")) or item.raiz)
         pasta = pasta.replace("&", "&amp;").replace("<", "&lt;")
-        extra = t("convertendo_heic") if carregando else ""
         fm = QFontMetrics(self.l_nome.font())
         self.l_nome.setText(fm.elidedText(item.nome, Qt.ElideMiddle, max(60, self.l_nome.width())))
         self.l_nome.setToolTip(item.caminho)
-        self.l_info.setText(f'{pasta} · {t("n_de_total", n=n, total=total)}{extra}')
+        self.l_info.setText(f'{pasta} · {t("n_de_total", n=n, total=total)}')
         self.l_info.setToolTip(item.caminho)
         cor = "#c35b5b" if item.falhou else DESTAQUE
         self.l_tipo.setPixmap(icone("foto" if item.tipo == "foto" else "video", cor, 20).pixmap(20, 20))
@@ -2598,5 +2589,4 @@ class Janela(QMainWindow):
             self.mpv.terminate()
         except Exception:
             pass
-        threading.Thread(target=fotos.limpar_cache, daemon=True).start()
         super().closeEvent(e)

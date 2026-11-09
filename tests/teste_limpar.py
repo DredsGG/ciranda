@@ -1,4 +1,4 @@
-"""Limpar tudo: some a fila e a lista do Continuar; ficam cache, ajustes e os arquivos originais.
+"""Limpar tudo: some a fila e a lista do Continuar; ficam os ajustes e os arquivos originais.
     CIRANDA_VO=x11 xvfb-run -a python testes/teste_limpar.py <pasta> <saida>"""
 import json, os, sys
 os.environ.setdefault("CIRANDA_IDIOMA_SISTEMA", "pt")  # textos dos testes em português
@@ -8,7 +8,6 @@ PASTA, SAIDA = sys.argv[1], sys.argv[2]
 os.environ["APPDATA"] = os.path.join(SAIDA, "appdata-limpar")
 from PySide6.QtCore import QTimer
 from PySide6.QtWidgets import QApplication
-from ciranda import fotos
 from ciranda.janela import QSS, Janela
 from ciranda.biblioteca import varrer
 
@@ -24,13 +23,11 @@ def heic():
 def conferir():
     cfgf = os.path.join(os.environ["APPDATA"], "Ciranda", "config.json")
     assert json.load(open(cfgf))["ultimas_pastas"], "antes: última fila guardada"
-    assert fotos.tem_cache(), "antes: cache HEIC existe"
     j._montar_menu_abrir()
     j.limpar_tudo(confirmar=False)
     cfg = json.load(open(cfgf))
     assert cfg["ultimas_pastas"] == [], cfg["ultimas_pastas"]
     assert cfg["segundos_foto"] == 7, "ajuste mantido"
-    assert fotos.tem_cache(), "cache NÃO deve ser apagado (só fila + Continuar)"
     assert len(j.fila) == 0 and j._item is None, "fila vazia"
     assert j.vazio.b_continuar.isHidden(), "botão Continuar sumiu"
     assert len(varrer(PASTA)) == antes, "nenhum arquivo original mexido"

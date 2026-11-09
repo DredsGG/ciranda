@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import os
+import shutil
 
 PADRAO = {
     "volume": 80,
@@ -32,6 +33,12 @@ def pasta_dados() -> str:
     p = os.path.join(base, "Ciranda")
     os.makedirs(p, exist_ok=True)
     return p
+
+
+def apagar_cache_heic_antigo():
+    """Até a 1.4.1 cada HEIC virava um JPEG em cache-heic; desde a 1.5.0 o mpv abre o HEIC direto.
+    Apaga só essa pasta do próprio Ciranda, nunca os originais. Se ela não existe, não faz nada."""
+    shutil.rmtree(os.path.join(pasta_dados(), "cache-heic"), ignore_errors=True)
 
 
 def _arquivo() -> str:
