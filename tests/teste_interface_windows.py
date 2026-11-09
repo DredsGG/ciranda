@@ -50,9 +50,11 @@ def esperar(seg):
 
 
 def tirar_print(nome):
-    p = j.tela.mapToGlobal(QPoint(0, 0))
-    QGuiApplication.primaryScreen().grabWindow(0, p.x(), p.y(), j.tela.width(), j.tela.height()).save(
-        os.path.join(SAIDA, nome + ".png"))
+    """Só se a janela da Ciranda estiver em primeiro plano: o print nunca pode pegar outra janela."""
+    if u32.GetForegroundWindow() == int(j.winId()):
+        p = j.tela.mapToGlobal(QPoint(0, 0))
+        QGuiApplication.primaryScreen().grabWindow(0, p.x(), p.y(), j.tela.width(), j.tela.height()).save(
+            os.path.join(SAIDA, nome + ".png"))
 
 
 def tocar_nome(nome):
