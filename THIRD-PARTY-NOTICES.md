@@ -9,14 +9,14 @@ Ciranda's own code is under the [MIT License](LICENSE). The components below shi
 - SHA-256 of the DLL: `94fb87247732c59915cd59808bc582e843a71c22214b7b6c1e5563aa8149cef4`. The release workflow checks both.
 - **mpv** is under the GNU LGPL version 2.1 or later (built with `-Dgpl=false`).
 - **FFmpeg**, inside the DLL, is built with `--enable-version3` and without `--enable-gpl`, so it is under the GNU LGPL version 3 or later.
-- **Heads-up: the official DLL also contains zvbi** (a teletext decoder Ciranda never uses). Two of its files, `src/packet-830.c` and `src/pdc.c`, are under the GNU GPL version 2. FFmpeg does not list libzvbi as a GPL library, so it ends up in mpv's "LGPL" build. As long as mpv ships the DLL this way, Ciranda's package is not entirely free of GPL code (`licenses/GPL-2.0.txt`). FFmpeg-Builds removed zvbi from its LGPL variants on 2026-11-07 ([commit 162691525a43](https://github.com/FFmpeg-Builds/FFmpeg-Builds/commit/162691525a43), after mpv 0.42.0 was built); Ciranda will switch DLLs once mpv publishes an official libmpv built after that.
+- **Heads-up: the official DLL also contains zvbi** (a teletext decoder Ciranda never uses). Two of its files, `src/packet-830.c` and `src/pdc.c`, are under the GNU GPL version 2 *only* (no "or later"), and packet-830.c ends up in the DLL. FFmpeg does not list libzvbi as a GPL library, so it got into mpv's "LGPL" build. GPL-2-only cannot be combined with the LGPL-3+ FFmpeg in the same DLL: this is not "a little GPL" but a license combination FFmpeg-Builds itself considers incompatible, which is why it removed zvbi from its LGPL variants on 2026-11-07 ([commit 162691525a43](https://github.com/FFmpeg-Builds/FFmpeg-Builds/commit/162691525a43), after mpv 0.42.0 was built). Ciranda will switch DLLs once mpv publishes an official libmpv built after that (`licenses/GPL-2.0.txt`).
 - Source: [mpv at tag v0.42.0](https://github.com/mpv-player/mpv/tree/v0.42.0) and [FFmpeg at commit baa68e6](https://github.com/FFmpeg/FFmpeg/commit/baa68e68b34e2de912eb7e94342cebd2545f05ed) (`git-2026-11-04-baa68e6`).
 - Build recipe: mpv's [`ci/build-mingw64-full.sh`](https://github.com/mpv-player/mpv/blob/v0.42.0/ci/build-mingw64-full.sh), on top of the `win64-lgpl` image from [FFmpeg-Builds at c63bb308](https://github.com/FFmpeg-Builds/FFmpeg-Builds/tree/c63bb308a1de656b425c132a8102f8fd5389afc5), the last recipe commit before mpv's build (2026-11-04), which pins every library's commit. What mpv clones without a pinned version (LuaJIT, libsixel, libarchive, subrandr, mujs) is listed at its commit on the build date: that part is inferred.
 - The DLL is a separate file: you can replace it with another compatible libmpv.
 
 ### Libraries compiled into the DLL
 
-Each library's license text, with its copyright notice, is in `licenses/motor/<library>.txt`; subrandr's Rust crates are in `licenses/motor/subrandr-crates.txt`; the full list with commits is `licenses/motor/LISTA.tsv`.
+Each library's license text, with its copyright notice and the license files of third-party code it carries in subfolders, is in `licenses/motor/<library>.txt`; subrandr's Rust crates are in `licenses/motor/subrandr-crates.txt`; the full list with commits is `licenses/motor/LISTA.tsv`. Limit: third-party code whose notice only lives in its own source file header may be missing (the ones found, such as libsvm and Xiph code inside vmaf, are included); each library's source, linked below, is the complete reference.
 
 <!-- motor:inicio -->
 | Library | Version | License | Source |
@@ -44,6 +44,7 @@ Each library's license text, with its copyright notice, is in `licenses/motor/<l
 | OpenCL-Headers | `82f60316cc14` | Apache-2.0 | https://github.com/KhronosGroup/OpenCL-Headers.git |
 | OpenCL-ICD-Loader | `5192c84f8059` | Apache-2.0 | https://github.com/KhronosGroup/OpenCL-ICD-Loader.git |
 | vmaf | `f712fa7564fe` | BSD-2-Clause-Patent | https://github.com/Netflix/vmaf.git |
+| libsvm | `v324` | BSD-3-Clause | https://github.com/cjlin1/libsvm.git |
 | xxhash | `61fd0fece2eb` | BSD-2-Clause | https://github.com/Cyan4973/xxHash.git |
 | zstd | `49cf51799ea0` | BSD-3-Clause | https://github.com/facebook/zstd.git |
 | Vulkan-Headers | `v1.4.366` | Apache-2.0 OR MIT | https://github.com/KhronosGroup/Vulkan-Headers.git |
@@ -80,7 +81,7 @@ Each library's license text, with its copyright notice, is in `licenses/motor/<l
 | mbedtls | `v4.2.0` | Apache-2.0 | https://github.com/Mbed-TLS/mbedtls.git |
 | tf-psa-crypto | `73c5da561c8e` | Apache-2.0 | https://github.com/Mbed-TLS/TF-PSA-Crypto.git |
 | librist | `47ad5513d1aa` | BSD-2-Clause | https://code.videolan.org/rist/librist.git |
-| libssh | `9de02f3d01ba` | LGPL-2.1-only | https://gitlab.com/libssh/libssh-mirror.git |
+| libssh | `9de02f3d01ba` | LGPL-2.1-or-later | https://gitlab.com/libssh/libssh-mirror.git |
 | theora | `28fd5ec77f0a` | BSD-3-Clause | https://github.com/xiph/theora.git |
 | libvpx | `900b2a52b69e` | BSD-3-Clause | https://chromium.googlesource.com/webm/libvpx |
 | libwebp | `1844042d1ca7` | BSD-3-Clause | https://chromium.googlesource.com/webm/libwebp |
@@ -120,7 +121,7 @@ Each library's license text, with its copyright notice, is in `licenses/motor/<l
 | mujs | `1.3.8` | ISC | https://codeberg.org/ccxvii/mujs.git |
 | cppwinrt | `2.0.250303.1` | MIT | https://github.com/microsoft/cppwinrt.git |
 | gcc-runtime | `releases/gcc-16.2.0` | GPL-3.0-or-later WITH GCC-exception-3.1 | https://github.com/gcc-mirror/gcc.git |
-| rust-std ⚠️ | `main` | MIT OR Apache-2.0 | https://github.com/rust-lang/rust.git |
+| rust-std | `1.99.1` | MIT OR Apache-2.0 | https://github.com/rust-lang/rust.git |
 <!-- motor:fim -->
 
 ## Python packages

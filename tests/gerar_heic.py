@@ -146,9 +146,12 @@ def simples(destino: str, largura: int, altura: int, irot: int | None = None):
 
 
 def grade(destino: str, colunas: int, linhas: int, largura: int, altura: int, irot: int | None = None,
-          bloco: int = 512, imir: int | None = None):
-    """Grade colunas x linhas de blocos quadrados. largura/altura são o tamanho final (o iPhone corta a sobra)."""
-    filtro = (f"{_fonte(colunas * bloco, linhas * bloco)},trim=end_frame=1,loop=loop={colunas * linhas - 1}:size=1,"
+          bloco: int = 512, imir: int | None = None, cor: str | None = None):
+    """Grade colunas x linhas de blocos quadrados. largura/altura são o tamanho final (o iPhone corta a sobra).
+    cor: uma cor lisa no lugar do padrão de teste (para saber, pela imagem, qual arquivo está na tela)."""
+    origem = (f"color=c={cor}:s={colunas * bloco}x{linhas * bloco}:r=1,format=rgb24" if cor
+              else _fonte(colunas * bloco, linhas * bloco))
+    filtro = (f"{origem},trim=end_frame=1,loop=loop={colunas * linhas - 1}:size=1,"
               f"crop={bloco}:{bloco}:x='mod(n,{colunas})*{bloco}':y='floor(n/{colunas})*{bloco}'{_PARA_YUV}")
     hvcc, blocos = _codificar(filtro, colunas * linhas)
     with open(destino, "wb") as f:

@@ -53,6 +53,7 @@ LIBS = [
     ("OpenCL-Headers", "https://github.com/KhronosGroup/OpenCL-Headers.git", "82f60316cc142e7b21dc1d8983b26de18858fbd9", FB, "Apache-2.0", ""),
     ("OpenCL-ICD-Loader", "https://github.com/KhronosGroup/OpenCL-ICD-Loader.git", "5192c84f8059e5f703e5452929b613f9487f6e4c", FB, "Apache-2.0", ""),
     ("vmaf", "https://github.com/Netflix/vmaf.git", "f712fa7564fe", FB, "BSD-2-Clause-Patent", ""),
+    ("libsvm", "https://github.com/cjlin1/libsvm.git", "v324", "copiado dentro do vmaf (libvmaf/src/svm.cpp, LIBSVM_VERSION 324)", "BSD-3-Clause", ""),
     ("xxhash", "https://github.com/Cyan4973/xxHash.git", "61fd0fece2eb", FB, "BSD-2-Clause", ""),
     ("zstd", "https://github.com/facebook/zstd.git", "49cf51799ea0", FB, "BSD-3-Clause", "licença dupla BSD ou GPL-2; usada a BSD"),
     ("Vulkan-Headers", "https://github.com/KhronosGroup/Vulkan-Headers.git", "v1.4.366", FB, "Apache-2.0 OR MIT", ""),
@@ -89,7 +90,7 @@ LIBS = [
     ("mbedtls", "https://github.com/Mbed-TLS/mbedtls.git", "v4.2.0", FB, "Apache-2.0", "licença dupla Apache-2.0 ou GPL-2+; usada a Apache"),
     ("tf-psa-crypto", "https://github.com/Mbed-TLS/TF-PSA-Crypto.git", "73c5da561c8e5253db7b1fb440eda86fde8d8024", "submódulo do mbedtls", "Apache-2.0", "licença dupla Apache-2.0 ou GPL-2+; usada a Apache"),
     ("librist", "https://code.videolan.org/rist/librist.git", "47ad5513d1aa", FB, "BSD-2-Clause", ""),
-    ("libssh", "https://gitlab.com/libssh/libssh-mirror.git", "9de02f3d01ba", FB, "LGPL-2.1-only", ""),
+    ("libssh", "https://gitlab.com/libssh/libssh-mirror.git", "9de02f3d01ba", FB, "LGPL-2.1-or-later", ""),
     ("theora", "https://github.com/xiph/theora.git", "28fd5ec77f0a", FB, "BSD-3-Clause", ""),
     ("libvpx", "https://chromium.googlesource.com/webm/libvpx", "900b2a52b69e", FB, "BSD-3-Clause", "+ concessão de patentes"),
     ("libwebp", "https://chromium.googlesource.com/webm/libwebp", "1844042d1ca7", FB, "BSD-3-Clause", "+ concessão de patentes"),
@@ -131,12 +132,19 @@ LIBS = [
     ("cppwinrt", "https://github.com/microsoft/cppwinrt.git", "2.0.250303.1", MPV, "MIT", "cabeçalhos gerados"),
     ("gcc-runtime", "https://github.com/gcc-mirror/gcc.git", "releases/gcc-16.2.0", "compilador (libgcc, libstdc++)", "GPL-3.0-or-later WITH GCC-exception-3.1",
      "a exceção de runtime libera a distribuição do programa compilado"),
-    ("rust-std", "https://github.com/rust-lang/rust.git", "main", "biblioteca padrão do Rust (subrandr)", "MIT OR Apache-2.0", "⚠️ versão do Rust usada não confirmei"),
+    ("rust-std", "https://github.com/rust-lang/rust.git", "1.99.1", "biblioteca padrão do Rust (subrandr)", "MIT OR Apache-2.0",
+     "a DLL traz caminhos /rustc/58cf8f9c35b3..., o commit da tag 1.99.1"),
 ]
 NOME_LIC = re.compile(r"^(licen[cs]e|copying|copyright|notice|unlicense|patents?)", re.I)
 FIXOS = {"gcc-runtime": ["COPYING3", "COPYING.RUNTIME"], "rust-std": ["LICENSE-MIT", "LICENSE-APACHE", "COPYRIGHT"],
          "nv-codec-headers": ["include/ffnvcodec/dynlink_loader.h"]}
+SO_RAIZ = {"mpv", "FFmpeg", "libsvm"}  # o aviso deles está na raiz; o resto da árvore são partes deles mesmos
+# avisos que só existem no cabeçalho do arquivo-fonte (código de terceiros copiado para dentro do projeto)
+CABECALHOS = {"vmaf": ["libvmaf/src/feature/third_party/xiph/psnr_hvs.c"]}
 IGNORAR = {"license-checker.cfg"}
+# código embutido em subpastas (third_party etc.) também tem aviso; teste, documentação e exemplo não entram na DLL
+FORA = re.compile(r"(^|/)(tests?|testdata|test_data|testing|unittests?|fuzz\w*|docs?|examples?|samples?|demos?|"
+                  r"\.github|bench\w*|tools?)(/|$)", re.I)
 
 
 def _git(*a, cwd=None):
@@ -169,20 +177,30 @@ def buscar(cache, lib):
             alvo = _git("rev-parse", "--verify", "-q", ref + "^{commit}", cwd=d).stdout.decode().strip()
     if not alvo:
         raise SystemExit(f"{nome}: não achei {ref} em {url}")
-    arqs = FIXOS.get(nome) or [n for n in _git("ls-tree", "--name-only", alvo, cwd=d).stdout.decode().splitlines()
-                               if NOME_LIC.match(n) and n not in IGNORAR]
+    if nome in FIXOS:
+        arqs = FIXOS[nome]
+    else:
+        todos = _git("ls-tree", "-r", "--name-only", alvo, cwd=d).stdout.decode().splitlines()
+        arqs = []
+        for caminho in todos:
+            partes = caminho.split("/")
+            if nome in SO_RAIZ and len(partes) > 1 and not NOME_LIC.match(partes[0]):
+                continue
+            # o arquivo se chama LICENSE/COPYING/..., ou está dentro de uma pasta com esse nome (licenses/fmt/...)
+            if not any(NOME_LIC.match(p) for p in partes) or partes[-1] in IGNORAR or FORA.search(caminho):
+                continue
+            arqs.append(caminho)
     textos = []
-    for a in sorted(arqs):
-        tipo = _git("cat-file", "-t", f"{alvo}:{a}", cwd=d).stdout.decode().strip()
-        dentro = ([f"{a}/{n}" for n in _git("ls-tree", "--name-only", f"{alvo}:{a}", cwd=d).stdout.decode().splitlines()]
-                  if tipo == "tree" else [a])
-        for f in dentro:
-            t = _git("show", f"{alvo}:{f}", cwd=d)
-            if t.returncode == 0 and t.stdout.strip():
-                texto = t.stdout.decode("utf-8", "replace")
-                if nome == "nv-codec-headers":  # só o aviso do cabeçalho
-                    texto = texto[:texto.index("*/") + 2]
-                textos.append((f, texto))
+    for f in sorted(arqs, key=lambda c: (c.count("/"), c.lower())):
+        t = _git("show", f"{alvo}:{f}", cwd=d)
+        if t.returncode == 0 and t.stdout.strip() and not t.stdout.startswith(b"tree "):
+            texto = t.stdout.decode("utf-8", "replace")
+            if nome == "nv-codec-headers":  # só o aviso do cabeçalho
+                texto = texto[:texto.index("*/") + 2]
+            textos.append((f, texto))
+    for f in CABECALHOS.get(nome, []):
+        t = _git("show", f"{alvo}:{f}", cwd=d).stdout.decode("utf-8", "replace")
+        textos.append((f + " (cabeçalho)", t[:t.index("*/") + 2]))
     if not textos:
         raise SystemExit(f"{nome}: nenhum texto de licença")
     return nome, alvo, textos

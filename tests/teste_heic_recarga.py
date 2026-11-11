@@ -29,7 +29,10 @@ from ciranda.janela import QSS, Janela  # noqa: E402
 
 PASTA = os.path.join(SAIDA, "midia-recarga")
 os.makedirs(PASTA, exist_ok=True)
-arq = {n: os.path.join(PASTA, n) for n in ("foto.jpg", "g2x1.heic", "g8x6.heic", "simples.heic", "giro.heic", "corrompido.heic")}
+arq = {n: os.path.join(PASTA, n) for n in ("foto.jpg", "g2x1.heic", "g8x6.heic", "simples.heic", "giro.heic", "corrompido.heic",
+                                           "vermelha.heic", "azul.heic")}
+gerar_heic.grade(arq["vermelha.heic"], 2, 1, 1024, 512, cor="red")  # mesmo tamanho, cores diferentes:
+gerar_heic.grade(arq["azul.heic"], 2, 1, 1024, 512, cor="blue")     # só a cor diz qual está na tela
 img = QImage(800, 600, QImage.Format_RGB32)
 img.fill(QColor(70, 130, 180))
 img.save(arq["foto.jpg"])
@@ -187,6 +190,81 @@ tela_s = time.monotonic() - t_apareceu
 ok(abs(tela_s - 2.0) < 0.4 and t_apareceu - t0 > 0.3,
    f"foto de 2 s: ficou {tela_s:.2f} s na tela depois de aparecer (apareceu {t_apareceu - t0:.2f} s após abrir, "
    f"na 2a tentativa); se contasse desde o carregamento, ficaria uns {2.0 - (t_apareceu - t0):.2f} s")
+
+
+def cor_na_tela():
+    """A verdade quando o tamanho não muda: a cor do quadro que a saída de vídeo mostra."""
+    f = os.path.join(SAIDA, "quadro.png")
+    j.mpv.command("screenshot-to-file", f, "video")
+    esperar(0.2)
+    c = QImage(f).pixelColor(512, 256)
+    return "azul" if c.blue() > 150 and c.red() < 100 else ("vermelha" if c.red() > 150 and c.blue() < 100 else "outra")
+
+
+# 6. foto anterior do mesmo tamanho (pasta de iPhone): a grade nova tem que aparecer de verdade
+j.s_foto.setValue(30)
+certo, percebeu = 0, 0
+for _ in range(20):
+    j.tocar(j.fila.ir_para(idx["vermelha.heic"]))
+    esperar(5, lambda: j._heic_apareceu)
+    esperar(0.3)
+    j.tocar(j.fila.ir_para(idx["azul.heic"]))
+    esperar(8, lambda: j._heic_apareceu or j._item.falhou)
+    esperar(0.3)
+    certo += cor_na_tela() == "azul"
+    percebeu += j._heic_apareceu
+ok(certo == 20 and percebeu == 20, f"foto anterior do mesmo tamanho: a nova na tela {certo} de 20, a Ciranda percebeu {percebeu} de 20")
+
+# 7. o mesmo arquivo de novo
+j.tocar(j.fila.ir_para(idx["azul.heic"]))
+a1 = esperar(5, lambda: j._heic_apareceu)
+j.tocar(j.fila.ir_para(idx["azul.heic"]))
+a2 = esperar(8, lambda: j._heic_apareceu or j._item.falhou)
+ok(a1 and a2 and not j._item.falhou and cor_na_tela() == "azul", "o mesmo HEIC duas vezes seguidas aparece e não é marcado como falho")
+
+# 8. pausado antes de aparecer: aparece, o relógio não anda; ao despausar, conta o tempo inteiro
+j.s_foto.setValue(2)
+j.tocar(j.fila.ir_para(idx["foto.jpg"]))
+esperar(0.8)
+j.tocar(j.fila.ir_para(idx["g8x6.heic"]))
+j.alternar_pausa()  # pausa antes de a grade aparecer
+pausou = bool(j.mpv.pause)
+esperar(6, lambda: j._heic_apareceu)
+esperar(3.0)  # mais que os 2 s da foto
+parada = j._item.nome == "g8x6.heic" and not j._t_foto.isActive() and bool(j.mpv.pause)
+apareceu_pausado = j._heic_apareceu  # lido antes de despausar: a troca de arquivo zera
+t_desp = time.monotonic()
+j.alternar_pausa()
+esperar(6, lambda: j._item.nome != "g8x6.heic")
+depois = time.monotonic() - t_desp
+ok(pausou and apareceu_pausado and parada and abs(depois - 2.0) < 0.4,
+   f"pausado antes de aparecer: ficou parado (relógio parado={parada}); despausado, ficou {depois:.2f} s (pedido 2)")
+
+# 9. a recarga mantém a pausa
+j.s_foto.setValue(30)
+j.HEIC_ESPERA_S, j.HEIC_PASSO_S = 0.02, 2.0
+pos = tamanho_log()
+j.tocar(j.fila.ir_para(idx["giro.heic"]))
+j.alternar_pausa()
+esperar(8, lambda: j._heic_apareceu)
+texto = log_desde(pos)
+j.HEIC_ESPERA_S, j.HEIC_PASSO_S = Janela.HEIC_ESPERA_S, Janela.HEIC_PASSO_S
+ok("recarregando" in texto and bool(j.mpv.pause) and not j._t_foto.isActive(),
+   f"recarga com o player pausado: recarregou={'recarregando' in texto}, continua pausado={bool(j.mpv.pause)}")
+j.alternar_pausa()
+
+# 10. pausar e despausar antes de aparecer não pula o HEIC
+j.s_foto.setValue(2)
+j.tocar(j.fila.ir_para(idx["foto.jpg"]))
+esperar(3.0, lambda: j._item.nome != "foto.jpg")  # a foto anterior roda o tempo inteiro
+j.tocar(j.fila.ir_para(idx["g8x6.heic"]))
+j.alternar_pausa()
+j.alternar_pausa()
+esperar(0.3)
+ainda = j._item.nome == "g8x6.heic" and not j._item.falhou
+esperar(5, lambda: j._heic_apareceu)
+ok(ainda and j._heic_apareceu and j._item.nome == "g8x6.heic",
+   "pausar e despausar antes de aparecer: o HEIC não foi pulado e apareceu")
 
 j.close()
 print("HEIC RECARGA " + (f"FALHOU: {falhas}" if falhas else f"PASSOU ({n_ok} checagens)"))

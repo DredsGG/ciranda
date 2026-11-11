@@ -37,6 +37,7 @@ for nome in nomes:
     corpo = texto.split("=====", 1)[-1]
     ok("=====" in texto and len(corpo) > 200, f"{nome}: sem o texto da licença")
     ok(COPYRIGHT.search(corpo), f"{nome}: sem aviso de copyright nem texto de licença reconhecível")
+    ok(not re.search(r"^tree [0-9a-f]{40}:", texto, re.M), f"{nome}: listagem de pasta no lugar do texto de licença")
     ok(lista[nome][2] and lista[nome][3].startswith("http"), f"{nome}: sem licença ou link do código-fonte")
 
 crates = open(os.path.join(MOTOR, "subrandr-crates.txt"), encoding="utf-8").read()
@@ -83,7 +84,18 @@ if os.path.isfile(dll):
         alvo = POR_OPCAO.get(opcao)
         ok(alvo is not None, f"--enable-{opcao} na DLL sem biblioteca correspondente no teste")
         ok(alvo in nomes, f"--enable-{opcao}: falta {alvo} em licenses/motor")
-    print(f"DLL conferida: {len(ligadas - desligadas)} opções --enable do FFmpeg")
+    # e as dependências do próprio mpv ("List of enabled features" gravada na DLL)
+    POR_RECURSO = {"iconv": "libiconv", "javascript": "mujs", "lcms2": "lcms2", "libarchive": "libarchive", "libass": "libass",
+                   "libbluray": "libbluray", "libcurl": "curl", "libplacebo": "libplacebo", "luajit": "LuaJIT",
+                   "shaderc": "shaderc", "sixel": "libsixel", "spirv-cross": "SPIRV-Cross", "subrandr": "subrandr",
+                   "uchardet": "uchardet", "vaapi": "libva", "vapoursynth": "vapoursynth", "vulkan": "Vulkan-Shim-Loader",
+                   "zimg": "zimg", "zlib": "zlib", "amf": "AMF", "ffnvcodec": "nv-codec-headers", "win32-smtc": "cppwinrt",
+                   "ffmpeg": "FFmpeg"}
+    recursos = set(re.search(rb"List of enabled features: ([^\n\0]+)", dados).group(1).decode().split())
+    for r in sorted(recursos & set(POR_RECURSO)):
+        ok(POR_RECURSO[r] in nomes, f"mpv com {r}: falta {POR_RECURSO[r]} em licenses/motor")
+    print(f"DLL conferida: {len(ligadas - desligadas)} opções --enable do FFmpeg e {len(recursos & set(POR_RECURSO))} "
+          f"dependências do mpv")
 else:
     print("(sem libmpv-2.dll na pasta: conferência contra a DLL pulada)")
 print(f"LICENCAS MOTOR PASSOU ({n} checagens)")

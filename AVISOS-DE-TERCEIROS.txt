@@ -18,18 +18,25 @@ modificado pela Ciranda.
      portanto sob a GNU LGPL versão 3 ou posterior.
    - ATENÇÃO: a DLL oficial também traz o zvbi (decodificador de teletexto, que a
      Ciranda não usa). Dois arquivos dele, src/packet-830.c e src/pdc.c, são GNU GPL
-     versão 2. O FFmpeg não classifica o libzvbi como GPL, por isso ele entra no
-     build "LGPL" do mpv. Enquanto o mpv publicar a DLL assim, o pacote da Ciranda
-     não está totalmente livre de GPL. Texto: licenses\GPL-2.0.txt.
-     O FFmpeg-Builds tirou o zvbi das variantes LGPL em 2026-11-07 (commit
-     162691525a43, depois do build do mpv 0.42.0); a Ciranda troca a DLL quando o
-     mpv publicar uma libmpv oficial feita depois disso.
+     versão 2 SOMENTE, sem "ou posterior", e o packet-830.c entra na DLL. O FFmpeg
+     não classifica o libzvbi como GPL, por isso ele entrou no build "LGPL" do mpv.
+     GPL-2 somente não combina com o FFmpeg LGPL-3+ da mesma DLL: não é "um pouco
+     de GPL", é uma combinação de licenças que o próprio FFmpeg-Builds considera
+     incompatível. Por isso ele tirou o zvbi das variantes LGPL em 2026-11-07
+     (commit 162691525a43, depois do build do mpv 0.42.0). A Ciranda troca a DLL
+     quando o mpv publicar uma libmpv oficial feita depois disso.
+     Texto: licenses\GPL-2.0.txt.
    Textos gerais: licenses\LGPL-2.1.txt, licenses\LGPL-3.0.txt e licenses\GPL-3.0.txt.
 
    Bibliotecas compiladas dentro da DLL: o texto de licença de cada uma, com o
-   aviso de copyright, está em licenses\motor\<biblioteca>.txt; os crates Rust do
-   subrandr estão em licenses\motor\subrandr-crates.txt; a lista completa, com
-   commit e origem, está em licenses\motor\LISTA.tsv.
+   aviso de copyright, está em licenses\motor\<biblioteca>.txt, junto com os
+   arquivos de licença do código de terceiros que elas trazem em subpastas; os
+   crates Rust do subrandr estão em licenses\motor\subrandr-crates.txt; a lista
+   completa, com commit e origem, está em licenses\motor\LISTA.tsv.
+   Limite: código de terceiros que só traz o aviso no cabeçalho do próprio
+   arquivo-fonte pode não estar aqui (os achados, como o libsvm e o Xiph dentro
+   do vmaf, foram incluídos); o código-fonte de cada biblioteca, no link da
+   tabela, é a referência completa.
    De onde vem a lista: a configuração do FFmpeg gravada dentro da DLL, o
    ci/build-mingw64-full.sh da tag v0.42.0 do mpv e a receita FFmpeg-Builds no
    último commit antes do build (c63bb308, 2026-11-04), que fixa o commit de cada
@@ -83,6 +90,8 @@ modificado pela Ciranda.
                         https://github.com/KhronosGroup/OpenCL-ICD-Loader.git
    vmaf                 f712fa7564fe           BSD-2-Clause-Patent
                         https://github.com/Netflix/vmaf.git
+   libsvm               v324                   BSD-3-Clause
+                        https://github.com/cjlin1/libsvm.git
    xxhash               61fd0fece2eb           BSD-2-Clause
                         https://github.com/Cyan4973/xxHash.git
    zstd                 49cf51799ea0           BSD-3-Clause
@@ -155,7 +164,7 @@ modificado pela Ciranda.
                         https://github.com/Mbed-TLS/TF-PSA-Crypto.git
    librist              47ad5513d1aa           BSD-2-Clause
                         https://code.videolan.org/rist/librist.git
-   libssh               9de02f3d01ba           LGPL-2.1-only
+   libssh               9de02f3d01ba           LGPL-2.1-or-later
                         https://gitlab.com/libssh/libssh-mirror.git
    theora               28fd5ec77f0a           BSD-3-Clause
                         https://github.com/xiph/theora.git
@@ -235,7 +244,7 @@ modificado pela Ciranda.
                         https://github.com/microsoft/cppwinrt.git
    gcc-runtime          releases/gcc-16.2.0    GPL-3.0-or-later WITH GCC-exception-3.1
                         https://github.com/gcc-mirror/gcc.git
-   rust-std             main                   MIT OR Apache-2.0 ⚠️
+   rust-std             1.99.1                 MIT OR Apache-2.0
                         https://github.com/rust-lang/rust.git
 [tabela do motor: fim]
 

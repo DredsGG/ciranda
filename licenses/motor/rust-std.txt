@@ -1,9 +1,9 @@
 Biblioteca: rust-std
-Versão: main (commit e88737b98536eae309f98e207b8af6a2cafa0350)
+Versão: 1.99.1 (commit 58cf8f9c35b355199727627d07ae34a4e2846d67)
 Licença: MIT OR Apache-2.0
 Fonte: https://github.com/rust-lang/rust.git
 Origem: biblioteca padrão do Rust (subrandr)
-Observação: ⚠️ versão do Rust usada não confirmei
+Observação: a DLL traz caminhos /rustc/58cf8f9c35b3..., o commit da tag 1.99.1
 
 ===== COPYRIGHT =====
 Short version for non-lawyers:

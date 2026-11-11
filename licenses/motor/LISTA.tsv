@@ -22,6 +22,7 @@ libvorbis	1b75110b5a27	BSD-3-Clause	https://github.com/xiph/vorbis.git @ 1b75110
 OpenCL-Headers	82f60316cc14	Apache-2.0	https://github.com/KhronosGroup/OpenCL-Headers.git @ 82f60316cc142e7b21dc1d8983b26de18858fbd9	receita FFmpeg-Builds c63bb308	
 OpenCL-ICD-Loader	5192c84f8059	Apache-2.0	https://github.com/KhronosGroup/OpenCL-ICD-Loader.git @ 5192c84f8059e5f703e5452929b613f9487f6e4c	receita FFmpeg-Builds c63bb308	
 vmaf	f712fa7564fe	BSD-2-Clause-Patent	https://github.com/Netflix/vmaf.git @ f712fa7564fe49b12991d83920b83573af2ae063	receita FFmpeg-Builds c63bb308	
+libsvm	v324	BSD-3-Clause	https://github.com/cjlin1/libsvm.git @ 557d85749aaf0ca83fd229af0f00e4f4cb7be85c	copiado dentro do vmaf (libvmaf/src/svm.cpp, LIBSVM_VERSION 324)	
 xxhash	61fd0fece2eb	BSD-2-Clause	https://github.com/Cyan4973/xxHash.git @ 61fd0fece2ebafc5bd9b573050e0c046c4e48d28	receita FFmpeg-Builds c63bb308	
 zstd	49cf51799ea0	BSD-3-Clause	https://github.com/facebook/zstd.git @ 49cf51799ea051457f57243527aa2058f999f005	receita FFmpeg-Builds c63bb308	licença dupla BSD ou GPL-2; usada a BSD
 Vulkan-Headers	v1.4.366	Apache-2.0 OR MIT	https://github.com/KhronosGroup/Vulkan-Headers.git @ 438f1a2a694b64e21464d70a881bf05bfbe89d88	receita FFmpeg-Builds c63bb308	
@@ -58,7 +59,7 @@ fast_float	97b54ca9e75f	Apache-2.0 OR BSL-1.0 OR MIT	https://github.com/fastfloa
 mbedtls	v4.2.0	Apache-2.0	https://github.com/Mbed-TLS/mbedtls.git @ 5bb362ae26e1d3f5e1d753a274abe2d23a0aa6c0	receita FFmpeg-Builds c63bb308	licença dupla Apache-2.0 ou GPL-2+; usada a Apache
 tf-psa-crypto	73c5da561c8e	Apache-2.0	https://github.com/Mbed-TLS/TF-PSA-Crypto.git @ 73c5da561c8e5253db7b1fb440eda86fde8d8024	submódulo do mbedtls	licença dupla Apache-2.0 ou GPL-2+; usada a Apache
 librist	47ad5513d1aa	BSD-2-Clause	https://code.videolan.org/rist/librist.git @ 47ad5513d1aa0adb692d78f635512e7fa123f06e	receita FFmpeg-Builds c63bb308	
-libssh	9de02f3d01ba	LGPL-2.1-only	https://gitlab.com/libssh/libssh-mirror.git @ 9de02f3d01ba16d06f46c0c4d27aa08d8deeecee	receita FFmpeg-Builds c63bb308	
+libssh	9de02f3d01ba	LGPL-2.1-or-later	https://gitlab.com/libssh/libssh-mirror.git @ 9de02f3d01ba16d06f46c0c4d27aa08d8deeecee	receita FFmpeg-Builds c63bb308	
 theora	28fd5ec77f0a	BSD-3-Clause	https://github.com/xiph/theora.git @ 28fd5ec77f0ad0e07a371cef1047828116f6bd8a	receita FFmpeg-Builds c63bb308	
 libvpx	900b2a52b69e	BSD-3-Clause	https://chromium.googlesource.com/webm/libvpx @ 900b2a52b69e9d4ab72eb855c365da1100c50eb1	receita FFmpeg-Builds c63bb308	+ concessão de patentes
 libwebp	1844042d1ca7	BSD-3-Clause	https://chromium.googlesource.com/webm/libwebp @ 1844042d1ca751e62e61df7617dba19c98588339	receita FFmpeg-Builds c63bb308	+ concessão de patentes
@@ -98,4 +99,4 @@ subrandr	a41311bb5e38	MPL-2.0	https://github.com/afishhh/subrandr.git @ a41311bb
 mujs	1.3.8	ISC	https://codeberg.org/ccxvii/mujs.git @ 307f18c4216420f2f56e22d8e7040baa39a6304a	ci/build-mingw64-full.sh do mpv v0.42.0, wrapdb na data do build (2026-11-04), dedução	
 cppwinrt	2.0.250303.1	MIT	https://github.com/microsoft/cppwinrt.git @ 69c78cfc7920367c4ce9cc024cf8c5b8d217fb1b	ci/build-mingw64-full.sh do mpv v0.42.0	cabeçalhos gerados
 gcc-runtime	releases/gcc-16.2.0	GPL-3.0-or-later WITH GCC-exception-3.1	https://github.com/gcc-mirror/gcc.git @ 1831ac03fd08e3400c16b29f21762e6b326a618d	compilador (libgcc, libstdc++)	a exceção de runtime libera a distribuição do programa compilado
-rust-std	main	MIT OR Apache-2.0	https://github.com/rust-lang/rust.git @ e88737b98536eae309f98e207b8af6a2cafa0350	biblioteca padrão do Rust (subrandr)	⚠️ versão do Rust usada não confirmei
+rust-std	1.99.1	MIT OR Apache-2.0	https://github.com/rust-lang/rust.git @ 58cf8f9c35b355199727627d07ae34a4e2846d67	biblioteca padrão do Rust (subrandr)	a DLL traz caminhos /rustc/58cf8f9c35b3..., o commit da tag 1.99.1

@@ -3,17 +3,17 @@
     "pt": [
       "Foto HEIC que às vezes ficava sem aparecer agora aparece; se o arquivo não abrir, o Ciranda tenta de novo e, sem jeito, pula para o próximo.",
       "O tempo de cada foto HEIC só começa a contar quando ela aparece.",
-      "Avisos de licença completos: o texto de cada biblioteca que vem dentro do motor."
+      "Avisos de licença do motor: o texto de licença das bibliotecas que vêm dentro dele."
     ],
     "en": [
       "HEIC photos that sometimes didn't show up now do; if a file won't open, Ciranda tries again and, failing that, moves on to the next one.",
       "Each HEIC photo's time only starts counting once it's on screen.",
-      "Complete license notices: the text for every library bundled inside the engine."
+      "Engine license notices: the license text of the libraries bundled inside it."
     ],
     "es": [
       "Las fotos HEIC que a veces no aparecían ahora aparecen; si un archivo no abre, Ciranda lo intenta de nuevo y, si no hay forma, pasa al siguiente.",
       "El tiempo de cada foto HEIC solo empieza a contar cuando aparece.",
-      "Avisos de licencia completos: el texto de cada biblioteca que viene dentro del motor."
+      "Avisos de licencia del motor: el texto de licencia de las bibliotecas que vienen dentro de él."
     ]
   },
   "1.5.0": {

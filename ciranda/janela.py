@@ -658,6 +658,8 @@ class Janela(QMainWindow):
         self._heic_apareceu = False
         self._heic_reiniciou = False  # chegou o playback-restart deste HEIC
         self._heic_carregado = False  # chegou o file-loaded deste HEIC
+        self._heic_lendo = False  # lendo o cabeçalho do HEIC em segundo plano (antes do loadfile)
+        self._pausa_na_leitura = None  # pausa pedida enquanto o cabeçalho era lido
         textos.iniciar(self.cfg)
         self._fixos = []  # textos fixos da tela, refeitos quando o idioma muda
         self.fila = Fila()
@@ -2104,6 +2106,9 @@ class Janela(QMainWindow):
         self._t_foto.stop()
         self._heic_espera = None  # o "apareceu" do arquivo anterior não vale para o próximo
         self._heic_apareceu = False
+        self._heic_lendo = False
+        self._pausa_na_leitura = None
+        self._foto_total_ms = self._foto_restante_ms = self.s_foto.value() * 1000  # nada sobra da foto anterior
         if self._urgente and item is not None:
             self._bloqueado()
             return
@@ -2121,6 +2126,7 @@ class Janela(QMainWindow):
         self.b_play.setIcon(icone("pause", "#1a0f07", 22))
         self.palco.setCurrentWidget(self.tela)
         if item.ext in heif.EXTENSOES:  # ler o cabeçalho pode demorar (NAS, foto só na nuvem): fora da interface
+            self._heic_lendo = True  # até carregar no motor, uma pausa vale para este arquivo, não para o anterior
             threading.Thread(target=self._ler_giro, args=(self._token, item.caminho), daemon=True).start()
         else:
             self._carregar_no_motor(item.caminho)
@@ -2137,6 +2143,7 @@ class Janela(QMainWindow):
 
     def _giro_pronto(self, token, filtro):
         if token == self._token and self._item is not None:
+            self._heic_lendo = False
             self._carregar_no_motor(self._item.caminho, filtro)
 
     def _carregar_no_motor(self, caminho, filtro="", tentativa=1):
@@ -2159,8 +2166,13 @@ class Janela(QMainWindow):
                 self._heic_apareceu = False
                 self._heic_reiniciou = False
                 self._heic_carregado = False
+            manter_pausa = bool(self.mpv.pause) if tentativa > 1 else None  # recarga não desfaz a pausa
             self.mpv.command("loadfile", caminho, "replace")
-            self.mpv.pause, self._retomar_pausado = self._retomar_pausado, False
+            if manter_pausa is None:
+                pausa = self._retomar_pausado if self._pausa_na_leitura is None else self._pausa_na_leitura
+                self.mpv.pause, self._retomar_pausado, self._pausa_na_leitura = pausa, False, None
+            else:
+                self.mpv.pause = manter_pausa
         except Exception as e:
             self._log.write(f"loadfile falhou: {e}\n")
             self._arquivo_falhou()
@@ -2190,10 +2202,15 @@ class Janela(QMainWindow):
         3 de 15 sem isto, 15 de 15 com isto; 1.5.1)."""
         if self._esp_atual() and not self._heic_apareceu:
             self._heic_carregado = True
+            self._heic_reiniciou = False  # só vale o playback-restart que vem depois desta volta ao início
             try:
                 self.mpv.command("seek", "0", "absolute+exact")
             except Exception:
                 pass
+
+    def _heic_esperando(self):
+        """Um HEIC está carregando e ainda não apareceu: o relógio da foto não pode andar."""
+        return self._heic_lendo or (self._heic_espera is not None and not self._heic_apareceu)
 
     def _imagem_apareceu(self):
         """playback-restart do motor. Sozinho não prova nada: chega também quando a grade trava."""
@@ -2215,14 +2232,18 @@ class Janela(QMainWindow):
 
     def _vigiar_heic(self, token, tentativa, prazo, espera):
         esp = self._heic_espera
-        if token != self._token or not esp or esp[3] != tentativa or self._heic_apareceu or self._item is None:
+        if (token != self._token or not esp or esp[3] != tentativa or self._heic_apareceu or self._item is None
+                or self._item.falhou or self._fim_da_fila):
             return
         if self._heic_reiniciou and self._heic_na_tela() and self._esp_atual():
             self._heic_apareceu = True
             if tentativa > 1:
                 self._log_linha(f"HEIC apareceu na tentativa {tentativa} de {self.HEIC_TENTATIVAS}")
             if self._item.tipo == "foto":
-                self._iniciar_relogio_foto()
+                # o tempo começa inteiro agora; pausado (ou travado por versão urgente), conta ao despausar
+                self._foto_total_ms = self._foto_restante_ms = self.s_foto.value() * 1000
+                if not (self.mpv.pause or self._urgente or self._instalando):
+                    self._iniciar_relogio_foto()
             return
         if time.monotonic() < prazo:
             QTimer.singleShot(50, lambda: self._vigiar_heic(token, tentativa, prazo, espera))
@@ -2272,6 +2293,7 @@ class Janela(QMainWindow):
         self.tocar(self.fila.proximo(automatico=True))
 
     def _arquivo_falhou(self):
+        self._heic_espera = None  # arquivo declarado falho não é mais vigiado nem recarregado
         if self._item is None:
             return
         self._item.falhou = True
@@ -2337,7 +2359,9 @@ class Janela(QMainWindow):
             return
         pausar = not self.mpv.pause
         self.mpv.pause = pausar
-        if self._item.tipo == "foto":
+        if self._heic_lendo:
+            self._pausa_na_leitura = pausar  # o motor ainda está no arquivo anterior: vale quando este carregar
+        if self._item.tipo == "foto" and not self._heic_esperando():
             if pausar:
                 self._foto_restante_ms = max(0, self._foto_restante_ms - self._foto_relogio.elapsed())
                 self._t_foto.stop()
@@ -2433,7 +2457,7 @@ class Janela(QMainWindow):
                 self.mpv["loop-file"] = "inf" if self.fila.repetir == "um" else "no"
         except Exception:
             pass
-        if item.tipo == "foto" and not self.mpv.pause:
+        if item.tipo == "foto" and not self.mpv.pause and not self._heic_esperando():
             if self.fila.repetir == "um":
                 self._foto_restante_ms = max(0, self._foto_restante_ms - self._foto_relogio.elapsed())
                 self._foto_relogio.restart()
