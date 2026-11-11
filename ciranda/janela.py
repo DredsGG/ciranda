@@ -165,6 +165,8 @@ class Ponte(QObject):
     duracao = Signal(float)
     pausa = Signal(bool)
     giro_pronto = Signal(int, str)
+    apareceu = Signal()
+    carregou = Signal()
 
 
 class PonteAtualizacao(QObject):
@@ -640,12 +642,22 @@ class BotaoTempoFoto(QToolButton):
 
 # ---------- janela ----------
 class Janela(QMainWindow):
+    # HEIC que não aparece: recarrega até 5 vezes. A espera cresce a cada tentativa para não cortar foto grande
+    # (8000 x 6000 levou 1,1 a 1,3 s até o 1º quadro neste PC).
+    HEIC_TENTATIVAS = 5
+    HEIC_ESPERA_S = 1.5
+    HEIC_PASSO_S = 1.0
+
     def __init__(self, caminhos_iniciais=None):
         super().__init__()
         self._config_existia = config.existe()
         self.cfg = config.carregar()
         threading.Thread(target=config.apagar_cache_heic_antigo, daemon=True).start()
         self._filtro_giro = ""  # filtro de vídeo pedido ao motor para a foto atual (heif.py)
+        self._heic_espera = None  # (token, caminho, filtro, tentativa) do HEIC que ainda não apareceu
+        self._heic_apareceu = False
+        self._heic_reiniciou = False  # chegou o playback-restart deste HEIC
+        self._heic_carregado = False  # chegou o file-loaded deste HEIC
         textos.iniciar(self.cfg)
         self._fixos = []  # textos fixos da tela, refeitos quando o idioma muda
         self.fila = Fila()
@@ -1864,6 +1876,23 @@ class Janela(QMainWindow):
         ponte.erro_arquivo.connect(self._arquivo_falhou)
         ponte.pausa.connect(self._recebeu_pausa)
         ponte.giro_pronto.connect(self._giro_pronto)
+
+        @self.mpv.event_callback("playback-restart")
+        def _quadro(_ev):
+            try:
+                ponte.apareceu.emit()
+            except RuntimeError:  # a janela fechou
+                pass
+
+        @self.mpv.event_callback("file-loaded")
+        def _carregou(_ev):
+            try:
+                ponte.carregou.emit()
+            except RuntimeError:
+                pass
+
+        ponte.apareceu.connect(self._imagem_apareceu)
+        ponte.carregou.connect(self._heic_carregou)
         QTimer.singleShot(400, lambda: desarmar_janelas_filhas(int(self.tela.winId())))
 
     # ----- abrir pastas -----
@@ -2073,6 +2102,8 @@ class Janela(QMainWindow):
 
     def tocar(self, item: Item | None):
         self._t_foto.stop()
+        self._heic_espera = None  # o "apareceu" do arquivo anterior não vale para o próximo
+        self._heic_apareceu = False
         if self._urgente and item is not None:
             self._bloqueado()
             return
@@ -2108,9 +2139,10 @@ class Janela(QMainWindow):
         if token == self._token and self._item is not None:
             self._carregar_no_motor(self._item.caminho, filtro)
 
-    def _carregar_no_motor(self, caminho, filtro=""):
+    def _carregar_no_motor(self, caminho, filtro="", tentativa=1):
         item = self._item
         rep_um = self.fila.repetir == "um"
+        heic = item.ext in heif.EXTENSOES
         try:
             self.mpv["loop-file"] = "inf" if (item.animada or (item.tipo == "video" and rep_um)) else "no"
             if filtro != self._filtro_giro:  # trocar o filtro refaz a cadeia de vídeo: só quando muda
@@ -2121,6 +2153,12 @@ class Janela(QMainWindow):
                 self.mpv["start"] = f"{pos:.2f}" if pos > 1 else "none"  # volta de onde parou (só depois de atualizar)
             except Exception:
                 pass
+            if heic:
+                # rede de segurança: se a imagem não aparecer, recarrega; o tempo da foto só conta quando aparece
+                self._heic_espera = (self._token, caminho, filtro, tentativa)
+                self._heic_apareceu = False
+                self._heic_reiniciou = False
+                self._heic_carregado = False
             self.mpv.command("loadfile", caminho, "replace")
             self.mpv.pause, self._retomar_pausado = self._retomar_pausado, False
         except Exception as e:
@@ -2128,9 +2166,80 @@ class Janela(QMainWindow):
             self._arquivo_falhou()
             return
         self._carregou_em = time.monotonic()
-        if item.tipo == "foto":
+        if heic:
+            espera = self.HEIC_ESPERA_S + self.HEIC_PASSO_S * (tentativa - 1)
+            self._vigiar_heic(self._token, tentativa, time.monotonic() + espera, espera)
+        elif item.tipo == "foto":
             self._iniciar_relogio_foto()
         QTimer.singleShot(500, lambda: desarmar_janelas_filhas(int(self.tela.winId())))
+
+    def _esp_atual(self):
+        """O HEIC em espera, se o motor está mesmo nele (avisos atrasados de outro arquivo não contam)."""
+        esp = self._heic_espera
+        if not esp or esp[0] != self._token:
+            return None
+        try:
+            atual = os.path.normcase(os.path.abspath(self.mpv.path or ""))
+        except Exception:
+            atual = ""
+        return esp if atual == os.path.normcase(os.path.abspath(esp[1])) else None
+
+    def _heic_carregou(self):
+        """file-loaded: na grade HEIC, o demuxer lê os blocos antes de eles virarem faixas e a montagem às vezes
+        não sai. Voltar ao início faz o motor reler com as faixas já escolhidas (grade de 2 blocos, janela real:
+        3 de 15 sem isto, 15 de 15 com isto; 1.5.1)."""
+        if self._esp_atual() and not self._heic_apareceu:
+            self._heic_carregado = True
+            try:
+                self.mpv.command("seek", "0", "absolute+exact")
+            except Exception:
+                pass
+
+    def _imagem_apareceu(self):
+        """playback-restart do motor. Sozinho não prova nada: chega também quando a grade trava."""
+        if self._esp_atual() and self._heic_carregado:
+            self._heic_reiniciou = True
+
+    def _heic_na_tela(self):
+        """A saída de vídeo mostra este arquivo: o tamanho na tela bate com o da faixa de vídeo dele (de pé
+        ou deitado). Os parâmetros decodificados não servem: quando nada sai, ficam os da foto anterior."""
+        if not self._heic_carregado:
+            return False
+        try:
+            faixa = next((t for t in (self.mpv.track_list or []) if t.get("type") == "video" and t.get("selected")), {})
+            na_tela = (self.mpv.dwidth, self.mpv.dheight)
+        except Exception:
+            return False
+        w, h = faixa.get("demux-w"), faixa.get("demux-h")
+        return bool(w and h) and na_tela in ((w, h), (h, w))
+
+    def _vigiar_heic(self, token, tentativa, prazo, espera):
+        esp = self._heic_espera
+        if token != self._token or not esp or esp[3] != tentativa or self._heic_apareceu or self._item is None:
+            return
+        if self._heic_reiniciou and self._heic_na_tela() and self._esp_atual():
+            self._heic_apareceu = True
+            if tentativa > 1:
+                self._log_linha(f"HEIC apareceu na tentativa {tentativa} de {self.HEIC_TENTATIVAS}")
+            if self._item.tipo == "foto":
+                self._iniciar_relogio_foto()
+            return
+        if time.monotonic() < prazo:
+            QTimer.singleShot(50, lambda: self._vigiar_heic(token, tentativa, prazo, espera))
+            return
+        self._conferir_heic(token, tentativa, espera)
+
+    def _conferir_heic(self, token, tentativa, espera):
+        esp = self._heic_espera
+        if token != self._token or not esp or esp[3] != tentativa or self._heic_apareceu or self._item is None:
+            return
+        if tentativa >= self.HEIC_TENTATIVAS:
+            self._log_linha(f"HEIC não apareceu em {self.HEIC_TENTATIVAS} tentativas: pulando")
+            self._heic_espera = None
+            self._arquivo_falhou()
+            return
+        self._log_linha(f"HEIC não apareceu em {espera:.1f} s: recarregando (tentativa {tentativa + 1} de {self.HEIC_TENTATIVAS})")
+        self._carregar_no_motor(esp[1], esp[2], tentativa + 1)
 
     def _iniciar_relogio_foto(self, restante_ms=None):
         self._foto_total_ms = self.s_foto.value() * 1000

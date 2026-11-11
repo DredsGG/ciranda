@@ -10,7 +10,7 @@ A Windows player that takes a folder and **every subfolder inside it** and plays
 ![Windows](https://img.shields.io/badge/Windows-10%20%2F%2011-0078D6?logo=windows&logoColor=white)
 ![Python 3.12](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
 ![mpv](https://img.shields.io/badge/engine-libmpv-691F69?logo=mpv&logoColor=white)
-![Version](https://img.shields.io/badge/version-1.5.0-ff8a3d)
+![Version](https://img.shields.io/badge/version-1.5.1-ff8a3d)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 <img src="docs/ciranda-tocando.png" width="900" alt="Ciranda 1.3.0 in English showing a mountain photo full width, the queue panel on the right with photos and videos from five folders and their subfolders, the footer with Report a bug, Check for updates, made by Dreds v1.3.0 and the PT EN ES switch, and the player bar with shuffle, previous, pause, next, repeat and a 30-second photo timer">
