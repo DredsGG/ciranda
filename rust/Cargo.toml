@@ -4,16 +4,28 @@ version = "0.1.0"
 edition = "2024"
 rust-version = "1.95"
 license = "MIT"
-description = "Ciranda em Rust: fase 1 (prova técnica: mpv + Slint por cima do vídeo no Windows)"
+description = "Ciranda em Rust: fase 2 (núcleo: varredura, fila, config) sobre a prova da fase 1 (mpv + Slint)"
 publish = false
+
+[lib]
+name = "ciranda"
+path = "src/lib.rs"
 
 [[bin]]
 name = "ciranda-prova"
 path = "src/main.rs"
 
+# Porta do tests/teste_logica.py da 1.5.1: imprime "TUDO PASSOU (N verificações)".
+[[test]]
+name = "teste_logica"
+path = "tests/teste_logica.rs"
+harness = false
+
 [dependencies]
 slint = { version = "=1.19.0", default-features = false, features = ["std", "compat-1-2", "backend-winit", "renderer-femtovg", "unstable-winit-030"] }
 libloading = "=0.9.1"
+serde_json = { version = "=1.0.154", features = ["preserve_order", "float_roundtrip"] }
+indexmap = "=2.14.2"
 windows-sys = { version = "=0.61.2", features = [
     "Win32_Foundation",
     "Win32_Graphics_Gdi",
@@ -25,6 +37,8 @@ windows-sys = { version = "=0.61.2", features = [
     "Win32_UI_Shell",
     "Win32_System_Threading",
     "Win32_Security_Cryptography",
+    "Win32_Storage_FileSystem",
+    "Win32_Globalization",
 ] }
 
 [build-dependencies]

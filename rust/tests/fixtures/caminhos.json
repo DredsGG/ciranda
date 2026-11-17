@@ -1,0 +1,172 @@
+{
+ "python": "3.12.10",
+ "normcase": [
+  [
+   "C:\\Fotos\\K.jpg",
+   "c:\\fotos\\k.jpg"
+  ],
+  [
+   "C:\\Fotos\\k.jpg",
+   "c:\\fotos\\k.jpg"
+  ],
+  [
+   "D:\\ΦΩΤΟΣ",
+   "d:\\φωτοσ"
+  ],
+  [
+   "D:\\φωτοσ",
+   "d:\\φωτοσ"
+  ],
+  [
+   "D:\\Ωmega",
+   "d:\\ωmega"
+  ],
+  [
+   "E:\\Straße\\ẞ",
+   "e:\\straße\\ẞ"
+  ],
+  [
+   "E:\\İstanbul\\I",
+   "e:\\İstanbul\\i"
+  ],
+  [
+   "F:\\ΣΊΣΥΦΟΣ\\σίσυφος",
+   "f:\\σίσυφοσ\\σίσυφος"
+  ],
+  [
+   "G:\\ǄǅǆĲ",
+   "g:\\ǆǅǆĳ"
+  ],
+  [
+   "H:\\Ꭰꭰ\\Å",
+   "h:\\Ꭰꭰ\\å"
+  ],
+  [
+   "C:\\a\\b\\..\\c",
+   "c:\\a\\b\\..\\c"
+  ],
+  [
+   "\\\\nas\\Mídia\\São João\\ÁÉÍÓÚ",
+   "\\\\nas\\mídia\\são joão\\áéíóú"
+  ],
+  [
+   "\\\\?\\C:\\X\\Y",
+   "\\\\?\\c:\\x\\y"
+  ],
+  [
+   "C:\\mixed\\Separators\\here",
+   "c:\\mixed\\separators\\here"
+  ],
+  [
+   "ÀÉÎÕÜÇÑ ẞ ꞵ Ꞵ",
+   "àéîõüçñ ẞ ꞵ Ꞵ"
+  ],
+  [
+   "",
+   ""
+  ]
+ ],
+ "abspath": [
+  [
+   "C:\\Windows\\",
+   "C:\\Windows"
+  ],
+  [
+   "C:\\Windows\\\\Fonts\\",
+   "C:\\Windows\\Fonts"
+  ],
+  [
+   "C:\\Windows\\.\\Fonts\\..\\",
+   "C:\\Windows"
+  ],
+  [
+   "C:\\",
+   "C:\\"
+  ],
+  [
+   "\\\\server\\share\\",
+   "\\\\server\\share\\"
+  ],
+  [
+   "\\\\server\\share\\x\\",
+   "\\\\server\\share\\x"
+  ],
+  [
+   "\\\\?\\C:\\Windows\\",
+   "\\\\?\\C:\\Windows"
+  ],
+  [
+   "\\\\?\\C:\\",
+   "\\\\?\\C:\\"
+  ],
+  [
+   "C:\\Windows\\a. ",
+   "C:\\Windows\\a"
+  ],
+  [
+   "C:\\Windows\\b...",
+   "C:\\Windows\\b"
+  ],
+  [
+   "C:\\Fotos\\Férias\\",
+   "C:\\Fotos\\Férias"
+  ]
+ ],
+ "erros_nao_oserror": {
+  "2": "FileNotFoundError",
+  "3": "FileNotFoundError",
+  "5": "PermissionError",
+  "15": "FileNotFoundError",
+  "16": "PermissionError",
+  "18": "FileNotFoundError",
+  "19": "PermissionError",
+  "20": "PermissionError",
+  "21": "PermissionError",
+  "22": "PermissionError",
+  "23": "PermissionError",
+  "24": "PermissionError",
+  "25": "PermissionError",
+  "26": "PermissionError",
+  "27": "PermissionError",
+  "28": "PermissionError",
+  "29": "PermissionError",
+  "30": "PermissionError",
+  "31": "PermissionError",
+  "32": "PermissionError",
+  "33": "PermissionError",
+  "34": "PermissionError",
+  "35": "PermissionError",
+  "36": "PermissionError",
+  "53": "FileNotFoundError",
+  "65": "PermissionError",
+  "67": "FileNotFoundError",
+  "80": "FileExistsError",
+  "82": "PermissionError",
+  "83": "PermissionError",
+  "89": "BlockingIOError",
+  "108": "PermissionError",
+  "109": "BrokenPipeError",
+  "128": "ChildProcessError",
+  "129": "ChildProcessError",
+  "132": "PermissionError",
+  "158": "PermissionError",
+  "161": "FileNotFoundError",
+  "164": "BlockingIOError",
+  "167": "PermissionError",
+  "183": "FileExistsError",
+  "206": "FileNotFoundError",
+  "215": "BlockingIOError",
+  "232": "BrokenPipeError",
+  "267": "NotADirectoryError",
+  "10004": "InterruptedError",
+  "10013": "PermissionError",
+  "10035": "BlockingIOError",
+  "10036": "BlockingIOError",
+  "10037": "BlockingIOError",
+  "10053": "ConnectionAbortedError",
+  "10054": "ConnectionResetError",
+  "10058": "BrokenPipeError",
+  "10060": "TimeoutError",
+  "10061": "ConnectionRefusedError"
+ }
+}

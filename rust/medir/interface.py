@@ -55,7 +55,13 @@ g32.CreateCompatibleBitmap.argtypes = [w.HDC, ctypes.c_int, ctypes.c_int]
 u32.GetWindow.argtypes = [w.HWND, w.UINT]
 u32.GetAncestor.argtypes = [w.HWND, w.UINT]
 
-LOG = os.path.join(os.environ["APPDATA"], "Ciranda-rust-prova", "prova.log")
+# Pasta de dados própria (CIRANDA_DADOS), com a fila em ordem: o padrão da 1.5.1 é aleatório
+# ligado, e as etapas contam com a ordem por nome.
+DADOS = os.path.join(os.environ["APPDATA"], "Ciranda-rust-prova", "interface")
+LOG = os.path.join(DADOS, "prova.log")
+os.makedirs(DADOS, exist_ok=True)
+with open(os.path.join(DADOS, "config.json"), "w", encoding="utf-8") as _f:
+    _f.write('{"aleatorio": false, "repetir": "tudo"}')
 RESULTADOS: list[dict] = []
 
 
@@ -178,7 +184,7 @@ def monitores():
 
 class App:
     def __init__(self, exe, args):
-        self.p = subprocess.Popen([exe, *args])
+        self.p = subprocess.Popen([exe, *args], env=dict(os.environ, CIRANDA_DADOS=DADOS))
         self.host = self.camada = None
         t0 = time.time()
         while time.time() - t0 < 15 and not (self.host and self.camada):

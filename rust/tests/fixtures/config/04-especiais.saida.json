@@ -1,0 +1,38 @@
+{
+  "volume": 18446744073709551615,
+  "mudo": false,
+  "aleatorio": true,
+  "repetir": "tudo",
+  "filtro": "tudo",
+  "segundos_foto": -0.0,
+  "painel": true,
+  "ultimas_pastas": [],
+  "geometria": [
+    1,
+    2.0,
+    true,
+    null,
+    "x"
+  ],
+  "versao_vista": "tab\there \"aspas\" barra\\ \u0001 \u001f    ✓ 😀 é",
+  "idioma": "",
+  "aviso_adiado_versao": "",
+  "aviso_adiado_ate": 1e+16,
+  "novidades_vista": "",
+  "tutorial_visto": false,
+  "retomar": {
+    "a": [],
+    "b": {},
+    "c": [
+      [],
+      [
+        {}
+      ]
+    ],
+    "pos": 1.5e-07,
+    "x": 0.0001,
+    "y": 1e+22,
+    "z": 2.5
+  },
+  "apoio_escolha": ""
+}

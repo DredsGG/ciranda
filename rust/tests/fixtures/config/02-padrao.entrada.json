@@ -1,0 +1,19 @@
+{
+  "volume": 80,
+  "mudo": false,
+  "aleatorio": true,
+  "repetir": "tudo",
+  "filtro": "tudo",
+  "segundos_foto": 5,
+  "painel": true,
+  "ultimas_pastas": [],
+  "geometria": null,
+  "versao_vista": "",
+  "idioma": "",
+  "aviso_adiado_versao": "",
+  "aviso_adiado_ate": 0,
+  "novidades_vista": "",
+  "tutorial_visto": false,
+  "retomar": {},
+  "apoio_escolha": ""
+}

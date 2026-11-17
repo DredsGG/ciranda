@@ -1,0 +1,33 @@
+﻿{
+  "volume": 65,
+  "mudo": true,
+  "aleatorio": false,
+  "repetir": "um",
+  "filtro": "fotos",
+  "segundos_foto": 12,
+  "painel": false,
+  "ultimas_pastas": [
+    "C:\\Users\\Fulano\\Fotos\\Férias 2024",
+    "D:\\Vídeos\\Aniversário \"da vó\"",
+    "\\\\nas\\mídia\\São João"
+  ],
+  "geometria": "AdnQywADAAAAAAB4AAAAeAAABdcAAAOrAAAAeAAAAJQAAAXXAAADqwAAAAAAAAAAB4AAAAB4AAAAlAAABdcAAAOr",
+  "versao_vista": "1.5.1",
+  "idioma": "es",
+  "aviso_adiado_versao": "1.6.0",
+  "aviso_adiado_ate": 1763400000.123456,
+  "novidades_vista": "1.5.1",
+  "tutorial_visto": true,
+  "retomar": {
+    "caminhos": [
+      "C:\\Users\\Fulano\\Fotos\\Férias 2024"
+    ],
+    "arquivo": "C:\\Users\\Fulano\\Fotos\\Férias 2024\\v.mp4",
+    "pos": 12.35,
+    "pausado": false,
+    "tela_cheia": true,
+    "de": "1.5.1",
+    "quando": 1763396400.987654
+  },
+  "apoio_escolha": "br"
+}

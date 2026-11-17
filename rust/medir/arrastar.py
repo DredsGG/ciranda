@@ -37,7 +37,7 @@ try:
     I.print_do_app(app, os.path.join(prints, nome_print))
     I._enviar(I.INPUT(0, I._U(mi=I.MOUSEINPUT(0, 0, 0, 0x4, 0, 0))))
     saida = fonte.communicate(timeout=15)[0]
-    ok = I.esperar_no_log(m, "fila:", 5)
+    ok = I.esperar_no_log(m, "varredura:", 5)  # linha de log da varredura (fase 2)
     time.sleep(2.0)
     print("fonte:", saida.strip(), "| borda no log:", borda, "| fila no log:", ok)
     sys.stdout.reconfigure(encoding="utf-8"); print(I.log_desde(m))

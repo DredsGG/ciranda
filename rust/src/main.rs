@@ -1,5 +1,9 @@
-//! Ciranda em Rust, fase 1 (prova técnica): mpv numa janela-hospedeira Win32 e a interface
-//! Slint numa janela de topo transparente por cima do vídeo.
+//! Ciranda em Rust: mpv numa janela-hospedeira Win32 e a interface Slint numa janela de topo
+//! transparente por cima do vídeo (prova da fase 1), agora com o núcleo da fase 2 (varredura,
+//! fila, sessão e config da biblioteca `ciranda`).
+//!
+//! `DREDS_TESTE=1` (REGRA 13): nenhuma janela aparece, mpv com `vo=null`, `ao=null` e `mute`,
+//! nada pega o foco. Teclas chegam por mensagem à hospedeira oculta (sem mexer no teclado real).
 #![windows_subsystem = "windows"]
 
 mod hospedeira;
@@ -10,9 +14,15 @@ use std::ffi::c_void;
 use std::io::Write as _;
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
+use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::time::{Duration, Instant};
 
+use ciranda::biblioteca::{Estatisticas, Item, Tipo, varrer_varios};
+use ciranda::config::Config;
+use ciranda::fila::{Filtro, Repetir};
+use ciranda::modo_teste;
+use ciranda::sessao::{Passo, Sessao};
 use slint::platform::Key;
 use slint::winit_030::{EventResult, WinitWindowAccessor, winit};
 use slint::{ComponentHandle, SharedString, Timer, TimerMode};
@@ -22,36 +32,34 @@ use mpv::{Evento, Mpv, Valor};
 
 slint::include_modules!();
 
-const FOTO: Duration = Duration::from_secs(5);
 const OCULTAR: Duration = Duration::from_millis(2500);
 /// Altura da barra de controles (a mesma do app.slint), em DIP.
 const BARRA_DIP: i32 = 76;
 
-const EXT_VIDEO: &[&str] = &[
-    "mp4", "m4v", "mov", "mkv", "webm", "avi", "wmv", "flv", "ts", "m2ts", "mts", "mpg", "mpeg",
-    "3gp", "ogv",
-];
-const EXT_FOTO: &[&str] = &[
-    "jpg", "jpeg", "png", "bmp", "gif", "webp", "tif", "tiff", "heic", "heif", "avif", "jxl",
-];
-
-fn ext(p: &Path) -> String {
-    p.extension().map(|e| e.to_string_lossy().to_lowercase()).unwrap_or_default()
-}
-fn eh_midia(p: &Path) -> bool {
-    let e = ext(p);
-    EXT_VIDEO.contains(&e.as_str()) || EXT_FOTO.contains(&e.as_str())
-}
-fn eh_foto(p: &Path) -> bool {
-    EXT_FOTO.contains(&ext(p).as_str())
-}
-
-/// Pasta de dados da prova. Nunca a da Ciranda 1.x.
-fn pasta_dados() -> PathBuf {
-    let base = std::env::var_os("APPDATA").map(PathBuf::from).unwrap_or_else(std::env::temp_dir);
-    let p = base.join("Ciranda-rust-prova");
-    let _ = std::fs::create_dir_all(&p);
-    p
+/// Pasta de dados: `%APPDATA%\Ciranda-rust-prova`, ou `CIRANDA_DADOS` (testes). Nunca a da
+/// Ciranda 1.x (`%APPDATA%\Ciranda`): o app se recusa a usar essa.
+fn pasta_dados() -> Result<PathBuf, String> {
+    use ciranda::biblioteca::{absoluto, destino_real, normcase};
+    let appdata = std::env::var_os("APPDATA")
+        .filter(|a| !a.is_empty())
+        .map(PathBuf::from)
+        .ok_or("APPDATA vazio: sem ele não dá para saber onde fica a pasta da Ciranda 1.x")?;
+    let p = std::env::var_os("CIRANDA_DADOS").map(PathBuf::from).unwrap_or_else(|| appdata.join("Ciranda-rust-prova"));
+    let p = absoluto(&p);
+    // A pasta da 1.x pelo APPDATA e pelo perfil (dentro de um pacote MSIX o APPDATA é
+    // redirecionado), cada uma também pelo destino real (junção, link, nome 8.3, `\\?\`). Recusa a
+    // pasta e qualquer coisa dentro dela, com ou sem barra no fim.
+    let mut proibidas = vec![absoluto(&appdata.join("Ciranda"))];
+    if let Some(perfil) = std::env::var_os("USERPROFILE").filter(|a| !a.is_empty()) {
+        proibidas.push(absoluto(&PathBuf::from(perfil).join(r"AppData\Roaming\Ciranda")));
+    }
+    let chaves_proibidas: Vec<String> = proibidas.iter().flat_map(|x| [normcase(x), destino_real(x)]).collect();
+    let dentro = |c: &str, q: &str| c == q || c.starts_with(&format!("{}\\", q.trim_end_matches('\\')));
+    if [normcase(&p), destino_real(&p)].iter().any(|c| chaves_proibidas.iter().any(|q| dentro(c, q))) {
+        return Err(format!("pasta de dados proibida (é a da Ciranda 1.x ou fica dentro dela): {}", p.display()));
+    }
+    std::fs::create_dir_all(&p).map_err(|e| format!("{}: {e}", p.display()))?;
+    Ok(p)
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -62,6 +70,9 @@ enum Acao {
     Pular(f64),
     AlternarTelaCheia,
     SairTelaCheia,
+    Aleatorio,
+    Repetir,
+    Filtro(Filtro),
 }
 
 struct Medicao {
@@ -71,9 +82,8 @@ struct Medicao {
     sair: bool,
 }
 
-/// Tempo de CPU (usuário + núcleo) de todas as threads do processo, em segundos.
 /// sha256 da libmpv-2.dll oficial LGPL 0.42 (a mesma da 1.5.1). Outra DLL (um build GPL, por
-/// exemplo) mudaria a licença do conjunto: a prova se recusa a carregar.
+/// exemplo) mudaria a licença do conjunto: o app se recusa a carregar.
 const DLL_SHA256: &str = "94fb87247732c59915cd59808bc582e843a71c22214b7b6c1e5563aa8149cef4";
 
 fn sha256_hex(caminho: &Path) -> Result<String, String> {
@@ -89,6 +99,7 @@ fn sha256_hex(caminho: &Path) -> Result<String, String> {
     Ok(saida.iter().map(|b| format!("{b:02x}")).collect())
 }
 
+/// Tempo de CPU (usuário + núcleo) de todas as threads do processo, em segundos.
 fn cpu_do_processo_s() -> f64 {
     use windows_sys::Win32::Foundation::FILETIME;
     use windows_sys::Win32::System::Threading::{GetCurrentProcess, GetProcessTimes};
@@ -99,17 +110,32 @@ fn cpu_do_processo_s() -> f64 {
     s(k) + s(u)
 }
 
+fn ctrl_apertado() -> bool {
+    use windows_sys::Win32::UI::Input::KeyboardAndMouse::{GetKeyState, VK_CONTROL};
+    (unsafe { GetKeyState(VK_CONTROL as i32) } as u16 & 0x8000) != 0
+}
+
 struct App {
     mpv: Mpv,
     ui: Camada,
     inicio: Instant,
     log: RefCell<std::fs::File>,
-    fila: RefCell<Vec<PathBuf>>,
-    atual: Cell<usize>,
+    /// Modo de teste invisível e mudo (DREDS_TESTE=1).
+    teste: bool,
+    /// No modo de teste: fecha sozinho quando a fila acaba (CIRANDA_SAIR_NO_FIM=1).
+    sair_no_fim: bool,
+    sessao: RefCell<Sessao>,
+    /// A varredura em andamento (o sinal de cancelar) e o número dela (resultado velho é ignorado).
+    varrendo: RefCell<Option<Arc<AtomicBool>>>,
+    geracao: Cell<u64>,
     carregado_em: Cell<Option<Instant>>,
     esperando_quadro: Cell<bool>,
+    motor_anotado: Cell<bool>,
+    /// No modo teste: o `current-ao` só existe quando toca algo com som; anota na primeira vez.
+    audio_anotado: Cell<bool>,
     eh_foto: Cell<bool>,
     foto_timer: Timer,
+    foto_total: Cell<Duration>,
     foto_restante: Cell<Duration>,
     foto_desde: Cell<Option<Instant>>,
     foto_ativa: Cell<bool>,
@@ -127,7 +153,6 @@ struct App {
     medida_inicio: Cell<Option<(Instant, f64, [Option<i64>; 3], u64)>>,
     medicao_agendada: Cell<bool>,
     notificador_ok: Cell<bool>,
-    falhas_seguidas: Cell<usize>,
     pular_timer: Timer,
 }
 
@@ -143,7 +168,9 @@ fn app() -> Option<Rc<App>> {
 impl App {
     fn log(&self, texto: &str) {
         let t = self.inicio.elapsed().as_secs_f64();
-        let _ = writeln!(self.log.borrow_mut(), "{t:9.3} {texto}");
+        let mut f = self.log.borrow_mut();
+        let _ = writeln!(f, "{t:9.3} {texto}");
+        let _ = f.flush();
     }
 
     fn avisar_na_tela(&self, texto: &str) {
@@ -156,56 +183,106 @@ impl App {
         });
     }
 
-    fn tocar_indice(&self, i: usize) {
-        let caminho = {
-            let fila = self.fila.borrow();
-            if fila.is_empty() {
-                return;
-            }
-            fila[i % fila.len()].clone()
-        };
-        let n = self.fila.borrow().len();
-        self.atual.set(i % n);
+    fn atualizar_nome(&self) {
+        let s = self.sessao.borrow();
+        let (pos, total) = s.fila.posicao();
+        if let Some(it) = s.item_atual() {
+            self.ui.set_nome(format!("{}  ·  {pos} de {total}", it.nome).into());
+        }
+    }
+
+    /// Toca o item `i` de `fila.itens` (a sessão já o marcou como o da tela).
+    fn tocar(&self, i: usize) {
+        let Some(item) = self.sessao.borrow().fila.itens.get(i).cloned() else { return };
+        let repetir_um = self.sessao.borrow().fila.repetir == Repetir::Um;
         self.parar_relogio_foto();
         self.pular_timer.stop(); // um "pular" pendente do arquivo anterior não vale mais
-        let foto = eh_foto(&caminho);
+        let foto = item.tipo == Tipo::Foto;
         self.eh_foto.set(foto);
-        // GIF anima em loop pelo tempo da foto; o resto toca uma vez.
-        let _ = self.mpv.por_texto("loop-file", if ext(&caminho) == "gif" { "inf" } else { "no" });
+        // GIF anima em loop pelo tempo da foto; vídeo em "repetir um" fica em loop; o resto toca uma vez.
+        let laco = item.animada() || (!foto && repetir_um);
+        let _ = self.mpv.por_texto("loop-file", if laco { "inf" } else { "no" });
         // Só arma no FILE_LOADED deste arquivo: um playback-restart atrasado do anterior não conta.
         self.esperando_quadro.set(false);
         self.carregado_em.set(Some(Instant::now()));
-        let texto = caminho.to_string_lossy().into_owned();
+        let texto = item.caminho.to_string_lossy().into_owned();
         if let Err(e) = self.mpv.comando(&["loadfile", &texto, "replace"]) {
+            // Como a 1.5.1: conta como arquivo que não abriu (senão a fila parava aqui).
             self.log(&format!("loadfile falhou: {e}"));
+            let p = self.sessao.borrow_mut().arquivo_falhou();
+            self.seguir(p);
+            return;
         }
         let _ = self.mpv.por_sim("pause", false);
         // A "pause" já era falsa no mpv ocioso: o evento de mudança não vem, então o botão muda aqui.
         self.pausado.set(false);
         self.ui.set_tocando(true);
-        let nome = caminho.file_name().map(|s| s.to_string_lossy().into_owned()).unwrap_or_default();
-        self.ui.set_nome(format!("{nome}  ·  {} de {n}", self.atual.get() + 1).into());
-        self.log(&format!("tocando {}", caminho.display()));
+        self.atualizar_nome();
+        let (pos, total) = self.sessao.borrow().fila.posicao();
+        self.log(&format!("tocando {pos}/{total} {}", item.caminho.display()));
     }
 
-    fn proximo(&self) {
-        if !self.fila.borrow().is_empty() {
-            self.tocar_indice(self.atual.get() + 1);
+    /// Executa a decisão da sessão.
+    fn seguir(&self, p: Passo) {
+        match p {
+            Passo::Nada => {}
+            Passo::Tocar(i) => self.tocar(i),
+            Passo::FimDaFila | Passo::NenhumAbriu => {
+                self.parar_relogio_foto();
+                let _ = self.mpv.por_sim("pause", true);
+                if p == Passo::FimDaFila {
+                    self.log("fim da fila");
+                    self.avisar_na_tela("Fim da fila");
+                } else {
+                    self.log("nenhum arquivo da fila abriu, parando");
+                    self.avisar_na_tela("Nenhum arquivo abriu");
+                }
+                self.sair_se_teste();
+            }
+            Passo::NadaComFiltro => {
+                self.parar_relogio_foto();
+                let _ = self.mpv.comando(&["stop"]);
+                self.ui.set_nome("Nada com este filtro".into());
+                self.log("nada com este filtro");
+            }
+            Passo::NenhumaMidia => {
+                self.log("nenhuma foto ou vídeo");
+                self.avisar_na_tela("Nada para tocar aqui");
+                if self.sessao.borrow().fila.itens.is_empty() {
+                    self.sair_se_teste();
+                }
+            }
+            Passo::Juntou => {
+                self.log(&format!("juntou: fila com {}", self.sessao.borrow().fila.len()));
+                self.atualizar_nome();
+            }
+            Passo::PularFalho => {
+                self.avisar_na_tela("Não abriu: pulando");
+                // Como a 1.5.1: o próximo é escolhido 50 ms depois, com o filtro de então.
+                self.pular_timer.start(TimerMode::SingleShot, Duration::from_millis(50), || {
+                    if let Some(a) = app() {
+                        let p = a.sessao.borrow_mut().pular_falho();
+                        a.seguir(p);
+                    }
+                });
+            }
         }
     }
 
-    fn anterior(&self) {
-        let n = self.fila.borrow().len();
-        if n > 0 {
-            self.tocar_indice((self.atual.get() + n - 1) % n);
+    fn sair_se_teste(&self) {
+        if self.teste && self.sair_no_fim {
+            self.log("modo teste: fila acabou, saindo");
+            Timer::single_shot(Duration::from_millis(100), || {
+                slint::quit_event_loop().ok();
+            });
         }
     }
 
-    // ---- relógio da foto (5 s, só conta quando a foto aparece; pausa congela) ----
+    // ---- relógio da foto (só conta quando a foto aparece; pausa congela; repetir um não passa) ----
     fn iniciar_relogio_foto(&self) {
-        self.foto_restante.set(FOTO);
+        self.foto_restante.set(self.foto_total.get());
         self.foto_ativa.set(true);
-        if !self.pausado.get() {
+        if !self.pausado.get() && self.sessao.borrow().fila.repetir != Repetir::Um {
             self.retomar_relogio_foto();
         }
     }
@@ -217,8 +294,10 @@ impl App {
         self.foto_timer.start(TimerMode::SingleShot, self.foto_restante.get(), || {
             if let Some(a) = app() {
                 a.foto_ativa.set(false);
-                a.log("foto: 5 s, passa");
-                a.proximo();
+                a.foto_desde.set(None);
+                a.log(&format!("foto: {} s, passa", a.foto_total.get().as_secs()));
+                let p = a.sessao.borrow_mut().foto_acabou();
+                a.seguir(p);
             }
         });
     }
@@ -243,24 +322,84 @@ impl App {
     fn executar(&self, a: Acao) {
         match a {
             Acao::TocarPausar => {
-                let p = self.mpv.ler_sim("pause").unwrap_or(false);
-                let _ = self.mpv.por_sim("pause", !p);
+                let p = self.sessao.borrow_mut().tocar_sem_item();
+                match p {
+                    Some(p) => self.seguir(p),
+                    None => {
+                        let p = self.mpv.ler_sim("pause").unwrap_or(false);
+                        let _ = self.mpv.por_sim("pause", !p);
+                    }
+                }
             }
-            Acao::Proximo => self.proximo(),
-            Acao::Anterior => self.anterior(),
+            Acao::Proximo => {
+                let p = self.sessao.borrow_mut().proximo(false);
+                self.seguir(p);
+            }
+            Acao::Anterior => {
+                // Como no VLC/Spotify: vídeo com mais de 3 s volta para o começo dele.
+                let fim = self.sessao.borrow().fim_da_fila;
+                if !self.eh_foto.get() && !fim && self.mpv.ler_real("time-pos").unwrap_or(0.0) > 3.0 {
+                    let _ = self.mpv.comando(&["seek", "0", "absolute"]);
+                    return;
+                }
+                let p = self.sessao.borrow_mut().anterior();
+                self.seguir(p);
+            }
             Acao::Pular(s) => {
                 if self.eh_foto.get() {
-                    if s > 0.0 { self.proximo() } else { self.anterior() }
+                    self.executar(if s > 0.0 { Acao::Proximo } else { Acao::Anterior });
                 } else {
                     let _ = self.mpv.comando(&["seek", &format!("{s}"), "relative"]);
                 }
             }
             Acao::AlternarTelaCheia => self.tela_cheia(!hospedeira::em_tela_cheia()),
             Acao::SairTelaCheia => self.tela_cheia(false),
+            Acao::Aleatorio => {
+                let ligado = self.sessao.borrow_mut().alternar_aleatorio();
+                self.log(&format!("aleatório: {}", if ligado { "ligado" } else { "desligado" }));
+                self.avisar_na_tela(if ligado { "Aleatório" } else { "Em ordem" });
+                self.atualizar_nome();
+            }
+            Acao::Repetir => {
+                let r = self.sessao.borrow_mut().ciclar_repetir();
+                self.log(&format!("repetir: {}", r.nome()));
+                self.avisar_na_tela(match r {
+                    Repetir::Nao => "Repetir: desligado",
+                    Repetir::Tudo => "Repetir: a fila",
+                    Repetir::Um => "Repetir: só este",
+                });
+                // Vale na hora para o que está na tela.
+                if self.sessao.borrow().item.is_some() {
+                    if !self.eh_foto.get() {
+                        let _ = self.mpv.por_texto("loop-file", if r == Repetir::Um { "inf" } else { "no" });
+                    } else if self.foto_ativa.get() && !self.pausado.get() {
+                        if r == Repetir::Um {
+                            self.pausar_relogio_foto();
+                        } else if self.foto_desde.get().is_none() {
+                            self.retomar_relogio_foto();
+                        }
+                    }
+                }
+            }
+            Acao::Filtro(f) => {
+                let p = self.sessao.borrow_mut().definir_filtro(f);
+                self.log(&format!("filtro: {}", f.nome()));
+                self.avisar_na_tela(match f {
+                    Filtro::Tudo => "Tudo",
+                    Filtro::Fotos => "Só fotos",
+                    Filtro::Videos => "Só vídeos",
+                });
+                self.seguir(p);
+                self.atualizar_nome();
+            }
         }
     }
 
     fn tela_cheia(&self, ligar: bool) {
+        if self.teste {
+            self.log(&format!("tela cheia: não aplicada no modo teste (pedido {ligar})"));
+            return;
+        }
         hospedeira::tela_cheia(ligar);
         // Registra o estado de fato, não o pedido: Esc em modo janela não pode parecer "saiu".
         self.log(&format!("tela cheia: {} (pedido {ligar})", hospedeira::em_tela_cheia()));
@@ -294,7 +433,7 @@ impl App {
     fn atualizar_relogio(&self) {
         let (prog, texto) = if self.eh_foto.get() {
             let falta = self.foto_falta().as_secs_f64();
-            let total = FOTO.as_secs_f64();
+            let total = self.foto_total.get().as_secs_f64().max(0.001);
             let prog = if self.foto_ativa.get() { ((total - falta) / total) as f32 } else { 0.0 };
             (prog, format!("foto · {:.0} s", falta.ceil()))
         } else {
@@ -312,6 +451,10 @@ impl App {
         }
     }
 
+    fn caminho_da_tela(&self) -> Option<PathBuf> {
+        self.sessao.borrow().item_atual().map(|i| i.caminho.clone())
+    }
+
     fn drenar_mpv(&self) {
         EVENTOS_PENDENTES.store(false, Ordering::Release);
         while let Some(e) = self.mpv.proximo_evento() {
@@ -319,17 +462,32 @@ impl App {
                 Evento::ArquivoCarregado => {
                     self.log("arquivo carregado");
                     self.esperando_quadro.set(true);
-                    let atual = self.fila.borrow().get(self.atual.get()).cloned();
-                    if let Some(p) = atual {
-                        if matches!(ext(&p).as_str(), "heic" | "heif") {
-                            // Mesmo truque da 1.5.1: a grade só fica certa depois de um seek 0.
-                            let _ = self.mpv.comando(&["seek", "0", "absolute+exact"]);
-                        }
+                    let heic = self.sessao.borrow().item_atual().is_some_and(|i| matches!(i.ext.as_str(), ".heic" | ".heif"));
+                    if heic {
+                        // Mesmo truque da 1.5.1: a grade só fica certa depois de um seek 0.
+                        let _ = self.mpv.comando(&["seek", "0", "absolute+exact"]);
+                    }
+                    if self.teste && !self.motor_anotado.replace(true) {
+                        let l = |p: &str| self.mpv.ler_texto(p).unwrap_or_else(|| "?".into());
+                        self.log(&format!(
+                            "modo teste: vo={} ao={} mute={} (opções vo={} ao={})",
+                            l("current-vo"),
+                            l("current-ao"),
+                            l("mute"),
+                            l("options/vo"),
+                            l("options/ao")
+                        ));
                     }
                 }
                 Evento::Reinicio => {
+                    if self.teste && !self.audio_anotado.get() {
+                        if let Some(ao) = self.mpv.ler_texto("current-ao") {
+                            self.audio_anotado.set(true);
+                            let mudo = self.mpv.ler_texto("mute").unwrap_or_else(|| "?".into());
+                            self.log(&format!("modo teste: áudio em ao={ao} mute={mudo}"));
+                        }
+                    }
                     if self.esperando_quadro.replace(false) {
-                        self.falhas_seguidas.set(0);
                         let ms = self
                             .carregado_em
                             .get()
@@ -349,36 +507,34 @@ impl App {
                 }
                 Evento::FimArquivo { motivo, erro } => {
                     if motivo == 4 {
-                        let falhas = self.falhas_seguidas.get() + 1;
-                        self.falhas_seguidas.set(falhas);
-                        if falhas >= self.fila.borrow().len() {
-                            // A fila inteira falhou: para em vez de girar para sempre.
-                            self.log(&format!("arquivo falhou (erro {erro}); nenhum da fila abriu, parando"));
-                            self.avisar_na_tela("Nenhum arquivo abriu");
-                        } else {
-                            self.log(&format!("arquivo falhou (erro {erro}): pulando"));
-                            self.avisar_na_tela("Não abriu: pulando");
-                            self.pular_timer.start(TimerMode::SingleShot, Duration::from_millis(400), || {
-                                if let Some(a) = app() {
-                                    a.proximo();
-                                }
-                            });
-                        }
+                        let caminho = self.caminho_da_tela().map(|p| p.display().to_string()).unwrap_or_default();
+                        self.log(&format!("não abriu: {caminho} (erro {erro})"));
+                        let p = self.sessao.borrow_mut().arquivo_falhou();
+                        self.seguir(p);
                     }
                 }
                 Evento::Propriedade { nome, valor, .. } => match (nome.as_str(), valor) {
                     ("pause", Valor::Sim(p)) => {
                         self.pausado.set(p);
                         // Com a fila vazia (mpv ocioso) o botão mostra "tocar", não "pausar".
-                        self.ui.set_tocando(!p && !self.fila.borrow().is_empty());
+                        self.ui.set_tocando(!p && !self.sessao.borrow().fila.itens.is_empty());
                         if self.eh_foto.get() && self.foto_ativa.get() {
-                            if p { self.pausar_relogio_foto() } else { self.retomar_relogio_foto() }
+                            if p {
+                                self.pausar_relogio_foto()
+                            } else if self.sessao.borrow().fila.repetir != Repetir::Um {
+                                self.retomar_relogio_foto()
+                            }
                         }
                     }
                     ("eof-reached", Valor::Sim(true)) => {
-                        if !self.eh_foto.get() {
+                        // Guarda da 1.5.1 (_video_acabou): aviso de menos de 0,3 s depois do loadfile
+                        // é do arquivo anterior (apertar N bem no fim do vídeo); e relê o eof-reached.
+                        let atrasado = self.carregado_em.get().is_some_and(|t| t.elapsed() < Duration::from_millis(300));
+                        let ainda = self.mpv.ler_sim("eof-reached").unwrap_or(true);
+                        if !self.eh_foto.get() && !atrasado && ainda {
                             self.log("fim do vídeo");
-                            self.proximo();
+                            let p = self.sessao.borrow_mut().video_acabou();
+                            self.seguir(p);
                         }
                     }
                     _ => {}
@@ -434,7 +590,7 @@ impl App {
         let cpu = cpu_do_processo_s() - cpu0;
         let c1 = self.contadores();
         let mut campos: Vec<(String, String)> = Vec::new();
-        let atual = self.fila.borrow().get(self.atual.get()).cloned().unwrap_or_default();
+        let atual = self.caminho_da_tela().unwrap_or_default();
         campos.push(("arquivo".into(), json_txt(&atual.to_string_lossy())));
         for p in [
             "hwdec-current",
@@ -469,20 +625,75 @@ impl App {
         campos.push(("aquecer_s".into(), m.aquecer.to_string()));
         let rep = if self.notificador_ok.get() { (self.repinturas.get() - rep0).to_string() } else { "null".into() };
         campos.push(("repinturas_da_interface".into(), rep));
-        let corpo = campos
-            .iter()
-            .map(|(k, v)| format!("  {}: {v}", json_txt(k)))
-            .collect::<Vec<_>>()
-            .join(",
-");
-        let _ = std::fs::write(&m.saida, format!("{{
-{corpo}
-}}
-"));
+        let corpo = campos.iter().map(|(k, v)| format!("  {}: {v}", json_txt(k))).collect::<Vec<_>>().join(",\n");
+        let _ = std::fs::write(&m.saida, format!("{{\n{corpo}\n}}\n"));
         self.log(&format!("medição gravada em {}", m.saida.display()));
         if m.sair {
             slint::quit_event_loop().ok();
         }
+    }
+
+    /// Abre (troca a fila) ou junta (Ctrl ao soltar) pastas e arquivos: a varredura roda numa
+    /// thread e pode ser cancelada por uma nova.
+    fn carregar(&self, caminhos: Vec<PathBuf>, juntar: bool) {
+        let carga = self.sessao.borrow_mut().preparar_carga(&caminhos, juntar);
+        let Some(carga) = carga else {
+            self.log("nada que exista para abrir");
+            return;
+        };
+        if let Some(antiga) = self.varrendo.borrow_mut().take() {
+            antiga.store(true, Ordering::Relaxed);
+            self.log("varredura anterior cancelada");
+        }
+        let cancelar = Arc::new(AtomicBool::new(false));
+        *self.varrendo.borrow_mut() = Some(cancelar.clone());
+        let geracao = self.geracao.get() + 1;
+        self.geracao.set(geracao);
+        self.log(&format!("lendo {} caminho(s){}", carga.caminhos.len(), if carga.juntar { ", juntando à fila" } else { "" }));
+        if self.sessao.borrow().item.is_none() {
+            self.ui.set_nome("Lendo…".into());
+        }
+        let t0 = Instant::now();
+        std::thread::spawn(move || {
+            let mut stats = Estatisticas::default();
+            let c = cancelar.clone();
+            let itens = varrer_varios(
+                &carga.caminhos,
+                &move || c.load(Ordering::Relaxed),
+                &mut |n, _| {
+                    let _ = slint::invoke_from_event_loop(move || {
+                        if let Some(a) = app() {
+                            if a.geracao.get() == geracao && a.sessao.borrow().item.is_none() {
+                                a.ui.set_nome(format!("Lendo… {n}").into());
+                            }
+                        }
+                    });
+                },
+                &mut stats,
+            );
+            if cancelar.load(Ordering::Relaxed) {
+                return;
+            }
+            let segundos = t0.elapsed().as_secs_f64();
+            let _ = slint::invoke_from_event_loop(move || {
+                if let Some(a) = app() {
+                    a.varredura_terminou(geracao, itens, carga.juntar, stats, segundos);
+                }
+            });
+        });
+    }
+
+    fn varredura_terminou(&self, geracao: u64, itens: Vec<Item>, juntar: bool, stats: Estatisticas, segundos: f64) {
+        if geracao != self.geracao.get() {
+            return; // de uma varredura que outra já substituiu
+        }
+        self.varrendo.borrow_mut().take();
+        for l in self.sessao.borrow().linhas_da_varredura(&itens, &stats) {
+            self.log(&l);
+        }
+        self.log(&format!("varredura em {segundos:.3} s"));
+        let p = self.sessao.borrow_mut().varredura_pronta(itens, juntar);
+        self.seguir(p);
     }
 
     fn processar_soltos(&self) {
@@ -493,14 +704,9 @@ impl App {
         for p in &soltos {
             self.log(&format!("solto: {}", p.display()));
         }
-        let fila = varrer_um_nivel(&soltos);
-        self.log(&format!("fila: {} arquivos de mídia", fila.len()));
-        if fila.is_empty() {
-            self.avisar_na_tela("Nada para tocar aqui");
-            return;
-        }
-        *self.fila.borrow_mut() = fila;
-        self.tocar_indice(0);
+        // Ctrl ao soltar junta à fila sem parar o que toca (como a 1.5.1).
+        let juntar = ctrl_apertado();
+        self.carregar(soltos, juntar);
     }
 
     fn soltar(&self, caminhos: Vec<PathBuf>) {
@@ -512,38 +718,6 @@ impl App {
             }
         });
     }
-}
-
-/// Varredura simples da fase 1: arquivos soltos + o primeiro nível de cada pasta.
-fn varrer_um_nivel(entradas: &[PathBuf]) -> Vec<PathBuf> {
-    // Pula ocultos e os "._" do macOS; o mesmo arquivo (pasta + arquivo dela soltos juntos) entra uma vez.
-    let visivel = |p: &Path| !p.file_name().map(|n| n.to_string_lossy().starts_with('.')).unwrap_or(true);
-    let mut vistos = std::collections::HashSet::new();
-    let mut v: Vec<PathBuf> = Vec::new();
-    let mut por = |p: PathBuf, v: &mut Vec<PathBuf>| {
-        if vistos.insert(p.to_string_lossy().to_lowercase()) {
-            v.push(p);
-        }
-    };
-    for e in entradas {
-        if e.is_dir() {
-            let mut daqui: Vec<PathBuf> = std::fs::read_dir(e)
-                .into_iter()
-                .flatten()
-                .flatten()
-                .map(|d| d.path())
-                .filter(|p| p.is_file() && eh_midia(p) && visivel(p))
-                .collect();
-            // Ordem natural (como a 1.5.1) fica para a fase 2; aqui é por nome, sem maiúsculas.
-            daqui.sort_by_key(|p| p.file_name().map(|s| s.to_string_lossy().to_lowercase()));
-            for p in daqui {
-                por(p, &mut v);
-            }
-        } else if eh_midia(e) && visivel(e) {
-            por(e.clone(), &mut v);
-        }
-    }
-    v
 }
 
 fn hms(s: f64) -> String {
@@ -579,6 +753,11 @@ fn acao_do_texto(t: &str, shift: bool) -> Option<Acao> {
         "f" | "F" => Acao::AlternarTelaCheia,
         "n" | "N" => Acao::Proximo,
         "p" | "P" => Acao::Anterior,
+        "s" | "S" => Acao::Aleatorio,
+        "r" | "R" => Acao::Repetir,
+        "1" => Acao::Filtro(Filtro::Tudo),
+        "2" => Acao::Filtro(Filtro::Fotos),
+        "3" => Acao::Filtro(Filtro::Videos),
         _ if s == k(Key::Return) => Acao::AlternarTelaCheia,
         _ if s == k(Key::F11) => Acao::AlternarTelaCheia,
         _ if s == k(Key::Escape) => Acao::SairTelaCheia,
@@ -596,6 +775,11 @@ fn acao_do_vk(vk: u32, shift: bool) -> Option<Acao> {
         0x1B => Acao::SairTelaCheia,                   // VK_ESCAPE
         0x4E => Acao::Proximo,                         // N
         0x50 => Acao::Anterior,                        // P
+        0x53 => Acao::Aleatorio,                       // S
+        0x52 => Acao::Repetir,                         // R
+        0x31 => Acao::Filtro(Filtro::Tudo),            // 1
+        0x32 => Acao::Filtro(Filtro::Fotos),           // 2
+        0x33 => Acao::Filtro(Filtro::Videos),          // 3
         0x27 => Acao::Pular(passo),                    // VK_RIGHT
         0x25 => Acao::Pular(-passo),                   // VK_LEFT
         _ => return None,
@@ -604,7 +788,7 @@ fn acao_do_vk(vk: u32, shift: bool) -> Option<Acao> {
 
 /// Ações que alternam estado: segurar a tecla não pode ficar ligando e desligando.
 fn alterna(a: &Acao) -> bool {
-    matches!(a, Acao::TocarPausar | Acao::AlternarTelaCheia | Acao::SairTelaCheia)
+    matches!(a, Acao::TocarPausar | Acao::AlternarTelaCheia | Acao::SairTelaCheia | Acao::Aleatorio | Acao::Repetir)
 }
 
 fn ao_avisar(a: Aviso) {
@@ -612,7 +796,7 @@ fn ao_avisar(a: Aviso) {
     match a {
         Aviso::Tecla { vk, shift, repetida, ctrl_alt } => {
             if ctrl_alt {
-                return; // Ctrl+F, Alt+N etc. não são atalhos da prova
+                return; // Ctrl+F, Alt+N etc. ainda não são atalhos (fase 3)
             }
             if let Some(acao) = acao_do_vk(vk, shift).filter(|a| !(repetida && alterna(a))) {
                 app.log(&format!("tecla na hospedeira: {acao:?}"));
@@ -621,6 +805,7 @@ fn ao_avisar(a: Aviso) {
         }
         Aviso::Soltou(v) => app.soltar(v),
         Aviso::Fechar => {
+            app.log("hospedeira pediu para fechar");
             slint::quit_event_loop().ok();
         }
         Aviso::Ativou => app.log("hospedeira ativada"),
@@ -661,8 +846,8 @@ fn hwnd_do_winit(w: &winit::window::Window) -> Option<isize> {
 
 fn main() {
     if let Err(e) = rodar() {
-        let p = pasta_dados().join("erro.txt");
-        let _ = std::fs::write(&p, format!("{e}\n"));
+        let base = pasta_dados().unwrap_or_else(|_| std::env::temp_dir());
+        let _ = std::fs::write(base.join("erro.txt"), format!("{e}\n"));
         eprintln!("{e}");
         std::process::exit(1);
     }
@@ -670,10 +855,13 @@ fn main() {
 
 fn rodar() -> Result<(), String> {
     let inicio = Instant::now();
+    let teste = modo_teste::ligado();
     hospedeira::ligar_dpi_por_monitor();
-    let dados = pasta_dados();
+    let dados = pasta_dados()?;
     let log = std::fs::File::create(dados.join("prova.log")).map_err(|e| e.to_string())?;
+    let cfg = Config::carregar(&dados);
 
+    // A hospedeira nasce oculta; no modo de teste continua assim (só recebe mensagens).
     let host = hospedeira::criar("Ciranda (prova Rust)", 1280, 720, ao_avisar, no_laco_modal);
 
     // Motor: a mesma libmpv-2.dll oficial LGPL da 1.5.1, ao lado do exe.
@@ -687,9 +875,8 @@ fn rodar() -> Result<(), String> {
         return Err(format!("libmpv-2.dll diferente da oficial (sha256 {sha}); esperado {DLL_SHA256}"));
     }
     let m = Mpv::carregar(&dll)?;
-    let opcoes = [
-        ("wid", (host as isize).to_string()),
-        ("vo", "gpu-next".into()),
+    let volume = cfg.volume().clamp(0, 100).to_string();
+    let mut opcoes: Vec<(&str, String)> = vec![
         ("hwdec", "auto-safe".into()),
         ("keep-open", "yes".into()),
         ("idle", "yes".into()),
@@ -700,7 +887,18 @@ fn rodar() -> Result<(), String> {
         ("osd-level", "1".into()),
         ("terminal", "no".into()),
         ("config", "no".into()),
+        ("volume", volume),
     ];
+    if teste {
+        // REGRA 13: sem janela de vídeo, sem som.
+        opcoes.extend([("vo", "null".into()), ("ao", "null".into()), ("mute", "yes".into())]);
+    } else {
+        opcoes.extend([
+            ("wid", (host as isize).to_string()),
+            ("vo", "gpu-next".into()),
+            ("mute", if cfg.mudo() { "yes" } else { "no" }.into()),
+        ]);
+    }
     for (k, v) in &opcoes {
         m.opcao(k, v)?;
     }
@@ -740,23 +938,31 @@ fn rodar() -> Result<(), String> {
         aquecer: std::env::var("CIRANDA_PROVA_AQUECER").ok().and_then(|s| s.parse().ok()).unwrap_or(0),
         sair: std::env::var("CIRANDA_PROVA_SAIR").map(|s| s == "1").unwrap_or(true),
     });
-    if medicao.is_some() {
+    if medicao.is_some() || teste {
         ui.set_quadro_visivel(false);
     }
 
+    let foto_total = Duration::from_secs(cfg.segundos_foto().clamp(1, 3600) as u64);
+    let sessao = Sessao::nova(cfg, &dados, None);
     let (amaj, amin) = m.versao_api();
     let estado = Rc::new(App {
         mpv: m,
         ui: ui.clone_strong(),
         inicio,
         log: RefCell::new(log),
-        fila: RefCell::new(Vec::new()),
-        atual: Cell::new(0),
+        teste,
+        sair_no_fim: std::env::var_os("CIRANDA_SAIR_NO_FIM").is_some_and(|v| v == "1"),
+        sessao: RefCell::new(sessao),
+        varrendo: RefCell::new(None),
+        geracao: Cell::new(0),
         carregado_em: Cell::new(None),
         esperando_quadro: Cell::new(false),
+        motor_anotado: Cell::new(false),
+        audio_anotado: Cell::new(false),
         eh_foto: Cell::new(false),
         foto_timer: Timer::default(),
-        foto_restante: Cell::new(FOTO),
+        foto_total: Cell::new(foto_total),
+        foto_restante: Cell::new(foto_total),
         foto_desde: Cell::new(None),
         foto_ativa: Cell::new(false),
         pausado: Cell::new(false),
@@ -773,11 +979,22 @@ fn rodar() -> Result<(), String> {
         medida_inicio: Cell::new(None),
         medicao_agendada: Cell::new(false),
         notificador_ok: Cell::new(true),
-        falhas_seguidas: Cell::new(0),
         pular_timer: Timer::default(),
     });
     APP.with(|a| *a.borrow_mut() = Some(estado.clone()));
     estado.log(&format!("Ciranda prova Rust, mpv API {amaj}.{amin}, Slint 1.19 (winit + femtovg)"));
+    {
+        let s = estado.sessao.borrow();
+        estado.log(&format!(
+            "dados em {}; aleatório {}, repetir {}, filtro {}, foto {} s{}",
+            dados.display(),
+            s.fila.aleatorio,
+            s.fila.repetir.nome(),
+            s.fila.filtro.nome(),
+            foto_total.as_secs(),
+            if teste { "; MODO TESTE (sem janela, sem som)" } else { "" }
+        ));
+    }
 
     // Callbacks da interface.
     ui.on_tocar_pausar(|| {
@@ -849,7 +1066,6 @@ fn rodar() -> Result<(), String> {
             }
         }
     });
-
     if let Err(e) = notificador {
         estado.notificador_ok.set(false);
         estado.log(&format!("sem contagem de repinturas: {e:?}"));
@@ -897,34 +1113,45 @@ fn rodar() -> Result<(), String> {
         }
     });
 
-    ui.show().map_err(|e| e.to_string())?;
-    hospedeira::mostrar();
+    if teste {
+        // Nada aparece, nada pega o foco. Limite de tempo para o teste nunca ficar preso.
+        let limite = std::env::var("CIRANDA_TESTE_LIMITE_S").ok().and_then(|s| s.parse().ok()).unwrap_or(120);
+        Timer::single_shot(Duration::from_secs(limite), || {
+            if let Some(a) = app() {
+                a.log("modo teste: tempo esgotado, saindo");
+            }
+            slint::quit_event_loop().ok();
+        });
+    } else {
+        ui.show().map_err(|e| e.to_string())?;
+        hospedeira::mostrar();
 
-    // A janela do winit só existe com o laço rodando: liga a camada à hospedeira aí.
-    let fraco = ui.as_weak();
-    slint::spawn_local(async move {
-        let Some(ui) = fraco.upgrade() else { return };
-        match ui.window().winit_window().await {
-            Ok(w) => {
-                if let Some(h) = hwnd_do_winit(&w) {
-                    hospedeira::ligar_camada(h as _);
+        // A janela do winit só existe com o laço rodando: liga a camada à hospedeira aí.
+        let fraco = ui.as_weak();
+        slint::spawn_local(async move {
+            let Some(ui) = fraco.upgrade() else { return };
+            match ui.window().winit_window().await {
+                Ok(w) => {
+                    if let Some(h) = hwnd_do_winit(&w) {
+                        hospedeira::ligar_camada(h as _);
+                        if let Some(a) = app() {
+                            a.log(&format!(
+                                "camada ligada; DPI hospedeira {} camada {}",
+                                hospedeira::dpi(hospedeira::hwnd()),
+                                hospedeira::dpi(h as _)
+                            ));
+                        }
+                    }
+                }
+                Err(e) => {
                     if let Some(a) = app() {
-                        a.log(&format!(
-                            "camada ligada; DPI hospedeira {} camada {}",
-                            hospedeira::dpi(hospedeira::hwnd()),
-                            hospedeira::dpi(h as _)
-                        ));
+                        a.log(&format!("sem janela winit: {e}"));
                     }
                 }
             }
-            Err(e) => {
-                if let Some(a) = app() {
-                    a.log(&format!("sem janela winit: {e}"));
-                }
-            }
-        }
-    })
-    .map_err(|e| e.to_string())?;
+        })
+        .map_err(|e| e.to_string())?;
+    }
 
     // Eventos que o mpv soltou antes de o laço do Slint existir.
     Timer::single_shot(Duration::ZERO, || {
@@ -940,6 +1167,13 @@ fn rodar() -> Result<(), String> {
     }
 
     slint::run_event_loop_until_quit().map_err(|e| e.to_string())?;
+    if let Some(c) = estado.varrendo.borrow_mut().take() {
+        c.store(true, Ordering::Relaxed);
+    }
+    match estado.sessao.borrow().salvar() {
+        Ok(()) => estado.log("config salvo"),
+        Err(e) => estado.log(&format!("config não salvo: {e}")),
+    }
     estado.log("saindo");
     APP.with(|a| a.borrow_mut().take());
     drop(estado);
