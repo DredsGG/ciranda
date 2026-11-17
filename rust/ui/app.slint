@@ -1,0 +1,243 @@
+// Ciranda em Rust, fase 1: a camada da interface, desenhada por cima do vídeo do mpv.
+// A janela é transparente (alfa por pixel): onde não há controle, aparece o vídeo de baixo.
+
+component Botao inherits Rectangle {
+    in property <string> icone;
+    in property <string> dica;
+    callback clicado;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background: area.has-hover ? #ffffff26 : transparent;
+    // Ícone em vetor (SVG 24×24): a fonte padrão do femtovg não tem os glifos ▶ ❚❚ ⏭.
+    Path {
+        width: 18px;
+        height: 18px;
+        viewbox-width: 24;
+        viewbox-height: 24;
+        fill: white;
+        commands: root.icone == "pausar" ? "M6 5 L10 5 L10 19 L6 19 Z M14 5 L18 5 L18 19 L14 19 Z"
+            : root.icone == "proximo" ? "M6 6 L14 12 L6 18 Z M16 6 L18 6 L18 18 L16 18 Z"
+            : "M8 5 L19 12 L8 19 Z";
+    }
+    area := TouchArea {
+        mouse-cursor: pointer;
+        clicked => { root.clicado(); }
+    }
+}
+
+export component Camada inherits Window {
+    title: "Ciranda (prova)";
+    background: transparent;
+    no-frame: true;
+    default-font-family: "Segoe UI";
+
+    in property <bool> tocando;
+    in property <float> progresso; // 0..1
+    in property <string> tempo-texto: "0:00 / 0:00";
+    in property <string> nome: "Arraste uma pasta ou arquivos para cá";
+    in property <bool> controles-visiveis: true;
+    in property <bool> arrastando;
+    in-out property <bool> quadro-visivel: true;
+    in property <string> aviso;
+
+    callback tocar-pausar();
+    callback proximo();
+    callback buscar(float);
+    callback tecla(string, bool, bool, bool) -> bool; // texto, shift, repetida, ctrl ou alt
+    callback mexeu();
+    callback duplo-clique();
+    callback menu(string);
+    callback fechar-quadro();
+
+    forward-focus: foco;
+
+    foco := FocusScope {
+        key-pressed(e) => {
+            if root.tecla(e.text, e.modifiers.shift, e.repeat, e.modifiers.control || e.modifiers.alt) { return accept; }
+            reject
+        }
+
+        ContextMenuArea {
+            Menu {
+                MenuItem { title: root.tocando ? "Pausar" : "Tocar"; activated => { root.menu("tocar"); } }
+                MenuItem { title: "Próximo"; activated => { root.menu("proximo"); } }
+                MenuItem { title: "Tela cheia"; activated => { root.menu("tela-cheia"); } }
+                MenuSeparator { }
+                MenuItem { title: "Mostrar o quadro"; activated => { root.menu("quadro"); } }
+            }
+
+            fundo := TouchArea {
+                mouse-cursor: root.controles-visiveis ? default : none;
+                changed mouse-x => { root.mexeu(); }
+                changed mouse-y => { root.mexeu(); }
+                double-clicked => { root.duplo-clique(); }
+                clicked => { foco.focus(); }
+            }
+        }
+
+        // Barra de baixo.
+        if root.controles-visiveis: Rectangle {
+            y: parent.height - self.height;
+            height: 76px;
+            background: @linear-gradient(0deg, #000000d0 0%, #00000000 100%);
+
+            Text {
+                x: 16px;
+                y: 4px;
+                text: root.nome;
+                color: #ffffffd8;
+                font-size: 13px;
+                overflow: elide;
+                width: parent.width - 32px;
+            }
+
+            HorizontalLayout {
+                y: 24px;
+                height: 48px;
+                padding-left: 8px;
+                padding-right: 16px;
+                spacing: 4px;
+                alignment: stretch;
+
+                Botao {
+                    y: 4px;
+                    icone: root.tocando ? "pausar" : "tocar";
+                    dica: "Tocar/pausar";
+                    clicado => { root.tocar-pausar(); }
+                }
+                Botao {
+                    y: 4px;
+                    icone: "proximo";
+                    dica: "Próximo";
+                    clicado => { root.proximo(); }
+                }
+
+                barra := Rectangle {
+                    horizontal-stretch: 1;
+                    TouchArea {
+                        mouse-cursor: pointer;
+                        clicked => { root.buscar(self.mouse-x / self.width); }
+                    }
+                    Rectangle {
+                        y: (parent.height - self.height) / 2;
+                        height: 4px;
+                        border-radius: 2px;
+                        background: #ffffff40;
+                        Rectangle {
+                            x: 0;
+                            width: parent.width * max(0, min(1, root.progresso));
+                            border-radius: 2px;
+                            background: #ff8a1f;
+                        }
+                    }
+                }
+
+                Text {
+                    text: root.tempo-texto;
+                    color: white;
+                    font-size: 13px;
+                    vertical-alignment: center;
+                    min-width: 110px;
+                    horizontal-alignment: right;
+                }
+            }
+        }
+
+        // Aviso curto no alto (troca de modo, erro).
+        if root.aviso != "": Rectangle {
+            x: (parent.width - self.width) / 2;
+            y: 24px;
+            width: aviso-txt.preferred-width + 32px;
+            height: 36px;
+            border-radius: 8px;
+            background: #141519c0;
+            aviso-txt := Text {
+                text: root.aviso;
+                color: white;
+                font-size: 15px;
+            }
+        }
+
+        // Quadro no meio da janela (como o de "Novidades").
+        if root.quadro-visivel: Rectangle {
+            background: #00000066;
+            TouchArea { } // segura o clique fora do quadro
+            Rectangle {
+                width: min(parent.width - 48px, 460px);
+                height: 230px;
+                border-radius: 14px;
+                background: #1d1f26;
+                border-width: 1px;
+                border-color: #ffffff22;
+                drop-shadow-blur: 24px;
+                drop-shadow-color: #00000099;
+
+                Text {
+                    x: 24px;
+                    y: 20px;
+                    text: "Novidades da prova";
+                    color: white;
+                    font-size: 20px;
+                    font-weight: 600;
+                }
+                Text {
+                    x: 24px;
+                    y: 62px;
+                    width: parent.width - 48px;
+                    wrap: word-wrap;
+                    color: #ffffffcc;
+                    font-size: 14px;
+                    text: "Esta janela Slint fica por cima do vídeo do mpv. Arraste uma pasta do Explorer, use Espaço, ← →, F, Esc e N, ou o botão direito do mouse.";
+                }
+                Rectangle {
+                    x: parent.width - self.width - 12px;
+                    y: 12px;
+                    width: 32px;
+                    height: 32px;
+                    border-radius: 16px;
+                    background: fechar.has-hover ? #ffffff26 : transparent;
+                    Path {
+                        width: 14px;
+                        height: 14px;
+                        viewbox-width: 24;
+                        viewbox-height: 24;
+                        stroke: white;
+                        stroke-width: 2px;
+                        commands: "M5 5 L19 19 M19 5 L5 19";
+                    }
+                    fechar := TouchArea {
+                        mouse-cursor: pointer;
+                        clicked => { root.fechar-quadro(); }
+                    }
+                }
+                Rectangle {
+                    x: parent.width - self.width - 24px;
+                    y: parent.height - self.height - 20px;
+                    width: 110px;
+                    height: 36px;
+                    border-radius: 8px;
+                    background: ok.has-hover ? #ffa04a : #ff8a1f;
+                    Text { text: "Entendi"; color: #111; font-size: 14px; font-weight: 600; }
+                    ok := TouchArea {
+                        mouse-cursor: pointer;
+                        clicked => { root.fechar-quadro(); }
+                    }
+                }
+            }
+        }
+
+        // Borda e texto enquanto algo é arrastado do Explorer por cima (por último: fica acima do quadro).
+        if root.arrastando: Rectangle {
+            border-width: 4px;
+            border-color: #ff8a1f;
+            background: #ff8a1f22;
+            Text {
+                text: "Solte para tocar";
+                color: white;
+                font-size: 28px;
+                font-weight: 600;
+            }
+        }
+    }
+}

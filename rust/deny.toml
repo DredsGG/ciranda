@@ -1,0 +1,37 @@
+# cargo deny check licenses: só licenças compatíveis com o código MIT da Ciranda.
+# Qualquer GPL/LGPL/AGPL derruba o passo. O Slint entra pela opção Royalty-free 2.0
+# (exige o AboutSlint numa tela "Sobre" e o selo Slint na página: fase 4).
+
+[graph]
+targets = ["x86_64-pc-windows-msvc"]
+
+[licenses]
+confidence-threshold = 0.9
+allow = [
+    "MIT",
+    "Apache-2.0",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "ISC",
+    "Zlib",
+    "Unicode-3.0",
+    "LicenseRef-Slint-Royalty-free-2.0",
+]
+
+# BSL-1.0 (Boost): permissiva, compatível com MIT, nem pede aviso no binário. Só estas duas,
+# que o Slint puxa para a área de transferência (arboard → clipboard-win → error-code).
+[[licenses.exceptions]]
+crate = "clipboard-win"
+allow = ["BSL-1.0"]
+
+[[licenses.exceptions]]
+crate = "error-code"
+allow = ["BSL-1.0"]
+
+# Só crates.io: dependência de git ou de outro registro derruba o passo.
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+
+# A libmpv-2.dll fica fora desta checagem: é carregada em tempo de execução, não é crate.
+# A licença (LGPL, build oficial) e o sha256 dela são conferidos à parte (LEIA-ME).

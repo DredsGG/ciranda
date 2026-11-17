@@ -1,0 +1,36 @@
+[package]
+name = "ciranda"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.95"
+license = "MIT"
+description = "Ciranda em Rust: fase 1 (prova técnica: mpv + Slint por cima do vídeo no Windows)"
+publish = false
+
+[[bin]]
+name = "ciranda-prova"
+path = "src/main.rs"
+
+[dependencies]
+slint = { version = "=1.19.0", default-features = false, features = ["std", "compat-1-2", "backend-winit", "renderer-femtovg", "unstable-winit-030"] }
+libloading = "=0.9.1"
+windows-sys = { version = "=0.61.2", features = [
+    "Win32_Foundation",
+    "Win32_Graphics_Gdi",
+    "Win32_Graphics_Dwm",
+    "Win32_System_LibraryLoader",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_UI_HiDpi",
+    "Win32_UI_Input_KeyboardAndMouse",
+    "Win32_UI_Shell",
+    "Win32_System_Threading",
+    "Win32_Security_Cryptography",
+] }
+
+[build-dependencies]
+slint-build = "=1.19.0"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 4
