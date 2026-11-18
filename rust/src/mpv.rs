@@ -97,27 +97,7 @@ struct Funcoes {
     client_api_version: FnApiVer,
 }
 
-/// Um evento já traduzido para Rust.
-#[derive(Debug, Clone)]
-pub enum Evento {
-    InicioArquivo,
-    ArquivoCarregado,
-    Reinicio,
-    FimArquivo { motivo: i32, erro: i32 },
-    Propriedade { id: u64, nome: String, valor: Valor },
-    Log { nivel: String, prefixo: String, texto: String },
-    FimDoMotor,
-    Outro(i32),
-}
-
-#[derive(Debug, Clone, PartialEq)]
-pub enum Valor {
-    Nada,
-    Texto(String),
-    Sim(bool),
-    Inteiro(i64),
-    Real(f64),
-}
+pub use crate::motor::{Evento, Valor};
 
 pub struct Mpv {
     f: Funcoes,
@@ -276,7 +256,11 @@ impl Mpv {
     }
 
     /// O callback roda numa thread do mpv: só pode acordar a thread da interface.
-    pub fn ao_acordar(&self, cb: unsafe extern "C" fn(*mut c_void), dado: *mut c_void) {
+    ///
+    /// # Safety
+    /// `dado` vai cru para o `cb`, em outra thread: tem de valer enquanto o callback estiver
+    /// registrado (ou ser nulo, como no `main.rs`).
+    pub unsafe fn ao_acordar(&self, cb: unsafe extern "C" fn(*mut c_void), dado: *mut c_void) {
         unsafe { (self.f.set_wakeup_callback)(self.h, Some(cb), dado) }
     }
 

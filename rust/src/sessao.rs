@@ -244,6 +244,49 @@ impl Sessao {
         None
     }
 
+    /// Duplo clique na lista (ou "Tocar agora"): toca esse item (índice em `fila.itens`).
+    pub fn ir_para(&mut self, indice_item: usize) -> Passo {
+        if indice_item >= self.fila.itens.len() {
+            return Passo::Nada;
+        }
+        self.erros_seguidos = 0;
+        let i = self.fila.ir_para(indice_item);
+        self.tocar(i)
+    }
+
+    /// "Tirar da fila" (`_tirar_da_fila` da 1.5.1). Os índices de `fila.itens` mudam: o item da
+    /// tela é remapeado. Se ele saiu, toca o próximo, ou limpa tudo se a fila ficou vazia
+    /// (`Passo::Nada` com `item == None` e fila vazia = a janela volta para a tela de início).
+    pub fn tirar(&mut self, indices: &[usize]) -> Passo {
+        let tirar: std::collections::HashSet<usize> = indices.iter().copied().filter(|&i| i < self.fila.itens.len()).collect();
+        if tirar.is_empty() {
+            return Passo::Nada;
+        }
+        let tocando = self.fila.indice_atual().is_some_and(|a| tirar.contains(&a));
+        let item_antes = self.item;
+        self.fila.remover(&tirar.iter().copied().collect::<Vec<_>>());
+        self.item = match item_antes {
+            Some(i) if !tirar.contains(&i) => Some(i - tirar.iter().filter(|&&t| t < i).count()),
+            _ => None,
+        };
+        if tocando {
+            if self.fila.len() > 0 {
+                return self.proximo(false);
+            }
+            self.limpar();
+        }
+        Passo::Nada
+    }
+
+    /// "Limpar fila": fila e pastas abertas vazias, nada na tela (o Continuar fica).
+    pub fn limpar(&mut self) {
+        self.fila.limpar();
+        self.item = None;
+        self.fim_da_fila = false;
+        self.erros_seguidos = 0;
+        self.pastas_abertas.clear();
+    }
+
     pub fn alternar_aleatorio(&mut self) -> bool {
         let novo = !self.fila.aleatorio;
         self.fila.definir_aleatorio(novo);

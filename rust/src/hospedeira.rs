@@ -1,6 +1,7 @@
-//! Janela-hospedeira Win32: tem a barra de título do Windows, recebe o vídeo do mpv numa
-//! janela filha (opção `wid`) e arrasta junto a janela Slint (de topo, "owned" por ela),
-//! que fica exatamente sobre a área cliente.
+//! Janela-hospedeira Win32: tem a barra de título do Windows (escura, nas cores da 1.5.1), recebe
+//! o vídeo do mpv numa janela filha, a "tela" (opção `wid`), do tamanho do palco que a interface
+//! informa, e arrasta junto a janela Slint (de topo, "owned" por ela), que fica exatamente sobre a
+//! área cliente.
 
 use std::sync::atomic::{AtomicBool, AtomicIsize, Ordering};
 
@@ -20,7 +21,7 @@ use windows_sys::Win32::UI::WindowsAndMessaging::*;
 /// O que a hospedeira avisa o resto do app (sempre fora do WndProc, pela fila do Slint).
 #[derive(Debug, Clone)]
 pub enum Aviso {
-    Tecla { vk: u32, shift: bool, repetida: bool, ctrl_alt: bool },
+    Tecla { vk: u32, shift: bool, ctrl: bool, alt: bool, repetida: bool },
     Soltou(Vec<std::path::PathBuf>),
     Fechar,
     Ativou,
@@ -28,6 +29,9 @@ pub enum Aviso {
 
 static HOSPEDEIRA: AtomicIsize = AtomicIsize::new(0);
 static CAMADA: AtomicIsize = AtomicIsize::new(0);
+static TELA: AtomicIsize = AtomicIsize::new(0);
+/// Tamanho mínimo da área cliente, em DIP (o `setMinimumSize(880, 520)` da 1.5.1).
+const MINIMO_DIP: (i32, i32) = (880, 520);
 static TELA_CHEIA: AtomicBool = AtomicBool::new(false);
 static mut AO_AVISAR: Option<fn(Aviso)> = None;
 /// Chamado ~60×/s enquanto a pessoa segura a barra de título ou a borda (laço modal do Windows):
@@ -51,6 +55,29 @@ pub fn ligar_dpi_por_monitor() {
     }
 }
 
+/// Tamanho da janela inteira (com borda e barra de título) para uma área cliente de `w`×`h` px.
+fn janela_para_cliente(h: HWND, w: i32, hh: i32) -> (i32, i32) {
+    use windows_sys::Win32::UI::HiDpi::AdjustWindowRectExForDpi;
+    unsafe {
+        let mut r = RECT { left: 0, top: 0, right: w, bottom: hh };
+        let estilo = GetWindowLongW(h, GWL_STYLE) as u32;
+        let ex = GetWindowLongW(h, GWL_EXSTYLE) as u32;
+        AdjustWindowRectExForDpi(&mut r, estilo, 0, ex, GetDpiForWindow(h).max(96));
+        (r.right - r.left, r.bottom - r.top)
+    }
+}
+
+/// Barra de título escura da cor do app (Windows 11): fundo #0e0f12, texto #ececf1, borda #24262d.
+fn barra_de_titulo_escura(h: HWND) {
+    unsafe {
+        for (attr, valor) in [(20u32, 1i32), (35, 0x0012_0F0E), (36, 0x00F1_ECEC), (34, 0x002D_2624)] {
+            DwmSetWindowAttribute(h, attr, &valor as *const _ as *const _, 4);
+        }
+    }
+}
+
+/// Cria a hospedeira (oculta) e a tela do vídeo dentro dela. `largura_dip`×`altura_dip` é a área
+/// cliente, como o `resize(1180, 720)` da 1.5.1.
 pub fn criar(titulo: &str, largura_dip: i32, altura_dip: i32, avisar: fn(Aviso), no_laco_modal: fn()) -> HWND {
     unsafe {
         AO_AVISAR = Some(avisar);
@@ -90,7 +117,7 @@ pub fn criar(titulo: &str, largura_dip: i32, altura_dip: i32, avisar: fn(Aviso),
         HOSPEDEIRA.store(h as isize, Ordering::Relaxed);
         // Tamanho em DIP convertido para o DPI do monitor onde a janela nasceu, centralizada.
         let dpi = GetDpiForWindow(h).max(96) as i32;
-        let (w, hh) = (largura_dip * dpi / 96, altura_dip * dpi / 96);
+        let (w, hh) = janela_para_cliente(h, largura_dip * dpi / 96, altura_dip * dpi / 96);
         let mon = MonitorFromWindow(h, MONITOR_DEFAULTTONEAREST);
         let mut mi: MONITORINFO = std::mem::zeroed();
         mi.cbSize = std::mem::size_of::<MONITORINFO>() as u32;
@@ -99,12 +126,71 @@ pub fn criar(titulo: &str, largura_dip: i32, altura_dip: i32, avisar: fn(Aviso),
         let x = wa.left + ((wa.right - wa.left) - w) / 2;
         let y = wa.top + ((wa.bottom - wa.top) - hh) / 2;
         SetWindowPos(h, std::ptr::null_mut(), x, y, w, hh, SWP_NOZORDER | SWP_NOACTIVATE);
-        // Barra de título escura (Windows 11): DWMWA_USE_IMMERSIVE_DARK_MODE = 20.
-        let escuro: i32 = 1;
-        DwmSetWindowAttribute(h, 20, &escuro as *const _ as *const _, 4);
+        barra_de_titulo_escura(h);
         DragAcceptFiles(h, 1);
+        // A tela do vídeo: filha, preta, desativada (clique e teclado ficam com a camada por cima).
+        let classe_tela = wide("CirandaTela");
+        let wt = WNDCLASSEXW {
+            cbSize: std::mem::size_of::<WNDCLASSEXW>() as u32,
+            style: 0,
+            lpfnWndProc: Some(DefWindowProcW),
+            cbClsExtra: 0,
+            cbWndExtra: 0,
+            hInstance: inst,
+            hIcon: std::ptr::null_mut(),
+            hCursor: LoadCursorW(std::ptr::null_mut(), IDC_ARROW),
+            hbrBackground: CreateSolidBrush(0),
+            lpszMenuName: std::ptr::null(),
+            lpszClassName: classe_tela.as_ptr(),
+            hIconSm: std::ptr::null_mut(),
+        };
+        RegisterClassExW(&wt);
+        let tela = CreateWindowExW(
+            0,
+            classe_tela.as_ptr(),
+            std::ptr::null(),
+            WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_DISABLED,
+            0,
+            0,
+            1,
+            1,
+            h,
+            std::ptr::null_mut(),
+            inst,
+            std::ptr::null(),
+        );
+        TELA.store(tela as isize, Ordering::Relaxed);
         h
     }
+}
+
+/// A janela onde o mpv desenha (opção `wid`).
+pub fn tela() -> HWND {
+    TELA.load(Ordering::Relaxed) as HWND
+}
+
+/// Põe a tela do vídeo no palco (pixels físicos da área cliente).
+pub fn definir_palco(x: i32, y: i32, w: i32, h: i32) {
+    let t = tela();
+    if t.is_null() {
+        return;
+    }
+    unsafe {
+        SetWindowPos(t, std::ptr::null_mut(), x, y, w.max(1), h.max(1), SWP_NOZORDER | SWP_NOACTIVATE);
+    }
+}
+
+pub fn titulo(texto: &str) {
+    let t = wide(texto);
+    unsafe {
+        SetWindowTextW(hwnd(), t.as_ptr());
+    }
+}
+
+/// Posição do cursor na tela, em pixels físicos.
+pub fn cursor() -> Option<(i32, i32)> {
+    let mut p = POINT { x: 0, y: 0 };
+    (unsafe { GetCursorPos(&mut p) } != 0).then_some((p.x, p.y))
 }
 
 pub fn mostrar() {
@@ -249,17 +335,11 @@ pub fn apagar_titulo_se_inativa() {
     }
 }
 
-/// O cursor está sobre a faixa de baixo da área cliente (a barra de controles)?
-pub fn cursor_sobre_a_barra(altura_dip: i32) -> bool {
-    unsafe {
-        let mut p = POINT { x: 0, y: 0 };
-        if GetCursorPos(&mut p) == 0 {
-            return false;
-        }
-        let r = area_cliente();
-        let alt = altura_dip * GetDpiForWindow(hwnd()).max(96) as i32 / 96;
-        p.x >= r.left && p.x < r.right && p.y >= r.bottom - alt && p.y < r.bottom
-    }
+/// O cursor está sobre a faixa de baixo da área cliente (a barra), de `altura` pixels físicos?
+pub fn cursor_na_faixa_de_baixo(altura: i32) -> bool {
+    let Some((x, y)) = cursor() else { return false };
+    let r = area_cliente();
+    x >= r.left && x < r.right && y >= r.bottom - altura && y < r.bottom
 }
 
 pub fn fechar() {
@@ -286,6 +366,13 @@ unsafe extern "system" fn wndproc(h: HWND, msg: u32, wp: WPARAM, lp: LPARAM) -> 
                 let r = DefWindowProcW(h, msg, wp, lp);
                 seguir();
                 return r;
+            }
+            WM_GETMINMAXINFO => {
+                let dpi = GetDpiForWindow(h).max(96) as i32;
+                let (w, hh) = janela_para_cliente(h, MINIMO_DIP.0 * dpi / 96, MINIMO_DIP.1 * dpi / 96);
+                let mmi = &mut *(lp as *mut MINMAXINFO);
+                mmi.ptMinTrackSize = POINT { x: w, y: hh };
+                return 0;
             }
             WM_DPICHANGED => {
                 if em_tela_cheia() {
@@ -346,9 +433,10 @@ unsafe extern "system" fn wndproc(h: HWND, msg: u32, wp: WPARAM, lp: LPARAM) -> 
                 use windows_sys::Win32::UI::Input::KeyboardAndMouse::{GetKeyState, VK_CONTROL, VK_MENU, VK_SHIFT};
                 let apertada = |k: u16| (GetKeyState(k as i32) as u16 & 0x8000) != 0;
                 let shift = apertada(VK_SHIFT);
-                let ctrl_alt = apertada(VK_CONTROL) || apertada(VK_MENU);
+                let ctrl = apertada(VK_CONTROL);
+                let alt = apertada(VK_MENU);
                 let repetida = (lp >> 30) & 1 == 1; // bit 30: a tecla já estava apertada
-                avisar(Aviso::Tecla { vk, shift, repetida, ctrl_alt });
+                avisar(Aviso::Tecla { vk, shift, ctrl, alt, repetida });
                 return 0;
             }
             WM_DROPFILES => {

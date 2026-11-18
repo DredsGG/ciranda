@@ -1,2 +1,4 @@
 # As fixtures comparam bytes com a 1.5.1 (CRLF incluso): o git não pode mexer no fim de linha.
 tests/fixtures/** -text
+# HEIC de teste (heif.rs): binários, sem diff nem merge de texto.
+tests/fixtures/heif/** binary

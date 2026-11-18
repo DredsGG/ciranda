@@ -466,6 +466,51 @@ def caso_controle_vigia():
     conferir(caso, "e não tomou o foco", v.frente == 0)
 
 
+# ---------- caso 7 (fase 3): todos os formatos e todos os HEIC, com o mpv de verdade ----------
+PROVA = os.path.join(os.environ["APPDATA"], "Ciranda-rust-prova")
+GIROS_ESPERADOS = {  # o que a 1.5.1 (heif.py) manda para o mpv em cada caso de tests/gerar_heic.py
+    "giro-grade-48-4032x3024.heic": "lavfi=[transpose=clock]",
+    "espelho-grade-12-2048x1536.heic": "lavfi=[hflip]",
+}
+
+
+def caso_formatos_e_heic():
+    caso = "formatos-e-heic"
+    print(caso)
+    dados = preparar(caso, {"aleatorio": False, "repetir": "nao", "segundos_foto": 1, "filtro": "tudo"})
+    pasta = os.path.join(dados, "midia")
+    shutil.copytree(MIDIA, os.path.join(pasta, "a-formatos"))
+    shutil.copytree(os.path.join(PROVA, "midia-teste-codecs"), os.path.join(pasta, "b-codecs"))
+    shutil.copytree(os.path.join(PROVA, "heic-casos"), os.path.join(pasta, "c-heic"))
+    shutil.copytree(os.path.join(PROVA, "heic-autoteste"), os.path.join(pasta, "d-heic-iphone"))
+    t0 = time.time()
+    p, v = abrir(dados, [pasta], limite=240)
+    fechar_e_conferir_invisivel(caso, p, v, s=260)
+    dt = time.time() - t0
+    lg = log(dados)
+    t = [os.path.basename(x.split(" ", 1)[1]) for x in tocados(dados)]
+    conferir(caso, "tocou os 26 (16 da 1.5.1, 3 codecs, 7 HEIC), nenhum duas vezes", len(t) == 26 and len(set(t)) == 26, f"{len(t)}: {t}")
+    conferir(caso, "pasta .oculta entra, como na 1.5.1 (abre tudo)", "nao-deve-aparecer.mp4" in t)
+    falhas = [l for l in lg.splitlines() if "não abriu: " in l]
+    conferir(caso, "só o corrompido não abriu", len(falhas) == 1 and "corrompido.mp4" in falhas[0], " | ".join(falhas))
+    conferir(caso, "fim da fila", "fim da fila" in lg)
+    fotos = lg.count("foto: 1 s, passa")
+    conferir(caso, "as 16 fotos (com GIF, BMP, WebP, PNG e os 7 HEIC) contaram 1 s e passaram", fotos == 16, str(fotos))
+    for nome, filtro in GIROS_ESPERADOS.items():
+        conferir(caso, f"{nome}: giro {filtro}", f"HEIC: giro {filtro}" in lg,
+                 " | ".join(l for l in lg.splitlines() if "HEIC" in l) or "sem linha HEIC")
+    giros = [l.split("HEIC: giro ", 1)[1] for l in lg.splitlines() if "HEIC: giro " in l]
+    conferir(caso, "nenhum outro HEIC de teste pede giro", len([g for g in giros if g not in GIROS_ESPERADOS.values()]) <= 2,
+             str(giros))
+    pulados = [l for l in lg.splitlines() if "HEIC não apareceu em 5 tentativas" in l]
+    conferir(caso, "nenhum HEIC pulado por não aparecer", not pulados, " | ".join(pulados))
+    recargas = [l for l in lg.splitlines() if "HEIC não apareceu em" in l and "recarregando" in l]
+    print(f"    (recargas de HEIC: {len(recargas)})")
+    conferir(caso, "motor sem vídeo e sem som", "mute=yes (opções vo=null ao=null)" in lg)
+    conferir(caso, "terminou em menos de 150 s", dt < 150, f"{dt:.1f} s")
+    return dt
+
+
 fg0 = u32.GetForegroundWindow()
 caso_controle_vigia()
 caso_fila_natural()
@@ -473,6 +518,7 @@ caso_teclas()
 caso_nada_abre()
 caso_filtro_volta()
 caso_pasta_proibida()
+caso_formatos_e_heic()
 passou = sum(r["passou"] for r in resultados)
 print(f"{passou} de {len(resultados)} passaram")
 os.makedirs(BASE, exist_ok=True)

@@ -1,4 +1,4 @@
-"""Planta um bug conhecido por vez no núcleo e confere que os testes pegam cada um (os testes não
+"""Planta um bug conhecido por vez no núcleo e na interface e confere que os testes pegam cada um (os testes não
 passam por acaso). Cada bug é desfeito logo depois, mesmo se o teste quebrar no meio.
 
     python -I rust/ferramentas/bugs_plantados.py <pasta-midia-teste>
@@ -50,12 +50,63 @@ BUGS = [
     ("subpastas sem o desempate estável do reverse=True", "src/biblioteca.rs",
      "        chaves.sort_by(|a, b| b.0.cmp(&a.0).then(a.1.cmp(&b.1)));",
      "        chaves.sort_by(|a, b| b.0.cmp(&a.0).then(b.1.cmp(&a.1)));"),
+    # Fase 3: a interface e o player (pegos pelo teste sem janela, tests/interface.rs).
+    ("HEIC não recarrega: pula na 1ª tentativa", "src/player.rs",
+     "        if tentativa >= HEIC_TENTATIVAS {", "        if tentativa >= 1 {"),
+    ("espera do HEIC não cresce a cada tentativa", "src/player.rs",
+     "HEIC_ESPERA_S + HEIC_PASSO_S * (tentativa - 1) as f64", "HEIC_ESPERA_S + 0.0 * (tentativa - 1) as f64"),
+    ("pausa apertada durante a leitura do HEIC se perde", "src/player.rs",
+     "            None => self.heic.borrow_mut().pausa_na_leitura.take().unwrap_or(false),", "            None => false,"),
+    ("dois cliques no vídeo também pausam", "src/player.rs",
+     "        self.t_clique.stop();\n        self.alternar_tela_cheia();", "        self.alternar_tela_cheia();"),
+    ("teclas valem com o menu aberto", "src/player.rs",
+     "        if (self.ui.get_menu_visivel() || self.ui.get_caixa_visivel()) && acao != Acao::Esc {",
+     "        if self.ui.get_caixa_visivel() && acao != Acao::Esc {"),
+    ("tecla segurada alterna de novo a cada repetição", "src/player.rs",
+     "        if repetida && acao.alterna() {", "        if false && repetida && acao.alterna() {"),
+    ("modo teste tira o motor do mudo", "src/player.rs",
+     "        if !self.opcoes.teste {\n            let _ = self.motor.por_sim(\"mute\", mudo);",
+     "        if true {\n            let _ = self.motor.por_sim(\"mute\", mudo);"),
+    ("controles nunca somem na tela cheia", "src/player.rs",
+     "            self.ui.set_controles_visiveis(false);\n            self.log(\"controles somem\");",
+     "            self.log(\"controles somem\");"),
+    ("Shift+clique não pega o intervalo", "src/player.rs",
+     "            sel.extend(linhas[de..=ate].iter().copied());", "            sel.insert(linhas[ate]);"),
+    ("Ctrl ao soltar não junta", "src/player.rs",
+     "        let juntar = self.ctrl_ao_soltar.get() && !self.sessao.borrow().fila.itens.is_empty();",
+     "        let juntar = false && !self.sessao.borrow().fila.itens.is_empty();"),
+    ("fila escondida com largura 0 estica o palco para fora da tela", "ui/app.slint",
+     "                        x: 0;\n                        width: 330px;\n", ""),
+    ("HEIC: irot 1 gira para o lado errado", "src/heif.rs",
+     '        1 => "transpose=cclock",', '        1 => "transpose=clock",'),
+    # Os da revisão independente da fase 3.
+    ("fila nova herda a seleção da antiga", "src/player.rs",
+     "            self.selecao.borrow_mut().clear();\n            self.ancora.set(None);\n        }\n        let filtro_antes",
+     "        }\n        let filtro_antes"),
+    ("âncora do Shift fica velha depois de tirar", "src/player.rs",
+     "        self.ancora.set(None); // os índices andaram", ""),
+    ("a roda passa pela caixa e mexe no volume", "ui/app.slint",
+     "        // segura o clique e a roda fora da caixa (é modal, como o QMessageBox da 1.5.1)\n        scroll-event(e) => { accept }",
+     "        // segura o clique fora da caixa"),
+    ("soltar com a caixa aberta carrega por trás", "src/player.rs",
+     "        if self.ui.get_caixa_visivel() || self.dialogo_aberto.get() {", "        if false {"),
+    ("teclas valem com a janela de escolher aberta", "src/player.rs",
+     "        if self.dialogo_aberto.get() {\n            return true; // a janela de escolher é modal",
+     "        if false {\n            return true; // a janela de escolher é modal"),
+    ("eof ilegível passa para o próximo", "src/player.rs",
+     '        if self.motor.ler_sim("eof-reached") != Some(true) {', '        if self.motor.ler_sim("eof-reached") == Some(false) {'),
+    ("Ctrl lido 40 ms depois de soltar", "src/player.rs",
+     "        let juntar = self.ctrl_ao_soltar.get() && ", "        let juntar = self.plat.ctrl_apertado() && "),
+    ("raiz C:\\ vira \"C:\" no nome da pasta", "src/player.rs",
+     "    let base = sem_drive(sem_barra).rsplit(", "    let base = sem_barra.rsplit("),
 ]
 
 
 def testes():
     cmds = [
-        [CARGO, "test", "--release", "--lib", "--test", "igual_151", "--test", "sessao", "--test", "biblioteca"],
+        [CARGO, "test", "--release", "--lib", "--test", "igual_151", "--test", "sessao", "--test", "biblioteca",
+         "--test", "heif", "--test", "textos"],
+        [CARGO, "test", "--release", "--test", "interface"],
         [CARGO, "test", "--release", "--test", "teste_logica", "--", MIDIA],
     ]
     for c in cmds:
@@ -74,13 +125,21 @@ if not ok0:
 pegos = 0
 for nome, arq, velho, novo in BUGS:
     p = os.path.join(RUST, arq)
-    original = open(p, encoding="utf-8").read()
-    assert original.count(velho) == 1, (nome, original.count(velho))
+    # O arquivo pode estar com CRLF (autocrlf do git): o bug é plantado com o fim de linha dele e
+    # o original volta byte a byte.
+    with open(p, "rb") as f:
+        original = f.read()
+    crlf = b"\r\n" in original
+    texto = original.decode("utf-8").replace("\r\n", "\n")
+    assert texto.count(velho) == 1, (nome, texto.count(velho))
+    com_bug = texto.replace(velho, novo)
     try:
-        open(p, "w", encoding="utf-8").write(original.replace(velho, novo))
+        with open(p, "wb") as f:
+            f.write((com_bug.replace("\n", "\r\n") if crlf else com_bug).encode("utf-8"))
         passou, onde = testes()
     finally:
-        open(p, "w", encoding="utf-8").write(original)
+        with open(p, "wb") as f:
+            f.write(original)
     pegos += not passou
     print(f"[{'pego' if not passou else 'NÃO PEGO'}] {nome}: {onde[0][:150] if onde else 'os testes passaram com o bug'}")
 print(f"{pegos} de {len(BUGS)} bugs plantados pegos")

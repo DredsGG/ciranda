@@ -1,6 +1,6 @@
-# Ciranda em Rust: fase 2 (núcleo) sobre a prova da fase 1
+# Ciranda em Rust: fase 3 (player completo)
 
-A 1.5.1 (Python) continua sendo a Ciranda de verdade. Aqui: a prova do arranjo de janelas (fase 1) e o núcleo portado da 1.5.1 (fase 2).
+A 1.5.1 (Python) continua sendo a Ciranda de verdade. Aqui: a prova do arranjo de janelas (fase 1), o núcleo portado da 1.5.1 (fase 2) e o player com a interface inteira (fase 3).
 
 ## O núcleo (biblioteca `ciranda`, `src/lib.rs`)
 
@@ -13,22 +13,43 @@ Nada no núcleo abre janela, toca som ou depende do motor: tudo roda em `cargo t
 - `sessao.rs`: o que a `janela.py` decide tocar (abrir/juntar, varredura pronta, próximo/anterior, fim de foto e vídeo, arquivo que falha, nenhum abriu, filtro que esconde tudo).
 - `modo_teste.rs`: `DREDS_TESTE=1`.
 
+## O player (fase 3)
+
+- `player.rs`: o que a `janela.py` faz com a tela e o motor. Teclas, relógio da foto, HEIC (giro, recarga até 5 vezes, tempo só depois que aparece), tela cheia e controles que somem, avisos por cima do vídeo (OSD do mpv), barra, fila lateral (seleção, busca, filtro, menu), menus, caixa de confirmação, arrastar e soltar, Continuar.
+  - Fala com o motor só pelo traço `motor::Motor`: o `Mpv` de verdade, ou o `MotorFalso` dos testes.
+  - Fala com o Windows só pelo traço `plataforma::Plataforma`: `Win32` no executável, `Registro` nos testes e no modo de teste, que só anota e nada abre.
+- `heif.rs`: porta da `heif.py`, que lê `irot`/`imir` e a grade no contêiner e devolve o filtro `lavfi` para o mpv.
+- `textos.rs` + `textos_tabela.rs`: os 240 textos da 1.5.1 nos 3 idiomas, gerados da `textos.py` por `ferramentas/gerar_textos.py`.
+- `sistema.rs`: Mostrar no Explorer (`SHOpenFolderAndSelectItems`), área de transferência, janelas de escolher pasta e arquivos. A janela de escolher abre numa thread própria, dona da hospedeira: o player continua andando com ela aberta, como na 1.5.1. A camada fica desligada até ela fechar, e a resposta volta pelo correio.
+- `ui/app.slint`: a interface inteira, desenhada na camada.
+  - Tela de início com Continuar.
+  - Barra em 3 zonas, com o volume virando só ícone abaixo de 1080 px.
+  - Fila lateral com milhares de linhas, menus e caixa: tudo desenhado dentro da janela, nada de janela popup.
+
 ## Testes do núcleo
 
 ```
-cargo test --release                                    # tudo (unidade, igual_151, sessao, teste_logica sem pasta)
+cargo test --release                                    # tudo (unidade, igual_151, sessao, heif, textos, interface, teste_logica sem pasta)
+cargo test --release --test interface                   # a interface sem janela: 217 checagens
 cargo test --release --test teste_logica -- <pasta>     # com a pasta do tests/gerar_midia.py: 384 checagens
 python -I rust/ferramentas/gerar_fixtures.py            # refaz as fixtures com o Python da 1.5.1
 python -I rust/ferramentas/comparar_varredura.py <varrer.exe> <saida.json> [pastas]   # 1.5.1 × Rust, item por item, com tempo
-python -I rust/medir/teste_invisivel.py <ciranda-prova.exe> <pasta-midia-teste>       # app em DREDS_TESTE=1
+python -I rust/medir/teste_invisivel.py <ciranda-prova.exe> <pasta-midia-teste>       # app em DREDS_TESTE=1, mpv de verdade
+python -I rust/ferramentas/gerar_fixtures_heif.py       # refaz as fixtures do HEIC com a heif.py da 1.5.1
 ```
 
 - `tests/teste_logica.rs`: porta do `teste_logica.py`, checagem por checagem (377 sem a pasta, 384 com ela; os mesmos números da 1.5.1).
 - `tests/igual_151.rs`: config (14 casos, bytes iguais aos da 1.5.1) e ordem natural (2.991 nomes difíceis, mesma ordem crescente e decrescente, inclusive nos empates).
 - `tests/biblioteca.rs`: `normcase`, `abspath` e a classe de erro de cada código do Windows (0 a 19.999) iguais aos do Python 3.12 (`tests/fixtures/caminhos.json`); pastas de sistema puladas; K (Kelvin) e k são dois arquivos; a mesma pasta em grego maiúsculo e minúsculo entra uma vez.
 - `tests/sessao.rs`: as decisões da janela, sem janela.
-- `ferramentas/bugs_plantados.py <pasta-midia-teste>`: planta 15 bugs conhecidos, um por vez, e confere que os testes pegam cada um.
-- `medir/teste_invisivel.py`: o app inteiro em `DREDS_TESTE=1` (sem janela, `vo=null`, `ao=null`, `mute`), teclas por `PostMessage` para a hospedeira oculta. Vigia de janela visível e de foco pelos eventos do Windows (`SetWinEventHook`) e a cada 100 ms. A única isenta é a auxiliar do winit ("Winit Thread Event Target": 16×16, em camadas, transparente, sem conteúdo; o winit a marca visível só para receber `WM_PAINT`, e o DWM não a mostra).
+- `tests/interface.rs`: a interface inteira no backend de teste do Slint, sem janela, com o `MotorFalso` e o `Registro`.
+  - Clica de verdade em cada botão, linha de menu e linha da fila, e aperta as teclas pela janela do Slint.
+  - O tempo é de mentira (`mock_elapsed_time`).
+  - O build liga o `with_debug_info` do Slint para os testes acharem os elementos pelo id. Nada muda na tela.
+- `tests/heif.rs`: 1.902 arquivos (os 6 casos reais de `tests/gerar_heic.py`, cortes byte a byte, bytes trocados ao acaso, tamanhos de caixa no limite). Dão o mesmo filtro que a `heif.py` da 1.5.1.
+- `tests/textos.rs`: tabela, formatação e idioma iguais aos da `textos.py`.
+- `ferramentas/bugs_plantados.py <pasta-midia-teste>`: planta 35 bugs conhecidos (15 do núcleo, 12 da interface e do HEIC, 8 dos achados da revisão da fase 3), um por vez, e confere que os testes pegam cada um.
+- `medir/teste_invisivel.py`: o app inteiro em `DREDS_TESTE=1` (sem janela, `vo=null`, `ao=null`, `mute`), teclas por `PostMessage` para a hospedeira oculta. O caso "formatos-e-heic" toca com o mpv de verdade 26 arquivos: os 16 da 1.5.1, 3 codecs e 7 HEIC. Confere o giro de cada HEIC. Vigia de janela visível e de foco pelos eventos do Windows (`SetWinEventHook`) e a cada 100 ms. A única isenta é a auxiliar do winit ("Winit Thread Event Target": 16×16, em camadas, transparente, sem conteúdo; o winit a marca visível só para receber `WM_PAINT`, e o DWM não a mostra).
 
 ## Modo de teste (REGRA 13)
 
@@ -40,7 +61,7 @@ python -I rust/medir/teste_invisivel.py <ciranda-prova.exe> <pasta-midia-teste> 
 - **Camada** (`ui/app.slint`): janela Slint de topo, sem borda, transparente com alfa por pixel (winit + femtovg), *owned* pela hospedeira. Fica sempre colada na área cliente; o Windows a mantém por cima da dona, esconde junto ao minimizar e a deixa fora da barra de tarefas e do Alt+Tab.
 - **Motor** (`src/mpv.rs`): ligação própria e fina com o `libmpv-2.dll` por `libloading`, escrita a partir do `include/mpv/client.h` da v0.42.0 (ISC). Nada de crate LGPL compilada dentro.
 - Teclas funcionam com o foco em qualquer das duas janelas (Slint `FocusScope` na camada, `WM_KEYDOWN` na hospedeira). Tecla segurada não fica alternando (Espaço, F, Enter, Esc); Ctrl/Alt + tecla não é atalho. Arrastar do Explorer chega pela camada (evento do winit) ou pela barra de título (`WM_DROPFILES`).
-- A interface só repinta quando uma propriedade muda (relógio da barra 4×/s), nunca a cada quadro de vídeo.
+- A interface só repinta quando uma propriedade muda (o relógio da barra olha o motor a cada 100 ms), nunca a cada quadro de vídeo.
 - Alt+F4 em qualquer das duas janelas fecha o app inteiro. A barra de título fica acesa com o foco na camada e apaga quando outro app vem para a frente.
 - Tela cheia: controles somem 2,5 s depois do último movimento do mouse, menos com o mouse parado sobre a barra.
 
@@ -56,7 +77,19 @@ A prova confere o sha256 da DLL antes de carregar (`94fb87247732c59915cd59808bc5
 
 Log e `config.json` em `%APPDATA%\Ciranda-rust-prova\` (nunca usa `%APPDATA%\Ciranda`; o app se recusa). Rodando de dentro do app Claude (pacote MSIX), o Windows redireciona esse `%APPDATA%` para `%LOCALAPPDATA%\Packages\Claude_…\LocalCache\Roaming`.
 
-Teclas: Espaço, ← → (5 s; Shift: 30 s; na foto troca de foto), F / Enter / F11 (tela cheia), Esc, N, P (vídeo com mais de 3 s volta ao começo), S (aleatório), R (repetir), 1 / 2 / 3 (tudo / fotos / vídeos). Duplo clique: tela cheia. Botão direito: menu. Soltar com Ctrl junta à fila sem parar o que toca.
+Teclas (as da 1.5.1):
+- Espaço / K: tocar e pausar.
+- ← →: 5 s; com Shift, 30 s; na foto, troca de foto.
+- N / PgDn: próximo. P / PgUp: anterior; vídeo com mais de 3 s volta ao começo.
+- ↑ ↓: volume. M: mudo.
+- F / Enter / F11: tela cheia. Esc: fecha caixa, depois menu, depois tela cheia.
+- S: aleatório. R: repetir. L: fila. E: Mostrar no Explorer.
+- 1 / 2 / 3: tudo / fotos / vídeos. + / −: tempo da foto.
+- Ctrl+O, Ctrl+Shift+O (juntar pasta), Ctrl+F (buscar na fila). Teclas de mídia.
+
+Letra só vale sem Shift, como no Qt. Com menu ou caixa aberta, só o Esc vale.
+
+Mouse: dois cliques no vídeo, tela cheia; um clique pausa depois de 230 ms; botão direito, menu; roda, volume. Soltar com Ctrl junta à fila sem parar o que toca.
 
 ## Medir
 
@@ -70,6 +103,8 @@ Teclas: Espaço, ← → (5 s; Shift: 30 s; na foto troca de foto), F / Enter / 
 
 `cargo deny check licenses sources` com `deny.toml`: só MIT, Apache-2.0, BSD, ISC, Zlib, Unicode-3.0 e Slint Royalty-free 2.0; BSL-1.0 só para `clipboard-win` e `error-code` (que o Slint puxa); só crates.io (git ou outro registro derruba). A `libmpv-2.dll` fica fora do `cargo deny` (é carregada em tempo de execução): quem a garante é a conferência do sha256 acima. O Slint Royalty-free exige o `AboutSlint` numa tela "Sobre" e o selo na página do projeto: entra na fase 4.
 
-## Fica para a fase 3 (player completo)
+## Fica para as fases 4 e 5
 
-Barra em 3 zonas, fila lateral, busca, OSD, menus, demais teclas, giro do HEIC do iPhone (`irot`/`imir`, que a 1.5.1 faz no `heif.py`) e a recarga do HEIC em grade, interface no backend de teste do Slint.
+No menu, aparecem apagados: Procurar atualização, Relatar bug, Como usar, Restaurar de fábrica e Usar como app padrão (este depende do instalador).
+- Fase 4: posição da janela guardada e "Sobre" com o `AboutSlint`.
+- Fase futura: entrada real (Explorer, clique e teclado de verdade) num workflow do GitHub Actions.

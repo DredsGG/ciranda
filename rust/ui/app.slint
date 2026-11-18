@@ -1,24 +1,353 @@
-// Ciranda em Rust, fase 1: a camada da interface, desenhada por cima do vídeo do mpv.
-// A janela é transparente (alfa por pixel): onde não há controle, aparece o vídeo de baixo.
+// Ciranda em Rust (fase 3): a interface da 1.5.1 (janela.py) em Slint, desenhada numa janela
+// transparente por cima do vídeo. Onde fica o vídeo (o "palco") não há nada pintado: aparece a
+// janela do mpv, que fica embaixo. Barra, fila, menus e caixas são opacos e ficam todos dentro
+// desta janela (nenhum menu abre janela nova).
 
-component Botao inherits Rectangle {
-    in property <string> icone;
+import { ListView } from "std-widgets.slint";
+import { Icones } from "icones.slint";
+
+export { Icones }
+
+// ---------- cores (as mesmas da 1.5.1) ----------
+global Cor {
+    out property <color> fundo: #0e0f12;
+    out property <color> barra: #16171c;
+    out property <color> painel: #121317;
+    out property <color> linha: #24262d;
+    out property <color> texto: #ececf1;
+    out property <color> apagado: #8a8c97;
+    out property <color> destaque: #ff8a3d;
+    out property <color> destaque-fundo: #2a1d14;
+    out property <color> falhou: #c35b5b;
+    out property <color> perigo: #ff7b72;
+    out property <color> hover: #23252c;
+    out property <color> pressionado: #2b2e36;
+    out property <color> menu: #1b1d22;
+    out property <color> menu-hover: #2a2d35;
+    out property <color> assinatura: #6f717c;
+}
+
+// Textos vêm do Rust (tabela da 1.5.1). `versao` muda quando o idioma muda: tudo se refaz.
+export global Textos {
+    in property <int> versao;
+    pure callback t(string, int) -> string;
+    pure public function tr(chave: string) -> string {
+        return self.t(chave, self.versao);
+    }
+}
+
+// Dica (tooltip) única, desenhada pela janela por cima de tudo.
+global Dica {
+    in-out property <string> texto;
+    in-out property <length> x;
+    in-out property <length> y;
+    in-out property <length> largura-dono;
+    in-out property <length> altura-dono;
+    public function mostrar(t: string, x: length, y: length, w: length, h: length) {
+        self.texto = t;
+        self.x = x;
+        self.y = y;
+        self.largura-dono = w;
+        self.altura-dono = h;
+    }
+    public function esconder(t: string) {
+        if self.texto == t {
+            self.texto = "";
+        }
+    }
+}
+
+export struct LinhaFila {
+    nome: string,
+    pasta: string,
+    foto: bool,
+    atual: bool,
+    falhou: bool,
+    selecionada: bool,
+    indice: int,
+}
+
+// tipo: "titulo", "explica", "linha", "radio" ou "sep".
+export struct LinhaMenu {
+    tipo: string,
+    icone: string,
+    texto: string,
+    atalho: string,
+    dica: string,
+    perigo: bool,
+    ativo: bool,
+    marcado: bool,
+    acao: string,
+}
+
+component Icone inherits Path {
+    in property <string> nome;
+    in property <color> cor: Cor.texto;
+    in property <length> tamanho: 20px;
+    width: self.tamanho;
+    height: self.tamanho;
+    viewbox-width: 24;
+    viewbox-height: 24;
+    commands: Icones.d(self.nome);
+    fill: Icones.cheio(self.nome) ? self.cor : transparent;
+    stroke: Icones.cheio(self.nome) ? transparent : self.cor;
+    stroke-width: Icones.cheio(self.nome) ? 0px : self.tamanho * 2 / 24;
+    stroke-line-cap: round;
+    stroke-line-join: round;
+}
+
+// Área com dica: depois de 0,7 s parado em cima, a dica aparece.
+component ComDica inherits TouchArea {
     in property <string> dica;
-    callback clicado;
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
-    background: area.has-hover ? #ffffff26 : transparent;
-    // Ícone em vetor (SVG 24×24): a fonte padrão do femtovg não tem os glifos ▶ ❚❚ ⏭.
-    Path {
-        width: 18px;
-        height: 18px;
-        viewbox-width: 24;
-        viewbox-height: 24;
-        fill: white;
-        commands: root.icone == "pausar" ? "M6 5 L10 5 L10 19 L6 19 Z M14 5 L18 5 L18 19 L14 19 Z"
-            : root.icone == "proximo" ? "M6 6 L14 12 L6 18 Z M16 6 L18 6 L18 18 L16 18 Z"
-            : "M8 5 L19 12 L8 19 Z";
+    mouse-cursor: pointer;
+    Timer {
+        interval: 700ms;
+        running: root.has-hover && root.dica != "" && !root.pressed;
+        triggered => {
+            Dica.mostrar(root.dica, root.absolute-position.x, root.absolute-position.y, root.width, root.height);
+        }
+    }
+    changed has-hover => {
+        if !self.has-hover {
+            Dica.esconder(self.dica);
+        }
+    }
+    changed pressed => {
+        if self.pressed {
+            Dica.esconder(self.dica);
+        }
+    }
+}
+
+// QToolButton da barra: ícone, fundo no hover, laranja apagado quando marcado.
+component BotaoIcone inherits Rectangle {
+    in property <string> icone;
+    in property <color> cor: Cor.texto;
+    in property <length> tamanho: 20px;
+    in property <string> dica;
+    in property <bool> marcado;
+    in property <bool> ativo: true;
+    callback clicado();
+    width: self.tamanho + 12px;
+    height: self.tamanho + 12px;
+    border-radius: 8px;
+    background: !root.ativo ? transparent : area.pressed ? Cor.pressionado : root.marcado ? Cor.destaque-fundo : area.has-hover ? Cor.hover : transparent;
+    accessible-role: button;
+    accessible-label: root.dica;
+    accessible-checked: root.marcado;
+    accessible-action-default => { if root.ativo { root.clicado(); } }
+    Icone {
+        nome: root.icone;
+        cor: root.ativo ? root.cor : root.cor.with-alpha(0.35);
+        tamanho: root.tamanho;
+    }
+    area := ComDica {
+        dica: root.dica;
+        enabled: root.ativo;
+        clicked => { root.clicado(); }
+    }
+}
+
+component BotaoPlay inherits Rectangle {
+    in property <bool> tocando;
+    in property <string> dica;
+    callback clicado();
+    width: 42px;
+    height: 42px;
+    border-radius: 21px;
+    background: area.has-hover ? #ff9b57 : Cor.destaque;
+    accessible-role: button;
+    accessible-label: root.dica;
+    accessible-action-default => { root.clicado(); }
+    Icone {
+        nome: root.tocando ? "pause" : "play";
+        cor: #1a0f07;
+        tamanho: 22px;
+    }
+    area := ComDica {
+        dica: root.dica;
+        clicked => { root.clicado(); }
+    }
+}
+
+// QToolButton#pilula: ícone + texto, borda fina.
+component Pilula inherits Rectangle {
+    in property <string> icone;
+    in property <string> texto;
+    in property <string> dica;
+    callback clicado();
+    height: 30px;
+    min-width: lay.preferred-width;
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: area.has-hover ? #33363f : Cor.linha;
+    background: area.has-hover ? #24262d : #1d1f25;
+    accessible-role: button;
+    accessible-label: root.texto;
+    accessible-action-default => { root.clicado(); }
+    lay := HorizontalLayout {
+        padding-left: 9px;
+        padding-right: 12px;
+        spacing: 6px;
+        alignment: center;
+        Icone {
+            y: (parent.height - self.height) / 2;
+            nome: root.icone;
+            tamanho: 16px;
+        }
+        Text {
+            text: root.texto;
+            color: Cor.texto;
+            font-size: 13px;
+            vertical-alignment: center;
+        }
+    }
+    area := ComDica {
+        dica: root.dica;
+        clicked => { root.clicado(); }
+    }
+}
+
+// QSlider da 1.5.1: trilho de 4 px (6 no hover), parte feita laranja, bolinha que cresce no hover.
+component Deslizador inherits Rectangle {
+    in property <float> valor; // 0..1
+    in property <bool> ativo: true;
+    in property <string> nome-acessivel;
+    out property <bool> arrastando: area.pressed;
+    out property <float> valor-arrasto: max(0, min(1, area.mouse-x / max(1px, self.width)));
+    callback mudou(float);
+    callback soltou(float);
+    height: 18px;
+    accessible-role: slider;
+    accessible-label: root.nome-acessivel;
+    accessible-value: round(root.mostrado * 1000);
+    accessible-value-minimum: 0;
+    accessible-value-maximum: 1000;
+    property <float> mostrado: area.pressed ? root.valor-arrasto : root.valor;
+    property <bool> quente: area.has-hover || area.pressed;
+    trilho := Rectangle {
+        y: (parent.height - self.height) / 2;
+        height: root.quente && root.ativo ? 6px : 4px;
+        border-radius: self.height / 2;
+        background: #2c2f37;
+        Rectangle {
+            x: 0;
+            width: parent.width * root.mostrado;
+            border-radius: parent.border-radius;
+            background: root.ativo ? Cor.destaque : #6b4a33;
+        }
+    }
+    if root.ativo: Rectangle {
+        property <length> d: root.quente ? 14px : 12px;
+        width: self.d;
+        height: self.d;
+        border-radius: self.d / 2;
+        x: max(0, min(root.width - self.d, root.width * root.mostrado - self.d / 2));
+        y: (root.height - self.d) / 2;
+        background: root.quente ? white : Cor.texto;
+    }
+    area := TouchArea {
+        enabled: root.ativo;
+        mouse-cursor: pointer;
+        moved => {
+            if self.pressed {
+                root.mudou(root.valor-arrasto);
+            }
+        }
+        pointer-event(e) => {
+            if e.button == PointerEventButton.left && e.kind == PointerEventKind.down {
+                root.mudou(root.valor-arrasto);
+            }
+            if e.button == PointerEventButton.left && e.kind == PointerEventKind.up {
+                root.soltou(root.valor-arrasto);
+            }
+        }
+    }
+}
+
+// Texto clicável (o tempo total, que alterna com o tempo que falta).
+component TextoClicavel inherits Rectangle {
+    in property <string> texto;
+    in property <string> dica;
+    in property <TextHorizontalAlignment> alinhamento: left;
+    callback clicado();
+    min-width: 44px;
+    accessible-role: button;
+    accessible-label: root.texto;
+    accessible-action-default => { root.clicado(); }
+    Text {
+        text: root.texto;
+        width: 100%;
+        color: Cor.apagado;
+        font-size: 11.5px;
+        horizontal-alignment: root.alinhamento;
+        vertical-alignment: center;
+    }
+    ComDica {
+        dica: root.dica;
+        clicked => { root.clicado(); }
+    }
+}
+
+component Segmento inherits Rectangle {
+    in property <string> texto;
+    in property <string> dica;
+    in property <bool> marcado;
+    callback clicado();
+    horizontal-stretch: 1;
+    height: 28px;
+    border-radius: 6px;
+    background: root.marcado ? #2b2e36 : transparent;
+    accessible-role: button;
+    accessible-label: root.texto;
+    accessible-checked: root.marcado;
+    accessible-action-default => { root.clicado(); }
+    Text {
+        text: root.texto;
+        color: root.marcado || area.has-hover ? Cor.texto : Cor.apagado;
+        font-size: 13px;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+    area := ComDica {
+        dica: root.dica;
+        clicked => { root.clicado(); }
+    }
+}
+
+// QPushButton (#primario: laranja).
+component BotaoTexto inherits Rectangle {
+    in property <string> texto;
+    in property <string> icone;
+    in property <bool> primario;
+    callback clicado();
+    height: 34px;
+    min-width: lay.preferred-width;
+    border-radius: 8px;
+    border-width: root.primario ? 0 : 1px;
+    border-color: Cor.linha;
+    background: root.primario ? (area.has-hover ? #ff9b57 : Cor.destaque) : (area.has-hover ? #2a2d35 : #22242b);
+    accessible-role: button;
+    accessible-label: root.texto;
+    accessible-action-default => { root.clicado(); }
+    lay := HorizontalLayout {
+        padding-left: 14px;
+        padding-right: 14px;
+        spacing: 8px;
+        alignment: center;
+        if root.icone != "": Icone {
+            y: (parent.height - self.height) / 2;
+            nome: root.icone;
+            cor: root.primario ? #1a0f07 : Cor.texto;
+            tamanho: 18px;
+        }
+        Text {
+            text: root.texto;
+            color: root.primario ? #1a0f07 : Cor.texto;
+            font-size: 13px;
+            font-weight: root.primario ? 600 : 400;
+            vertical-alignment: center;
+        }
     }
     area := TouchArea {
         mouse-cursor: pointer;
@@ -26,217 +355,920 @@ component Botao inherits Rectangle {
     }
 }
 
+// Uma linha da fila (Delegado da 1.5.1): 46 px, ícone, nome e pasta.
+component LinhaDaFila inherits Rectangle {
+    in property <LinhaFila> dado;
+    in property <string> prefixo-falhou;
+    callback clique(int, bool, bool);
+    callback duplo(int);
+    callback menu(int, length, length);
+    height: 46px;
+    accessible-role: list-item;
+    accessible-label: root.dado.nome;
+    accessible-item-selected: root.dado.selecionada;
+    accessible-action-default => { root.duplo(root.dado.indice); }
+    fundo := Rectangle {
+        x: 6px;
+        y: 2px;
+        width: parent.width - 12px;
+        height: parent.height - 4px;
+        border-radius: 8px;
+        background: root.dado.atual ? Cor.destaque-fundo : root.dado.selecionada ? #22242b : area.has-hover ? #1a1c21 : transparent;
+        if root.dado.atual: Rectangle {
+            x: 0;
+            y: 10px;
+            width: 3px;
+            height: parent.height - 20px;
+            border-radius: 1.5px;
+            background: Cor.destaque;
+        }
+        Icone {
+            x: 12px;
+            y: (parent.height - 18px) / 2;
+            nome: root.dado.foto ? "foto" : "video";
+            tamanho: 18px;
+            cor: root.dado.atual ? Cor.destaque : root.dado.falhou ? Cor.falhou : Cor.apagado;
+        }
+        Text {
+            x: 40px;
+            y: 4px;
+            width: parent.width - 48px;
+            height: 20px;
+            text: root.dado.nome;
+            overflow: elide;
+            font-size: 13px;
+            font-weight: root.dado.atual ? 600 : 400;
+            color: root.dado.falhou ? Cor.falhou : root.dado.atual ? Cor.texto : #d4d5dc;
+            vertical-alignment: center;
+        }
+        Text {
+            x: 40px;
+            y: 22px;
+            width: parent.width - 48px;
+            height: 18px;
+            text: (root.dado.falhou ? root.prefixo-falhou : "") + root.dado.pasta;
+            overflow: elide;
+            font-size: 11.5px;
+            color: Cor.apagado;
+            vertical-alignment: center;
+        }
+    }
+    property <bool> ctrl-ao-apertar;
+    property <bool> shift-ao-apertar;
+    area := TouchArea {
+        clicked => {
+            root.clique(root.dado.indice, root.ctrl-ao-apertar, root.shift-ao-apertar);
+        }
+        double-clicked => {
+            root.duplo(root.dado.indice);
+        }
+        pointer-event(e) => {
+            if e.button == PointerEventButton.left && e.kind == PointerEventKind.down {
+                root.ctrl-ao-apertar = e.modifiers.control;
+                root.shift-ao-apertar = e.modifiers.shift;
+            }
+            if e.button == PointerEventButton.right && e.kind == PointerEventKind.down {
+                root.menu(root.dado.indice, self.absolute-position.x + self.mouse-x, self.absolute-position.y + self.mouse-y);
+            }
+        }
+    }
+}
+
+// Campo de busca da fila (QLineEdit com lupa e botão de limpar).
+component CampoBusca inherits Rectangle {
+    in-out property <string> texto <=> entrada.text;
+    in property <string> dica;
+    callback editado(string);
+    callback esc();
+    height: 34px;
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: entrada.has-focus ? #5a4232 : Cor.linha;
+    background: #1b1d22;
+    public function focar() {
+        entrada.focus();
+        entrada.select-all();
+    }
+    Icone {
+        x: 10px;
+        y: (parent.height - self.height) / 2;
+        nome: "buscar";
+        cor: Cor.apagado;
+        tamanho: 16px;
+    }
+    if entrada.text == "": Text {
+        x: 34px;
+        width: parent.width - 64px;
+        height: parent.height;
+        text: root.dica;
+        color: Cor.apagado.with-alpha(0.8);
+        font-size: 13px;
+        vertical-alignment: center;
+    }
+    entrada := TextInput {
+        x: 34px;
+        width: parent.width - 64px;
+        height: parent.height;
+        color: Cor.texto;
+        font-size: 13px;
+        vertical-alignment: center;
+        single-line: true;
+        accessible-role: text-input;
+        accessible-label: root.dica;
+        edited => { root.editado(self.text); }
+        key-pressed(e) => {
+            if e.text == Key.Escape && self.text != "" {
+                self.text = "";
+                root.editado("");
+                return accept;
+            }
+            reject
+        }
+    }
+    if entrada.text != "": Rectangle {
+        x: parent.width - 28px;
+        y: (parent.height - 20px) / 2;
+        width: 20px;
+        height: 20px;
+        border-radius: 10px;
+        background: limpar.has-hover ? Cor.hover : transparent;
+        accessible-role: button;
+        accessible-label: "limpar-busca";
+        accessible-action-default => {
+            entrada.text = "";
+            root.editado("");
+        }
+        Icone {
+            nome: "fechar";
+            cor: Cor.apagado;
+            tamanho: 12px;
+        }
+        limpar := TouchArea {
+            mouse-cursor: pointer;
+            clicked => {
+                entrada.text = "";
+                root.editado("");
+            }
+        }
+    }
+}
+
+// Menu (MenuRico da 1.5.1), desenhado dentro da janela.
+component LinhaDoMenu inherits Rectangle {
+    in property <LinhaMenu> dado;
+    in property <bool> primeira;
+    callback escolheu(string);
+    property <bool> clicavel: (root.dado.tipo == "linha" || root.dado.tipo == "radio") && root.dado.ativo;
+    height: root.dado.tipo == "sep" ? 9px : root.dado.tipo == "titulo" ? (root.primeira ? 24px : 33px) : root.dado.tipo == "explica" ? 26px : 30px;
+    border-radius: 6px;
+    accessible-role: button;
+    accessible-label: root.dado.texto;
+    accessible-enabled: root.clicavel;
+    accessible-checked: root.dado.marcado;
+    accessible-action-default => { if root.clicavel { root.escolheu(root.dado.acao); } }
+    if root.dado.tipo == "sep" || (root.dado.tipo == "titulo" && !root.primeira): Rectangle {
+        y: 4px;
+        height: 1px;
+        background: Cor.linha;
+    }
+    if root.dado.tipo != "sep": Rectangle {
+        y: root.dado.tipo == "titulo" && !root.primeira ? 9px : 0;
+        height: parent.height - self.y;
+        border-radius: 6px;
+        background: root.clicavel && area.has-hover ? Cor.menu-hover : transparent;
+        HorizontalLayout {
+            padding-left: root.dado.tipo == "titulo" || root.dado.tipo == "explica" ? 12px : 10px;
+            padding-right: 18px;
+            spacing: 10px;
+            if root.dado.tipo == "linha" || root.dado.tipo == "radio": Rectangle {
+                width: 16px;
+                if root.dado.tipo == "linha" && root.dado.icone != "": Icone {
+                    nome: root.dado.icone;
+                    tamanho: 16px;
+                    cor: !root.dado.ativo ? Cor.apagado.with-alpha(0.6) : root.dado.perigo ? Cor.perigo : Cor.texto;
+                }
+                if root.dado.tipo == "radio" && root.dado.marcado: Rectangle {
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 4px;
+                    background: Cor.destaque;
+                }
+            }
+            Text {
+                text: root.dado.tipo == "titulo" ? root.dado.texto.to-uppercase() : root.dado.texto;
+                font-size: root.dado.tipo == "titulo" ? 11.5px : 13px;
+                font-weight: root.dado.tipo == "titulo" ? 700 : 400;
+                color: root.dado.tipo == "titulo" || root.dado.tipo == "explica" || !root.dado.ativo ? Cor.apagado : root.dado.perigo ? Cor.perigo : Cor.texto;
+                vertical-alignment: center;
+                horizontal-stretch: 1;
+            }
+            if root.dado.atalho != "": Text {
+                text: root.dado.atalho;
+                font-size: 12px;
+                color: Cor.apagado;
+                vertical-alignment: center;
+            }
+        }
+    }
+    area := ComDica {
+        dica: root.dado.dica;
+        enabled: root.clicavel;
+        mouse-cursor: default;
+        clicked => { root.escolheu(root.dado.acao); }
+    }
+}
+
+// Caixa no meio da janela (pergunta Sim/Não, ou número).
+component Caixa inherits Rectangle {
+    in property <string> titulo;
+    in property <string> texto;
+    in property <string> sim;
+    in property <string> nao;
+    in property <bool> com-numero;
+    in-out property <string> numero;
+    callback respondeu(bool);
+    background: #00000088;
+    TouchArea {
+        // segura o clique e a roda fora da caixa (é modal, como o QMessageBox da 1.5.1)
+        scroll-event(e) => { accept }
+    }
+    Rectangle {
+        width: min(parent.width - 48px, 440px);
+        height: lay.preferred-height;
+        border-radius: 12px;
+        background: #1d1f26;
+        border-width: 1px;
+        border-color: #ffffff22;
+        drop-shadow-blur: 24px;
+        drop-shadow-color: #00000099;
+        lay := VerticalLayout {
+            padding: 22px;
+            spacing: 12px;
+            Text {
+                text: root.titulo;
+                color: Cor.texto;
+                font-size: 16px;
+                font-weight: 600;
+                wrap: word-wrap;
+            }
+            Text {
+                text: root.texto;
+                color: #ffffffcc;
+                font-size: 13px;
+                wrap: word-wrap;
+            }
+            if root.com-numero: Rectangle {
+                height: 34px;
+                border-radius: 8px;
+                border-width: 1px;
+                border-color: num.has-focus ? #5a4232 : Cor.linha;
+                background: #1b1d22;
+                num := TextInput {
+                    x: 10px;
+                    width: parent.width - 20px;
+                    text <=> root.numero;
+                    color: Cor.texto;
+                    font-size: 14px;
+                    vertical-alignment: center;
+                    input-type: number;
+                    single-line: true;
+                    accessible-role: text-input;
+                    accessible-label: "numero";
+                    init => {
+                        self.focus();
+                        self.select-all();
+                    }
+                    accepted => { root.respondeu(true); }
+                }
+            }
+            HorizontalLayout {
+                alignment: end;
+                spacing: 8px;
+                BotaoTexto {
+                    texto: root.nao;
+                    clicado => { root.respondeu(false); }
+                }
+                BotaoTexto {
+                    texto: root.sim;
+                    primario: true;
+                    clicado => { root.respondeu(true); }
+                }
+            }
+        }
+    }
+}
+
+// Tela de início (Vazio da 1.5.1).
+component Vazio inherits Rectangle {
+    in property <bool> arrastando;
+    in property <string> continuar;
+    in property <string> status;
+    callback abrir();
+    callback continuar-clicado();
+    background: Cor.fundo;
+    Rectangle {
+        x: 10px;
+        y: 10px;
+        width: parent.width - 20px;
+        height: parent.height - 20px;
+        border-radius: 14px;
+        border-width: 2px;
+        border-color: root.arrastando ? Cor.destaque : transparent;
+        background: root.arrastando ? #16120f : Cor.fundo;
+        VerticalLayout {
+            alignment: center;
+            spacing: 10px;
+            Image {
+                source: @image-url("ciranda-256.png");
+                height: 112px;
+                image-fit: contain;
+            }
+            Rectangle { height: 6px; }
+            Text {
+                text: root.arrastando ? Textos.tr("solte_para_tocar") : Textos.tr("arraste_aqui");
+                color: Cor.texto;
+                font-size: 22px;
+                font-weight: 600;
+                horizontal-alignment: center;
+            }
+            Text {
+                text: Textos.tr("vazio_sub");
+                color: Cor.apagado;
+                font-size: 13px;
+                horizontal-alignment: center;
+            }
+            Rectangle { height: 10px; }
+            HorizontalLayout {
+                alignment: center;
+                spacing: 8px;
+                b-abrir := BotaoTexto {
+                    texto: Textos.tr("abrir_pasta");
+                    icone: "pasta";
+                    primario: true;
+                    clicado => { root.abrir(); }
+                }
+                if root.continuar != "": b-continuar := BotaoTexto {
+                    texto: root.continuar;
+                    clicado => { root.continuar-clicado(); }
+                }
+            }
+            Rectangle { height: 8px; }
+            t-status := Text {
+                text: root.status;
+                color: Cor.apagado;
+                font-size: 13px;
+                horizontal-alignment: center;
+            }
+        }
+    }
+}
+
 export component Camada inherits Window {
-    title: "Ciranda (prova)";
+    title: "Ciranda";
     background: transparent;
     no-frame: true;
     default-font-family: "Segoe UI";
+    default-font-size: 13px;
 
-    in property <bool> tocando;
-    in property <float> progresso; // 0..1
-    in property <string> tempo-texto: "0:00 / 0:00";
-    in property <string> nome: "Arraste uma pasta ou arquivos para cá";
+    // ----- estado (vem do Rust) -----
+    in property <bool> vazio: true;
+    in property <bool> painel-visivel: true;
+    in property <bool> tela-cheia;
     in property <bool> controles-visiveis: true;
     in property <bool> arrastando;
-    in-out property <bool> quadro-visivel: true;
-    in property <string> aviso;
+    in property <string> nome;
+    in property <string> info;
+    in property <string> caminho-atual;
+    in property <string> tipo-icone: "pasta";
+    in property <bool> tipo-falhou;
+    in property <bool> tocando;
+    in property <bool> aleatorio;
+    in property <string> repetir: "tudo";
+    in property <float> progresso;
+    in property <bool> busca-ativa;
+    in property <string> tempo-txt: "0:00";
+    in property <string> total-txt: "0:00";
+    in property <string> foto-longo;
+    in property <string> foto-curto;
+    in property <int> volume: 80;
+    in property <bool> mudo;
+    in property <string> filtro: "tudo";
+    in property <string> contagem;
+    in property <string> resumo;
+    in property <[LinhaFila]> fila;
+    in-out property <string> busca;
+    in property <string> continuar-txt;
+    in property <string> status;
+    // menu
+    in property <bool> menu-visivel;
+    in property <[LinhaMenu]> menu-itens;
+    in property <length> menu-ancora-x;
+    in property <length> menu-ancora-y;
+    in property <length> menu-ancora-w;
+    in property <length> menu-ancora-h;
+    // "acima-direita" (botão da barra, alinhado à direita), "acima-esquerda", "ponteiro"
+    in property <string> menu-jeito;
+    // caixa (pergunta ou número)
+    in property <bool> caixa-visivel;
+    in property <string> caixa-titulo;
+    in property <string> caixa-texto;
+    in property <string> caixa-sim;
+    in property <string> caixa-nao;
+    in property <bool> caixa-numero;
+    in-out property <string> caixa-valor;
 
-    callback tocar-pausar();
-    callback proximo();
-    callback buscar(float);
-    callback tecla(string, bool, bool, bool) -> bool; // texto, shift, repetida, ctrl ou alt
+    // ----- geometria do palco (onde o vídeo aparece), em px lógicos -----
+    out property <length> palco-x: palco.absolute-position.x;
+    out property <length> palco-y: palco.absolute-position.y;
+    out property <length> palco-w: palco.width;
+    out property <length> palco-h: palco.height;
+    out property <length> barra-h: barra.visible ? barra.height : 0;
+    // Barra responsiva (< 1080 px): volume só no ícone, tempo da foto curto.
+    in-out property <bool> larga: true;
+    init => { self.larga = self.width >= 1080px; }
+    changed width => { self.larga = self.width >= 1080px; }
+
+    // ----- avisos para o Rust -----
+    callback acao(string);
+    callback abrir-menu(string, length, length, length, length);
+    callback menu-video(length, length);
+    callback menu-lista(int, length, length);
+    callback menu-escolheu(string);
+    callback menu-fechou();
+    callback busca-soltou(float);
+    callback volume-mudou(int);
+    callback palco-clique();
+    callback palco-duplo();
+    callback palco-roda(int);
+    callback lista-clique(int, bool, bool);
+    callback lista-duplo(int);
+    callback busca-mudou(string);
+    callback tecla(string, bool, bool, bool, bool) -> bool; // texto, shift, ctrl, alt, repetida
     callback mexeu();
-    callback duplo-clique();
-    callback menu(string);
-    callback fechar-quadro();
+    callback palco-mudou();
+    callback caixa-respondeu(bool);
+
+    public function rolar-para(linha: int) {
+        // Deixa a linha à vista (EnsureVisible), sem pular se já está.
+        if linha >= 0 {
+            if linha * 46px < -lista.content-y {
+                lista.content-y = -linha * 46px;
+            } else if (linha + 1) * 46px > -lista.content-y + lista.visible-height {
+                lista.content-y = -((linha + 1) * 46px - lista.visible-height);
+            }
+        }
+    }
+    public function focar-busca() {
+        campo-busca.focar();
+    }
+    public function focar-janela() {
+        foco.focus();
+    }
+
+    changed palco-x => { root.palco-mudou(); }
+    changed palco-y => { root.palco-mudou(); }
+    changed palco-w => { root.palco-mudou(); }
+    changed palco-h => { root.palco-mudou(); }
 
     forward-focus: foco;
 
     foco := FocusScope {
         key-pressed(e) => {
-            if root.tecla(e.text, e.modifiers.shift, e.repeat, e.modifiers.control || e.modifiers.alt) { return accept; }
+            if root.tecla(e.text, e.modifiers.shift, e.modifiers.control, e.modifiers.alt, e.repeat) {
+                return accept;
+            }
             reject
         }
 
-        ContextMenuArea {
-            Menu {
-                MenuItem { title: root.tocando ? "Pausar" : "Tocar"; activated => { root.menu("tocar"); } }
-                MenuItem { title: "Próximo"; activated => { root.menu("proximo"); } }
-                MenuItem { title: "Tela cheia"; activated => { root.menu("tela-cheia"); } }
-                MenuSeparator { }
-                MenuItem { title: "Mostrar o quadro"; activated => { root.menu("quadro"); } }
-            }
-
-            fundo := TouchArea {
-                mouse-cursor: root.controles-visiveis ? default : none;
-                changed mouse-x => { root.mexeu(); }
-                changed mouse-y => { root.mexeu(); }
-                double-clicked => { root.duplo-clique(); }
-                clicked => { foco.focus(); }
-            }
-        }
-
-        // Barra de baixo.
-        if root.controles-visiveis: Rectangle {
-            y: parent.height - self.height;
-            height: 76px;
-            background: @linear-gradient(0deg, #000000d0 0%, #00000000 100%);
-
-            Text {
-                x: 16px;
-                y: 4px;
-                text: root.nome;
-                color: #ffffffd8;
-                font-size: 13px;
-                overflow: elide;
-                width: parent.width - 32px;
-            }
-
+        VerticalLayout {
             HorizontalLayout {
-                y: 24px;
-                height: 48px;
-                padding-left: 8px;
-                padding-right: 16px;
-                spacing: 4px;
-                alignment: stretch;
-
-                Botao {
-                    y: 4px;
-                    icone: root.tocando ? "pausar" : "tocar";
-                    dica: "Tocar/pausar";
-                    clicado => { root.tocar-pausar(); }
-                }
-                Botao {
-                    y: 4px;
-                    icone: "proximo";
-                    dica: "Próximo";
-                    clicado => { root.proximo(); }
-                }
-
-                barra := Rectangle {
+                // ----- palco: tela de início ou vídeo (transparente) -----
+                palco := Rectangle {
                     horizontal-stretch: 1;
-                    TouchArea {
-                        mouse-cursor: pointer;
-                        clicked => { root.buscar(self.mouse-x / self.width); }
+                    if root.vazio: Vazio {
+                        arrastando: root.arrastando;
+                        continuar: root.continuar-txt;
+                        status: root.status;
+                        abrir => { root.acao("abrir-pasta"); }
+                        continuar-clicado => { root.acao("continuar"); }
                     }
-                    Rectangle {
-                        y: (parent.height - self.height) / 2;
-                        height: 4px;
-                        border-radius: 2px;
-                        background: #ffffff40;
-                        Rectangle {
-                            x: 0;
-                            width: parent.width * max(0, min(1, root.progresso));
-                            border-radius: 2px;
-                            background: #ff8a1f;
+                    if !root.vazio: tela := TouchArea {
+                        mouse-cursor: root.tela-cheia && !root.controles-visiveis ? MouseCursor.none : MouseCursor.default;
+                        clicked => {
+                            foco.focus();
+                            root.palco-clique();
+                        }
+                        double-clicked => { root.palco-duplo(); }
+                        changed mouse-x => { root.mexeu(); }
+                        changed mouse-y => { root.mexeu(); }
+                        pointer-event(e) => {
+                            if e.button == PointerEventButton.right && e.kind == PointerEventKind.down {
+                                root.menu-video(self.absolute-position.x + self.mouse-x, self.absolute-position.y + self.mouse-y);
+                            }
+                        }
+                        scroll-event(e) => {
+                            if e.delta-y > 0 {
+                                root.palco-roda(1);
+                                return accept;
+                            } else if e.delta-y < 0 {
+                                root.palco-roda(-1);
+                                return accept;
+                            }
+                            reject
                         }
                     }
                 }
 
-                Text {
-                    text: root.tempo-texto;
-                    color: white;
-                    font-size: 13px;
-                    vertical-alignment: center;
-                    min-width: 110px;
-                    horizontal-alignment: right;
+                // ----- fila lateral -----
+                painel := Rectangle {
+                    visible: root.painel-visivel;
+                    width: self.visible ? 330px : 0;
+                    clip: true;
+                    background: Cor.painel;
+                    Rectangle {
+                        x: 0;
+                        width: 1px;
+                        background: Cor.linha;
+                    }
+                    // Largura fixa por dentro: escondida (largura 0), os textos que quebram linha
+                    // não viram uma letra por linha, o que esticava o palco para fora da tela.
+                    VerticalLayout {
+                        x: 0;
+                        width: 330px;
+                        padding-left: 14px;
+                        padding-top: 14px;
+                        padding-right: 10px;
+                        padding-bottom: 12px;
+                        spacing: 10px;
+                        HorizontalLayout {
+                            spacing: 6px;
+                            alignment: start;
+                            Text {
+                                text: Textos.tr("fila");
+                                color: Cor.texto;
+                                font-size: 16px;
+                                font-weight: 600;
+                            }
+                            t-contagem := Text {
+                                text: root.contagem;
+                                color: Cor.apagado;
+                                font-size: 13px;
+                                vertical-alignment: bottom;
+                            }
+                        }
+                        HorizontalLayout {
+                            spacing: 6px;
+                            alignment: start;
+                            p-abrir := Pilula {
+                                icone: "pasta";
+                                texto: Textos.tr("pil_abrir");
+                                dica: Textos.tr("pil_abrir_dica");
+                                clicado => { root.acao("abrir-pasta"); }
+                            }
+                            p-juntar := Pilula {
+                                icone: "pastamais";
+                                texto: Textos.tr("pil_juntar");
+                                dica: Textos.tr("pil_juntar_dica");
+                                clicado => { root.acao("juntar-pasta"); }
+                            }
+                            p-limpar := Pilula {
+                                icone: "limpar";
+                                texto: Textos.tr("limpar");
+                                dica: Textos.tr("pil_limpar_dica");
+                                clicado => {
+                                    root.abrir-menu("limpar", self.absolute-position.x, self.absolute-position.y, self.width, self.height);
+                                }
+                            }
+                        }
+                        Rectangle {
+                            height: 34px;
+                            border-radius: 8px;
+                            border-width: 1px;
+                            border-color: Cor.linha;
+                            background: #1d1f25;
+                            HorizontalLayout {
+                                padding: 3px;
+                                spacing: 2px;
+                                f-tudo := Segmento {
+                                    texto: Textos.tr("filtro_tudo");
+                                    dica: Textos.tr("filtro_tudo_dica");
+                                    marcado: root.filtro == "tudo";
+                                    clicado => { root.acao("filtro-tudo"); }
+                                }
+                                f-fotos := Segmento {
+                                    texto: Textos.tr("filtro_fotos");
+                                    dica: Textos.tr("filtro_fotos_dica");
+                                    marcado: root.filtro == "fotos";
+                                    clicado => { root.acao("filtro-fotos"); }
+                                }
+                                f-videos := Segmento {
+                                    texto: Textos.tr("filtro_videos");
+                                    dica: Textos.tr("filtro_videos_dica");
+                                    marcado: root.filtro == "videos";
+                                    clicado => { root.acao("filtro-videos"); }
+                                }
+                            }
+                        }
+                        campo-busca := CampoBusca {
+                            texto <=> root.busca;
+                            dica: Textos.tr("buscar_fila");
+                            editado(t) => { root.busca-mudou(t); }
+                        }
+                        lista := ListView {
+                            vertical-stretch: 1;
+                            for linha in root.fila: LinhaDaFila {
+                                dado: linha;
+                                prefixo-falhou: Textos.tr("nao_abriu_pasta");
+                                clique(i, c, s) => {
+                                    foco.focus();
+                                    root.lista-clique(i, c, s);
+                                }
+                                duplo(i) => { root.lista-duplo(i); }
+                                menu(i, x, y) => { root.menu-lista(i, x, y); }
+                            }
+                        }
+                        t-resumo := Text {
+                            text: root.resumo;
+                            color: Cor.apagado;
+                            font-size: 13px;
+                            wrap: word-wrap;
+                        }
+                    }
+                }
+            }
+
+            // ----- barra de baixo, em 3 zonas -----
+            barra := Rectangle {
+                visible: !root.tela-cheia || root.controles-visiveis;
+                height: self.visible ? lay-barra.preferred-height : 0;
+                background: Cor.barra;
+                Rectangle {
+                    y: 0;
+                    height: 1px;
+                    background: Cor.linha;
+                }
+                area-barra := TouchArea {
+                    changed mouse-x => { root.mexeu(); }
+                    changed mouse-y => { root.mexeu(); }
+                }
+                lay-barra := HorizontalLayout {
+                    padding-left: 16px;
+                    padding-right: 16px;
+                    padding-top: 10px;
+                    padding-bottom: 12px;
+                    spacing: 16px;
+
+                    // esquerda: o que está tocando (clique: mostra na fila)
+                    esq := Rectangle {
+                        horizontal-stretch: 2;
+                        min-width: root.larga ? 330px : 250px;
+                        HorizontalLayout {
+                            spacing: 11px;
+                            Rectangle {
+                                width: 42px;
+                                height: 42px;
+                                y: (parent.height - self.height) / 2;
+                                border-radius: 9px;
+                                background: #1f2127;
+                                Icone {
+                                    nome: root.tipo-icone;
+                                    tamanho: 20px;
+                                    cor: root.tipo-icone == "pasta" ? Cor.apagado : root.tipo-falhou ? Cor.falhou : Cor.destaque;
+                                }
+                            }
+                            VerticalLayout {
+                                alignment: center;
+                                spacing: 1px;
+                                t-nome := Text {
+                                    text: root.nome;
+                                    color: Cor.texto;
+                                    font-size: 13.5px;
+                                    font-weight: 600;
+                                    overflow: elide;
+                                }
+                                t-info := Text {
+                                    text: root.info;
+                                    color: Cor.apagado;
+                                    font-size: 12px;
+                                    overflow: elide;
+                                }
+                            }
+                        }
+                        b-esq := ComDica {
+                            dica: root.caminho-atual != "" ? root.caminho-atual : Textos.tr("mostrar_na_fila");
+                            clicked => { root.acao("mostrar-na-fila"); }
+                        }
+                    }
+
+                    // centro: controles e progresso
+                    cen := VerticalLayout {
+                        horizontal-stretch: 3;
+                        min-width: 300px;
+                        max-width: 720px;
+                        spacing: 2px;
+                        HorizontalLayout {
+                            alignment: center;
+                            spacing: 10px;
+                            b-alea := BotaoIcone {
+                                y: (parent.height - self.height) / 2;
+                                icone: "aleatorio";
+                                tamanho: 18px;
+                                cor: root.aleatorio ? Cor.destaque : Cor.texto;
+                                marcado: root.aleatorio;
+                                dica: Textos.tr("dica_aleatorio");
+                                clicado => { root.acao("aleatorio"); }
+                            }
+                            b-ant := BotaoIcone {
+                                y: (parent.height - self.height) / 2;
+                                icone: "anterior";
+                                dica: Textos.tr("dica_anterior");
+                                clicado => { root.acao("anterior"); }
+                            }
+                            b-play := BotaoPlay {
+                                tocando: root.tocando;
+                                dica: Textos.tr("dica_play");
+                                clicado => { root.acao("tocar-pausar"); }
+                            }
+                            b-prox := BotaoIcone {
+                                y: (parent.height - self.height) / 2;
+                                icone: "proximo";
+                                dica: Textos.tr("dica_proximo");
+                                clicado => { root.acao("proximo"); }
+                            }
+                            b-rep := BotaoIcone {
+                                y: (parent.height - self.height) / 2;
+                                icone: root.repetir == "um" ? "repetir1" : "repetir";
+                                tamanho: 18px;
+                                cor: root.repetir != "nao" ? Cor.destaque : Cor.texto;
+                                marcado: root.repetir != "nao";
+                                dica: Textos.tr("dica_repetir_" + root.repetir);
+                                clicado => { root.acao("repetir"); }
+                            }
+                        }
+                        HorizontalLayout {
+                            spacing: 10px;
+                            t-tempo := Text {
+                                text: root.tempo-txt;
+                                min-width: 44px;
+                                color: Cor.apagado;
+                                font-size: 11.5px;
+                                horizontal-alignment: right;
+                                vertical-alignment: center;
+                            }
+                            busca-barra := Deslizador {
+                                horizontal-stretch: 1;
+                                valor: root.progresso;
+                                ativo: root.busca-ativa;
+                                nome-acessivel: "busca";
+                                soltou(v) => { root.busca-soltou(v); }
+                            }
+                            t-total := TextoClicavel {
+                                texto: root.total-txt;
+                                dica: Textos.tr("dica_total");
+                                clicado => { root.acao("alternar-restante"); }
+                            }
+                        }
+                    }
+
+                    // direita: ajustes
+                    dir := HorizontalLayout {
+                        horizontal-stretch: 2;
+                        min-width: root.larga ? 330px : 250px;
+                        alignment: end;
+                        spacing: 4px;
+                        p-foto := Pilula {
+                            y: (parent.height - self.height) / 2;
+                            icone: "relogio";
+                            texto: root.larga ? root.foto-longo : root.foto-curto;
+                            dica: Textos.tr("dica_tempo_foto");
+                            clicado => {
+                                root.abrir-menu("foto", self.absolute-position.x, self.absolute-position.y, self.width, self.height);
+                            }
+                        }
+                        Rectangle { width: 10px; }
+                        b-vol := BotaoIcone {
+                            y: (parent.height - self.height) / 2;
+                            icone: root.mudo ? "mudo" : "volume";
+                            tamanho: 18px;
+                            dica: Textos.tr("dica_mudo");
+                            clicado => { root.acao("mudo"); }
+                        }
+                        if root.larga: volume := Deslizador {
+                            y: (parent.height - self.height) / 2;
+                            width: 84px;
+                            valor: root.volume / 100;
+                            nome-acessivel: "volume";
+                            mudou(v) => { root.volume-mudou(round(v * 100)); }
+                            soltou(v) => { root.volume-mudou(round(v * 100)); }
+                        }
+                        Rectangle { width: 10px; }
+                        Rectangle {
+                            width: 1px;
+                            height: 22px;
+                            y: (parent.height - self.height) / 2;
+                            background: Cor.linha;
+                        }
+                        Rectangle { width: 6px; }
+                        b-pastas := BotaoIcone {
+                            y: (parent.height - self.height) / 2;
+                            icone: "pasta";
+                            tamanho: 19px;
+                            dica: Textos.tr("dica_pastas");
+                            clicado => {
+                                root.abrir-menu("pastas", self.absolute-position.x, self.absolute-position.y, self.width, self.height);
+                            }
+                        }
+                        b-painel := BotaoIcone {
+                            y: (parent.height - self.height) / 2;
+                            icone: "lista";
+                            tamanho: 19px;
+                            marcado: root.painel-visivel;
+                            dica: Textos.tr("dica_fila");
+                            clicado => { root.acao("painel"); }
+                        }
+                        b-tela := BotaoIcone {
+                            y: (parent.height - self.height) / 2;
+                            icone: root.tela-cheia ? "sairtela" : "telacheia";
+                            tamanho: 19px;
+                            dica: Textos.tr("dica_tela_cheia");
+                            clicado => { root.acao("tela-cheia"); }
+                        }
+                    }
                 }
             }
         }
 
-        // Aviso curto no alto (troca de modo, erro).
-        if root.aviso != "": Rectangle {
-            x: (parent.width - self.width) / 2;
-            y: 24px;
-            width: aviso-txt.preferred-width + 32px;
-            height: 36px;
-            border-radius: 8px;
-            background: #141519c0;
-            aviso-txt := Text {
-                text: root.aviso;
-                color: white;
-                font-size: 15px;
+        // ----- menu (por cima de tudo menos a caixa) -----
+        if root.menu-visivel: Rectangle {
+            fora := TouchArea {
+                clicked => { root.menu-fechou(); }
+                scroll-event(e) => { accept } // com o menu aberto a roda não mexe no volume
+                pointer-event(e) => {
+                    if e.button == PointerEventButton.right && e.kind == PointerEventKind.down {
+                        root.menu-fechou();
+                    }
+                }
             }
-        }
-
-        // Quadro no meio da janela (como o de "Novidades").
-        if root.quadro-visivel: Rectangle {
-            background: #00000066;
-            TouchArea { } // segura o clique fora do quadro
-            Rectangle {
-                width: min(parent.width - 48px, 460px);
-                height: 230px;
-                border-radius: 14px;
-                background: #1d1f26;
+            caixa-menu := Rectangle {
+                property <length> w: max(200px, lay-menu.preferred-width);
+                property <length> h: lay-menu.preferred-height;
+                property <length> margem: 4px;
+                property <length> x-pedido: root.menu-jeito == "acima-direita" ? root.menu-ancora-x + root.menu-ancora-w - self.w
+                    : root.menu-ancora-x;
+                property <length> y-acima: root.menu-ancora-y - self.h - 6px;
+                property <length> y-pedido: root.menu-jeito == "ponteiro"
+                    ? (root.menu-ancora-y + self.h <= root.height ? root.menu-ancora-y : max(0, root.menu-ancora-y - self.h))
+                    : (self.y-acima >= 0 ? self.y-acima : root.menu-ancora-y + root.menu-ancora-h + 6px);
+                x: max(self.margem, min(self.x-pedido, root.width - self.w - self.margem));
+                y: max(0, min(self.y-pedido, root.height - self.h));
+                width: self.w;
+                height: self.h;
+                background: Cor.menu;
                 border-width: 1px;
-                border-color: #ffffff22;
-                drop-shadow-blur: 24px;
-                drop-shadow-color: #00000099;
-
-                Text {
-                    x: 24px;
-                    y: 20px;
-                    text: "Novidades da prova";
-                    color: white;
-                    font-size: 20px;
-                    font-weight: 600;
-                }
-                Text {
-                    x: 24px;
-                    y: 62px;
-                    width: parent.width - 48px;
-                    wrap: word-wrap;
-                    color: #ffffffcc;
-                    font-size: 14px;
-                    text: "Esta janela Slint fica por cima do vídeo do mpv. Arraste uma pasta do Explorer, use Espaço, ← →, F, Esc e N, ou o botão direito do mouse.";
-                }
-                Rectangle {
-                    x: parent.width - self.width - 12px;
-                    y: 12px;
-                    width: 32px;
-                    height: 32px;
-                    border-radius: 16px;
-                    background: fechar.has-hover ? #ffffff26 : transparent;
-                    Path {
-                        width: 14px;
-                        height: 14px;
-                        viewbox-width: 24;
-                        viewbox-height: 24;
-                        stroke: white;
-                        stroke-width: 2px;
-                        commands: "M5 5 L19 19 M19 5 L5 19";
-                    }
-                    fechar := TouchArea {
-                        mouse-cursor: pointer;
-                        clicked => { root.fechar-quadro(); }
-                    }
-                }
-                Rectangle {
-                    x: parent.width - self.width - 24px;
-                    y: parent.height - self.height - 20px;
-                    width: 110px;
-                    height: 36px;
-                    border-radius: 8px;
-                    background: ok.has-hover ? #ffa04a : #ff8a1f;
-                    Text { text: "Entendi"; color: #111; font-size: 14px; font-weight: 600; }
-                    ok := TouchArea {
-                        mouse-cursor: pointer;
-                        clicked => { root.fechar-quadro(); }
+                border-color: Cor.linha;
+                border-radius: 8px;
+                drop-shadow-blur: 16px;
+                drop-shadow-color: #00000080;
+                TouchArea { } // clique entre as linhas não fecha
+                lay-menu := VerticalLayout {
+                    padding: 4px;
+                    for item[i] in root.menu-itens: LinhaDoMenu {
+                        dado: item;
+                        primeira: i == 0;
+                        escolheu(a) => { root.menu-escolheu(a); }
                     }
                 }
             }
         }
 
-        // Borda e texto enquanto algo é arrastado do Explorer por cima (por último: fica acima do quadro).
-        if root.arrastando: Rectangle {
-            border-width: 4px;
-            border-color: #ff8a1f;
-            background: #ff8a1f22;
-            Text {
-                text: "Solte para tocar";
-                color: white;
-                font-size: 28px;
-                font-weight: 600;
+        // ----- caixa (pergunta Sim/Não ou número) -----
+        if root.caixa-visivel: Caixa {
+            titulo: root.caixa-titulo;
+            texto: root.caixa-texto;
+            sim: root.caixa-sim;
+            nao: root.caixa-nao;
+            com-numero: root.caixa-numero;
+            numero <=> root.caixa-valor;
+            respondeu(s) => { root.caixa-respondeu(s); }
+        }
+
+        // ----- dica (tooltip) -----
+        if Dica.texto != "": Rectangle {
+            property <length> w: min(dica-txt.preferred-width + 12px, 420px);
+            x: max(4px, min(Dica.x + Dica.largura-dono / 2 - self.w / 2, root.width - self.w - 4px));
+            y: Dica.y + Dica.altura-dono + 6px + self.height <= root.height ? Dica.y + Dica.altura-dono + 6px : Dica.y - self.height - 6px;
+            width: self.w;
+            height: dica-txt.preferred-height + 8px;
+            background: Cor.menu;
+            border-width: 1px;
+            border-color: Cor.linha;
+            dica-txt := Text {
+                x: 6px;
+                width: parent.width - 12px;
+                text: Dica.texto;
+                color: Cor.texto;
+                font-size: 12px;
+                wrap: word-wrap;
             }
         }
     }

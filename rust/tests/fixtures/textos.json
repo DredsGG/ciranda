@@ -1,0 +1,7832 @@
+{
+"python": "3.12.10",
+"idiomas": [
+"pt",
+"en",
+"es"
+],
+"nomes": {
+"pt": "PT",
+"en": "EN",
+"es": "ES"
+},
+"quantas": 240,
+"chaves": [
+"nada_tocando",
+"arraste_para_janela",
+"mostrar_na_fila",
+"dica_anterior",
+"dica_play",
+"dica_proximo",
+"dica_aleatorio",
+"dica_total",
+"dica_mudo",
+"dica_pastas",
+"dica_fila",
+"dica_tela_cheia",
+"dica_repetir_nao",
+"dica_repetir_tudo",
+"dica_repetir_um",
+"n_de_total",
+"dica_tempo_foto",
+"foto_rotulo",
+"tempo_de_cada_foto",
+"video_nao_usa",
+"outro_tempo",
+"outro_tempo_agora",
+"segundos",
+"arraste_aqui",
+"solte_para_tocar",
+"vazio_sub",
+"abrir_pasta",
+"continuar_ultima",
+"n_pastas",
+"relatar_bug",
+"procurar_atualizacao",
+"feito_por",
+"como_usar",
+"idioma",
+"m_abrir",
+"abrir_pasta_desc",
+"juntar_outra",
+"juntar_desc",
+"abrir_arquivos",
+"abrir_arquivos_desc",
+"ultima_fila",
+"continuar_1",
+"continuar_n",
+"e_mais",
+"arquivo_na_tela",
+"mostrar_explorer",
+"mostrar_explorer_desc",
+"limpar",
+"limpar_fila",
+"limpar_fila_desc",
+"limpar_tudo",
+"limpar_tudo_desc",
+"usar_padrao",
+"usar_padrao_desc",
+"procurar_desc",
+"relatar_bug_desc",
+"como_usar_desc",
+"restaurar",
+"restaurar_desc",
+"m_pastas",
+"juntar_desc_curta",
+"abrir_desc_curta",
+"tocar",
+"tecla_espaco",
+"pausar",
+"proximo",
+"aleatorio_ligado",
+"aleatorio_desligado",
+"repetir_nao",
+"repetir_tudo",
+"repetir_um",
+"tela_cheia",
+"sair_tela_cheia",
+"tocar_agora",
+"copiar_caminho",
+"tirar_da_fila",
+"tirar_n_da_fila",
+"fila",
+"pil_abrir",
+"pil_abrir_dica",
+"pil_juntar",
+"pil_juntar_dica",
+"pil_limpar_dica",
+"filtro_tudo",
+"filtro_fotos",
+"filtro_videos",
+"filtro_tudo_dica",
+"filtro_fotos_dica",
+"filtro_videos_dica",
+"buscar_fila",
+"resumo",
+"resumo_pastas_1",
+"resumo_pastas_n",
+"outros_tipos",
+"um_nao_abriu",
+"n_nao_abriram",
+"fila_vazia",
+"nao_abriu_pasta",
+"dlg_adicionar_pasta",
+"dlg_abrir_arquivos",
+"lendo",
+"lendo_n",
+"nenhuma_midia",
+"limpar_tudo_confirma",
+"limpos",
+"restaurar_titulo",
+"restaurar_confirma",
+"restaurado",
+"fim_fila",
+"nenhum_abriu",
+"nada_com_filtro",
+"osd_volume",
+"osd_sem_som",
+"osd_som",
+"osd_aleatorio",
+"osd_em_ordem",
+"osd_repetir_nao",
+"osd_repetir_tudo",
+"osd_repetir_um",
+"osd_filtro_tudo",
+"osd_filtro_fotos",
+"osd_filtro_videos",
+"osd_cada_foto",
+"nao_abriu_app",
+"ver_e_atualizar",
+"depois",
+"procurando",
+"sem_github",
+"ja_mais_nova",
+"faixa_nova",
+"faixa_teste",
+"voce_esta_na",
+"da_pasta_teste",
+"nova_versao",
+"nova_versao_teste",
+"atualizar",
+"nova_versao_urgente",
+"urgente_explica",
+"pronta_titulo",
+"pronta_corpo",
+"atualizando_ja",
+"apoiar",
+"apoio_onde",
+"apoio_brasil",
+"apoio_brasil_sub",
+"apoio_fora",
+"apoio_fora_sub",
+"apoio_opcional",
+"apoio_pix_titulo",
+"apoio_outro_valor",
+"apoio_valor_dica",
+"apoio_valor_ruim",
+"apoio_valor_livre",
+"apoio_qr_alt",
+"apoio_sem_qr",
+"apoio_copiar_codigo",
+"apoio_copiado",
+"apoio_chave",
+"apoio_copiar_chave",
+"apoio_instrucoes",
+"apoio_fora_titulo",
+"apoio_fora_texto",
+"apoio_abrir_sponsors",
+"apoio_voltar",
+"dlg_atualizacao",
+"disponivel",
+"disponivel_teste",
+"voce_esta_na_frase",
+"veio_pasta_teste",
+"o_que_mudou",
+"ver_tudo_github",
+"atualizar_agora",
+"baixar_github",
+"dica_instala",
+"dica_zip",
+"cancelar",
+"copiando",
+"baixando",
+"copiando_mb",
+"baixando_mb",
+"instalando",
+"conferido_instalando",
+"erro_abrir_instalador",
+"tentar_de_novo",
+"download_cancelado",
+"nao_deu_atualizar",
+"erro_endereco",
+"erro_sem_sha",
+"erro_sha",
+"erro_local",
+"notas_teste",
+"novidades_da",
+"atualizado_de",
+"reinstalado",
+"entendi",
+"pular",
+"voltar",
+"passo_n",
+"fechar_esc",
+"tut1_t",
+"tut1",
+"tut2_t",
+"tut2",
+"tut3_t",
+"tut3",
+"tut4_t",
+"tut4",
+"tut5_t",
+"tut5",
+"bug_pergunta",
+"bug_exemplo",
+"incluir_diag",
+"bug_aviso",
+"copiar_relatorio",
+"abrir_github",
+"copiado",
+"abri_github",
+"log_grande",
+"diag_instalado",
+"diag_codigo",
+"diag_sistema",
+"diag_telas",
+"diag_fila",
+"diag_modos",
+"diag_atual",
+"diag_ultimo_erro",
+"diag_fim_log",
+"diag_fila_txt",
+"diag_modos_txt",
+"diag_mudo",
+"diag_em",
+"diag_falhou",
+"sim",
+"nao",
+"bug_o_que",
+"bug_nao_escrito",
+"bug_diag",
+"bug_enviado",
+"log_cortado",
+"diag_grande"
+],
+"t": [
+{
+"chave": "nada_tocando",
+"idioma": "pt",
+"cru": "Nada tocando",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Nada tocando"
+},
+{
+"chave": "nada_tocando",
+"idioma": "en",
+"cru": "Nothing playing",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Nothing playing"
+},
+{
+"chave": "nada_tocando",
+"idioma": "es",
+"cru": "Nada en reproducción",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Nada en reproducción"
+},
+{
+"chave": "arraste_para_janela",
+"idioma": "pt",
+"cru": "Arraste pastas para a janela",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Arraste pastas para a janela"
+},
+{
+"chave": "arraste_para_janela",
+"idioma": "en",
+"cru": "Drag folders into the window",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Drag folders into the window"
+},
+{
+"chave": "arraste_para_janela",
+"idioma": "es",
+"cru": "Arrastra carpetas a la ventana",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Arrastra carpetas a la ventana"
+},
+{
+"chave": "mostrar_na_fila",
+"idioma": "pt",
+"cru": "Mostrar na fila",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Mostrar na fila"
+},
+{
+"chave": "mostrar_na_fila",
+"idioma": "en",
+"cru": "Show in the queue",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Show in the queue"
+},
+{
+"chave": "mostrar_na_fila",
+"idioma": "es",
+"cru": "Mostrar en la cola",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Mostrar en la cola"
+},
+{
+"chave": "dica_anterior",
+"idioma": "pt",
+"cru": "Anterior (P)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Anterior (P)"
+},
+{
+"chave": "dica_anterior",
+"idioma": "en",
+"cru": "Previous (P)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Previous (P)"
+},
+{
+"chave": "dica_anterior",
+"idioma": "es",
+"cru": "Anterior (P)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Anterior (P)"
+},
+{
+"chave": "dica_play",
+"idioma": "pt",
+"cru": "Tocar / pausar (Espaço)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Tocar / pausar (Espaço)"
+},
+{
+"chave": "dica_play",
+"idioma": "en",
+"cru": "Play / pause (Space)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Play / pause (Space)"
+},
+{
+"chave": "dica_play",
+"idioma": "es",
+"cru": "Reproducir / pausar (Espacio)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Reproducir / pausar (Espacio)"
+},
+{
+"chave": "dica_proximo",
+"idioma": "pt",
+"cru": "Próximo (N)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Próximo (N)"
+},
+{
+"chave": "dica_proximo",
+"idioma": "en",
+"cru": "Next (N)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Next (N)"
+},
+{
+"chave": "dica_proximo",
+"idioma": "es",
+"cru": "Siguiente (N)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Siguiente (N)"
+},
+{
+"chave": "dica_aleatorio",
+"idioma": "pt",
+"cru": "Aleatório (S)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Aleatório (S)"
+},
+{
+"chave": "dica_aleatorio",
+"idioma": "en",
+"cru": "Shuffle (S)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Shuffle (S)"
+},
+{
+"chave": "dica_aleatorio",
+"idioma": "es",
+"cru": "Aleatorio (S)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Aleatorio (S)"
+},
+{
+"chave": "dica_total",
+"idioma": "pt",
+"cru": "Clique: tempo total / tempo que falta",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Clique: tempo total / tempo que falta"
+},
+{
+"chave": "dica_total",
+"idioma": "en",
+"cru": "Click: total time / time left",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Click: total time / time left"
+},
+{
+"chave": "dica_total",
+"idioma": "es",
+"cru": "Clic: tiempo total / tiempo restante",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Clic: tiempo total / tiempo restante"
+},
+{
+"chave": "dica_mudo",
+"idioma": "pt",
+"cru": "Mudo (M)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Mudo (M)"
+},
+{
+"chave": "dica_mudo",
+"idioma": "en",
+"cru": "Mute (M)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Mute (M)"
+},
+{
+"chave": "dica_mudo",
+"idioma": "es",
+"cru": "Silenciar (M)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Silenciar (M)"
+},
+{
+"chave": "dica_pastas",
+"idioma": "pt",
+"cru": "Pastas: abrir, juntar, limpar (Ctrl+O abre direto)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Pastas: abrir, juntar, limpar (Ctrl+O abre direto)"
+},
+{
+"chave": "dica_pastas",
+"idioma": "en",
+"cru": "Folders: open, add, clear (Ctrl+O opens directly)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Folders: open, add, clear (Ctrl+O opens directly)"
+},
+{
+"chave": "dica_pastas",
+"idioma": "es",
+"cru": "Carpetas: abrir, añadir, limpiar (Ctrl+O abre directamente)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Carpetas: abrir, añadir, limpiar (Ctrl+O abre directamente)"
+},
+{
+"chave": "dica_fila",
+"idioma": "pt",
+"cru": "Fila (L)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Fila (L)"
+},
+{
+"chave": "dica_fila",
+"idioma": "en",
+"cru": "Queue (L)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Queue (L)"
+},
+{
+"chave": "dica_fila",
+"idioma": "es",
+"cru": "Cola (L)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Cola (L)"
+},
+{
+"chave": "dica_tela_cheia",
+"idioma": "pt",
+"cru": "Tela cheia (F / duplo clique)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Tela cheia (F / duplo clique)"
+},
+{
+"chave": "dica_tela_cheia",
+"idioma": "en",
+"cru": "Full screen (F / double-click)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Full screen (F / double-click)"
+},
+{
+"chave": "dica_tela_cheia",
+"idioma": "es",
+"cru": "Pantalla completa (F / doble clic)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Pantalla completa (F / doble clic)"
+},
+{
+"chave": "dica_repetir_nao",
+"idioma": "pt",
+"cru": "Repetir: desligado (R)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repetir: desligado (R)"
+},
+{
+"chave": "dica_repetir_nao",
+"idioma": "en",
+"cru": "Repeat: off (R)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repeat: off (R)"
+},
+{
+"chave": "dica_repetir_nao",
+"idioma": "es",
+"cru": "Repetir: desactivado (R)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repetir: desactivado (R)"
+},
+{
+"chave": "dica_repetir_tudo",
+"idioma": "pt",
+"cru": "Repetir: a fila toda (R)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repetir: a fila toda (R)"
+},
+{
+"chave": "dica_repetir_tudo",
+"idioma": "en",
+"cru": "Repeat: whole queue (R)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repeat: whole queue (R)"
+},
+{
+"chave": "dica_repetir_tudo",
+"idioma": "es",
+"cru": "Repetir: toda la cola (R)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repetir: toda la cola (R)"
+},
+{
+"chave": "dica_repetir_um",
+"idioma": "pt",
+"cru": "Repetir: só este (R)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repetir: só este (R)"
+},
+{
+"chave": "dica_repetir_um",
+"idioma": "en",
+"cru": "Repeat: this one (R)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repeat: this one (R)"
+},
+{
+"chave": "dica_repetir_um",
+"idioma": "es",
+"cru": "Repetir: solo este (R)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repetir: solo este (R)"
+},
+{
+"chave": "n_de_total",
+"idioma": "pt",
+"cru": "{n} de {total}",
+"args": {
+"n": 1592,
+"total": 1888,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "1592 de 1888"
+},
+{
+"chave": "n_de_total",
+"idioma": "en",
+"cru": "{n} of {total}",
+"args": {
+"n": 1592,
+"total": 1888,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "1592 of 1888"
+},
+{
+"chave": "n_de_total",
+"idioma": "es",
+"cru": "{n} de {total}",
+"args": {
+"n": 1592,
+"total": 1888,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "1592 de 1888"
+},
+{
+"chave": "dica_tempo_foto",
+"idioma": "pt",
+"cru": "Tempo de cada foto na tela antes de passar para a próxima.\nVídeo sempre toca até o fim. Atalho: + e −",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Tempo de cada foto na tela antes de passar para a próxima.\nVídeo sempre toca até o fim. Atalho: + e −"
+},
+{
+"chave": "dica_tempo_foto",
+"idioma": "en",
+"cru": "How long each photo stays on screen before the next one.\nVideos always play to the end. Shortcut: + and −",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "How long each photo stays on screen before the next one.\nVideos always play to the end. Shortcut: + and −"
+},
+{
+"chave": "dica_tempo_foto",
+"idioma": "es",
+"cru": "Cuánto tiempo queda cada foto en pantalla antes de pasar a la siguiente.\nLos videos siempre se reproducen hasta el final. Atajo: + y −",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Cuánto tiempo queda cada foto en pantalla antes de pasar a la siguiente.\nLos videos siempre se reproducen hasta el final. Atajo: + y −"
+},
+{
+"chave": "foto_rotulo",
+"idioma": "pt",
+"cru": "Foto: {tempo}",
+"args": {
+"tempo": "7 s",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Foto: 7 s"
+},
+{
+"chave": "foto_rotulo",
+"idioma": "en",
+"cru": "Photo: {tempo}",
+"args": {
+"tempo": "7 s",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Photo: 7 s"
+},
+{
+"chave": "foto_rotulo",
+"idioma": "es",
+"cru": "Foto: {tempo}",
+"args": {
+"tempo": "7 s",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Foto: 7 s"
+},
+{
+"chave": "tempo_de_cada_foto",
+"idioma": "pt",
+"cru": "Tempo de cada foto",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Tempo de cada foto"
+},
+{
+"chave": "tempo_de_cada_foto",
+"idioma": "en",
+"cru": "Time per photo",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Time per photo"
+},
+{
+"chave": "tempo_de_cada_foto",
+"idioma": "es",
+"cru": "Tiempo por foto",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Tiempo por foto"
+},
+{
+"chave": "video_nao_usa",
+"idioma": "pt",
+"cru": "Vídeo não usa: sempre toca até o fim",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Vídeo não usa: sempre toca até o fim"
+},
+{
+"chave": "video_nao_usa",
+"idioma": "en",
+"cru": "Not for videos: they always play to the end",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Not for videos: they always play to the end"
+},
+{
+"chave": "video_nao_usa",
+"idioma": "es",
+"cru": "No se aplica a los videos: siempre se reproducen hasta el final",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "No se aplica a los videos: siempre se reproducen hasta el final"
+},
+{
+"chave": "outro_tempo",
+"idioma": "pt",
+"cru": "Outro tempo…",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Outro tempo…"
+},
+{
+"chave": "outro_tempo",
+"idioma": "en",
+"cru": "Other time…",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Other time…"
+},
+{
+"chave": "outro_tempo",
+"idioma": "es",
+"cru": "Otro tiempo…",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Otro tiempo…"
+},
+{
+"chave": "outro_tempo_agora",
+"idioma": "pt",
+"cru": "Outro tempo… (agora {tempo})",
+"args": {
+"tempo": "7 s",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Outro tempo… (agora 7 s)"
+},
+{
+"chave": "outro_tempo_agora",
+"idioma": "en",
+"cru": "Other time… (now {tempo})",
+"args": {
+"tempo": "7 s",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Other time… (now 7 s)"
+},
+{
+"chave": "outro_tempo_agora",
+"idioma": "es",
+"cru": "Otro tiempo… (ahora {tempo})",
+"args": {
+"tempo": "7 s",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Otro tiempo… (ahora 7 s)"
+},
+{
+"chave": "segundos",
+"idioma": "pt",
+"cru": "Segundos:",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Segundos:"
+},
+{
+"chave": "segundos",
+"idioma": "en",
+"cru": "Seconds:",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Seconds:"
+},
+{
+"chave": "segundos",
+"idioma": "es",
+"cru": "Segundos:",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Segundos:"
+},
+{
+"chave": "arraste_aqui",
+"idioma": "pt",
+"cru": "Arraste pastas aqui",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Arraste pastas aqui"
+},
+{
+"chave": "arraste_aqui",
+"idioma": "en",
+"cru": "Drop folders here",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Drop folders here"
+},
+{
+"chave": "arraste_aqui",
+"idioma": "es",
+"cru": "Suelta carpetas aquí",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Suelta carpetas aquí"
+},
+{
+"chave": "solte_para_tocar",
+"idioma": "pt",
+"cru": "Solte para tocar",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Solte para tocar"
+},
+{
+"chave": "solte_para_tocar",
+"idioma": "en",
+"cru": "Drop to play",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Drop to play"
+},
+{
+"chave": "solte_para_tocar",
+"idioma": "es",
+"cru": "Suelta para reproducir",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Suelta para reproducir"
+},
+{
+"chave": "vazio_sub",
+"idioma": "pt",
+"cru": "Fotos e vídeos da pasta e de todas as subpastas entram numa fila só.\nSegure Ctrl ao soltar para juntar à fila atual.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Fotos e vídeos da pasta e de todas as subpastas entram numa fila só.\nSegure Ctrl ao soltar para juntar à fila atual."
+},
+{
+"chave": "vazio_sub",
+"idioma": "en",
+"cru": "Photos and videos from the folder and every subfolder go into one queue.\nHold Ctrl while dropping to add them to the current queue.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Photos and videos from the folder and every subfolder go into one queue.\nHold Ctrl while dropping to add them to the current queue."
+},
+{
+"chave": "vazio_sub",
+"idioma": "es",
+"cru": "Las fotos y videos de la carpeta y de todas sus subcarpetas forman una sola cola.\nMantén Ctrl al soltar para sumarlos a la cola actual.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Las fotos y videos de la carpeta y de todas sus subcarpetas forman una sola cola.\nMantén Ctrl al soltar para sumarlos a la cola actual."
+},
+{
+"chave": "abrir_pasta",
+"idioma": "pt",
+"cru": "Abrir pasta",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abrir pasta"
+},
+{
+"chave": "abrir_pasta",
+"idioma": "en",
+"cru": "Open folder",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Open folder"
+},
+{
+"chave": "abrir_pasta",
+"idioma": "es",
+"cru": "Abrir carpeta",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abrir carpeta"
+},
+{
+"chave": "continuar_ultima",
+"idioma": "pt",
+"cru": "Continuar a última fila ({nomes})",
+"args": {
+"nomes": "São João, Ação",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Continuar a última fila (São João, Ação)"
+},
+{
+"chave": "continuar_ultima",
+"idioma": "en",
+"cru": "Continue the last queue ({nomes})",
+"args": {
+"nomes": "São João, Ação",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Continue the last queue (São João, Ação)"
+},
+{
+"chave": "continuar_ultima",
+"idioma": "es",
+"cru": "Continuar la última cola ({nomes})",
+"args": {
+"nomes": "São João, Ação",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Continuar la última cola (São João, Ação)"
+},
+{
+"chave": "n_pastas",
+"idioma": "pt",
+"cru": "{n} pastas",
+"args": {
+"n": 1592,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "1592 pastas"
+},
+{
+"chave": "n_pastas",
+"idioma": "en",
+"cru": "{n} folders",
+"args": {
+"n": 1592,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "1592 folders"
+},
+{
+"chave": "n_pastas",
+"idioma": "es",
+"cru": "{n} carpetas",
+"args": {
+"n": 1592,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "1592 carpetas"
+},
+{
+"chave": "relatar_bug",
+"idioma": "pt",
+"cru": "Relatar bug",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Relatar bug"
+},
+{
+"chave": "relatar_bug",
+"idioma": "en",
+"cru": "Report a bug",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Report a bug"
+},
+{
+"chave": "relatar_bug",
+"idioma": "es",
+"cru": "Reportar un error",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Reportar un error"
+},
+{
+"chave": "procurar_atualizacao",
+"idioma": "pt",
+"cru": "Procurar atualização",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Procurar atualização"
+},
+{
+"chave": "procurar_atualizacao",
+"idioma": "en",
+"cru": "Check for updates",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Check for updates"
+},
+{
+"chave": "procurar_atualizacao",
+"idioma": "es",
+"cru": "Buscar actualizaciones",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Buscar actualizaciones"
+},
+{
+"chave": "feito_por",
+"idioma": "pt",
+"cru": "feito por",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "feito por"
+},
+{
+"chave": "feito_por",
+"idioma": "en",
+"cru": "made by",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "made by"
+},
+{
+"chave": "feito_por",
+"idioma": "es",
+"cru": "hecho por",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "hecho por"
+},
+{
+"chave": "como_usar",
+"idioma": "pt",
+"cru": "Como usar",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Como usar"
+},
+{
+"chave": "como_usar",
+"idioma": "en",
+"cru": "How to use",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "How to use"
+},
+{
+"chave": "como_usar",
+"idioma": "es",
+"cru": "Cómo usar",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Cómo usar"
+},
+{
+"chave": "idioma",
+"idioma": "pt",
+"cru": "Idioma",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Idioma"
+},
+{
+"chave": "idioma",
+"idioma": "en",
+"cru": "Language",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Language"
+},
+{
+"chave": "idioma",
+"idioma": "es",
+"cru": "Idioma",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Idioma"
+},
+{
+"chave": "m_abrir",
+"idioma": "pt",
+"cru": "Abrir",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abrir"
+},
+{
+"chave": "m_abrir",
+"idioma": "en",
+"cru": "Open",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Open"
+},
+{
+"chave": "m_abrir",
+"idioma": "es",
+"cru": "Abrir",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abrir"
+},
+{
+"chave": "abrir_pasta_desc",
+"idioma": "pt",
+"cru": "Toca a pasta e todas as subpastas (troca a fila)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Toca a pasta e todas as subpastas (troca a fila)"
+},
+{
+"chave": "abrir_pasta_desc",
+"idioma": "en",
+"cru": "Plays the folder and every subfolder (replaces the queue)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Plays the folder and every subfolder (replaces the queue)"
+},
+{
+"chave": "abrir_pasta_desc",
+"idioma": "es",
+"cru": "Reproduce la carpeta y todas sus subcarpetas (reemplaza la cola)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Reproduce la carpeta y todas sus subcarpetas (reemplaza la cola)"
+},
+{
+"chave": "juntar_outra",
+"idioma": "pt",
+"cru": "Juntar outra pasta",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Juntar outra pasta"
+},
+{
+"chave": "juntar_outra",
+"idioma": "en",
+"cru": "Add another folder",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Add another folder"
+},
+{
+"chave": "juntar_outra",
+"idioma": "es",
+"cru": "Añadir otra carpeta",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Añadir otra carpeta"
+},
+{
+"chave": "juntar_desc",
+"idioma": "pt",
+"cru": "Soma mais uma pasta à fila, sem parar o que toca",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Soma mais uma pasta à fila, sem parar o que toca"
+},
+{
+"chave": "juntar_desc",
+"idioma": "en",
+"cru": "Adds one more folder to the queue without stopping playback",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Adds one more folder to the queue without stopping playback"
+},
+{
+"chave": "juntar_desc",
+"idioma": "es",
+"cru": "Suma una carpeta más a la cola sin detener lo que se reproduce",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Suma una carpeta más a la cola sin detener lo que se reproduce"
+},
+{
+"chave": "abrir_arquivos",
+"idioma": "pt",
+"cru": "Abrir arquivos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abrir arquivos"
+},
+{
+"chave": "abrir_arquivos",
+"idioma": "en",
+"cru": "Open files",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Open files"
+},
+{
+"chave": "abrir_arquivos",
+"idioma": "es",
+"cru": "Abrir archivos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abrir archivos"
+},
+{
+"chave": "abrir_arquivos_desc",
+"idioma": "pt",
+"cru": "Escolher fotos ou vídeos soltos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Escolher fotos ou vídeos soltos"
+},
+{
+"chave": "abrir_arquivos_desc",
+"idioma": "en",
+"cru": "Pick individual photos or videos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Pick individual photos or videos"
+},
+{
+"chave": "abrir_arquivos_desc",
+"idioma": "es",
+"cru": "Elegir fotos o videos sueltos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Elegir fotos o videos sueltos"
+},
+{
+"chave": "ultima_fila",
+"idioma": "pt",
+"cru": "Última fila",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Última fila"
+},
+{
+"chave": "ultima_fila",
+"idioma": "en",
+"cru": "Last queue",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Last queue"
+},
+{
+"chave": "ultima_fila",
+"idioma": "es",
+"cru": "Última cola",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Última cola"
+},
+{
+"chave": "continuar_1",
+"idioma": "pt",
+"cru": "Continuar ({n} pasta)",
+"args": {
+"n": 1592,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Continuar (1592 pasta)"
+},
+{
+"chave": "continuar_1",
+"idioma": "en",
+"cru": "Continue ({n} folder)",
+"args": {
+"n": 1592,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Continue (1592 folder)"
+},
+{
+"chave": "continuar_1",
+"idioma": "es",
+"cru": "Continuar ({n} carpeta)",
+"args": {
+"n": 1592,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Continuar (1592 carpeta)"
+},
+{
+"chave": "continuar_n",
+"idioma": "pt",
+"cru": "Continuar ({n} pastas)",
+"args": {
+"n": 1592,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Continuar (1592 pastas)"
+},
+{
+"chave": "continuar_n",
+"idioma": "en",
+"cru": "Continue ({n} folders)",
+"args": {
+"n": 1592,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Continue (1592 folders)"
+},
+{
+"chave": "continuar_n",
+"idioma": "es",
+"cru": "Continuar ({n} carpetas)",
+"args": {
+"n": 1592,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Continuar (1592 carpetas)"
+},
+{
+"chave": "e_mais",
+"idioma": "pt",
+"cru": " e mais {n}",
+"args": {
+"n": 1592,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " e mais 1592"
+},
+{
+"chave": "e_mais",
+"idioma": "en",
+"cru": " and {n} more",
+"args": {
+"n": 1592,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " and 1592 more"
+},
+{
+"chave": "e_mais",
+"idioma": "es",
+"cru": " y {n} más",
+"args": {
+"n": 1592,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " y 1592 más"
+},
+{
+"chave": "arquivo_na_tela",
+"idioma": "pt",
+"cru": "Arquivo na tela",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Arquivo na tela"
+},
+{
+"chave": "arquivo_na_tela",
+"idioma": "en",
+"cru": "File on screen",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "File on screen"
+},
+{
+"chave": "arquivo_na_tela",
+"idioma": "es",
+"cru": "Archivo en pantalla",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Archivo en pantalla"
+},
+{
+"chave": "mostrar_explorer",
+"idioma": "pt",
+"cru": "Mostrar no Explorer",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Mostrar no Explorer"
+},
+{
+"chave": "mostrar_explorer",
+"idioma": "en",
+"cru": "Show in Explorer",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Show in Explorer"
+},
+{
+"chave": "mostrar_explorer",
+"idioma": "es",
+"cru": "Mostrar en el Explorador",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Mostrar en el Explorador"
+},
+{
+"chave": "mostrar_explorer_desc",
+"idioma": "pt",
+"cru": "Abre a pasta onde ele está",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abre a pasta onde ele está"
+},
+{
+"chave": "mostrar_explorer_desc",
+"idioma": "en",
+"cru": "Opens the folder it's in",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Opens the folder it's in"
+},
+{
+"chave": "mostrar_explorer_desc",
+"idioma": "es",
+"cru": "Abre la carpeta donde está",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abre la carpeta donde está"
+},
+{
+"chave": "limpar",
+"idioma": "pt",
+"cru": "Limpar",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Limpar"
+},
+{
+"chave": "limpar",
+"idioma": "en",
+"cru": "Clear",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Clear"
+},
+{
+"chave": "limpar",
+"idioma": "es",
+"cru": "Limpiar",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Limpiar"
+},
+{
+"chave": "limpar_fila",
+"idioma": "pt",
+"cru": "Limpar fila",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Limpar fila"
+},
+{
+"chave": "limpar_fila",
+"idioma": "en",
+"cru": "Clear queue",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Clear queue"
+},
+{
+"chave": "limpar_fila",
+"idioma": "es",
+"cru": "Vaciar la cola",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Vaciar la cola"
+},
+{
+"chave": "limpar_fila_desc",
+"idioma": "pt",
+"cru": "Esvazia a fila. O Continuar fica guardado",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Esvazia a fila. O Continuar fica guardado"
+},
+{
+"chave": "limpar_fila_desc",
+"idioma": "en",
+"cru": "Empties the queue. Continue is kept",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Empties the queue. Continue is kept"
+},
+{
+"chave": "limpar_fila_desc",
+"idioma": "es",
+"cru": "Vacía la cola. Continuar se conserva",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Vacía la cola. Continuar se conserva"
+},
+{
+"chave": "limpar_tudo",
+"idioma": "pt",
+"cru": "Limpar tudo",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Limpar tudo"
+},
+{
+"chave": "limpar_tudo",
+"idioma": "en",
+"cru": "Clear all",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Clear all"
+},
+{
+"chave": "limpar_tudo",
+"idioma": "es",
+"cru": "Limpiar todo",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Limpiar todo"
+},
+{
+"chave": "limpar_tudo_desc",
+"idioma": "pt",
+"cru": "Fila e a lista do Continuar. Não apaga nada do PC",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Fila e a lista do Continuar. Não apaga nada do PC"
+},
+{
+"chave": "limpar_tudo_desc",
+"idioma": "en",
+"cru": "The queue and the Continue list. Nothing on your PC is deleted",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "The queue and the Continue list. Nothing on your PC is deleted"
+},
+{
+"chave": "limpar_tudo_desc",
+"idioma": "es",
+"cru": "La cola y la lista de Continuar. No se borra nada del PC",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "La cola y la lista de Continuar. No se borra nada del PC"
+},
+{
+"chave": "usar_padrao",
+"idioma": "pt",
+"cru": "Usar como app padrão…",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Usar como app padrão…"
+},
+{
+"chave": "usar_padrao",
+"idioma": "en",
+"cru": "Use as default app…",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Use as default app…"
+},
+{
+"chave": "usar_padrao",
+"idioma": "es",
+"cru": "Usar como aplicación predeterminada…",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Usar como aplicación predeterminada…"
+},
+{
+"chave": "usar_padrao_desc",
+"idioma": "pt",
+"cru": "Abre a tela do Windows para escolher o Ciranda para fotos e vídeos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abre a tela do Windows para escolher o Ciranda para fotos e vídeos"
+},
+{
+"chave": "usar_padrao_desc",
+"idioma": "en",
+"cru": "Opens the Windows screen to choose Ciranda for photos and videos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Opens the Windows screen to choose Ciranda for photos and videos"
+},
+{
+"chave": "usar_padrao_desc",
+"idioma": "es",
+"cru": "Abre la pantalla de Windows para elegir Ciranda para fotos y videos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abre la pantalla de Windows para elegir Ciranda para fotos y videos"
+},
+{
+"chave": "procurar_desc",
+"idioma": "pt",
+"cru": "Você está na v{versao}. Confere se saiu versão nova no GitHub (o Ciranda também confere sozinho ao abrir)",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Você está na v1.6.0-ç. Confere se saiu versão nova no GitHub (o Ciranda também confere sozinho ao abrir)"
+},
+{
+"chave": "procurar_desc",
+"idioma": "en",
+"cru": "You have v{versao}. Checks GitHub for a new version (Ciranda also checks by itself when it opens)",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "You have v1.6.0-ç. Checks GitHub for a new version (Ciranda also checks by itself when it opens)"
+},
+{
+"chave": "procurar_desc",
+"idioma": "es",
+"cru": "Tienes la v{versao}. Busca una versión nueva en GitHub (Ciranda también lo hace solo al abrirse)",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Tienes la v1.6.0-ç. Busca una versión nueva en GitHub (Ciranda también lo hace solo al abrirse)"
+},
+{
+"chave": "relatar_bug_desc",
+"idioma": "pt",
+"cru": "Abre o relato no GitHub já preenchido, sem nomes de pastas e arquivos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abre o relato no GitHub já preenchido, sem nomes de pastas e arquivos"
+},
+{
+"chave": "relatar_bug_desc",
+"idioma": "en",
+"cru": "Opens a prefilled report on GitHub, without folder or file names",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Opens a prefilled report on GitHub, without folder or file names"
+},
+{
+"chave": "relatar_bug_desc",
+"idioma": "es",
+"cru": "Abre el informe en GitHub ya completado, sin nombres de carpetas ni archivos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abre el informe en GitHub ya completado, sin nombres de carpetas ni archivos"
+},
+{
+"chave": "como_usar_desc",
+"idioma": "pt",
+"cru": "Mostra o tutorial de novo",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Mostra o tutorial de novo"
+},
+{
+"chave": "como_usar_desc",
+"idioma": "en",
+"cru": "Shows the tutorial again",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Shows the tutorial again"
+},
+{
+"chave": "como_usar_desc",
+"idioma": "es",
+"cru": "Muestra el tutorial otra vez",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Muestra el tutorial otra vez"
+},
+{
+"chave": "restaurar",
+"idioma": "pt",
+"cru": "Restaurar de fábrica…",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Restaurar de fábrica…"
+},
+{
+"chave": "restaurar",
+"idioma": "en",
+"cru": "Factory reset…",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Factory reset…"
+},
+{
+"chave": "restaurar",
+"idioma": "es",
+"cru": "Restablecer de fábrica…",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Restablecer de fábrica…"
+},
+{
+"chave": "restaurar_desc",
+"idioma": "pt",
+"cru": "Volta todos os ajustes ao padrão e limpa fila e Continuar. Não apaga nada do PC",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Volta todos os ajustes ao padrão e limpa fila e Continuar. Não apaga nada do PC"
+},
+{
+"chave": "restaurar_desc",
+"idioma": "en",
+"cru": "Resets all settings and clears the queue and Continue. Nothing on your PC is deleted",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Resets all settings and clears the queue and Continue. Nothing on your PC is deleted"
+},
+{
+"chave": "restaurar_desc",
+"idioma": "es",
+"cru": "Restablece todos los ajustes y limpia la cola y Continuar. No se borra nada del PC",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Restablece todos los ajustes y limpia la cola y Continuar. No se borra nada del PC"
+},
+{
+"chave": "m_pastas",
+"idioma": "pt",
+"cru": "Pastas",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Pastas"
+},
+{
+"chave": "m_pastas",
+"idioma": "en",
+"cru": "Folders",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Folders"
+},
+{
+"chave": "m_pastas",
+"idioma": "es",
+"cru": "Carpetas",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Carpetas"
+},
+{
+"chave": "juntar_desc_curta",
+"idioma": "pt",
+"cru": "Soma à fila sem parar o que toca",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Soma à fila sem parar o que toca"
+},
+{
+"chave": "juntar_desc_curta",
+"idioma": "en",
+"cru": "Adds to the queue without stopping",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Adds to the queue without stopping"
+},
+{
+"chave": "juntar_desc_curta",
+"idioma": "es",
+"cru": "Suma a la cola sin detener",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Suma a la cola sin detener"
+},
+{
+"chave": "abrir_desc_curta",
+"idioma": "pt",
+"cru": "Troca a fila",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Troca a fila"
+},
+{
+"chave": "abrir_desc_curta",
+"idioma": "en",
+"cru": "Replaces the queue",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Replaces the queue"
+},
+{
+"chave": "abrir_desc_curta",
+"idioma": "es",
+"cru": "Reemplaza la cola",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Reemplaza la cola"
+},
+{
+"chave": "tocar",
+"idioma": "pt",
+"cru": "Tocar",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Tocar"
+},
+{
+"chave": "tocar",
+"idioma": "en",
+"cru": "Play",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Play"
+},
+{
+"chave": "tocar",
+"idioma": "es",
+"cru": "Reproducir",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Reproducir"
+},
+{
+"chave": "tecla_espaco",
+"idioma": "pt",
+"cru": "Espaço",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Espaço"
+},
+{
+"chave": "tecla_espaco",
+"idioma": "en",
+"cru": "Space",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Space"
+},
+{
+"chave": "tecla_espaco",
+"idioma": "es",
+"cru": "Espacio",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Espacio"
+},
+{
+"chave": "pausar",
+"idioma": "pt",
+"cru": "Pausar",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Pausar"
+},
+{
+"chave": "pausar",
+"idioma": "en",
+"cru": "Pause",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Pause"
+},
+{
+"chave": "pausar",
+"idioma": "es",
+"cru": "Pausar",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Pausar"
+},
+{
+"chave": "proximo",
+"idioma": "pt",
+"cru": "Próximo",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Próximo"
+},
+{
+"chave": "proximo",
+"idioma": "en",
+"cru": "Next",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Next"
+},
+{
+"chave": "proximo",
+"idioma": "es",
+"cru": "Siguiente",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Siguiente"
+},
+{
+"chave": "aleatorio_ligado",
+"idioma": "pt",
+"cru": "Aleatório: ligado",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Aleatório: ligado"
+},
+{
+"chave": "aleatorio_ligado",
+"idioma": "en",
+"cru": "Shuffle: on",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Shuffle: on"
+},
+{
+"chave": "aleatorio_ligado",
+"idioma": "es",
+"cru": "Aleatorio: activado",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Aleatorio: activado"
+},
+{
+"chave": "aleatorio_desligado",
+"idioma": "pt",
+"cru": "Aleatório: desligado",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Aleatório: desligado"
+},
+{
+"chave": "aleatorio_desligado",
+"idioma": "en",
+"cru": "Shuffle: off",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Shuffle: off"
+},
+{
+"chave": "aleatorio_desligado",
+"idioma": "es",
+"cru": "Aleatorio: desactivado",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Aleatorio: desactivado"
+},
+{
+"chave": "repetir_nao",
+"idioma": "pt",
+"cru": "Repetir: desligado",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repetir: desligado"
+},
+{
+"chave": "repetir_nao",
+"idioma": "en",
+"cru": "Repeat: off",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repeat: off"
+},
+{
+"chave": "repetir_nao",
+"idioma": "es",
+"cru": "Repetir: desactivado",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repetir: desactivado"
+},
+{
+"chave": "repetir_tudo",
+"idioma": "pt",
+"cru": "Repetir: a fila toda",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repetir: a fila toda"
+},
+{
+"chave": "repetir_tudo",
+"idioma": "en",
+"cru": "Repeat: whole queue",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repeat: whole queue"
+},
+{
+"chave": "repetir_tudo",
+"idioma": "es",
+"cru": "Repetir: toda la cola",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repetir: toda la cola"
+},
+{
+"chave": "repetir_um",
+"idioma": "pt",
+"cru": "Repetir: só este",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repetir: só este"
+},
+{
+"chave": "repetir_um",
+"idioma": "en",
+"cru": "Repeat: this one",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repeat: this one"
+},
+{
+"chave": "repetir_um",
+"idioma": "es",
+"cru": "Repetir: solo este",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repetir: solo este"
+},
+{
+"chave": "tela_cheia",
+"idioma": "pt",
+"cru": "Tela cheia",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Tela cheia"
+},
+{
+"chave": "tela_cheia",
+"idioma": "en",
+"cru": "Full screen",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Full screen"
+},
+{
+"chave": "tela_cheia",
+"idioma": "es",
+"cru": "Pantalla completa",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Pantalla completa"
+},
+{
+"chave": "sair_tela_cheia",
+"idioma": "pt",
+"cru": "Sair da tela cheia",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Sair da tela cheia"
+},
+{
+"chave": "sair_tela_cheia",
+"idioma": "en",
+"cru": "Exit full screen",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Exit full screen"
+},
+{
+"chave": "sair_tela_cheia",
+"idioma": "es",
+"cru": "Salir de pantalla completa",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Salir de pantalla completa"
+},
+{
+"chave": "tocar_agora",
+"idioma": "pt",
+"cru": "Tocar agora",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Tocar agora"
+},
+{
+"chave": "tocar_agora",
+"idioma": "en",
+"cru": "Play now",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Play now"
+},
+{
+"chave": "tocar_agora",
+"idioma": "es",
+"cru": "Reproducir ahora",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Reproducir ahora"
+},
+{
+"chave": "copiar_caminho",
+"idioma": "pt",
+"cru": "Copiar caminho",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Copiar caminho"
+},
+{
+"chave": "copiar_caminho",
+"idioma": "en",
+"cru": "Copy path",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Copy path"
+},
+{
+"chave": "copiar_caminho",
+"idioma": "es",
+"cru": "Copiar ruta",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Copiar ruta"
+},
+{
+"chave": "tirar_da_fila",
+"idioma": "pt",
+"cru": "Tirar da fila",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Tirar da fila"
+},
+{
+"chave": "tirar_da_fila",
+"idioma": "en",
+"cru": "Remove from queue",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Remove from queue"
+},
+{
+"chave": "tirar_da_fila",
+"idioma": "es",
+"cru": "Quitar de la cola",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Quitar de la cola"
+},
+{
+"chave": "tirar_n_da_fila",
+"idioma": "pt",
+"cru": "Tirar {n} da fila",
+"args": {
+"n": 1592,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Tirar 1592 da fila"
+},
+{
+"chave": "tirar_n_da_fila",
+"idioma": "en",
+"cru": "Remove {n} from queue",
+"args": {
+"n": 1592,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Remove 1592 from queue"
+},
+{
+"chave": "tirar_n_da_fila",
+"idioma": "es",
+"cru": "Quitar {n} de la cola",
+"args": {
+"n": 1592,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Quitar 1592 de la cola"
+},
+{
+"chave": "fila",
+"idioma": "pt",
+"cru": "Fila",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Fila"
+},
+{
+"chave": "fila",
+"idioma": "en",
+"cru": "Queue",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Queue"
+},
+{
+"chave": "fila",
+"idioma": "es",
+"cru": "Cola",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Cola"
+},
+{
+"chave": "pil_abrir",
+"idioma": "pt",
+"cru": "Abrir",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abrir"
+},
+{
+"chave": "pil_abrir",
+"idioma": "en",
+"cru": "Open",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Open"
+},
+{
+"chave": "pil_abrir",
+"idioma": "es",
+"cru": "Abrir",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abrir"
+},
+{
+"chave": "pil_abrir_dica",
+"idioma": "pt",
+"cru": "Abrir pasta: troca a fila (Ctrl+O)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abrir pasta: troca a fila (Ctrl+O)"
+},
+{
+"chave": "pil_abrir_dica",
+"idioma": "en",
+"cru": "Open folder: replaces the queue (Ctrl+O)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Open folder: replaces the queue (Ctrl+O)"
+},
+{
+"chave": "pil_abrir_dica",
+"idioma": "es",
+"cru": "Abrir carpeta: reemplaza la cola (Ctrl+O)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abrir carpeta: reemplaza la cola (Ctrl+O)"
+},
+{
+"chave": "pil_juntar",
+"idioma": "pt",
+"cru": "Juntar pasta",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Juntar pasta"
+},
+{
+"chave": "pil_juntar",
+"idioma": "en",
+"cru": "Add folder",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Add folder"
+},
+{
+"chave": "pil_juntar",
+"idioma": "es",
+"cru": "Añadir",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Añadir"
+},
+{
+"chave": "pil_juntar_dica",
+"idioma": "pt",
+"cru": "Soma mais uma pasta à fila, sem parar o que toca (Ctrl+Shift+O)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Soma mais uma pasta à fila, sem parar o que toca (Ctrl+Shift+O)"
+},
+{
+"chave": "pil_juntar_dica",
+"idioma": "en",
+"cru": "Adds one more folder to the queue without stopping playback (Ctrl+Shift+O)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Adds one more folder to the queue without stopping playback (Ctrl+Shift+O)"
+},
+{
+"chave": "pil_juntar_dica",
+"idioma": "es",
+"cru": "Suma una carpeta más a la cola sin detener lo que se reproduce (Ctrl+Shift+O)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Suma una carpeta más a la cola sin detener lo que se reproduce (Ctrl+Shift+O)"
+},
+{
+"chave": "pil_limpar_dica",
+"idioma": "pt",
+"cru": "Limpar fila ou limpar tudo",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Limpar fila ou limpar tudo"
+},
+{
+"chave": "pil_limpar_dica",
+"idioma": "en",
+"cru": "Clear the queue or clear all",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Clear the queue or clear all"
+},
+{
+"chave": "pil_limpar_dica",
+"idioma": "es",
+"cru": "Vaciar la cola o limpiar todo",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Vaciar la cola o limpiar todo"
+},
+{
+"chave": "filtro_tudo",
+"idioma": "pt",
+"cru": "Tudo",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Tudo"
+},
+{
+"chave": "filtro_tudo",
+"idioma": "en",
+"cru": "All",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "All"
+},
+{
+"chave": "filtro_tudo",
+"idioma": "es",
+"cru": "Todo",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Todo"
+},
+{
+"chave": "filtro_fotos",
+"idioma": "pt",
+"cru": "Fotos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Fotos"
+},
+{
+"chave": "filtro_fotos",
+"idioma": "en",
+"cru": "Photos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Photos"
+},
+{
+"chave": "filtro_fotos",
+"idioma": "es",
+"cru": "Fotos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Fotos"
+},
+{
+"chave": "filtro_videos",
+"idioma": "pt",
+"cru": "Vídeos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Vídeos"
+},
+{
+"chave": "filtro_videos",
+"idioma": "en",
+"cru": "Videos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Videos"
+},
+{
+"chave": "filtro_videos",
+"idioma": "es",
+"cru": "Videos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Videos"
+},
+{
+"chave": "filtro_tudo_dica",
+"idioma": "pt",
+"cru": "Fotos e vídeos (1)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Fotos e vídeos (1)"
+},
+{
+"chave": "filtro_tudo_dica",
+"idioma": "en",
+"cru": "Photos and videos (1)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Photos and videos (1)"
+},
+{
+"chave": "filtro_tudo_dica",
+"idioma": "es",
+"cru": "Fotos y videos (1)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Fotos y videos (1)"
+},
+{
+"chave": "filtro_fotos_dica",
+"idioma": "pt",
+"cru": "Só fotos (2)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Só fotos (2)"
+},
+{
+"chave": "filtro_fotos_dica",
+"idioma": "en",
+"cru": "Photos only (2)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Photos only (2)"
+},
+{
+"chave": "filtro_fotos_dica",
+"idioma": "es",
+"cru": "Solo fotos (2)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Solo fotos (2)"
+},
+{
+"chave": "filtro_videos_dica",
+"idioma": "pt",
+"cru": "Só vídeos (3)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Só vídeos (3)"
+},
+{
+"chave": "filtro_videos_dica",
+"idioma": "en",
+"cru": "Videos only (3)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Videos only (3)"
+},
+{
+"chave": "filtro_videos_dica",
+"idioma": "es",
+"cru": "Solo videos (3)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Solo videos (3)"
+},
+{
+"chave": "buscar_fila",
+"idioma": "pt",
+"cru": "Buscar na fila (nome ou pasta)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Buscar na fila (nome ou pasta)"
+},
+{
+"chave": "buscar_fila",
+"idioma": "en",
+"cru": "Search the queue (name or folder)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Search the queue (name or folder)"
+},
+{
+"chave": "buscar_fila",
+"idioma": "es",
+"cru": "Buscar en la cola (nombre o carpeta)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Buscar en la cola (nombre o carpeta)"
+},
+{
+"chave": "resumo",
+"idioma": "pt",
+"cru": "{fila} na fila · {fotos} fotos · {videos} vídeos",
+"args": {
+"fila": 1259,
+"fotos": 1370,
+"videos": 2036,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "1259 na fila · 1370 fotos · 2036 vídeos"
+},
+{
+"chave": "resumo",
+"idioma": "en",
+"cru": "{fila} in queue · {fotos} photos · {videos} videos",
+"args": {
+"fila": 1259,
+"fotos": 1370,
+"videos": 2036,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "1259 in queue · 1370 photos · 2036 videos"
+},
+{
+"chave": "resumo",
+"idioma": "es",
+"cru": "{fila} en la cola · {fotos} fotos · {videos} videos",
+"args": {
+"fila": 1259,
+"fotos": 1370,
+"videos": 2036,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "1259 en la cola · 1370 fotos · 2036 videos"
+},
+{
+"chave": "resumo_pastas_1",
+"idioma": "pt",
+"cru": "de {pastas} pastas com mídia ({abertas} aberta, {lidas} lidas)",
+"args": {
+"abertas": 1000,
+"lidas": 1481,
+"pastas": 1740,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "de 1740 pastas com mídia (1000 aberta, 1481 lidas)"
+},
+{
+"chave": "resumo_pastas_1",
+"idioma": "en",
+"cru": "from {pastas} folders with media ({abertas} opened, {lidas} read)",
+"args": {
+"abertas": 1000,
+"lidas": 1481,
+"pastas": 1740,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "from 1740 folders with media (1000 opened, 1481 read)"
+},
+{
+"chave": "resumo_pastas_1",
+"idioma": "es",
+"cru": "de {pastas} carpetas con contenido ({abertas} abierta, {lidas} leídas)",
+"args": {
+"abertas": 1000,
+"lidas": 1481,
+"pastas": 1740,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "de 1740 carpetas con contenido (1000 abierta, 1481 leídas)"
+},
+{
+"chave": "resumo_pastas_n",
+"idioma": "pt",
+"cru": "de {pastas} pastas com mídia ({abertas} abertas, {lidas} lidas)",
+"args": {
+"abertas": 1000,
+"lidas": 1481,
+"pastas": 1740,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "de 1740 pastas com mídia (1000 abertas, 1481 lidas)"
+},
+{
+"chave": "resumo_pastas_n",
+"idioma": "en",
+"cru": "from {pastas} folders with media ({abertas} opened, {lidas} read)",
+"args": {
+"abertas": 1000,
+"lidas": 1481,
+"pastas": 1740,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "from 1740 folders with media (1000 opened, 1481 read)"
+},
+{
+"chave": "resumo_pastas_n",
+"idioma": "es",
+"cru": "de {pastas} carpetas con contenido ({abertas} abiertas, {lidas} leídas)",
+"args": {
+"abertas": 1000,
+"lidas": 1481,
+"pastas": 1740,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "de 1740 carpetas con contenido (1000 abiertas, 1481 leídas)"
+},
+{
+"chave": "outros_tipos",
+"idioma": "pt",
+"cru": " · {n} arquivos de outros tipos",
+"args": {
+"n": 1592,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " · 1592 arquivos de outros tipos"
+},
+{
+"chave": "outros_tipos",
+"idioma": "en",
+"cru": " · {n} files of other types",
+"args": {
+"n": 1592,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " · 1592 files of other types"
+},
+{
+"chave": "outros_tipos",
+"idioma": "es",
+"cru": " · {n} archivos de otros tipos",
+"args": {
+"n": 1592,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " · 1592 archivos de otros tipos"
+},
+{
+"chave": "um_nao_abriu",
+"idioma": "pt",
+"cru": " · 1 não abriu",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " · 1 não abriu"
+},
+{
+"chave": "um_nao_abriu",
+"idioma": "en",
+"cru": " · 1 didn't open",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " · 1 didn't open"
+},
+{
+"chave": "um_nao_abriu",
+"idioma": "es",
+"cru": " · 1 no se abrió",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " · 1 no se abrió"
+},
+{
+"chave": "n_nao_abriram",
+"idioma": "pt",
+"cru": " · {n} não abriram",
+"args": {
+"n": 1592,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " · 1592 não abriram"
+},
+{
+"chave": "n_nao_abriram",
+"idioma": "en",
+"cru": " · {n} didn't open",
+"args": {
+"n": 1592,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " · 1592 didn't open"
+},
+{
+"chave": "n_nao_abriram",
+"idioma": "es",
+"cru": " · {n} no se abrieron",
+"args": {
+"n": 1592,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " · 1592 no se abrieron"
+},
+{
+"chave": "fila_vazia",
+"idioma": "pt",
+"cru": "Fila vazia. Arraste pastas para a janela.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Fila vazia. Arraste pastas para a janela."
+},
+{
+"chave": "fila_vazia",
+"idioma": "en",
+"cru": "The queue is empty. Drag folders into the window.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "The queue is empty. Drag folders into the window."
+},
+{
+"chave": "fila_vazia",
+"idioma": "es",
+"cru": "La cola está vacía. Arrastra carpetas a la ventana.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "La cola está vacía. Arrastra carpetas a la ventana."
+},
+{
+"chave": "nao_abriu_pasta",
+"idioma": "pt",
+"cru": "não abriu · ",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "não abriu · "
+},
+{
+"chave": "nao_abriu_pasta",
+"idioma": "en",
+"cru": "didn't open · ",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "didn't open · "
+},
+{
+"chave": "nao_abriu_pasta",
+"idioma": "es",
+"cru": "no se abrió · ",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "no se abrió · "
+},
+{
+"chave": "dlg_adicionar_pasta",
+"idioma": "pt",
+"cru": "Adicionar pasta à fila",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Adicionar pasta à fila"
+},
+{
+"chave": "dlg_adicionar_pasta",
+"idioma": "en",
+"cru": "Add folder to the queue",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Add folder to the queue"
+},
+{
+"chave": "dlg_adicionar_pasta",
+"idioma": "es",
+"cru": "Añadir carpeta a la cola",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Añadir carpeta a la cola"
+},
+{
+"chave": "dlg_abrir_arquivos",
+"idioma": "pt",
+"cru": "Abrir fotos e vídeos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abrir fotos e vídeos"
+},
+{
+"chave": "dlg_abrir_arquivos",
+"idioma": "en",
+"cru": "Open photos and videos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Open photos and videos"
+},
+{
+"chave": "dlg_abrir_arquivos",
+"idioma": "es",
+"cru": "Abrir fotos y videos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abrir fotos y videos"
+},
+{
+"chave": "lendo",
+"idioma": "pt",
+"cru": "Lendo {nome}…",
+"args": {
+"nome": "Férias {n} {{x}} 2024",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Lendo Férias {n} {{x}} 2024…"
+},
+{
+"chave": "lendo",
+"idioma": "en",
+"cru": "Reading {nome}…",
+"args": {
+"nome": "Férias {n} {{x}} 2024",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Reading Férias {n} {{x}} 2024…"
+},
+{
+"chave": "lendo",
+"idioma": "es",
+"cru": "Leyendo {nome}…",
+"args": {
+"nome": "Férias {n} {{x}} 2024",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Leyendo Férias {n} {{x}} 2024…"
+},
+{
+"chave": "lendo_n",
+"idioma": "pt",
+"cru": "Lendo… {n} arquivos",
+"args": {
+"n": 1592,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Lendo… 1592 arquivos"
+},
+{
+"chave": "lendo_n",
+"idioma": "en",
+"cru": "Reading… {n} files",
+"args": {
+"n": 1592,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Reading… 1592 files"
+},
+{
+"chave": "lendo_n",
+"idioma": "es",
+"cru": "Leyendo… {n} archivos",
+"args": {
+"n": 1592,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Leyendo… 1592 archivos"
+},
+{
+"chave": "nenhuma_midia",
+"idioma": "pt",
+"cru": "Nenhuma foto ou vídeo nessa pasta nem nas subpastas.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Nenhuma foto ou vídeo nessa pasta nem nas subpastas."
+},
+{
+"chave": "nenhuma_midia",
+"idioma": "en",
+"cru": "No photos or videos in that folder or its subfolders.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "No photos or videos in that folder or its subfolders."
+},
+{
+"chave": "nenhuma_midia",
+"idioma": "es",
+"cru": "No hay fotos ni videos en esa carpeta ni en sus subcarpetas.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "No hay fotos ni videos en esa carpeta ni en sus subcarpetas."
+},
+{
+"chave": "limpar_tudo_confirma",
+"idioma": "pt",
+"cru": "Limpar a fila e a lista do \"Continuar\"?\n\nNenhuma foto ou vídeo do PC é apagado.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Limpar a fila e a lista do \"Continuar\"?\n\nNenhuma foto ou vídeo do PC é apagado."
+},
+{
+"chave": "limpar_tudo_confirma",
+"idioma": "en",
+"cru": "Clear the queue and the \"Continue\" list?\n\nNo photo or video on your PC is deleted.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Clear the queue and the \"Continue\" list?\n\nNo photo or video on your PC is deleted."
+},
+{
+"chave": "limpar_tudo_confirma",
+"idioma": "es",
+"cru": "¿Limpiar la cola y la lista de \"Continuar\"?\n\nNo se borra ninguna foto ni video del PC.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "¿Limpiar la cola y la lista de \"Continuar\"?\n\nNo se borra ninguna foto ni video del PC."
+},
+{
+"chave": "limpos",
+"idioma": "pt",
+"cru": "Fila e Continuar limpos. Arraste pastas para começar.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Fila e Continuar limpos. Arraste pastas para começar."
+},
+{
+"chave": "limpos",
+"idioma": "en",
+"cru": "Queue and Continue cleared. Drag folders to start.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Queue and Continue cleared. Drag folders to start."
+},
+{
+"chave": "limpos",
+"idioma": "es",
+"cru": "Cola y Continuar limpios. Arrastra carpetas para empezar.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Cola y Continuar limpios. Arrastra carpetas para empezar."
+},
+{
+"chave": "restaurar_titulo",
+"idioma": "pt",
+"cru": "Restaurar de fábrica",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Restaurar de fábrica"
+},
+{
+"chave": "restaurar_titulo",
+"idioma": "en",
+"cru": "Factory reset",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Factory reset"
+},
+{
+"chave": "restaurar_titulo",
+"idioma": "es",
+"cru": "Restablecer de fábrica",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Restablecer de fábrica"
+},
+{
+"chave": "restaurar_confirma",
+"idioma": "pt",
+"cru": "Voltar o Ciranda ao estado de recém-instalado?\n\n• Ajustes voltam ao padrão (volume, aleatório, repetir, tempo da foto, filtro, janela)\n• Fila e Continuar são limpos\n\nNenhuma foto ou vídeo do PC é apagado.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Voltar o Ciranda ao estado de recém-instalado?\n\n• Ajustes voltam ao padrão (volume, aleatório, repetir, tempo da foto, filtro, janela)\n• Fila e Continuar são limpos\n\nNenhuma foto ou vídeo do PC é apagado."
+},
+{
+"chave": "restaurar_confirma",
+"idioma": "en",
+"cru": "Put Ciranda back as if it was just installed?\n\n• Settings go back to default (volume, shuffle, repeat, photo time, filter, window)\n• The queue and Continue are cleared\n\nNo photo or video on your PC is deleted.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Put Ciranda back as if it was just installed?\n\n• Settings go back to default (volume, shuffle, repeat, photo time, filter, window)\n• The queue and Continue are cleared\n\nNo photo or video on your PC is deleted."
+},
+{
+"chave": "restaurar_confirma",
+"idioma": "es",
+"cru": "¿Dejar Ciranda como recién instalado?\n\n• Los ajustes vuelven a los valores de fábrica (volumen, aleatorio, repetir, tiempo por foto, filtro, ventana)\n• Se limpian la cola y Continuar\n\nNo se borra ninguna foto ni video del PC.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "¿Dejar Ciranda como recién instalado?\n\n• Los ajustes vuelven a los valores de fábrica (volumen, aleatorio, repetir, tiempo por foto, filtro, ventana)\n• Se limpian la cola y Continuar\n\nNo se borra ninguna foto ni video del PC."
+},
+{
+"chave": "restaurado",
+"idioma": "pt",
+"cru": "Ciranda restaurado de fábrica. Arraste pastas para começar.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ciranda restaurado de fábrica. Arraste pastas para começar."
+},
+{
+"chave": "restaurado",
+"idioma": "en",
+"cru": "Ciranda was reset. Drag folders to start.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ciranda was reset. Drag folders to start."
+},
+{
+"chave": "restaurado",
+"idioma": "es",
+"cru": "Ciranda restablecido de fábrica. Arrastra carpetas para empezar.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ciranda restablecido de fábrica. Arrastra carpetas para empezar."
+},
+{
+"chave": "fim_fila",
+"idioma": "pt",
+"cru": "Fim da fila. Aperte ▶ para começar de novo.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Fim da fila. Aperte ▶ para começar de novo."
+},
+{
+"chave": "fim_fila",
+"idioma": "en",
+"cru": "End of the queue. Press ▶ to start again.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "End of the queue. Press ▶ to start again."
+},
+{
+"chave": "fim_fila",
+"idioma": "es",
+"cru": "Fin de la cola. Pulsa ▶ para empezar de nuevo.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Fin de la cola. Pulsa ▶ para empezar de nuevo."
+},
+{
+"chave": "nenhum_abriu",
+"idioma": "pt",
+"cru": "Nenhum arquivo da fila abriu.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Nenhum arquivo da fila abriu."
+},
+{
+"chave": "nenhum_abriu",
+"idioma": "en",
+"cru": "None of the files in the queue opened.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "None of the files in the queue opened."
+},
+{
+"chave": "nenhum_abriu",
+"idioma": "es",
+"cru": "No se abrió ningún archivo de la cola.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "No se abrió ningún archivo de la cola."
+},
+{
+"chave": "nada_com_filtro",
+"idioma": "pt",
+"cru": "Nada na fila com esse filtro.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Nada na fila com esse filtro."
+},
+{
+"chave": "nada_com_filtro",
+"idioma": "en",
+"cru": "Nothing in the queue with this filter.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Nothing in the queue with this filter."
+},
+{
+"chave": "nada_com_filtro",
+"idioma": "es",
+"cru": "Nada en la cola con este filtro.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Nada en la cola con este filtro."
+},
+{
+"chave": "osd_volume",
+"idioma": "pt",
+"cru": "Volume {v}%",
+"args": {
+"v": 1925,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Volume 1925%"
+},
+{
+"chave": "osd_volume",
+"idioma": "en",
+"cru": "Volume {v}%",
+"args": {
+"v": 1925,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Volume 1925%"
+},
+{
+"chave": "osd_volume",
+"idioma": "es",
+"cru": "Volumen {v}%",
+"args": {
+"v": 1925,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Volumen 1925%"
+},
+{
+"chave": "osd_sem_som",
+"idioma": "pt",
+"cru": "Sem som",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Sem som"
+},
+{
+"chave": "osd_sem_som",
+"idioma": "en",
+"cru": "Sound off",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Sound off"
+},
+{
+"chave": "osd_sem_som",
+"idioma": "es",
+"cru": "Sin sonido",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Sin sonido"
+},
+{
+"chave": "osd_som",
+"idioma": "pt",
+"cru": "Som ligado",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Som ligado"
+},
+{
+"chave": "osd_som",
+"idioma": "en",
+"cru": "Sound on",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Sound on"
+},
+{
+"chave": "osd_som",
+"idioma": "es",
+"cru": "Sonido activado",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Sonido activado"
+},
+{
+"chave": "osd_aleatorio",
+"idioma": "pt",
+"cru": "Aleatório ligado",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Aleatório ligado"
+},
+{
+"chave": "osd_aleatorio",
+"idioma": "en",
+"cru": "Shuffle on",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Shuffle on"
+},
+{
+"chave": "osd_aleatorio",
+"idioma": "es",
+"cru": "Aleatorio activado",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Aleatorio activado"
+},
+{
+"chave": "osd_em_ordem",
+"idioma": "pt",
+"cru": "Em ordem",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Em ordem"
+},
+{
+"chave": "osd_em_ordem",
+"idioma": "en",
+"cru": "In order",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "In order"
+},
+{
+"chave": "osd_em_ordem",
+"idioma": "es",
+"cru": "En orden",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "En orden"
+},
+{
+"chave": "osd_repetir_nao",
+"idioma": "pt",
+"cru": "Repetir desligado",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repetir desligado"
+},
+{
+"chave": "osd_repetir_nao",
+"idioma": "en",
+"cru": "Repeat off",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repeat off"
+},
+{
+"chave": "osd_repetir_nao",
+"idioma": "es",
+"cru": "Repetir desactivado",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repetir desactivado"
+},
+{
+"chave": "osd_repetir_tudo",
+"idioma": "pt",
+"cru": "Repetir a fila toda",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repetir a fila toda"
+},
+{
+"chave": "osd_repetir_tudo",
+"idioma": "en",
+"cru": "Repeat the whole queue",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repeat the whole queue"
+},
+{
+"chave": "osd_repetir_tudo",
+"idioma": "es",
+"cru": "Repetir toda la cola",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repetir toda la cola"
+},
+{
+"chave": "osd_repetir_um",
+"idioma": "pt",
+"cru": "Repetir só este",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repetir só este"
+},
+{
+"chave": "osd_repetir_um",
+"idioma": "en",
+"cru": "Repeat this one",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repeat this one"
+},
+{
+"chave": "osd_repetir_um",
+"idioma": "es",
+"cru": "Repetir solo este",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Repetir solo este"
+},
+{
+"chave": "osd_filtro_tudo",
+"idioma": "pt",
+"cru": "Mostrando fotos e vídeos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Mostrando fotos e vídeos"
+},
+{
+"chave": "osd_filtro_tudo",
+"idioma": "en",
+"cru": "Showing photos and videos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Showing photos and videos"
+},
+{
+"chave": "osd_filtro_tudo",
+"idioma": "es",
+"cru": "Mostrando fotos y videos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Mostrando fotos y videos"
+},
+{
+"chave": "osd_filtro_fotos",
+"idioma": "pt",
+"cru": "Só fotos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Só fotos"
+},
+{
+"chave": "osd_filtro_fotos",
+"idioma": "en",
+"cru": "Photos only",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Photos only"
+},
+{
+"chave": "osd_filtro_fotos",
+"idioma": "es",
+"cru": "Solo fotos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Solo fotos"
+},
+{
+"chave": "osd_filtro_videos",
+"idioma": "pt",
+"cru": "Só vídeos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Só vídeos"
+},
+{
+"chave": "osd_filtro_videos",
+"idioma": "en",
+"cru": "Videos only",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Videos only"
+},
+{
+"chave": "osd_filtro_videos",
+"idioma": "es",
+"cru": "Solo videos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Solo videos"
+},
+{
+"chave": "osd_cada_foto",
+"idioma": "pt",
+"cru": "Cada foto: {v} s",
+"args": {
+"v": 1925,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Cada foto: 1925 s"
+},
+{
+"chave": "osd_cada_foto",
+"idioma": "en",
+"cru": "Each photo: {v} s",
+"args": {
+"v": 1925,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Each photo: 1925 s"
+},
+{
+"chave": "osd_cada_foto",
+"idioma": "es",
+"cru": "Cada foto: {v} s",
+"args": {
+"v": 1925,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Cada foto: 1925 s"
+},
+{
+"chave": "nao_abriu_app",
+"idioma": "pt",
+"cru": "O Ciranda não conseguiu abrir.\nDetalhes em %APPDATA%\\Ciranda\\erro.txt",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "O Ciranda não conseguiu abrir.\nDetalhes em %APPDATA%\\Ciranda\\erro.txt"
+},
+{
+"chave": "nao_abriu_app",
+"idioma": "en",
+"cru": "Ciranda couldn't open.\nDetails in %APPDATA%\\Ciranda\\erro.txt",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ciranda couldn't open.\nDetails in %APPDATA%\\Ciranda\\erro.txt"
+},
+{
+"chave": "nao_abriu_app",
+"idioma": "es",
+"cru": "Ciranda no pudo abrirse.\nDetalles en %APPDATA%\\Ciranda\\erro.txt",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ciranda no pudo abrirse.\nDetalles en %APPDATA%\\Ciranda\\erro.txt"
+},
+{
+"chave": "ver_e_atualizar",
+"idioma": "pt",
+"cru": "Ver e atualizar",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ver e atualizar"
+},
+{
+"chave": "ver_e_atualizar",
+"idioma": "en",
+"cru": "View and update",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "View and update"
+},
+{
+"chave": "ver_e_atualizar",
+"idioma": "es",
+"cru": "Ver y actualizar",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ver y actualizar"
+},
+{
+"chave": "depois",
+"idioma": "pt",
+"cru": "Depois",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Depois"
+},
+{
+"chave": "depois",
+"idioma": "en",
+"cru": "Later",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Later"
+},
+{
+"chave": "depois",
+"idioma": "es",
+"cru": "Después",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Después"
+},
+{
+"chave": "procurando",
+"idioma": "pt",
+"cru": "Procurando atualização…",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Procurando atualização…"
+},
+{
+"chave": "procurando",
+"idioma": "en",
+"cru": "Checking for updates…",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Checking for updates…"
+},
+{
+"chave": "procurando",
+"idioma": "es",
+"cru": "Buscando actualizaciones…",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Buscando actualizaciones…"
+},
+{
+"chave": "sem_github",
+"idioma": "pt",
+"cru": "Não consegui falar com o GitHub agora (sem internet?).\nTente de novo daqui a pouco.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Não consegui falar com o GitHub agora (sem internet?).\nTente de novo daqui a pouco."
+},
+{
+"chave": "sem_github",
+"idioma": "en",
+"cru": "Couldn't reach GitHub right now (no internet?).\nTry again in a moment.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Couldn't reach GitHub right now (no internet?).\nTry again in a moment."
+},
+{
+"chave": "sem_github",
+"idioma": "es",
+"cru": "No pude conectar con GitHub ahora (¿sin internet?).\nInténtalo de nuevo en un momento.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "No pude conectar con GitHub ahora (¿sin internet?).\nInténtalo de nuevo en un momento."
+},
+{
+"chave": "ja_mais_nova",
+"idioma": "pt",
+"cru": "Você já está na versão mais nova (v{versao}).",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Você já está na versão mais nova (v1.6.0-ç)."
+},
+{
+"chave": "ja_mais_nova",
+"idioma": "en",
+"cru": "You already have the latest version (v{versao}).",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "You already have the latest version (v1.6.0-ç)."
+},
+{
+"chave": "ja_mais_nova",
+"idioma": "es",
+"cru": "Ya tienes la versión más reciente (v{versao}).",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ya tienes la versión más reciente (v1.6.0-ç)."
+},
+{
+"chave": "faixa_nova",
+"idioma": "pt",
+"cru": "<b>Ciranda v{versao}</b> disponível",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "<b>Ciranda v1.6.0-ç</b> disponível"
+},
+{
+"chave": "faixa_nova",
+"idioma": "en",
+"cru": "<b>Ciranda v{versao}</b> is available",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "<b>Ciranda v1.6.0-ç</b> is available"
+},
+{
+"chave": "faixa_nova",
+"idioma": "es",
+"cru": "<b>Ciranda v{versao}</b> disponible",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "<b>Ciranda v1.6.0-ç</b> disponible"
+},
+{
+"chave": "faixa_teste",
+"idioma": "pt",
+"cru": "<b>Ciranda v{versao} (teste)</b> pronto para instalar",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "<b>Ciranda v1.6.0-ç (teste)</b> pronto para instalar"
+},
+{
+"chave": "faixa_teste",
+"idioma": "en",
+"cru": "<b>Ciranda v{versao} (test)</b> ready to install",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "<b>Ciranda v1.6.0-ç (test)</b> ready to install"
+},
+{
+"chave": "faixa_teste",
+"idioma": "es",
+"cru": "<b>Ciranda v{versao} (prueba)</b> lista para instalar",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "<b>Ciranda v1.6.0-ç (prueba)</b> lista para instalar"
+},
+{
+"chave": "voce_esta_na",
+"idioma": "pt",
+"cru": "você está na v{versao}",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "você está na v1.6.0-ç"
+},
+{
+"chave": "voce_esta_na",
+"idioma": "en",
+"cru": "you have v{versao}",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "you have v1.6.0-ç"
+},
+{
+"chave": "voce_esta_na",
+"idioma": "es",
+"cru": "tienes la v{versao}",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "tienes la v1.6.0-ç"
+},
+{
+"chave": "da_pasta_teste",
+"idioma": "pt",
+"cru": "da sua pasta de teste",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "da sua pasta de teste"
+},
+{
+"chave": "da_pasta_teste",
+"idioma": "en",
+"cru": "from your test folder",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "from your test folder"
+},
+{
+"chave": "da_pasta_teste",
+"idioma": "es",
+"cru": "de tu carpeta de prueba",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "de tu carpeta de prueba"
+},
+{
+"chave": "nova_versao",
+"idioma": "pt",
+"cru": "Nova versão v{versao}",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Nova versão v1.6.0-ç"
+},
+{
+"chave": "nova_versao",
+"idioma": "en",
+"cru": "New version v{versao}",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "New version v1.6.0-ç"
+},
+{
+"chave": "nova_versao",
+"idioma": "es",
+"cru": "Nueva versión v{versao}",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Nueva versión v1.6.0-ç"
+},
+{
+"chave": "nova_versao_teste",
+"idioma": "pt",
+"cru": "Nova versão v{versao} (teste)",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Nova versão v1.6.0-ç (teste)"
+},
+{
+"chave": "nova_versao_teste",
+"idioma": "en",
+"cru": "New version v{versao} (test)",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "New version v1.6.0-ç (test)"
+},
+{
+"chave": "nova_versao_teste",
+"idioma": "es",
+"cru": "Nueva versión v{versao} (prueba)",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Nueva versión v1.6.0-ç (prueba)"
+},
+{
+"chave": "atualizar",
+"idioma": "pt",
+"cru": "Atualizar",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Atualizar"
+},
+{
+"chave": "atualizar",
+"idioma": "en",
+"cru": "Update",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Update"
+},
+{
+"chave": "atualizar",
+"idioma": "es",
+"cru": "Actualizar",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Actualizar"
+},
+{
+"chave": "nova_versao_urgente",
+"idioma": "pt",
+"cru": "Atualização urgente v{versao}",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Atualização urgente v1.6.0-ç"
+},
+{
+"chave": "nova_versao_urgente",
+"idioma": "en",
+"cru": "Urgent update v{versao}",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Urgent update v1.6.0-ç"
+},
+{
+"chave": "nova_versao_urgente",
+"idioma": "es",
+"cru": "Actualización urgente v{versao}",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Actualización urgente v1.6.0-ç"
+},
+{
+"chave": "urgente_explica",
+"idioma": "pt",
+"cru": "Esta versão corrige um problema grave. O Ciranda fica pausado até você atualizar.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Esta versão corrige um problema grave. O Ciranda fica pausado até você atualizar."
+},
+{
+"chave": "urgente_explica",
+"idioma": "en",
+"cru": "This version fixes a serious problem. Ciranda stays paused until you update.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "This version fixes a serious problem. Ciranda stays paused until you update."
+},
+{
+"chave": "urgente_explica",
+"idioma": "es",
+"cru": "Esta versión corrige un problema grave. Ciranda queda en pausa hasta que actualices.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Esta versión corrige un problema grave. Ciranda queda en pausa hasta que actualices."
+},
+{
+"chave": "pronta_titulo",
+"idioma": "pt",
+"cru": "Ciranda v{versao} baixada",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ciranda v1.6.0-ç baixada"
+},
+{
+"chave": "pronta_titulo",
+"idioma": "en",
+"cru": "Ciranda v{versao} downloaded",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ciranda v1.6.0-ç downloaded"
+},
+{
+"chave": "pronta_titulo",
+"idioma": "es",
+"cru": "Ciranda v{versao} descargada",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ciranda v1.6.0-ç descargada"
+},
+{
+"chave": "pronta_corpo",
+"idioma": "pt",
+"cru": "Instala sozinha quando este arquivo terminar, quando você pausar ou ao fechar o Ciranda, e ele volta de onde parou.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Instala sozinha quando este arquivo terminar, quando você pausar ou ao fechar o Ciranda, e ele volta de onde parou."
+},
+{
+"chave": "pronta_corpo",
+"idioma": "en",
+"cru": "It installs by itself when this file ends, when you pause or when you close Ciranda, and it picks up where you left off.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "It installs by itself when this file ends, when you pause or when you close Ciranda, and it picks up where you left off."
+},
+{
+"chave": "pronta_corpo",
+"idioma": "es",
+"cru": "Se instala sola cuando termine este archivo, cuando pauses o al cerrar Ciranda, y vuelve a donde lo dejaste.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Se instala sola cuando termine este archivo, cuando pauses o al cerrar Ciranda, y vuelve a donde lo dejaste."
+},
+{
+"chave": "atualizando_ja",
+"idioma": "pt",
+"cru": "Atualizando para a v{versao}… volta já de onde parou",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Atualizando para a v1.6.0-ç… volta já de onde parou"
+},
+{
+"chave": "atualizando_ja",
+"idioma": "en",
+"cru": "Updating to v{versao}… back where you left off in a moment",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Updating to v1.6.0-ç… back where you left off in a moment"
+},
+{
+"chave": "atualizando_ja",
+"idioma": "es",
+"cru": "Actualizando a la v{versao}… enseguida vuelve a donde lo dejaste",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Actualizando a la v1.6.0-ç… enseguida vuelve a donde lo dejaste"
+},
+{
+"chave": "apoiar",
+"idioma": "pt",
+"cru": "Apoiar ♥",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Apoiar ♥"
+},
+{
+"chave": "apoiar",
+"idioma": "en",
+"cru": "Support ♥",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Support ♥"
+},
+{
+"chave": "apoiar",
+"idioma": "es",
+"cru": "Apoyar ♥",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Apoyar ♥"
+},
+{
+"chave": "apoio_onde",
+"idioma": "pt",
+"cru": "De onde você é?",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "De onde você é?"
+},
+{
+"chave": "apoio_onde",
+"idioma": "en",
+"cru": "Where are you from?",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Where are you from?"
+},
+{
+"chave": "apoio_onde",
+"idioma": "es",
+"cru": "¿De dónde eres?",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "¿De dónde eres?"
+},
+{
+"chave": "apoio_brasil",
+"idioma": "pt",
+"cru": "Brasil",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Brasil"
+},
+{
+"chave": "apoio_brasil",
+"idioma": "en",
+"cru": "Brazil",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Brazil"
+},
+{
+"chave": "apoio_brasil",
+"idioma": "es",
+"cru": "Brasil",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Brasil"
+},
+{
+"chave": "apoio_brasil_sub",
+"idioma": "pt",
+"cru": "Pix, em reais, na hora",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Pix, em reais, na hora"
+},
+{
+"chave": "apoio_brasil_sub",
+"idioma": "en",
+"cru": "Pix, in reais, instantly",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Pix, in reais, instantly"
+},
+{
+"chave": "apoio_brasil_sub",
+"idioma": "es",
+"cru": "Pix, en reales, al instante",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Pix, en reales, al instante"
+},
+{
+"chave": "apoio_fora",
+"idioma": "pt",
+"cru": "Outro país",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Outro país"
+},
+{
+"chave": "apoio_fora",
+"idioma": "en",
+"cru": "Another country",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Another country"
+},
+{
+"chave": "apoio_fora",
+"idioma": "es",
+"cru": "Otro país",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Otro país"
+},
+{
+"chave": "apoio_fora_sub",
+"idioma": "pt",
+"cru": "Cartão, em dólar, pelo GitHub Sponsors",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Cartão, em dólar, pelo GitHub Sponsors"
+},
+{
+"chave": "apoio_fora_sub",
+"idioma": "en",
+"cru": "Card, in dollars, via GitHub Sponsors",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Card, in dollars, via GitHub Sponsors"
+},
+{
+"chave": "apoio_fora_sub",
+"idioma": "es",
+"cru": "Tarjeta, en dólares, por GitHub Sponsors",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Tarjeta, en dólares, por GitHub Sponsors"
+},
+{
+"chave": "apoio_opcional",
+"idioma": "pt",
+"cru": "É opcional e não muda nada no Ciranda. Obrigado por usar!",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "É opcional e não muda nada no Ciranda. Obrigado por usar!"
+},
+{
+"chave": "apoio_opcional",
+"idioma": "en",
+"cru": "It's optional and changes nothing in Ciranda. Thanks for using it!",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "It's optional and changes nothing in Ciranda. Thanks for using it!"
+},
+{
+"chave": "apoio_opcional",
+"idioma": "es",
+"cru": "Es opcional y no cambia nada en Ciranda. ¡Gracias por usarlo!",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Es opcional y no cambia nada en Ciranda. ¡Gracias por usarlo!"
+},
+{
+"chave": "apoio_pix_titulo",
+"idioma": "pt",
+"cru": "Apoiar com Pix",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Apoiar com Pix"
+},
+{
+"chave": "apoio_pix_titulo",
+"idioma": "en",
+"cru": "Support with Pix",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Support with Pix"
+},
+{
+"chave": "apoio_pix_titulo",
+"idioma": "es",
+"cru": "Apoyar con Pix",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Apoyar con Pix"
+},
+{
+"chave": "apoio_outro_valor",
+"idioma": "pt",
+"cru": "Outro valor",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Outro valor"
+},
+{
+"chave": "apoio_outro_valor",
+"idioma": "en",
+"cru": "Other amount",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Other amount"
+},
+{
+"chave": "apoio_outro_valor",
+"idioma": "es",
+"cru": "Otro valor",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Otro valor"
+},
+{
+"chave": "apoio_valor_dica",
+"idioma": "pt",
+"cru": "Em reais, de R$ 1 a R$ 10.000. Vazio: você digita o valor no banco.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Em reais, de R$ 1 a R$ 10.000. Vazio: você digita o valor no banco."
+},
+{
+"chave": "apoio_valor_dica",
+"idioma": "en",
+"cru": "In reais, from R$ 1 to R$ 10,000. Empty: you type the amount in your bank app.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "In reais, from R$ 1 to R$ 10,000. Empty: you type the amount in your bank app."
+},
+{
+"chave": "apoio_valor_dica",
+"idioma": "es",
+"cru": "En reales, de R$ 1 a R$ 10.000. Vacío: escribes el valor en tu banco.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "En reales, de R$ 1 a R$ 10.000. Vacío: escribes el valor en tu banco."
+},
+{
+"chave": "apoio_valor_ruim",
+"idioma": "pt",
+"cru": "Valor de R$ 1 a R$ 10.000.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Valor de R$ 1 a R$ 10.000."
+},
+{
+"chave": "apoio_valor_ruim",
+"idioma": "en",
+"cru": "Amount from R$ 1 to R$ 10,000.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Amount from R$ 1 to R$ 10,000."
+},
+{
+"chave": "apoio_valor_ruim",
+"idioma": "es",
+"cru": "Valor de R$ 1 a R$ 10.000.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Valor de R$ 1 a R$ 10.000."
+},
+{
+"chave": "apoio_valor_livre",
+"idioma": "pt",
+"cru": "valor livre",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "valor livre"
+},
+{
+"chave": "apoio_valor_livre",
+"idioma": "en",
+"cru": "any amount",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "any amount"
+},
+{
+"chave": "apoio_valor_livre",
+"idioma": "es",
+"cru": "valor libre",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "valor libre"
+},
+{
+"chave": "apoio_qr_alt",
+"idioma": "pt",
+"cru": "QR Code Pix de {valor}",
+"args": {
+"valor": "R$ 12,50",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "QR Code Pix de R$ 12,50"
+},
+{
+"chave": "apoio_qr_alt",
+"idioma": "en",
+"cru": "Pix QR Code for {valor}",
+"args": {
+"valor": "R$ 12,50",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Pix QR Code for R$ 12,50"
+},
+{
+"chave": "apoio_qr_alt",
+"idioma": "es",
+"cru": "Código QR Pix de {valor}",
+"args": {
+"valor": "R$ 12,50",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Código QR Pix de R$ 12,50"
+},
+{
+"chave": "apoio_sem_qr",
+"idioma": "pt",
+"cru": "Não deu para desenhar o QR aqui. Use o Copiar código Pix abaixo.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Não deu para desenhar o QR aqui. Use o Copiar código Pix abaixo."
+},
+{
+"chave": "apoio_sem_qr",
+"idioma": "en",
+"cru": "Couldn't draw the QR here. Use Copy Pix code below.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Couldn't draw the QR here. Use Copy Pix code below."
+},
+{
+"chave": "apoio_sem_qr",
+"idioma": "es",
+"cru": "No se pudo dibujar el QR aquí. Usa Copiar código Pix abajo.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "No se pudo dibujar el QR aquí. Usa Copiar código Pix abajo."
+},
+{
+"chave": "apoio_copiar_codigo",
+"idioma": "pt",
+"cru": "Copiar código Pix",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Copiar código Pix"
+},
+{
+"chave": "apoio_copiar_codigo",
+"idioma": "en",
+"cru": "Copy Pix code",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Copy Pix code"
+},
+{
+"chave": "apoio_copiar_codigo",
+"idioma": "es",
+"cru": "Copiar código Pix",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Copiar código Pix"
+},
+{
+"chave": "apoio_copiado",
+"idioma": "pt",
+"cru": "Copiado!",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Copiado!"
+},
+{
+"chave": "apoio_copiado",
+"idioma": "en",
+"cru": "Copied!",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Copied!"
+},
+{
+"chave": "apoio_copiado",
+"idioma": "es",
+"cru": "¡Copiado!",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "¡Copiado!"
+},
+{
+"chave": "apoio_chave",
+"idioma": "pt",
+"cru": "Chave",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Chave"
+},
+{
+"chave": "apoio_chave",
+"idioma": "en",
+"cru": "Key",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Key"
+},
+{
+"chave": "apoio_chave",
+"idioma": "es",
+"cru": "Clave",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Clave"
+},
+{
+"chave": "apoio_copiar_chave",
+"idioma": "pt",
+"cru": "Copiar chave",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Copiar chave"
+},
+{
+"chave": "apoio_copiar_chave",
+"idioma": "en",
+"cru": "Copy key",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Copy key"
+},
+{
+"chave": "apoio_copiar_chave",
+"idioma": "es",
+"cru": "Copiar clave",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Copiar clave"
+},
+{
+"chave": "apoio_instrucoes",
+"idioma": "pt",
+"cru": "Abra o app do seu banco, escolha Pix → Ler QR Code ou Pix Copia e Cola. O nome que aparece é Andre Miller Fleck.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abra o app do seu banco, escolha Pix → Ler QR Code ou Pix Copia e Cola. O nome que aparece é Andre Miller Fleck."
+},
+{
+"chave": "apoio_instrucoes",
+"idioma": "en",
+"cru": "Open your bank app, choose Pix → Scan QR Code or Pix Copy and Paste. The name shown is Andre Miller Fleck.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Open your bank app, choose Pix → Scan QR Code or Pix Copy and Paste. The name shown is Andre Miller Fleck."
+},
+{
+"chave": "apoio_instrucoes",
+"idioma": "es",
+"cru": "Abre la app de tu banco, elige Pix → Leer código QR o Pix Copia y Pega. El nombre que aparece es Andre Miller Fleck.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abre la app de tu banco, elige Pix → Leer código QR o Pix Copia y Pega. El nombre que aparece es Andre Miller Fleck."
+},
+{
+"chave": "apoio_fora_titulo",
+"idioma": "pt",
+"cru": "Apoiar pelo GitHub Sponsors",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Apoiar pelo GitHub Sponsors"
+},
+{
+"chave": "apoio_fora_titulo",
+"idioma": "en",
+"cru": "Support on GitHub Sponsors",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Support on GitHub Sponsors"
+},
+{
+"chave": "apoio_fora_titulo",
+"idioma": "es",
+"cru": "Apoyar en GitHub Sponsors",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Apoyar en GitHub Sponsors"
+},
+{
+"chave": "apoio_fora_texto",
+"idioma": "pt",
+"cru": "Uma vez ou todo mês, a partir de US$ 1. Pagamento com cartão pelo GitHub, sem taxa para mim.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Uma vez ou todo mês, a partir de US$ 1. Pagamento com cartão pelo GitHub, sem taxa para mim."
+},
+{
+"chave": "apoio_fora_texto",
+"idioma": "en",
+"cru": "One-time or monthly, from US$ 1. Card payments through GitHub, no fee for me.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "One-time or monthly, from US$ 1. Card payments through GitHub, no fee for me."
+},
+{
+"chave": "apoio_fora_texto",
+"idioma": "es",
+"cru": "Una vez o cada mes, desde US$ 1. Pago con tarjeta por GitHub, sin comisión para mí.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Una vez o cada mes, desde US$ 1. Pago con tarjeta por GitHub, sin comisión para mí."
+},
+{
+"chave": "apoio_abrir_sponsors",
+"idioma": "pt",
+"cru": "Abrir GitHub Sponsors",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abrir GitHub Sponsors"
+},
+{
+"chave": "apoio_abrir_sponsors",
+"idioma": "en",
+"cru": "Open GitHub Sponsors",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Open GitHub Sponsors"
+},
+{
+"chave": "apoio_abrir_sponsors",
+"idioma": "es",
+"cru": "Abrir GitHub Sponsors",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abrir GitHub Sponsors"
+},
+{
+"chave": "apoio_voltar",
+"idioma": "pt",
+"cru": "← Voltar",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "← Voltar"
+},
+{
+"chave": "apoio_voltar",
+"idioma": "en",
+"cru": "← Back",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "← Back"
+},
+{
+"chave": "apoio_voltar",
+"idioma": "es",
+"cru": "← Volver",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "← Volver"
+},
+{
+"chave": "dlg_atualizacao",
+"idioma": "pt",
+"cru": "Atualização do Ciranda",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Atualização do Ciranda"
+},
+{
+"chave": "dlg_atualizacao",
+"idioma": "en",
+"cru": "Ciranda update",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ciranda update"
+},
+{
+"chave": "dlg_atualizacao",
+"idioma": "es",
+"cru": "Actualización de Ciranda",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Actualización de Ciranda"
+},
+{
+"chave": "disponivel",
+"idioma": "pt",
+"cru": "Ciranda v{versao} disponível",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ciranda v1.6.0-ç disponível"
+},
+{
+"chave": "disponivel",
+"idioma": "en",
+"cru": "Ciranda v{versao} is available",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ciranda v1.6.0-ç is available"
+},
+{
+"chave": "disponivel",
+"idioma": "es",
+"cru": "Ciranda v{versao} disponible",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ciranda v1.6.0-ç disponible"
+},
+{
+"chave": "disponivel_teste",
+"idioma": "pt",
+"cru": "Ciranda v{versao} (teste) disponível",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ciranda v1.6.0-ç (teste) disponível"
+},
+{
+"chave": "disponivel_teste",
+"idioma": "en",
+"cru": "Ciranda v{versao} (test) is available",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ciranda v1.6.0-ç (test) is available"
+},
+{
+"chave": "disponivel_teste",
+"idioma": "es",
+"cru": "Ciranda v{versao} (prueba) disponible",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ciranda v1.6.0-ç (prueba) disponible"
+},
+{
+"chave": "voce_esta_na_frase",
+"idioma": "pt",
+"cru": "Você está na v{versao}.",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Você está na v1.6.0-ç."
+},
+{
+"chave": "voce_esta_na_frase",
+"idioma": "en",
+"cru": "You have v{versao}.",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "You have v1.6.0-ç."
+},
+{
+"chave": "voce_esta_na_frase",
+"idioma": "es",
+"cru": "Tienes la v{versao}.",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Tienes la v1.6.0-ç."
+},
+{
+"chave": "veio_pasta_teste",
+"idioma": "pt",
+"cru": " Esta versão veio da sua pasta de teste e ainda não está no GitHub.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " Esta versão veio da sua pasta de teste e ainda não está no GitHub."
+},
+{
+"chave": "veio_pasta_teste",
+"idioma": "en",
+"cru": " This build came from your test folder and isn't on GitHub yet.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " This build came from your test folder and isn't on GitHub yet."
+},
+{
+"chave": "veio_pasta_teste",
+"idioma": "es",
+"cru": " Esta versión viene de tu carpeta de prueba y aún no está en GitHub.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " Esta versión viene de tu carpeta de prueba y aún no está en GitHub."
+},
+{
+"chave": "o_que_mudou",
+"idioma": "pt",
+"cru": "O que mudou",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "O que mudou"
+},
+{
+"chave": "o_que_mudou",
+"idioma": "en",
+"cru": "What changed",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "What changed"
+},
+{
+"chave": "o_que_mudou",
+"idioma": "es",
+"cru": "Qué cambió",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Qué cambió"
+},
+{
+"chave": "ver_tudo_github",
+"idioma": "pt",
+"cru": "Ver tudo no GitHub",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ver tudo no GitHub"
+},
+{
+"chave": "ver_tudo_github",
+"idioma": "en",
+"cru": "See everything on GitHub",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "See everything on GitHub"
+},
+{
+"chave": "ver_tudo_github",
+"idioma": "es",
+"cru": "Ver todo en GitHub",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ver todo en GitHub"
+},
+{
+"chave": "atualizar_agora",
+"idioma": "pt",
+"cru": "Atualizar agora",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Atualizar agora"
+},
+{
+"chave": "atualizar_agora",
+"idioma": "en",
+"cru": "Update now",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Update now"
+},
+{
+"chave": "atualizar_agora",
+"idioma": "es",
+"cru": "Actualizar ahora",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Actualizar ahora"
+},
+{
+"chave": "baixar_github",
+"idioma": "pt",
+"cru": "Baixar no GitHub",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Baixar no GitHub"
+},
+{
+"chave": "baixar_github",
+"idioma": "en",
+"cru": "Download from GitHub",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Download from GitHub"
+},
+{
+"chave": "baixar_github",
+"idioma": "es",
+"cru": "Descargar de GitHub",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Descargar de GitHub"
+},
+{
+"chave": "dica_instala",
+"idioma": "pt",
+"cru": "O Ciranda fecha, instala sozinho e abre de novo de onde parou. Seus ajustes ficam.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "O Ciranda fecha, instala sozinho e abre de novo de onde parou. Seus ajustes ficam."
+},
+{
+"chave": "dica_instala",
+"idioma": "en",
+"cru": "Ciranda closes, installs by itself and opens again where you left off. Your settings stay.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ciranda closes, installs by itself and opens again where you left off. Your settings stay."
+},
+{
+"chave": "dica_instala",
+"idioma": "es",
+"cru": "Ciranda se cierra, se instala solo y vuelve a abrirse donde lo dejaste. Tus ajustes se mantienen.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ciranda se cierra, se instala solo y vuelve a abrirse donde lo dejaste. Tus ajustes se mantienen."
+},
+{
+"chave": "dica_zip",
+"idioma": "pt",
+"cru": "Este Ciranda não veio do instalador: baixe a versão nova na página.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Este Ciranda não veio do instalador: baixe a versão nova na página."
+},
+{
+"chave": "dica_zip",
+"idioma": "en",
+"cru": "This Ciranda wasn't installed with the setup: download the new version from the page.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "This Ciranda wasn't installed with the setup: download the new version from the page."
+},
+{
+"chave": "dica_zip",
+"idioma": "es",
+"cru": "Este Ciranda no se instaló con el instalador: descarga la versión nueva en la página.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Este Ciranda no se instaló con el instalador: descarga la versión nueva en la página."
+},
+{
+"chave": "cancelar",
+"idioma": "pt",
+"cru": "Cancelar",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Cancelar"
+},
+{
+"chave": "cancelar",
+"idioma": "en",
+"cru": "Cancel",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Cancel"
+},
+{
+"chave": "cancelar",
+"idioma": "es",
+"cru": "Cancelar",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Cancelar"
+},
+{
+"chave": "copiando",
+"idioma": "pt",
+"cru": "Copiando…",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Copiando…"
+},
+{
+"chave": "copiando",
+"idioma": "en",
+"cru": "Copying…",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Copying…"
+},
+{
+"chave": "copiando",
+"idioma": "es",
+"cru": "Copiando…",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Copiando…"
+},
+{
+"chave": "baixando",
+"idioma": "pt",
+"cru": "Baixando…",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Baixando…"
+},
+{
+"chave": "baixando",
+"idioma": "en",
+"cru": "Downloading…",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Downloading…"
+},
+{
+"chave": "baixando",
+"idioma": "es",
+"cru": "Descargando…",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Descargando…"
+},
+{
+"chave": "copiando_mb",
+"idioma": "pt",
+"cru": "Copiando… {feito} de {total} MB",
+"args": {
+"feito": 1222,
+"total": 1888,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Copiando… 1222 de 1888 MB"
+},
+{
+"chave": "copiando_mb",
+"idioma": "en",
+"cru": "Copying… {feito} of {total} MB",
+"args": {
+"feito": 1222,
+"total": 1888,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Copying… 1222 of 1888 MB"
+},
+{
+"chave": "copiando_mb",
+"idioma": "es",
+"cru": "Copiando… {feito} de {total} MB",
+"args": {
+"feito": 1222,
+"total": 1888,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Copiando… 1222 de 1888 MB"
+},
+{
+"chave": "baixando_mb",
+"idioma": "pt",
+"cru": "Baixando… {feito} de {total} MB",
+"args": {
+"feito": 1222,
+"total": 1888,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Baixando… 1222 de 1888 MB"
+},
+{
+"chave": "baixando_mb",
+"idioma": "en",
+"cru": "Downloading… {feito} of {total} MB",
+"args": {
+"feito": 1222,
+"total": 1888,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Downloading… 1222 of 1888 MB"
+},
+{
+"chave": "baixando_mb",
+"idioma": "es",
+"cru": "Descargando… {feito} de {total} MB",
+"args": {
+"feito": 1222,
+"total": 1888,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Descargando… 1222 de 1888 MB"
+},
+{
+"chave": "instalando",
+"idioma": "pt",
+"cru": "Instalando…",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Instalando…"
+},
+{
+"chave": "instalando",
+"idioma": "en",
+"cru": "Installing…",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Installing…"
+},
+{
+"chave": "instalando",
+"idioma": "es",
+"cru": "Instalando…",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Instalando…"
+},
+{
+"chave": "conferido_instalando",
+"idioma": "pt",
+"cru": "Conferido (SHA-256 igual ao do GitHub). Instalando…",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Conferido (SHA-256 igual ao do GitHub). Instalando…"
+},
+{
+"chave": "conferido_instalando",
+"idioma": "en",
+"cru": "Verified (SHA-256 matches GitHub). Installing…",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Verified (SHA-256 matches GitHub). Installing…"
+},
+{
+"chave": "conferido_instalando",
+"idioma": "es",
+"cru": "Verificado (SHA-256 igual al de GitHub). Instalando…",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Verificado (SHA-256 igual al de GitHub). Instalando…"
+},
+{
+"chave": "erro_abrir_instalador",
+"idioma": "pt",
+"cru": "não consegui abrir o instalador ({erro})",
+"args": {
+"erro": "[WinError 5] Acesso negado: 'C:\\\\Instalação'",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "não consegui abrir o instalador ([WinError 5] Acesso negado: 'C:\\\\Instalação')"
+},
+{
+"chave": "erro_abrir_instalador",
+"idioma": "en",
+"cru": "couldn't start the installer ({erro})",
+"args": {
+"erro": "[WinError 5] Acesso negado: 'C:\\\\Instalação'",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "couldn't start the installer ([WinError 5] Acesso negado: 'C:\\\\Instalação')"
+},
+{
+"chave": "erro_abrir_instalador",
+"idioma": "es",
+"cru": "no pude abrir el instalador ({erro})",
+"args": {
+"erro": "[WinError 5] Acesso negado: 'C:\\\\Instalação'",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "no pude abrir el instalador ([WinError 5] Acesso negado: 'C:\\\\Instalação')"
+},
+{
+"chave": "tentar_de_novo",
+"idioma": "pt",
+"cru": "Tentar de novo",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Tentar de novo"
+},
+{
+"chave": "tentar_de_novo",
+"idioma": "en",
+"cru": "Try again",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Try again"
+},
+{
+"chave": "tentar_de_novo",
+"idioma": "es",
+"cru": "Intentar de nuevo",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Intentar de nuevo"
+},
+{
+"chave": "download_cancelado",
+"idioma": "pt",
+"cru": "Download cancelado.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Download cancelado."
+},
+{
+"chave": "download_cancelado",
+"idioma": "en",
+"cru": "Download canceled.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Download canceled."
+},
+{
+"chave": "download_cancelado",
+"idioma": "es",
+"cru": "Descarga cancelada.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Descarga cancelada."
+},
+{
+"chave": "nao_deu_atualizar",
+"idioma": "pt",
+"cru": "Não deu para atualizar: {msg}. Tente de novo ou baixe na página.",
+"args": {
+"msg": "rede caiu — “ops”",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Não deu para atualizar: rede caiu — “ops”. Tente de novo ou baixe na página."
+},
+{
+"chave": "nao_deu_atualizar",
+"idioma": "en",
+"cru": "Couldn't update: {msg}. Try again or download it from the page.",
+"args": {
+"msg": "rede caiu — “ops”",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Couldn't update: rede caiu — “ops”. Try again or download it from the page."
+},
+{
+"chave": "nao_deu_atualizar",
+"idioma": "es",
+"cru": "No se pudo actualizar: {msg}. Inténtalo de nuevo o descárgalo en la página.",
+"args": {
+"msg": "rede caiu — “ops”",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "No se pudo actualizar: rede caiu — “ops”. Inténtalo de nuevo o descárgalo en la página."
+},
+{
+"chave": "erro_endereco",
+"idioma": "pt",
+"cru": "endereço do instalador fora do repositório do Ciranda",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "endereço do instalador fora do repositório do Ciranda"
+},
+{
+"chave": "erro_endereco",
+"idioma": "en",
+"cru": "the installer link is outside Ciranda's repository",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "the installer link is outside Ciranda's repository"
+},
+{
+"chave": "erro_endereco",
+"idioma": "es",
+"cru": "el enlace del instalador está fuera del repositorio de Ciranda",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "el enlace del instalador está fuera del repositorio de Ciranda"
+},
+{
+"chave": "erro_sem_sha",
+"idioma": "pt",
+"cru": "o GitHub não informou o SHA-256 do instalador",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "o GitHub não informou o SHA-256 do instalador"
+},
+{
+"chave": "erro_sem_sha",
+"idioma": "en",
+"cru": "GitHub didn't provide the installer's SHA-256",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "GitHub didn't provide the installer's SHA-256"
+},
+{
+"chave": "erro_sem_sha",
+"idioma": "es",
+"cru": "GitHub no informó el SHA-256 del instalador",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "GitHub no informó el SHA-256 del instalador"
+},
+{
+"chave": "erro_sha",
+"idioma": "pt",
+"cru": "o instalador baixado não confere com o SHA-256 do GitHub",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "o instalador baixado não confere com o SHA-256 do GitHub"
+},
+{
+"chave": "erro_sha",
+"idioma": "en",
+"cru": "the downloaded installer doesn't match GitHub's SHA-256",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "the downloaded installer doesn't match GitHub's SHA-256"
+},
+{
+"chave": "erro_sha",
+"idioma": "es",
+"cru": "el instalador descargado no coincide con el SHA-256 de GitHub",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "el instalador descargado no coincide con el SHA-256 de GitHub"
+},
+{
+"chave": "erro_local",
+"idioma": "pt",
+"cru": "o instalador da pasta de teste está incompleto ou não confere com o .sha256",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "o instalador da pasta de teste está incompleto ou não confere com o .sha256"
+},
+{
+"chave": "erro_local",
+"idioma": "en",
+"cru": "the installer in the test folder is incomplete or doesn't match its .sha256",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "the installer in the test folder is incomplete or doesn't match its .sha256"
+},
+{
+"chave": "erro_local",
+"idioma": "es",
+"cru": "el instalador de la carpeta de prueba está incompleto o no coincide con su .sha256",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "el instalador de la carpeta de prueba está incompleto o no coincide con su .sha256"
+},
+{
+"chave": "notas_teste",
+"idioma": "pt",
+"cru": "Versão de teste: ainda não publicada no GitHub.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Versão de teste: ainda não publicada no GitHub."
+},
+{
+"chave": "notas_teste",
+"idioma": "en",
+"cru": "Test build: not published on GitHub yet.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Test build: not published on GitHub yet."
+},
+{
+"chave": "notas_teste",
+"idioma": "es",
+"cru": "Versión de prueba: aún no publicada en GitHub.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Versión de prueba: aún no publicada en GitHub."
+},
+{
+"chave": "novidades_da",
+"idioma": "pt",
+"cru": "Novidades da v{versao}",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Novidades da v1.6.0-ç"
+},
+{
+"chave": "novidades_da",
+"idioma": "en",
+"cru": "What's new in v{versao}",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "What's new in v1.6.0-ç"
+},
+{
+"chave": "novidades_da",
+"idioma": "es",
+"cru": "Novedades de la v{versao}",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Novedades de la v1.6.0-ç"
+},
+{
+"chave": "atualizado_de",
+"idioma": "pt",
+"cru": "O Ciranda foi atualizado da v{antes} para a v{agora}.",
+"args": {
+"agora": "1.6.0",
+"antes": "1.5.1",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "O Ciranda foi atualizado da v1.5.1 para a v1.6.0."
+},
+{
+"chave": "atualizado_de",
+"idioma": "en",
+"cru": "Ciranda was updated from v{antes} to v{agora}.",
+"args": {
+"agora": "1.6.0",
+"antes": "1.5.1",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ciranda was updated from v1.5.1 to v1.6.0."
+},
+{
+"chave": "atualizado_de",
+"idioma": "es",
+"cru": "Ciranda se actualizó de la v{antes} a la v{agora}.",
+"args": {
+"agora": "1.6.0",
+"antes": "1.5.1",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ciranda se actualizó de la v1.5.1 a la v1.6.0."
+},
+{
+"chave": "reinstalado",
+"idioma": "pt",
+"cru": "O Ciranda foi reinstalado na v{agora} (versão de teste nova).",
+"args": {
+"agora": "1.6.0",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "O Ciranda foi reinstalado na v1.6.0 (versão de teste nova)."
+},
+{
+"chave": "reinstalado",
+"idioma": "en",
+"cru": "Ciranda was reinstalled at v{agora} (new test build).",
+"args": {
+"agora": "1.6.0",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ciranda was reinstalled at v1.6.0 (new test build)."
+},
+{
+"chave": "reinstalado",
+"idioma": "es",
+"cru": "Ciranda se reinstaló en la v{agora} (nueva versión de prueba).",
+"args": {
+"agora": "1.6.0",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ciranda se reinstaló en la v1.6.0 (nueva versión de prueba)."
+},
+{
+"chave": "entendi",
+"idioma": "pt",
+"cru": "Entendi",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Entendi"
+},
+{
+"chave": "entendi",
+"idioma": "en",
+"cru": "Got it",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Got it"
+},
+{
+"chave": "entendi",
+"idioma": "es",
+"cru": "Entendido",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Entendido"
+},
+{
+"chave": "pular",
+"idioma": "pt",
+"cru": "Pular",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Pular"
+},
+{
+"chave": "pular",
+"idioma": "en",
+"cru": "Skip",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Skip"
+},
+{
+"chave": "pular",
+"idioma": "es",
+"cru": "Omitir",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Omitir"
+},
+{
+"chave": "voltar",
+"idioma": "pt",
+"cru": "Voltar",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Voltar"
+},
+{
+"chave": "voltar",
+"idioma": "en",
+"cru": "Back",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Back"
+},
+{
+"chave": "voltar",
+"idioma": "es",
+"cru": "Atrás",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Atrás"
+},
+{
+"chave": "passo_n",
+"idioma": "pt",
+"cru": "{n} de {total}",
+"args": {
+"n": 1592,
+"total": 1888,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "1592 de 1888"
+},
+{
+"chave": "passo_n",
+"idioma": "en",
+"cru": "{n} of {total}",
+"args": {
+"n": 1592,
+"total": 1888,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "1592 of 1888"
+},
+{
+"chave": "passo_n",
+"idioma": "es",
+"cru": "{n} de {total}",
+"args": {
+"n": 1592,
+"total": 1888,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "1592 de 1888"
+},
+{
+"chave": "fechar_esc",
+"idioma": "pt",
+"cru": "Fechar (Esc)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Fechar (Esc)"
+},
+{
+"chave": "fechar_esc",
+"idioma": "en",
+"cru": "Close (Esc)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Close (Esc)"
+},
+{
+"chave": "fechar_esc",
+"idioma": "es",
+"cru": "Cerrar (Esc)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Cerrar (Esc)"
+},
+{
+"chave": "tut1_t",
+"idioma": "pt",
+"cru": "Bem-vindo ao Ciranda",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Bem-vindo ao Ciranda"
+},
+{
+"chave": "tut1_t",
+"idioma": "en",
+"cru": "Welcome to Ciranda",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Welcome to Ciranda"
+},
+{
+"chave": "tut1_t",
+"idioma": "es",
+"cru": "Te damos la bienvenida a Ciranda",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Te damos la bienvenida a Ciranda"
+},
+{
+"chave": "tut1",
+"idioma": "pt",
+"cru": "Arraste uma pasta para a janela (ou use Abrir pasta): as fotos e vídeos dela e de todas as subpastas viram uma fila só.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Arraste uma pasta para a janela (ou use Abrir pasta): as fotos e vídeos dela e de todas as subpastas viram uma fila só."
+},
+{
+"chave": "tut1",
+"idioma": "en",
+"cru": "Drag a folder into the window (or use Open folder): its photos and videos, and those of every subfolder, become one queue.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Drag a folder into the window (or use Open folder): its photos and videos, and those of every subfolder, become one queue."
+},
+{
+"chave": "tut1",
+"idioma": "es",
+"cru": "Arrastra una carpeta a la ventana (o usa Abrir carpeta): sus fotos y videos, y los de todas sus subcarpetas, forman una sola cola.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Arrastra una carpeta a la ventana (o usa Abrir carpeta): sus fotos y videos, y los de todas sus subcarpetas, forman una sola cola."
+},
+{
+"chave": "tut2_t",
+"idioma": "pt",
+"cru": "Tocar do seu jeito",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Tocar do seu jeito"
+},
+{
+"chave": "tut2_t",
+"idioma": "en",
+"cru": "Play it your way",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Play it your way"
+},
+{
+"chave": "tut2_t",
+"idioma": "es",
+"cru": "A tu manera",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "A tu manera"
+},
+{
+"chave": "tut2",
+"idioma": "pt",
+"cru": "Na barra de baixo: aleatório (S), anterior e próximo, repetir (R) e quanto tempo cada foto fica na tela. Vídeo sempre toca até o fim.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Na barra de baixo: aleatório (S), anterior e próximo, repetir (R) e quanto tempo cada foto fica na tela. Vídeo sempre toca até o fim."
+},
+{
+"chave": "tut2",
+"idioma": "en",
+"cru": "On the bottom bar: shuffle (S), previous and next, repeat (R) and how long each photo stays on screen. Videos always play to the end.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "On the bottom bar: shuffle (S), previous and next, repeat (R) and how long each photo stays on screen. Videos always play to the end."
+},
+{
+"chave": "tut2",
+"idioma": "es",
+"cru": "En la barra de abajo: aleatorio (S), anterior y siguiente, repetir (R) y cuánto tiempo queda cada foto en pantalla. Los videos siempre se reproducen hasta el final.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "En la barra de abajo: aleatorio (S), anterior y siguiente, repetir (R) y cuánto tiempo queda cada foto en pantalla. Los videos siempre se reproducen hasta el final."
+},
+{
+"chave": "tut3_t",
+"idioma": "pt",
+"cru": "A fila",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "A fila"
+},
+{
+"chave": "tut3_t",
+"idioma": "en",
+"cru": "The queue",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "The queue"
+},
+{
+"chave": "tut3_t",
+"idioma": "es",
+"cru": "La cola",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "La cola"
+},
+{
+"chave": "tut3",
+"idioma": "pt",
+"cru": "À direita (L mostra e esconde): busque pelo nome, filtre fotos ou vídeos (1, 2, 3), dois cliques para tocar e botão direito para mostrar no Explorer ou tirar da fila.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "À direita (L mostra e esconde): busque pelo nome, filtre fotos ou vídeos (1, 2, 3), dois cliques para tocar e botão direito para mostrar no Explorer ou tirar da fila."
+},
+{
+"chave": "tut3",
+"idioma": "en",
+"cru": "On the right (L shows and hides it): search by name, filter photos or videos (1, 2, 3), double-click to play and right-click to show in Explorer or remove.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "On the right (L shows and hides it): search by name, filter photos or videos (1, 2, 3), double-click to play and right-click to show in Explorer or remove."
+},
+{
+"chave": "tut3",
+"idioma": "es",
+"cru": "A la derecha (L la muestra y la oculta): busca por nombre, filtra fotos o videos (1, 2, 3), doble clic para reproducir y clic derecho para mostrar en el Explorador o quitar de la cola.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "A la derecha (L la muestra y la oculta): busca por nombre, filtra fotos o videos (1, 2, 3), doble clic para reproducir y clic derecho para mostrar en el Explorador o quitar de la cola."
+},
+{
+"chave": "tut4_t",
+"idioma": "pt",
+"cru": "O menu da pastinha",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "O menu da pastinha"
+},
+{
+"chave": "tut4_t",
+"idioma": "en",
+"cru": "The folder menu",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "The folder menu"
+},
+{
+"chave": "tut4_t",
+"idioma": "es",
+"cru": "El menú de la carpeta",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "El menú de la carpeta"
+},
+{
+"chave": "tut4",
+"idioma": "pt",
+"cru": "O ícone de pasta na barra junta outra pasta, continua a última fila, limpa e restaura de fábrica. Nada disso apaga arquivo do PC.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "O ícone de pasta na barra junta outra pasta, continua a última fila, limpa e restaura de fábrica. Nada disso apaga arquivo do PC."
+},
+{
+"chave": "tut4",
+"idioma": "en",
+"cru": "The folder icon on the bar adds another folder, continues the last queue, clears and resets. None of it deletes files from your PC.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "The folder icon on the bar adds another folder, continues the last queue, clears and resets. None of it deletes files from your PC."
+},
+{
+"chave": "tut4",
+"idioma": "es",
+"cru": "El icono de carpeta en la barra añade otra carpeta, continúa la última cola, limpia y restablece. Nada de eso borra archivos del PC.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "El icono de carpeta en la barra añade otra carpeta, continúa la última cola, limpia y restablece. Nada de eso borra archivos del PC."
+},
+{
+"chave": "tut5_t",
+"idioma": "pt",
+"cru": "Tela cheia e rodapé",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Tela cheia e rodapé"
+},
+{
+"chave": "tut5_t",
+"idioma": "en",
+"cru": "Full screen and footer",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Full screen and footer"
+},
+{
+"chave": "tut5_t",
+"idioma": "es",
+"cru": "Pantalla completa y pie",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Pantalla completa y pie"
+},
+{
+"chave": "tut5",
+"idioma": "pt",
+"cru": "Dois cliques no vídeo (ou F) para tela cheia. Embaixo da fila: idioma (PT · EN · ES), Relatar bug, Procurar atualização e o ? para ver este tutorial de novo.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Dois cliques no vídeo (ou F) para tela cheia. Embaixo da fila: idioma (PT · EN · ES), Relatar bug, Procurar atualização e o ? para ver este tutorial de novo."
+},
+{
+"chave": "tut5",
+"idioma": "en",
+"cru": "Double-click the video (or F) for full screen. Below the queue: language (PT · EN · ES), Report a bug, Check for updates and the ? to see this tutorial again.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Double-click the video (or F) for full screen. Below the queue: language (PT · EN · ES), Report a bug, Check for updates and the ? to see this tutorial again."
+},
+{
+"chave": "tut5",
+"idioma": "es",
+"cru": "Doble clic en el video (o F) para pantalla completa. Debajo de la cola: idioma (PT · EN · ES), Reportar un error, Buscar actualizaciones y el ? para ver este tutorial otra vez.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Doble clic en el video (o F) para pantalla completa. Debajo de la cola: idioma (PT · EN · ES), Reportar un error, Buscar actualizaciones y el ? para ver este tutorial otra vez."
+},
+{
+"chave": "bug_pergunta",
+"idioma": "pt",
+"cru": "O que aconteceu? O que você estava fazendo?",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "O que aconteceu? O que você estava fazendo?"
+},
+{
+"chave": "bug_pergunta",
+"idioma": "en",
+"cru": "What happened? What were you doing?",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "What happened? What were you doing?"
+},
+{
+"chave": "bug_pergunta",
+"idioma": "es",
+"cru": "¿Qué pasó? ¿Qué estabas haciendo?",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "¿Qué pasó? ¿Qué estabas haciendo?"
+},
+{
+"chave": "bug_exemplo",
+"idioma": "pt",
+"cru": "Ex.: abri uma pasta com vídeos .mov e a tela ficou preta",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ex.: abri uma pasta com vídeos .mov e a tela ficou preta"
+},
+{
+"chave": "bug_exemplo",
+"idioma": "en",
+"cru": "E.g.: I opened a folder with .mov videos and the screen went black",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "E.g.: I opened a folder with .mov videos and the screen went black"
+},
+{
+"chave": "bug_exemplo",
+"idioma": "es",
+"cru": "Ej.: abrí una carpeta con videos .mov y la pantalla se puso negra",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Ej.: abrí una carpeta con videos .mov y la pantalla se puso negra"
+},
+{
+"chave": "incluir_diag",
+"idioma": "pt",
+"cru": "Incluir diagnóstico (versões, ajustes, fim do log)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Incluir diagnóstico (versões, ajustes, fim do log)"
+},
+{
+"chave": "incluir_diag",
+"idioma": "en",
+"cru": "Include diagnostics (versions, settings, end of the log)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Include diagnostics (versions, settings, end of the log)"
+},
+{
+"chave": "incluir_diag",
+"idioma": "es",
+"cru": "Incluir diagnóstico (versiones, ajustes, final del registro)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Incluir diagnóstico (versiones, ajustes, final del registro)"
+},
+{
+"chave": "bug_aviso",
+"idioma": "pt",
+"cru": "Nomes de pastas, arquivos, do usuário e do PC são tirados: fica só a extensão. Nada é enviado sozinho: o GitHub abre no navegador e você confere antes de enviar (precisa de conta no GitHub; sem conta, use Copiar relatório).",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Nomes de pastas, arquivos, do usuário e do PC são tirados: fica só a extensão. Nada é enviado sozinho: o GitHub abre no navegador e você confere antes de enviar (precisa de conta no GitHub; sem conta, use Copiar relatório)."
+},
+{
+"chave": "bug_aviso",
+"idioma": "en",
+"cru": "Folder, file, user and PC names are removed: only the extension stays. Nothing is sent by itself: GitHub opens in your browser and you check it before submitting (it needs a GitHub account; without one, use Copy report).",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Folder, file, user and PC names are removed: only the extension stays. Nothing is sent by itself: GitHub opens in your browser and you check it before submitting (it needs a GitHub account; without one, use Copy report)."
+},
+{
+"chave": "bug_aviso",
+"idioma": "es",
+"cru": "Se quitan los nombres de carpetas, archivos, usuario y PC: solo queda la extensión. No se envía nada solo: GitHub se abre en el navegador y lo revisas antes de enviar (necesita una cuenta de GitHub; sin cuenta, usa Copiar informe).",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Se quitan los nombres de carpetas, archivos, usuario y PC: solo queda la extensión. No se envía nada solo: GitHub se abre en el navegador y lo revisas antes de enviar (necesita una cuenta de GitHub; sin cuenta, usa Copiar informe)."
+},
+{
+"chave": "copiar_relatorio",
+"idioma": "pt",
+"cru": "Copiar relatório",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Copiar relatório"
+},
+{
+"chave": "copiar_relatorio",
+"idioma": "en",
+"cru": "Copy report",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Copy report"
+},
+{
+"chave": "copiar_relatorio",
+"idioma": "es",
+"cru": "Copiar informe",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Copiar informe"
+},
+{
+"chave": "abrir_github",
+"idioma": "pt",
+"cru": "Abrir no GitHub",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abrir no GitHub"
+},
+{
+"chave": "abrir_github",
+"idioma": "en",
+"cru": "Open on GitHub",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Open on GitHub"
+},
+{
+"chave": "abrir_github",
+"idioma": "es",
+"cru": "Abrir en GitHub",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abrir en GitHub"
+},
+{
+"chave": "copiado",
+"idioma": "pt",
+"cru": "Copiado. Cole em github.com/DredsGG/ciranda/issues ou mande para o Dreds.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Copiado. Cole em github.com/DredsGG/ciranda/issues ou mande para o Dreds."
+},
+{
+"chave": "copiado",
+"idioma": "en",
+"cru": "Copied. Paste it at github.com/DredsGG/ciranda/issues or send it to Dreds.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Copied. Paste it at github.com/DredsGG/ciranda/issues or send it to Dreds."
+},
+{
+"chave": "copiado",
+"idioma": "es",
+"cru": "Copiado. Pégalo en github.com/DredsGG/ciranda/issues o envíalo a Dreds.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Copiado. Pégalo en github.com/DredsGG/ciranda/issues o envíalo a Dreds."
+},
+{
+"chave": "abri_github",
+"idioma": "pt",
+"cru": "Abri o GitHub no navegador. Confira o texto e envie lá.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abri o GitHub no navegador. Confira o texto e envie lá."
+},
+{
+"chave": "abri_github",
+"idioma": "en",
+"cru": "GitHub is open in your browser. Check the text and submit it there.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "GitHub is open in your browser. Check the text and submit it there."
+},
+{
+"chave": "abri_github",
+"idioma": "es",
+"cru": "Abrí GitHub en el navegador. Revisa el texto y envíalo allí.",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Abrí GitHub en el navegador. Revisa el texto y envíalo allí."
+},
+{
+"chave": "log_grande",
+"idioma": "pt",
+"cru": " O log era grande: o relatório completo foi copiado (Ctrl+V para colar).",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " O log era grande: o relatório completo foi copiado (Ctrl+V para colar)."
+},
+{
+"chave": "log_grande",
+"idioma": "en",
+"cru": " The log was long: the full report was copied (Ctrl+V to paste).",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " The log was long: the full report was copied (Ctrl+V to paste)."
+},
+{
+"chave": "log_grande",
+"idioma": "es",
+"cru": " El registro era largo: el informe completo se copió (Ctrl+V para pegar).",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " El registro era largo: el informe completo se copió (Ctrl+V para pegar)."
+},
+{
+"chave": "diag_instalado",
+"idioma": "pt",
+"cru": "instalado",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "instalado"
+},
+{
+"chave": "diag_instalado",
+"idioma": "en",
+"cru": "installed",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "installed"
+},
+{
+"chave": "diag_instalado",
+"idioma": "es",
+"cru": "instalado",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "instalado"
+},
+{
+"chave": "diag_codigo",
+"idioma": "pt",
+"cru": "pelo código / zip",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "pelo código / zip"
+},
+{
+"chave": "diag_codigo",
+"idioma": "en",
+"cru": "from source / zip",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "from source / zip"
+},
+{
+"chave": "diag_codigo",
+"idioma": "es",
+"cru": "desde el código / zip",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "desde el código / zip"
+},
+{
+"chave": "diag_sistema",
+"idioma": "pt",
+"cru": "Sistema",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Sistema"
+},
+{
+"chave": "diag_sistema",
+"idioma": "en",
+"cru": "System",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "System"
+},
+{
+"chave": "diag_sistema",
+"idioma": "es",
+"cru": "Sistema",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Sistema"
+},
+{
+"chave": "diag_telas",
+"idioma": "pt",
+"cru": "Telas",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Telas"
+},
+{
+"chave": "diag_telas",
+"idioma": "en",
+"cru": "Screens",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Screens"
+},
+{
+"chave": "diag_telas",
+"idioma": "es",
+"cru": "Pantallas",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Pantallas"
+},
+{
+"chave": "diag_fila",
+"idioma": "pt",
+"cru": "Fila",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Fila"
+},
+{
+"chave": "diag_fila",
+"idioma": "en",
+"cru": "Queue",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Queue"
+},
+{
+"chave": "diag_fila",
+"idioma": "es",
+"cru": "Cola",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Cola"
+},
+{
+"chave": "diag_modos",
+"idioma": "pt",
+"cru": "Modos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Modos"
+},
+{
+"chave": "diag_modos",
+"idioma": "en",
+"cru": "Modes",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Modes"
+},
+{
+"chave": "diag_modos",
+"idioma": "es",
+"cru": "Modos",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Modos"
+},
+{
+"chave": "diag_atual",
+"idioma": "pt",
+"cru": "Na tela",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Na tela"
+},
+{
+"chave": "diag_atual",
+"idioma": "en",
+"cru": "On screen",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "On screen"
+},
+{
+"chave": "diag_atual",
+"idioma": "es",
+"cru": "En pantalla",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "En pantalla"
+},
+{
+"chave": "diag_ultimo_erro",
+"idioma": "pt",
+"cru": "Último erro (erro.txt):",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Último erro (erro.txt):"
+},
+{
+"chave": "diag_ultimo_erro",
+"idioma": "en",
+"cru": "Last error (erro.txt):",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Last error (erro.txt):"
+},
+{
+"chave": "diag_ultimo_erro",
+"idioma": "es",
+"cru": "Último error (erro.txt):",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Último error (erro.txt):"
+},
+{
+"chave": "diag_fim_log",
+"idioma": "pt",
+"cru": "Fim do log (ciranda.log):",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Fim do log (ciranda.log):"
+},
+{
+"chave": "diag_fim_log",
+"idioma": "en",
+"cru": "End of the log (ciranda.log):",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "End of the log (ciranda.log):"
+},
+{
+"chave": "diag_fim_log",
+"idioma": "es",
+"cru": "Final del registro (ciranda.log):",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "Final del registro (ciranda.log):"
+},
+{
+"chave": "diag_fila_txt",
+"idioma": "pt",
+"cru": "{itens} itens ({fotos} fotos, {videos} vídeos), {abertas} pastas abertas, {lidas} pastas lidas, {outros} arquivos de outros tipos",
+"args": {
+"abertas": 1000,
+"fotos": 1370,
+"itens": 1444,
+"lidas": 1481,
+"outros": 1703,
+"videos": 2036,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "1444 itens (1370 fotos, 2036 vídeos), 1000 pastas abertas, 1481 pastas lidas, 1703 arquivos de outros tipos"
+},
+{
+"chave": "diag_fila_txt",
+"idioma": "en",
+"cru": "{itens} items ({fotos} photos, {videos} videos), {abertas} folders opened, {lidas} folders read, {outros} files of other types",
+"args": {
+"abertas": 1000,
+"fotos": 1370,
+"itens": 1444,
+"lidas": 1481,
+"outros": 1703,
+"videos": 2036,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "1444 items (1370 photos, 2036 videos), 1000 folders opened, 1481 folders read, 1703 files of other types"
+},
+{
+"chave": "diag_fila_txt",
+"idioma": "es",
+"cru": "{itens} elementos ({fotos} fotos, {videos} videos), {abertas} carpetas abiertas, {lidas} carpetas leídas, {outros} archivos de otros tipos",
+"args": {
+"abertas": 1000,
+"fotos": 1370,
+"itens": 1444,
+"lidas": 1481,
+"outros": 1703,
+"videos": 2036,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "1444 elementos (1370 fotos, 2036 videos), 1000 carpetas abiertas, 1481 carpetas leídas, 1703 archivos de otros tipos"
+},
+{
+"chave": "diag_modos_txt",
+"idioma": "pt",
+"cru": "aleatório {aleatorio}, repetir {repetir}, filtro {filtro}, foto {foto} s, volume {volume}{mudo}, tela cheia {cheia}, idioma {idioma}",
+"args": {
+"aleatorio": "sim",
+"cheia": "não",
+"filtro": "vídeos",
+"foto": 1333,
+"idioma": "es",
+"mudo": " (mudo)",
+"repetir": "não",
+"volume": 2073,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "aleatório sim, repetir não, filtro vídeos, foto 1333 s, volume 2073 (mudo), tela cheia não, idioma es"
+},
+{
+"chave": "diag_modos_txt",
+"idioma": "en",
+"cru": "shuffle {aleatorio}, repeat {repetir}, filter {filtro}, photo {foto} s, volume {volume}{mudo}, full screen {cheia}, language {idioma}",
+"args": {
+"aleatorio": "sim",
+"cheia": "não",
+"filtro": "vídeos",
+"foto": 1333,
+"idioma": "es",
+"mudo": " (mudo)",
+"repetir": "não",
+"volume": 2073,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "shuffle sim, repeat não, filter vídeos, photo 1333 s, volume 2073 (mudo), full screen não, language es"
+},
+{
+"chave": "diag_modos_txt",
+"idioma": "es",
+"cru": "aleatorio {aleatorio}, repetir {repetir}, filtro {filtro}, foto {foto} s, volumen {volume}{mudo}, pantalla completa {cheia}, idioma {idioma}",
+"args": {
+"aleatorio": "sim",
+"cheia": "não",
+"filtro": "vídeos",
+"foto": 1333,
+"idioma": "es",
+"mudo": " (mudo)",
+"repetir": "não",
+"volume": 2073,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "aleatorio sim, repetir não, filtro vídeos, foto 1333 s, volumen 2073 (mudo), pantalla completa não, idioma es"
+},
+{
+"chave": "diag_mudo",
+"idioma": "pt",
+"cru": " (mudo)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " (mudo)"
+},
+{
+"chave": "diag_mudo",
+"idioma": "en",
+"cru": " (muted)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " (muted)"
+},
+{
+"chave": "diag_mudo",
+"idioma": "es",
+"cru": " (silenciado)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " (silenciado)"
+},
+{
+"chave": "diag_em",
+"idioma": "pt",
+"cru": " em {pos} de {total}",
+"args": {
+"pos": 1777,
+"total": 1888,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " em 1777 de 1888"
+},
+{
+"chave": "diag_em",
+"idioma": "en",
+"cru": " at {pos} of {total}",
+"args": {
+"pos": 1777,
+"total": 1888,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " at 1777 of 1888"
+},
+{
+"chave": "diag_em",
+"idioma": "es",
+"cru": " en {pos} de {total}",
+"args": {
+"pos": 1777,
+"total": 1888,
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " en 1777 de 1888"
+},
+{
+"chave": "diag_falhou",
+"idioma": "pt",
+"cru": " (falhou)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " (falhou)"
+},
+{
+"chave": "diag_falhou",
+"idioma": "en",
+"cru": " (failed)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " (failed)"
+},
+{
+"chave": "diag_falhou",
+"idioma": "es",
+"cru": " (falló)",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": " (falló)"
+},
+{
+"chave": "sim",
+"idioma": "pt",
+"cru": "sim",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "sim"
+},
+{
+"chave": "sim",
+"idioma": "en",
+"cru": "yes",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "yes"
+},
+{
+"chave": "sim",
+"idioma": "es",
+"cru": "sí",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "sí"
+},
+{
+"chave": "nao",
+"idioma": "pt",
+"cru": "não",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "não"
+},
+{
+"chave": "nao",
+"idioma": "en",
+"cru": "no",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "no"
+},
+{
+"chave": "nao",
+"idioma": "es",
+"cru": "no",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "no"
+},
+{
+"chave": "bug_o_que",
+"idioma": "pt",
+"cru": "### O que aconteceu",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "### O que aconteceu"
+},
+{
+"chave": "bug_o_que",
+"idioma": "en",
+"cru": "### What happened",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "### What happened"
+},
+{
+"chave": "bug_o_que",
+"idioma": "es",
+"cru": "### Qué pasó",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "### Qué pasó"
+},
+{
+"chave": "bug_nao_escrito",
+"idioma": "pt",
+"cru": "_(não escrito)_",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "_(não escrito)_"
+},
+{
+"chave": "bug_nao_escrito",
+"idioma": "en",
+"cru": "_(not written)_",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "_(not written)_"
+},
+{
+"chave": "bug_nao_escrito",
+"idioma": "es",
+"cru": "_(sin escribir)_",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "_(sin escribir)_"
+},
+{
+"chave": "bug_diag",
+"idioma": "pt",
+"cru": "### Diagnóstico",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "### Diagnóstico"
+},
+{
+"chave": "bug_diag",
+"idioma": "en",
+"cru": "### Diagnostics",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "### Diagnostics"
+},
+{
+"chave": "bug_diag",
+"idioma": "es",
+"cru": "### Diagnóstico",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "### Diagnóstico"
+},
+{
+"chave": "bug_enviado",
+"idioma": "pt",
+"cru": "_Enviado pelo botão \"Relatar bug\" do Ciranda v{versao}._",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "_Enviado pelo botão \"Relatar bug\" do Ciranda v1.6.0-ç._"
+},
+{
+"chave": "bug_enviado",
+"idioma": "en",
+"cru": "_Sent with the \"Report a bug\" button in Ciranda v{versao}._",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "_Sent with the \"Report a bug\" button in Ciranda v1.6.0-ç._"
+},
+{
+"chave": "bug_enviado",
+"idioma": "es",
+"cru": "_Enviado con el botón \"Reportar un error\" de Ciranda v{versao}._",
+"args": {
+"versao": "1.6.0-ç",
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "_Enviado con el botón \"Reportar un error\" de Ciranda v1.6.0-ç._"
+},
+{
+"chave": "log_cortado",
+"idioma": "pt",
+"cru": "(começo cortado; o completo vai no \"Copiar relatório\")",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "(começo cortado; o completo vai no \"Copiar relatório\")"
+},
+{
+"chave": "log_cortado",
+"idioma": "en",
+"cru": "(beginning cut; the full log is in \"Copy report\")",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "(beginning cut; the full log is in \"Copy report\")"
+},
+{
+"chave": "log_cortado",
+"idioma": "es",
+"cru": "(inicio recortado; el completo va en \"Copiar informe\")",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "(inicio recortado; el completo va en \"Copiar informe\")"
+},
+{
+"chave": "diag_grande",
+"idioma": "pt",
+"cru": "_(grande demais para o endereço: foi copiado; cole aqui com Ctrl+V)_",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "_(grande demais para o endereço: foi copiado; cole aqui com Ctrl+V)_"
+},
+{
+"chave": "diag_grande",
+"idioma": "en",
+"cru": "_(too long for the link: it was copied; paste it here with Ctrl+V)_",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "_(too long for the link: it was copied; paste it here with Ctrl+V)_"
+},
+{
+"chave": "diag_grande",
+"idioma": "es",
+"cru": "_(demasiado largo para el enlace: se copió; pégalo aquí con Ctrl+V)_",
+"args": {
+"campo_que_nenhum_modelo_usa": "ñ"
+},
+"formatado": "_(demasiado largo para el enlace: se copió; pégalo aquí con Ctrl+V)_"
+}
+],
+"formato": [
+{
+"modelo": "{{",
+"args": {},
+"esperado": "{"
+},
+{
+"modelo": "}}",
+"args": {},
+"esperado": "}"
+},
+{
+"modelo": "{{n}}",
+"args": {},
+"esperado": "{n}"
+},
+{
+"modelo": "{{n}}",
+"args": {
+"n": 1
+},
+"esperado": "{n}"
+},
+{
+"modelo": "{{{n}}}",
+"args": {
+"n": 7
+},
+"esperado": "{7}"
+},
+{
+"modelo": "a{{b}}c{n}d",
+"args": {
+"n": "é"
+},
+"esperado": "a{b}céd"
+},
+{
+"modelo": "}}{{",
+"args": {
+"x": 1
+},
+"esperado": "}{"
+},
+{
+"modelo": "{n}{n}{total}",
+"args": {
+"n": 2,
+"total": 30
+},
+"esperado": "2230"
+},
+{
+"modelo": "100%",
+"args": {
+"v": 1
+},
+"esperado": "100%"
+},
+{
+"modelo": "%APPDATA%\\x {v}%",
+"args": {
+"v": 55
+},
+"esperado": "%APPDATA%\\x 55%"
+},
+{
+"modelo": "",
+"args": {
+"n": 1
+},
+"esperado": ""
+},
+{
+"modelo": "sem campo",
+"args": {
+"n": 1
+},
+"esperado": "sem campo"
+},
+{
+"modelo": "ç{nome}ç",
+"args": {
+"nome": "{n}"
+},
+"esperado": "ç{n}ç"
+},
+{
+"modelo": "{n}}}",
+"args": {
+"n": 4
+},
+"esperado": "4}"
+},
+{
+"modelo": "{{{{",
+"args": {},
+"esperado": "{{"
+},
+{
+"modelo": "{nome}",
+"args": {
+"nome": ""
+},
+"esperado": ""
+},
+{
+"modelo": "início {a}, meio {b}, fim {a}",
+"args": {
+"a": "α",
+"b": -3
+},
+"esperado": "início α, meio -3, fim α"
+},
+{
+"modelo": "{x}{{}}{y}",
+"args": {
+"x": 0,
+"y": "😀"
+},
+"esperado": "0{}😀"
+}
+],
+"escolha": [
+{
+"trio": [
+"",
+"en",
+"es"
+],
+"idioma": "pt",
+"esperado": "en"
+},
+{
+"trio": [
+"",
+"en",
+"es"
+],
+"idioma": "en",
+"esperado": "en"
+},
+{
+"trio": [
+"",
+"en",
+"es"
+],
+"idioma": "es",
+"esperado": "es"
+},
+{
+"trio": [
+"pt",
+"",
+"es"
+],
+"idioma": "pt",
+"esperado": "pt"
+},
+{
+"trio": [
+"pt",
+"",
+"es"
+],
+"idioma": "en",
+"esperado": ""
+},
+{
+"trio": [
+"pt",
+"",
+"es"
+],
+"idioma": "es",
+"esperado": "es"
+},
+{
+"trio": [
+"pt",
+"en",
+""
+],
+"idioma": "pt",
+"esperado": "pt"
+},
+{
+"trio": [
+"pt",
+"en",
+""
+],
+"idioma": "en",
+"esperado": "en"
+},
+{
+"trio": [
+"pt",
+"en",
+""
+],
+"idioma": "es",
+"esperado": "en"
+},
+{
+"trio": [
+"",
+"",
+""
+],
+"idioma": "pt",
+"esperado": ""
+},
+{
+"trio": [
+"",
+"",
+""
+],
+"idioma": "en",
+"esperado": ""
+},
+{
+"trio": [
+"",
+"",
+""
+],
+"idioma": "es",
+"esperado": ""
+},
+{
+"trio": [
+"",
+"en",
+""
+],
+"idioma": "pt",
+"esperado": "en"
+},
+{
+"trio": [
+"",
+"en",
+""
+],
+"idioma": "en",
+"esperado": "en"
+},
+{
+"trio": [
+"",
+"en",
+""
+],
+"idioma": "es",
+"esperado": "en"
+},
+{
+"trio": [
+"pt",
+"",
+""
+],
+"idioma": "pt",
+"esperado": "pt"
+},
+{
+"trio": [
+"pt",
+"",
+""
+],
+"idioma": "en",
+"esperado": ""
+},
+{
+"trio": [
+"pt",
+"",
+""
+],
+"idioma": "es",
+"esperado": ""
+}
+],
+"normalizar": [
+[
+"pt-BR",
+"pt"
+],
+[
+"es-419",
+"es"
+],
+[
+"en-US",
+"en"
+],
+[
+"PT",
+"pt"
+],
+[
+"pt_BR",
+"pt"
+],
+[
+"",
+"en"
+],
+[
+"fr",
+"en"
+],
+[
+"ptx",
+"en"
+],
+[
+" es ",
+"es"
+],
+[
+"pt-",
+"pt"
+],
+[
+"zh-Hant-TW",
+"en"
+],
+[
+"pt",
+"pt"
+],
+[
+"en",
+"en"
+],
+[
+"es",
+"es"
+],
+[
+"EN-gb",
+"en"
+],
+[
+"Es-Es",
+"es"
+],
+[
+"es_MX.UTF-8",
+"es"
+],
+[
+"pt_",
+"pt"
+],
+[
+"-pt",
+"en"
+],
+[
+"p",
+"en"
+],
+[
+"pt--BR",
+"pt"
+],
+[
+"en-pt",
+"en"
+],
+[
+"esp",
+"en"
+],
+[
+"ES419",
+"en"
+],
+[
+"\tpt-PT\n",
+"pt"
+],
+[
+"​pt",
+"en"
+],
+[
+"﻿es",
+"en"
+],
+[
+"᠎es",
+"en"
+],
+[
+"pt\u0000",
+"en"
+],
+[
+"  ",
+"en"
+],
+[
+"PT-BR ",
+"pt"
+],
+[
+"İt",
+"en"
+],
+[
+"ΡΤ",
+"en"
+],
+[
+"ｐｔ",
+"en"
+],
+[
+"pt́",
+"en"
+],
+[
+"de-DE",
+"en"
+],
+[
+"ja",
+"en"
+],
+[
+"\tpt-BR\t",
+"pt"
+],
+[
+"\npt-BR\n",
+"pt"
+],
+[
+"\u000bpt-BR\u000b",
+"pt"
+],
+[
+"\fpt-BR\f",
+"pt"
+],
+[
+"\rpt-BR\r",
+"pt"
+],
+[
+"\u001cpt-BR\u001c",
+"pt"
+],
+[
+"\u001dpt-BR\u001d",
+"pt"
+],
+[
+"\u001ept-BR\u001e",
+"pt"
+],
+[
+"\u001fpt-BR\u001f",
+"pt"
+],
+[
+" pt-BR ",
+"pt"
+],
+[
+"pt-BR",
+"pt"
+],
+[
+" pt-BR ",
+"pt"
+],
+[
+" pt-BR ",
+"pt"
+],
+[
+" pt-BR ",
+"pt"
+],
+[
+" pt-BR ",
+"pt"
+],
+[
+" pt-BR ",
+"pt"
+],
+[
+" pt-BR ",
+"pt"
+],
+[
+" pt-BR ",
+"pt"
+],
+[
+" pt-BR ",
+"pt"
+],
+[
+" pt-BR ",
+"pt"
+],
+[
+" pt-BR ",
+"pt"
+],
+[
+" pt-BR ",
+"pt"
+],
+[
+" pt-BR ",
+"pt"
+],
+[
+" pt-BR ",
+"pt"
+],
+[
+" pt-BR ",
+"pt"
+],
+[
+" pt-BR ",
+"pt"
+],
+[
+" pt-BR ",
+"pt"
+],
+[
+" pt-BR ",
+"pt"
+],
+[
+"　pt-BR　",
+"pt"
+],
+[
+"\t\tES",
+"es"
+],
+[
+"\n\nES",
+"es"
+],
+[
+"\u000b\u000bES",
+"es"
+],
+[
+"\f\fES",
+"es"
+],
+[
+"\r\rES",
+"es"
+],
+[
+"\u001c\u001cES",
+"es"
+],
+[
+"\u001d\u001dES",
+"es"
+],
+[
+"\u001e\u001eES",
+"es"
+],
+[
+"\u001f\u001fES",
+"es"
+],
+[
+"  ES",
+"es"
+],
+[
+"ES",
+"es"
+],
+[
+"  ES",
+"es"
+],
+[
+"  ES",
+"es"
+],
+[
+"  ES",
+"es"
+],
+[
+"  ES",
+"es"
+],
+[
+"  ES",
+"es"
+],
+[
+"  ES",
+"es"
+],
+[
+"  ES",
+"es"
+],
+[
+"  ES",
+"es"
+],
+[
+"  ES",
+"es"
+],
+[
+"  ES",
+"es"
+],
+[
+"  ES",
+"es"
+],
+[
+"  ES",
+"es"
+],
+[
+"  ES",
+"es"
+],
+[
+"  ES",
+"es"
+],
+[
+"  ES",
+"es"
+],
+[
+"  ES",
+"es"
+],
+[
+"  ES",
+"es"
+],
+[
+"　　ES",
+"es"
+]
+],
+"sistema": [
+[
+"pt-BR",
+"pt"
+],
+[
+"es-419",
+"es"
+],
+[
+"en-US",
+"en"
+],
+[
+"fr-FR",
+"en"
+],
+[
+"PT",
+"pt"
+],
+[
+" es ",
+"es"
+],
+[
+"ptx",
+"en"
+],
+[
+"de",
+"en"
+],
+[
+"zh-Hant-TW",
+"en"
+],
+[
+"pt_PT",
+"pt"
+],
+[
+"es",
+"es"
+],
+[
+"　pt",
+"pt"
+]
+],
+"iniciar": [
+{
+"sistema": "pt-BR",
+"salvo": null,
+"esperado": "pt"
+},
+{
+"sistema": "pt-BR",
+"salvo": "",
+"esperado": "pt"
+},
+{
+"sistema": "pt-BR",
+"salvo": "pt",
+"esperado": "pt"
+},
+{
+"sistema": "pt-BR",
+"salvo": "en",
+"esperado": "en"
+},
+{
+"sistema": "pt-BR",
+"salvo": "es",
+"esperado": "es"
+},
+{
+"sistema": "pt-BR",
+"salvo": "PT",
+"esperado": "pt"
+},
+{
+"sistema": "pt-BR",
+"salvo": "fr",
+"esperado": "pt"
+},
+{
+"sistema": "pt-BR",
+"salvo": "pt-BR",
+"esperado": "pt"
+},
+{
+"sistema": "pt-BR",
+"salvo": " es",
+"esperado": "pt"
+},
+{
+"sistema": "es-ES",
+"salvo": null,
+"esperado": "es"
+},
+{
+"sistema": "es-ES",
+"salvo": "",
+"esperado": "es"
+},
+{
+"sistema": "es-ES",
+"salvo": "pt",
+"esperado": "pt"
+},
+{
+"sistema": "es-ES",
+"salvo": "en",
+"esperado": "en"
+},
+{
+"sistema": "es-ES",
+"salvo": "es",
+"esperado": "es"
+},
+{
+"sistema": "es-ES",
+"salvo": "PT",
+"esperado": "es"
+},
+{
+"sistema": "es-ES",
+"salvo": "fr",
+"esperado": "es"
+},
+{
+"sistema": "es-ES",
+"salvo": "pt-BR",
+"esperado": "es"
+},
+{
+"sistema": "es-ES",
+"salvo": " es",
+"esperado": "es"
+},
+{
+"sistema": "fr",
+"salvo": null,
+"esperado": "en"
+},
+{
+"sistema": "fr",
+"salvo": "",
+"esperado": "en"
+},
+{
+"sistema": "fr",
+"salvo": "pt",
+"esperado": "pt"
+},
+{
+"sistema": "fr",
+"salvo": "en",
+"esperado": "en"
+},
+{
+"sistema": "fr",
+"salvo": "es",
+"esperado": "es"
+},
+{
+"sistema": "fr",
+"salvo": "PT",
+"esperado": "en"
+},
+{
+"sistema": "fr",
+"salvo": "fr",
+"esperado": "en"
+},
+{
+"sistema": "fr",
+"salvo": "pt-BR",
+"esperado": "en"
+},
+{
+"sistema": "fr",
+"salvo": " es",
+"esperado": "en"
+}
+],
+"definir": [
+[
+"pt",
+"pt"
+],
+[
+"en",
+"en"
+],
+[
+"es",
+"es"
+],
+[
+"PT",
+"en"
+],
+[
+"pt-BR",
+"en"
+],
+[
+"",
+"en"
+],
+[
+"xx",
+"en"
+],
+[
+" es",
+"en"
+]
+]
+}

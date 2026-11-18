@@ -1,0 +1,8221 @@
+{
+"casos": {
+"caixa-espelho-grade-12-2048x1536-ftyp-longo-15.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-ftyp-longo.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"caixa-espelho-grade-12-2048x1536-ftyp-tam-4.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-ftyp-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta-longo-16.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta-longo-2a40.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta-longo-limite.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"caixa-espelho-grade-12-2048x1536-meta-tam-8.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta-tam-limite-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta-tam-limite.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"caixa-espelho-grade-12-2048x1536-meta-tam-mais-100.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"caixa-espelho-grade-12-2048x1536-meta0-longo.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"caixa-espelho-grade-12-2048x1536-meta0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_hdlr0-longo.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"caixa-espelho-grade-12-2048x1536-meta0_hdlr0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_idat0-longo.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"caixa-espelho-grade-12-2048x1536-meta0_idat0-zero.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iinf0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iinf0-longo.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iinf0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iinf0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iinf0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iinf0_infe12-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iinf0_infe12-longo.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iinf0_infe12-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iinf0_infe12-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iinf0_infe12-zero.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iloc0-longo.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iloc0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iprp0-longo.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iprp0-zero.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iprp0_ipco0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iprp0_ipco0-longo.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iprp0_ipco0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iprp0_ipco0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iprp0_ipco0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iprp0_ipco0_hvcC0-longo.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iprp0_ipco0_hvcC0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iprp0_ipco0_imir0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iprp0_ipco0_imir0-longo.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iprp0_ipco0_imir0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iprp0_ipco0_imir0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iprp0_ipco0_imir0-zero.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iprp0_ipco0_ispe0-longo.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iprp0_ipco0_ispe0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iprp0_ipma0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iprp0_ipma0-longo.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iprp0_ipma0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iprp0_ipma0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iprp0_ipma0-zero.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iref0-longo.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"caixa-espelho-grade-12-2048x1536-meta0_iref0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_pitm0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_pitm0-longo.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"caixa-espelho-grade-12-2048x1536-meta0_pitm0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_pitm0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-espelho-grade-12-2048x1536-meta0_pitm0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-ftyp-longo-15.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-ftyp-longo.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"caixa-giro-grade-48-4032x3024-ftyp-tam-4.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-ftyp-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta-longo-16.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta-longo-2a40.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta-longo-limite.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"caixa-giro-grade-48-4032x3024-meta-tam-8.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta-tam-limite-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta-tam-limite.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"caixa-giro-grade-48-4032x3024-meta-tam-mais-100.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"caixa-giro-grade-48-4032x3024-meta0-longo.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"caixa-giro-grade-48-4032x3024-meta0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_hdlr0-longo.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"caixa-giro-grade-48-4032x3024-meta0_hdlr0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_idat0-longo.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"caixa-giro-grade-48-4032x3024-meta0_idat0-zero.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"caixa-giro-grade-48-4032x3024-meta0_iinf0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_iinf0-longo.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"caixa-giro-grade-48-4032x3024-meta0_iinf0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_iinf0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_iinf0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_iinf0_infe48-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_iinf0_infe48-longo.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"caixa-giro-grade-48-4032x3024-meta0_iinf0_infe48-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_iinf0_infe48-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_iinf0_infe48-zero.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"caixa-giro-grade-48-4032x3024-meta0_iloc0-longo.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"caixa-giro-grade-48-4032x3024-meta0_iloc0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_iprp0-longo.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"caixa-giro-grade-48-4032x3024-meta0_iprp0-zero.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"caixa-giro-grade-48-4032x3024-meta0_iprp0_ipco0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_iprp0_ipco0-longo.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"caixa-giro-grade-48-4032x3024-meta0_iprp0_ipco0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_iprp0_ipco0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_iprp0_ipco0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_iprp0_ipco0_hvcC0-longo.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"caixa-giro-grade-48-4032x3024-meta0_iprp0_ipco0_hvcC0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_iprp0_ipco0_irot0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_iprp0_ipco0_irot0-longo.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"caixa-giro-grade-48-4032x3024-meta0_iprp0_ipco0_irot0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_iprp0_ipco0_irot0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_iprp0_ipco0_irot0-zero.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"caixa-giro-grade-48-4032x3024-meta0_iprp0_ipco0_ispe0-longo.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"caixa-giro-grade-48-4032x3024-meta0_iprp0_ipco0_ispe0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_iprp0_ipma0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_iprp0_ipma0-longo.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"caixa-giro-grade-48-4032x3024-meta0_iprp0_ipma0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_iprp0_ipma0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_iprp0_ipma0-zero.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"caixa-giro-grade-48-4032x3024-meta0_iref0-longo.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"caixa-giro-grade-48-4032x3024-meta0_iref0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_pitm0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_pitm0-longo.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"caixa-giro-grade-48-4032x3024-meta0_pitm0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_pitm0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-grade-48-4032x3024-meta0_pitm0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-ftyp-longo-15.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-ftyp-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-ftyp-tam-4.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-ftyp-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta-longo-16.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta-longo-2a40.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta-longo-limite.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta-tam-8.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta-tam-limite-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta-tam-limite.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta-tam-mais-100.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_hdlr0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_hdlr0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iinf0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iinf0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iinf0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iinf0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iinf0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iloc0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iloc0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iprp0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iprp0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iprp0_ipco0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iprp0_ipco0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iprp0_ipco0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iprp0_ipco0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iprp0_ipco0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iprp0_ipco0_hvcC0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iprp0_ipco0_hvcC0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iprp0_ipco0_irot0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iprp0_ipco0_irot0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iprp0_ipco0_irot0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iprp0_ipco0_irot0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iprp0_ipco0_irot0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iprp0_ipco0_ispe0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iprp0_ipco0_ispe0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iprp0_ipma0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iprp0_ipma0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iprp0_ipma0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iprp0_ipma0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_iprp0_ipma0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_pitm0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_pitm0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_pitm0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_pitm0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-giro-simples-640x480-meta0_pitm0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-ftyp-longo-15.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-ftyp-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-ftyp-tam-4.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-ftyp-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta-longo-16.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta-longo-2a40.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta-longo-limite.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta-tam-8.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta-tam-limite-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta-tam-limite.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta-tam-mais-100.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_hdlr0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_hdlr0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_idat0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_idat0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iinf0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iinf0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iinf0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iinf0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iinf0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iinf0_infe2-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iinf0_infe2-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iinf0_infe2-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iinf0_infe2-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iinf0_infe2-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iloc0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iloc0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iprp0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iprp0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iprp0_ipco0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iprp0_ipco0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iprp0_ipco0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iprp0_ipco0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iprp0_ipco0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iprp0_ipco0_hvcC0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iprp0_ipco0_hvcC0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iprp0_ipco0_ispe0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iprp0_ipco0_ispe0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iprp0_ipma0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iprp0_ipma0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iprp0_ipma0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iprp0_ipma0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iprp0_ipma0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iref0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_iref0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_pitm0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_pitm0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_pitm0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_pitm0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-2-1024x512-meta0_pitm0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-ftyp-longo-15.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-ftyp-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-ftyp-tam-4.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-ftyp-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta-longo-16.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta-longo-2a40.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta-longo-limite.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta-tam-8.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta-tam-limite-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta-tam-limite.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta-tam-mais-100.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_hdlr0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_hdlr0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_idat0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_idat0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iinf0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iinf0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iinf0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iinf0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iinf0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iinf0_infe48-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iinf0_infe48-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iinf0_infe48-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iinf0_infe48-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iinf0_infe48-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iloc0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iloc0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iprp0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iprp0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iprp0_ipco0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iprp0_ipco0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iprp0_ipco0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iprp0_ipco0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iprp0_ipco0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iprp0_ipco0_hvcC0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iprp0_ipco0_hvcC0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iprp0_ipco0_ispe0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iprp0_ipco0_ispe0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iprp0_ipma0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iprp0_ipma0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iprp0_ipma0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iprp0_ipma0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iprp0_ipma0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iref0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_iref0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_pitm0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_pitm0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_pitm0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_pitm0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-grade-48-4032x3024-meta0_pitm0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-ftyp-longo-15.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-ftyp-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-ftyp-tam-4.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-ftyp-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta-longo-16.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta-longo-2a40.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta-longo-limite.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta-tam-8.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta-tam-limite-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta-tam-limite.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta-tam-mais-100.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_hdlr0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_hdlr0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_iinf0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_iinf0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_iinf0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_iinf0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_iinf0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_iloc0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_iloc0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_iprp0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_iprp0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_iprp0_ipco0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_iprp0_ipco0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_iprp0_ipco0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_iprp0_ipco0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_iprp0_ipco0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_iprp0_ipco0_hvcC0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_iprp0_ipco0_hvcC0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_iprp0_ipco0_ispe0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_iprp0_ipco0_ispe0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_iprp0_ipma0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_iprp0_ipma0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_iprp0_ipma0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_iprp0_ipma0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_iprp0_ipma0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_pitm0-longo-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_pitm0-longo.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_pitm0-tam-7.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_pitm0-tam-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"caixa-simples-1200x900-meta0_pitm0-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00000.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00001.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00004.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00007.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00008.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00009.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00012.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00015.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00016.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00023.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00024.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00025.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00028.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00031.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00032.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00033.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00035.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00036.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00037.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00039.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00040.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00043.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00044.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00045.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00052.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00068.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00069.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00070.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00071.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00072.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00073.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00074.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00075.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00076.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00077.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00078.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00079.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00080.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00081.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00082.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00083.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00084.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00090.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00091.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00092.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00195.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00306.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00307.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00308.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00314.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00315.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00316.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00321.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00322.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00328.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00329.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00330.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00331.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00341.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00342.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00450.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00474.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00573.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00574.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00575.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00576.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00577.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00578.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00579.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00580.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00581.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00582.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00583.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00584.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00585.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00586.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00587.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00588.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00589.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00590.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00591.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00592.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00593.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00594.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00595.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00601.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00602.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00603.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00618.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00641.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00642.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00643.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00649.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00650.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00651.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00652.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00653.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00654.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00655.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00656.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00657.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00658.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00659.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00660.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00661.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00662.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00663.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00664.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00665.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00666.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00667.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00718.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00738.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00775.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00777.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00778.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00779.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00780.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00781.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00782.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00783.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00784.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00785.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00786.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00787.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00788.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00789.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00790.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00791.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00792.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00793.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00794.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00795.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00796.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00797.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00798.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00799.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00800.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00801.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00802.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00803.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00804.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00805.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00806.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00807.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00808.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00809.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00810.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00811.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00812.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00813.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00814.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00815.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00816.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00817.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00818.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00819.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00820.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00821.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00822.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00823.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00824.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00825.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00826.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00827.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00828.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00831.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00834.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00835.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00836.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00839.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00843.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00847.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00851.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00855.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00859.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00863.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00867.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00871.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00875.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00879.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00883.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00887.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00891.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00895.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00899.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00903.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00907.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-espelho-grade-12-2048x1536-00908.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"corte-espelho-grade-12-2048x1536-00909.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"corte-espelho-grade-12-2048x1536-00915.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"corte-espelho-grade-12-2048x1536-00916.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"corte-espelho-grade-12-2048x1536-00917.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"corte-espelho-grade-12-2048x1536-00923.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"corte-espelho-grade-12-2048x1536-00924.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"corte-espelho-grade-12-2048x1536-00925.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"corte-espelho-grade-12-2048x1536-00932.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"corte-giro-grade-48-4032x3024-00000.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00001.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00004.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00007.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00008.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00009.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00012.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00015.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00016.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00023.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00024.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00025.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00028.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00031.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00032.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00033.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00035.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00036.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00037.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00039.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00040.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00043.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00044.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00045.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00052.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00068.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00069.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00070.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00071.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00072.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00073.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00074.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00075.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00076.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00077.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00078.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00079.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00080.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00081.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00082.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00083.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00084.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00090.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00091.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00092.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00483.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00882.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00883.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00884.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00890.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00891.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00892.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00897.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00898.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00904.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00905.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00906.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00907.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00917.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-00918.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01266.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01404.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01905.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01906.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01907.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01908.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01909.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01910.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01911.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01912.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01913.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01914.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01915.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01916.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01917.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01918.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01919.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01920.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01921.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01922.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01923.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01924.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01925.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01926.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01927.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01933.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01934.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01935.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-01986.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02045.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02046.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02047.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02053.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02054.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02055.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02056.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02057.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02058.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02059.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02060.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02061.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02062.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02063.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02064.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02065.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02066.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02067.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02068.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02069.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02070.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02071.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02122.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02142.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02181.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02182.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02183.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02184.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02185.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02186.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02187.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02188.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02189.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02190.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02191.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02192.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02193.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02194.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02195.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02196.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02197.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02198.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02199.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02200.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02201.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02202.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02203.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02204.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02205.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02206.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02207.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02208.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02209.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02210.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02211.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02212.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02213.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02214.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02215.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02216.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02217.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02218.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02219.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02220.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02221.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02222.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02223.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02224.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02225.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02226.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02227.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02228.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02229.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02230.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02231.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02232.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02235.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02238.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02239.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02240.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02243.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02247.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02251.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02255.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02259.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02263.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02267.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02269.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02271.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02275.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02279.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02283.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02287.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02291.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02295.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02299.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02303.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02307.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02311.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02315.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02319.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02323.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02327.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02331.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02335.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02339.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02343.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02347.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02351.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02355.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02359.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02361.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02363.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02367.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02371.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02375.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02379.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02383.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02387.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02391.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02395.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02399.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02403.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02407.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02411.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02415.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02419.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02423.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02427.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02431.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02435.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02439.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02443.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02447.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02451.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02455.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02459.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02463.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02467.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02471.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02475.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02479.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02483.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02487.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02491.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-grade-48-4032x3024-02492.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"corte-giro-grade-48-4032x3024-02493.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"corte-giro-grade-48-4032x3024-02499.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"corte-giro-grade-48-4032x3024-02500.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"corte-giro-grade-48-4032x3024-02501.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"corte-giro-grade-48-4032x3024-02507.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"corte-giro-grade-48-4032x3024-02508.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"corte-giro-grade-48-4032x3024-02509.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"corte-giro-grade-48-4032x3024-02516.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"corte-giro-simples-640x480-00000.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00001.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00004.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00007.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00008.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00009.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00012.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00015.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00016.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00023.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00024.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00025.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00028.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00031.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00032.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00033.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00035.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00036.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00037.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00039.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00040.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00043.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00044.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00045.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00052.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00068.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00069.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00070.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00071.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00072.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00073.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00074.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00075.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00076.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00077.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00078.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00079.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00080.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00081.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00082.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00083.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00084.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00090.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00091.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00092.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00099.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00114.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00115.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00116.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00122.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00123.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00124.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00129.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00130.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00132.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00136.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00137.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00138.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00139.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00149.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00150.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00151.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00157.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00158.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00159.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00160.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00161.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00162.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00163.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00164.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00165.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00166.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00167.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00168.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00169.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00170.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00171.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00172.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00173.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00174.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00175.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00180.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00226.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00236.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00243.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00285.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00286.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00287.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00288.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00289.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00290.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00291.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00292.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00293.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00294.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00295.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00296.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00297.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00298.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00299.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00300.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00301.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00302.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00303.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00304.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00305.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00306.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00307.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00308.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00309.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00310.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00311.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00312.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00313.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00314.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00315.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00316.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00317.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00318.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00319.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00320.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00321.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00322.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00323.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00324.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00325.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00326.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00327.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00328.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00329.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00330.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00331.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00332.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00333.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00334.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00335.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00336.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00337.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00338.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-giro-simples-640x480-00345.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00000.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00001.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00002.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00003.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00004.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00005.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00006.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00007.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00008.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00009.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00010.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00011.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00012.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00013.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00014.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00015.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00016.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00017.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00018.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00019.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00020.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00021.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00022.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00023.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00024.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00025.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00026.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00027.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00028.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00029.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00030.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00031.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00032.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00033.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00034.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00035.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00036.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00037.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00038.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00039.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00040.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00043.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00044.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00045.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00052.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00068.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00069.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00070.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00071.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00072.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00073.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00074.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00075.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00076.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00077.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00078.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00079.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00080.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00081.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00082.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00083.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00084.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00090.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00091.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00092.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00115.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00146.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00147.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00148.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00154.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00155.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00156.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00161.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00162.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00168.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00169.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00170.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00171.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00181.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00182.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00185.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00203.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00204.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00205.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00206.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00207.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00208.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00209.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00210.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00211.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00212.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00213.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00214.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00215.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00216.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00217.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00218.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00219.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00220.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00221.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00222.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00223.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00224.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00225.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00231.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00232.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00233.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00238.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00249.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00251.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00252.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00253.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00259.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00260.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00261.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00262.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00263.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00264.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00265.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00266.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00267.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00268.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00269.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00270.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00271.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00272.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00273.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00274.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00275.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00276.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00277.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00328.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00344.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00355.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00387.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00388.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00389.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00390.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00391.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00392.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00393.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00394.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00395.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00396.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00397.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00398.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00399.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00400.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00401.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00402.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00403.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00404.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00405.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00406.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00407.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00408.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00409.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00410.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00411.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00412.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00413.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00414.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00415.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00416.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00417.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00418.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00419.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00420.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00421.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00422.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00423.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00424.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00425.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00426.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00427.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00428.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00429.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00430.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00431.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00432.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00433.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00434.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00435.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00436.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00437.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00438.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00439.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00440.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00441.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00442.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00443.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00444.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00445.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00446.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00447.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00448.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00449.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00450.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00451.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00452.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00453.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00454.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00455.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00456.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00457.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00458.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00459.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00465.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00466.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00467.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00473.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00474.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00475.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-2-1024x512-00482.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00000.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00001.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00004.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00007.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00008.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00009.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00012.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00015.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00016.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00023.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00024.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00025.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00028.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00031.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00032.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00033.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00035.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00036.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00037.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00039.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00040.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00043.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00044.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00045.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00052.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00068.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00069.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00070.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00076.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00077.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00078.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00082.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00083.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00084.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00090.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00091.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00092.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00483.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00882.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00883.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00884.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00890.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00891.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00892.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00897.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00898.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00904.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00905.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00906.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00907.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00917.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-00918.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-01261.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-01404.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-01905.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-01906.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-01912.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-01913.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-01914.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-01915.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-01925.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-01926.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-01927.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-01933.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-01934.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-01935.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-01986.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02045.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02046.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02047.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02053.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02054.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02055.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02056.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02057.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02058.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02059.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02060.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02061.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02062.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02063.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02064.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02065.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02066.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02067.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02068.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02069.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02070.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02071.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02122.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02138.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02181.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02182.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02183.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02189.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02190.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02191.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02192.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02201.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02202.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02203.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02209.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02210.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02211.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02212.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02221.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02222.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02223.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02229.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02230.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02231.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02264.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02352.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02481.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02482.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02483.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02489.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02490.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02491.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02497.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02498.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02499.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-grade-48-4032x3024-02506.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00000.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00001.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00004.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00007.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00008.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00009.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00012.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00015.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00016.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00023.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00024.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00025.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00028.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00031.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00032.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00033.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00035.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00036.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00037.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00039.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00040.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00043.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00044.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00045.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00052.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00068.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00069.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00070.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00071.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00072.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00073.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00074.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00075.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00076.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00077.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00078.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00079.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00080.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00081.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00082.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00083.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00084.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00090.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00091.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00092.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00099.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00114.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00115.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00116.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00122.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00123.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00124.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00129.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00130.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00132.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00136.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00137.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00138.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00139.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00149.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00150.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00151.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00157.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00158.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00159.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00160.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00161.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00162.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00163.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00164.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00165.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00166.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00167.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00168.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00169.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00170.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00171.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00172.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00173.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00174.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00175.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00176.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00226.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00232.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00239.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00286.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00287.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00288.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00289.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00290.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00291.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00292.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00293.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00294.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00295.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00296.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00297.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00298.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00299.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00300.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00301.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00302.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00303.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00304.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00305.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00306.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00307.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00308.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00309.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00310.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00311.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00312.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00313.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00314.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00315.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00316.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00317.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00318.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00319.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00320.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00321.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00322.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00323.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00324.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00325.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00326.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00327.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00328.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00329.heic": {
+"filtro": "",
+"partes": []
+},
+"corte-simples-1200x900-00336.heic": {
+"filtro": "",
+"partes": []
+},
+"fora-7-bytes.heic": {
+"filtro": "",
+"partes": []
+},
+"fora-jpeg.heic": {
+"filtro": "",
+"partes": []
+},
+"fora-longo-sem-tamanho.heic": {
+"filtro": "",
+"partes": []
+},
+"fora-meta-1-byte.heic": {
+"filtro": "",
+"partes": []
+},
+"fora-meta-muito-grande.heic": {
+"filtro": "",
+"partes": []
+},
+"fora-meta-sem-versao-com-caixas.heic": {
+"filtro": "",
+"partes": []
+},
+"fora-meta-so-cabecalho-cheio.heic": {
+"filtro": "",
+"partes": []
+},
+"fora-meta-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"fora-mp4-com-meta-dentro-da-moov.heic": {
+"filtro": "",
+"partes": []
+},
+"fora-png.heic": {
+"filtro": "",
+"partes": []
+},
+"fora-so-cabecalho-free.heic": {
+"filtro": "",
+"partes": []
+},
+"fora-so-ftyp.heic": {
+"filtro": "",
+"partes": []
+},
+"fora-texto.heic": {
+"filtro": "",
+"partes": []
+},
+"fora-uns.heic": {
+"filtro": "",
+"partes": []
+},
+"fora-vazio.heic": {
+"filtro": "",
+"partes": []
+},
+"fora-zeros.heic": {
+"filtro": "",
+"partes": []
+},
+"real-espelho-grade-12-2048x1536.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"real-giro-grade-48-4032x3024.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"real-giro-simples-640x480.heic": {
+"filtro": "",
+"partes": []
+},
+"real-grade-2-1024x512.heic": {
+"filtro": "",
+"partes": []
+},
+"real-grade-48-4032x3024.heic": {
+"filtro": "",
+"partes": []
+},
+"real-simples-1200x900.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-62-free-antes-da-meta.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-63-free-antes-da-meta.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-duas-entradas-do-primario.heic": {
+"filtro": "lavfi=[transpose=cclock,vflip]",
+"partes": [
+"transpose=cclock",
+"vflip"
+]
+},
+"sint-duas-iinf-ultima-vale.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-duas-ipco-ultima-vale.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"sint-duas-ipma-ultima-vale.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-duas-iprp-ultima-vale.heic": {
+"filtro": "lavfi=[vflip]",
+"partes": [
+"vflip"
+]
+},
+"sint-duas-pitm-ultima-grade.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-duas-pitm-ultima-vale.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-flags-0x100-indice-8bits.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-flags-0xffffff.heic": {
+"filtro": "lavfi=[transpose=clock,transpose=clock]",
+"partes": [
+"transpose=clock",
+"transpose=clock"
+]
+},
+"sint-flags0-mas-indices-de-16bits.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-flags1-mas-indices-de-8bits.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-free-longo-100000000-antes-da-meta.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-free-longo-10000000000-antes-da-meta.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-free-longo-4000000000000000-antes-da-meta.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-free-longo-7fffffffffffffe7-antes-da-meta.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-free-longo-7fffffffffffffe8-antes-da-meta.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-free-longo-8000000000000000-antes-da-meta.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-free-longo-antes-da-meta.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-free-longo-ffffffffffffffff-antes-da-meta.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-free-tam-7-antes-da-meta.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-free-zero-antes-da-meta.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-giro-repetido.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip,transpose=cclock,transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip",
+"transpose=cclock",
+"transpose=cclock",
+"hflip"
+]
+},
+"sint-giro-so-nos-blocos.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-grade-larg16-rot0-mir0-mir-rot.heic": {
+"filtro": "lavfi=[vflip]",
+"partes": [
+"vflip"
+]
+},
+"sint-grade-larg16-rot0-mir0-rot-mir.heic": {
+"filtro": "lavfi=[vflip]",
+"partes": [
+"vflip"
+]
+},
+"sint-grade-larg16-rot0-mir1-mir-rot.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"sint-grade-larg16-rot0-mir1-rot-mir.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"sint-grade-larg16-rot0-mirNone-rot-mir.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-grade-larg16-rot1-mir0-mir-rot.heic": {
+"filtro": "lavfi=[vflip,transpose=cclock]",
+"partes": [
+"vflip",
+"transpose=cclock"
+]
+},
+"sint-grade-larg16-rot1-mir0-rot-mir.heic": {
+"filtro": "lavfi=[transpose=cclock,vflip]",
+"partes": [
+"transpose=cclock",
+"vflip"
+]
+},
+"sint-grade-larg16-rot1-mir1-mir-rot.heic": {
+"filtro": "lavfi=[hflip,transpose=cclock]",
+"partes": [
+"hflip",
+"transpose=cclock"
+]
+},
+"sint-grade-larg16-rot1-mir1-rot-mir.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip"
+]
+},
+"sint-grade-larg16-rot1-mirNone-rot-mir.heic": {
+"filtro": "lavfi=[transpose=cclock]",
+"partes": [
+"transpose=cclock"
+]
+},
+"sint-grade-larg16-rot2-mir0-mir-rot.heic": {
+"filtro": "lavfi=[vflip,hflip,vflip]",
+"partes": [
+"vflip",
+"hflip,vflip"
+]
+},
+"sint-grade-larg16-rot2-mir0-rot-mir.heic": {
+"filtro": "lavfi=[hflip,vflip,vflip]",
+"partes": [
+"hflip,vflip",
+"vflip"
+]
+},
+"sint-grade-larg16-rot2-mir1-mir-rot.heic": {
+"filtro": "lavfi=[hflip,hflip,vflip]",
+"partes": [
+"hflip",
+"hflip,vflip"
+]
+},
+"sint-grade-larg16-rot2-mir1-rot-mir.heic": {
+"filtro": "lavfi=[hflip,vflip,hflip]",
+"partes": [
+"hflip,vflip",
+"hflip"
+]
+},
+"sint-grade-larg16-rot2-mirNone-rot-mir.heic": {
+"filtro": "lavfi=[hflip,vflip]",
+"partes": [
+"hflip,vflip"
+]
+},
+"sint-grade-larg16-rot3-mir0-mir-rot.heic": {
+"filtro": "lavfi=[vflip,transpose=clock]",
+"partes": [
+"vflip",
+"transpose=clock"
+]
+},
+"sint-grade-larg16-rot3-mir0-rot-mir.heic": {
+"filtro": "lavfi=[transpose=clock,vflip]",
+"partes": [
+"transpose=clock",
+"vflip"
+]
+},
+"sint-grade-larg16-rot3-mir1-mir-rot.heic": {
+"filtro": "lavfi=[hflip,transpose=clock]",
+"partes": [
+"hflip",
+"transpose=clock"
+]
+},
+"sint-grade-larg16-rot3-mir1-rot-mir.heic": {
+"filtro": "lavfi=[transpose=clock,hflip]",
+"partes": [
+"transpose=clock",
+"hflip"
+]
+},
+"sint-grade-larg16-rot3-mirNone-rot-mir.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-grade-larg16-rotNone-mir0-rot-mir.heic": {
+"filtro": "lavfi=[vflip]",
+"partes": [
+"vflip"
+]
+},
+"sint-grade-larg16-rotNone-mir1-rot-mir.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"sint-grade-larg16-rotNone-mirNone-rot-mir.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-grade-larg8-rot0-mir0-mir-rot.heic": {
+"filtro": "lavfi=[vflip]",
+"partes": [
+"vflip"
+]
+},
+"sint-grade-larg8-rot0-mir0-rot-mir.heic": {
+"filtro": "lavfi=[vflip]",
+"partes": [
+"vflip"
+]
+},
+"sint-grade-larg8-rot0-mir1-mir-rot.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"sint-grade-larg8-rot0-mir1-rot-mir.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"sint-grade-larg8-rot0-mirNone-rot-mir.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-grade-larg8-rot1-mir0-mir-rot.heic": {
+"filtro": "lavfi=[vflip,transpose=cclock]",
+"partes": [
+"vflip",
+"transpose=cclock"
+]
+},
+"sint-grade-larg8-rot1-mir0-rot-mir.heic": {
+"filtro": "lavfi=[transpose=cclock,vflip]",
+"partes": [
+"transpose=cclock",
+"vflip"
+]
+},
+"sint-grade-larg8-rot1-mir1-mir-rot.heic": {
+"filtro": "lavfi=[hflip,transpose=cclock]",
+"partes": [
+"hflip",
+"transpose=cclock"
+]
+},
+"sint-grade-larg8-rot1-mir1-rot-mir.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip"
+]
+},
+"sint-grade-larg8-rot1-mirNone-rot-mir.heic": {
+"filtro": "lavfi=[transpose=cclock]",
+"partes": [
+"transpose=cclock"
+]
+},
+"sint-grade-larg8-rot2-mir0-mir-rot.heic": {
+"filtro": "lavfi=[vflip,hflip,vflip]",
+"partes": [
+"vflip",
+"hflip,vflip"
+]
+},
+"sint-grade-larg8-rot2-mir0-rot-mir.heic": {
+"filtro": "lavfi=[hflip,vflip,vflip]",
+"partes": [
+"hflip,vflip",
+"vflip"
+]
+},
+"sint-grade-larg8-rot2-mir1-mir-rot.heic": {
+"filtro": "lavfi=[hflip,hflip,vflip]",
+"partes": [
+"hflip",
+"hflip,vflip"
+]
+},
+"sint-grade-larg8-rot2-mir1-rot-mir.heic": {
+"filtro": "lavfi=[hflip,vflip,hflip]",
+"partes": [
+"hflip,vflip",
+"hflip"
+]
+},
+"sint-grade-larg8-rot2-mirNone-rot-mir.heic": {
+"filtro": "lavfi=[hflip,vflip]",
+"partes": [
+"hflip,vflip"
+]
+},
+"sint-grade-larg8-rot3-mir0-mir-rot.heic": {
+"filtro": "lavfi=[vflip,transpose=clock]",
+"partes": [
+"vflip",
+"transpose=clock"
+]
+},
+"sint-grade-larg8-rot3-mir0-rot-mir.heic": {
+"filtro": "lavfi=[transpose=clock,vflip]",
+"partes": [
+"transpose=clock",
+"vflip"
+]
+},
+"sint-grade-larg8-rot3-mir1-mir-rot.heic": {
+"filtro": "lavfi=[hflip,transpose=clock]",
+"partes": [
+"hflip",
+"transpose=clock"
+]
+},
+"sint-grade-larg8-rot3-mir1-rot-mir.heic": {
+"filtro": "lavfi=[transpose=clock,hflip]",
+"partes": [
+"transpose=clock",
+"hflip"
+]
+},
+"sint-grade-larg8-rot3-mirNone-rot-mir.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-grade-larg8-rotNone-mir0-rot-mir.heic": {
+"filtro": "lavfi=[vflip]",
+"partes": [
+"vflip"
+]
+},
+"sint-grade-larg8-rotNone-mir1-rot-mir.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"sint-grade-larg8-rotNone-mirNone-rot-mir.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-ids-32bits-ipma-v0.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-ids-32bits.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-iinf-depois-da-iprp-grid-curto.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-iinf-v1.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-iinf-vazia-no-fim.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-imir-ok-irot-sem-corpo-no-fim.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-imir-sem-corpo-no-fim-nao-usado.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"sint-imir-sem-corpo-no-meio.heic": {
+"filtro": "lavfi=[vflip]",
+"partes": [
+"vflip"
+]
+},
+"sint-indice-0.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-indice-127.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-indice-16bits-alem.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-indice-alem-do-fim.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-indice-alto-flags1-v1.heic": {
+"filtro": "lavfi=[hflip,vflip,hflip]",
+"partes": [
+"hflip,vflip",
+"hflip"
+]
+},
+"sint-indice-alto-flags1.heic": {
+"filtro": "lavfi=[transpose=cclock,vflip,transpose=cclock]",
+"partes": [
+"transpose=cclock",
+"vflip",
+"transpose=cclock"
+]
+},
+"sint-infe-curta-tipo-da-proxima.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-infe-grid-sem-nada-depois.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-infe-repetida-grid-antes.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-infe-repetida-hvc1-antes.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-infe-sem-id-no-fim.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-infe-v0-grade.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-infe-v1-grade.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-infe-v3-grade.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-infe-v4-grade.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-infe-vazia-no-fim.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-infe-zero-no-fim-da-iinf.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-ipco-filho-alem-do-pai.heic": {
+"filtro": "lavfi=[transpose=cclock]",
+"partes": [
+"transpose=cclock"
+]
+},
+"sint-ipco-filho-longo-ipma-depois.heic": {
+"filtro": "lavfi=[transpose=cclock]",
+"partes": [
+"transpose=cclock"
+]
+},
+"sint-ipco-filho-tam-3.heic": {
+"filtro": "lavfi=[transpose=cclock]",
+"partes": [
+"transpose=cclock"
+]
+},
+"sint-ipco-filho-zero.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip"
+]
+},
+"sint-ipco-vazia.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-ipma-antes-da-ipco.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip"
+]
+},
+"sint-ipma-curta-no-fim.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-ipma-le-alem-da-caixa-idat.heic": {
+"filtro": "lavfi=[transpose=cclock]",
+"partes": [
+"transpose=cclock"
+]
+},
+"sint-ipma-le-alem-da-caixa.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip"
+]
+},
+"sint-ipma-n-0.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-ipma-n-enorme.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-ipma-n-mais-1.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-ipma-qtd-alem-da-caixa.heic": {
+"filtro": "lavfi=[transpose=cclock]",
+"partes": [
+"transpose=cclock"
+]
+},
+"sint-ipma-sem-n.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-ipma-so-cabecalho.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-iprp-filho-zero-ipco.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-iprp-vazia.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-irot-4-vira-0.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"sint-irot-bits-altos.heic": {
+"filtro": "lavfi=[transpose=cclock,vflip]",
+"partes": [
+"transpose=cclock",
+"vflip"
+]
+},
+"sint-irot-ok-imir-sem-corpo-no-fim.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-irot-sem-corpo-no-meio.heic": {
+"filtro": "lavfi=[transpose=cclock]",
+"partes": [
+"transpose=cclock"
+]
+},
+"sint-item-0.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-mdat-antes-da-meta.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-meta-antes-hdlr-zero.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-meta-filho-longo-ok.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-meta-longo-sem-tamanho-8-no-fim.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-meta-longo-sem-tamanho-no-fim.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-meta-primeira-sem-ftyp.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-meta-tam-2-no-fim.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-pitm-curta-id-da-proxima-casa.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-pitm-curta-le-a-proxima.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-pitm-v1-curta-id-da-proxima-casa.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-pitm-v1-curta.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-pitm-v1-id-curto.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-pitm-v2.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-pitm-vazia.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-primario-e-bloco.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-primario-sem-infe.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-grade-larg8-rot0-mir0-mir-rot.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-grade-larg8-rot0-mir0-rot-mir.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-grade-larg8-rot0-mir1-mir-rot.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-grade-larg8-rot0-mir1-rot-mir.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-grade-larg8-rot0-mirNone-rot-mir.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-grade-larg8-rot1-mir0-mir-rot.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-grade-larg8-rot1-mir0-rot-mir.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-grade-larg8-rot1-mir1-mir-rot.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-grade-larg8-rot1-mir1-rot-mir.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-grade-larg8-rot1-mirNone-rot-mir.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-grade-larg8-rot2-mir0-mir-rot.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-grade-larg8-rot2-mir0-rot-mir.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-grade-larg8-rot2-mir1-mir-rot.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-grade-larg8-rot2-mir1-rot-mir.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-grade-larg8-rot2-mirNone-rot-mir.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-grade-larg8-rot3-mir0-mir-rot.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-grade-larg8-rot3-mir0-rot-mir.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-grade-larg8-rot3-mir1-mir-rot.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-grade-larg8-rot3-mir1-rot-mir.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-grade-larg8-rot3-mirNone-rot-mir.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-grade-larg8-rotNone-mir0-rot-mir.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-grade-larg8-rotNone-mir1-rot-mir.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-grade-larg8-rotNone-mirNone-rot-mir.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-iinf.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-ipco.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-ipma.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-iprp.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-sem-mdat-depois.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"sint-sem-pitm.heic": {
+"filtro": "",
+"partes": []
+},
+"sint-tipo-grid-maiusculo.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-espelho-grade-12-2048x1536-00.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-01.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-02.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-03.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-04.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-05.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-espelho-grade-12-2048x1536-06.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-07.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-08.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-09.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-10.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-11.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-espelho-grade-12-2048x1536-12.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-espelho-grade-12-2048x1536-13.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-14.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-15.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-16.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-17.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-18.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-espelho-grade-12-2048x1536-19.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-20.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-21.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-22.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-23.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-24.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-25.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-espelho-grade-12-2048x1536-26.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-27.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-espelho-grade-12-2048x1536-28.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-29.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-30.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-31.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-espelho-grade-12-2048x1536-32.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-espelho-grade-12-2048x1536-33.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-espelho-grade-12-2048x1536-34.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-espelho-grade-12-2048x1536-35.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-36.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-37.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-espelho-grade-12-2048x1536-38.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-espelho-grade-12-2048x1536-39.heic": {
+"filtro": "lavfi=[hflip]",
+"partes": [
+"hflip"
+]
+},
+"troca-giro-grade-48-4032x3024-00.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-01.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-02.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-03.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-grade-48-4032x3024-04.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-05.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-06.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-07.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-08.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-grade-48-4032x3024-09.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-10.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-grade-48-4032x3024-11.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-12.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-13.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-grade-48-4032x3024-14.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-15.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-16.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-17.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-18.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-19.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-20.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-21.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-grade-48-4032x3024-22.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-23.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-24.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-grade-48-4032x3024-25.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-26.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-27.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-28.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-29.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-30.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-31.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-32.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-33.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-34.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-35.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-36.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-37.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-grade-48-4032x3024-38.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-grade-48-4032x3024-39.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-giro-simples-640x480-00.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-01.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-02.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-03.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-04.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-05.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-06.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-07.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-08.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-09.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-10.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-11.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-12.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-13.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-14.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-15.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-16.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-17.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-18.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-19.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-20.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-21.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-22.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-23.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-24.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-25.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-26.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-27.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-28.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-29.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-30.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-31.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-32.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-33.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-34.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-35.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-36.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-37.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-38.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-giro-simples-640x480-39.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-00.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-01.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-02.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-03.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-04.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-05.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-06.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-07.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-08.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-09.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-10.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-11.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-12.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-13.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-14.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-15.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-16.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-17.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-18.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-19.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-20.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-21.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-22.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-23.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-24.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-25.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-26.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-27.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-28.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-29.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-30.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-31.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-32.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-33.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-34.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-35.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-36.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-37.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-38.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-2-1024x512-39.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-00.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-01.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-02.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-03.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-04.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-05.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-06.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-07.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-08.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-09.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-10.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-11.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-12.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-13.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-14.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-15.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-16.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-17.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-18.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-19.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-20.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-21.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-22.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-23.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-24.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-25.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-26.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-27.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-28.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-29.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-30.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-31.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-32.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-33.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-34.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-35.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-36.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-37.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-38.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-grade-48-4032x3024-39.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-00.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-01.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-02.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-03.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-04.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-05.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-06.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-07.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-08.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-09.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-10.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-11.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-12.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-13.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-14.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-15.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-16.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-17.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-18.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-19.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-20.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-21.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-22.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-23.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-24.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-25.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-26.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-27.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-28.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-29.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-30.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-31.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-32.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-33.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-34.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-35.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-36.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-37.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-38.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-simples-1200x900-39.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ids-32bits-00.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ids-32bits-01.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-sint-ids-32bits-02.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ids-32bits-03.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-sint-ids-32bits-04.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ids-32bits-05.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ids-32bits-06.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ids-32bits-07.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-sint-ids-32bits-08.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-sint-ids-32bits-09.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ids-32bits-10.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ids-32bits-11.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ids-32bits-12.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ids-32bits-13.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-sint-ids-32bits-14.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ids-32bits-15.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ids-32bits-16.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-sint-ids-32bits-17.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ids-32bits-18.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ids-32bits-19.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ids-32bits-20.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ids-32bits-21.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-sint-ids-32bits-22.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-sint-ids-32bits-23.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-sint-ids-32bits-24.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ids-32bits-25.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-sint-ids-32bits-26.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ids-32bits-27.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-sint-ids-32bits-28.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ids-32bits-29.heic": {
+"filtro": "lavfi=[transpose=clock]",
+"partes": [
+"transpose=clock"
+]
+},
+"troca-sint-indice-alto-flags1-00.heic": {
+"filtro": "lavfi=[transpose=cclock,vflip,transpose=cclock]",
+"partes": [
+"transpose=cclock",
+"vflip",
+"transpose=cclock"
+]
+},
+"troca-sint-indice-alto-flags1-01.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-indice-alto-flags1-02.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-indice-alto-flags1-03.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-indice-alto-flags1-04.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-indice-alto-flags1-05.heic": {
+"filtro": "lavfi=[transpose=cclock,vflip,transpose=cclock]",
+"partes": [
+"transpose=cclock",
+"vflip",
+"transpose=cclock"
+]
+},
+"troca-sint-indice-alto-flags1-06.heic": {
+"filtro": "lavfi=[transpose=cclock,vflip,transpose=cclock]",
+"partes": [
+"transpose=cclock",
+"vflip",
+"transpose=cclock"
+]
+},
+"troca-sint-indice-alto-flags1-07.heic": {
+"filtro": "lavfi=[transpose=cclock,vflip,transpose=cclock]",
+"partes": [
+"transpose=cclock",
+"vflip",
+"transpose=cclock"
+]
+},
+"troca-sint-indice-alto-flags1-08.heic": {
+"filtro": "lavfi=[transpose=cclock,vflip,transpose=cclock]",
+"partes": [
+"transpose=cclock",
+"vflip",
+"transpose=cclock"
+]
+},
+"troca-sint-indice-alto-flags1-09.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-indice-alto-flags1-10.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-indice-alto-flags1-11.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-indice-alto-flags1-12.heic": {
+"filtro": "lavfi=[transpose=cclock,vflip,transpose=cclock]",
+"partes": [
+"transpose=cclock",
+"vflip",
+"transpose=cclock"
+]
+},
+"troca-sint-indice-alto-flags1-13.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-indice-alto-flags1-14.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-indice-alto-flags1-15.heic": {
+"filtro": "lavfi=[transpose=cclock,vflip,transpose=cclock]",
+"partes": [
+"transpose=cclock",
+"vflip",
+"transpose=cclock"
+]
+},
+"troca-sint-indice-alto-flags1-16.heic": {
+"filtro": "lavfi=[transpose=cclock,vflip,transpose=cclock]",
+"partes": [
+"transpose=cclock",
+"vflip",
+"transpose=cclock"
+]
+},
+"troca-sint-indice-alto-flags1-17.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-indice-alto-flags1-18.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-indice-alto-flags1-19.heic": {
+"filtro": "lavfi=[transpose=cclock,vflip,transpose=cclock]",
+"partes": [
+"transpose=cclock",
+"vflip",
+"transpose=cclock"
+]
+},
+"troca-sint-indice-alto-flags1-20.heic": {
+"filtro": "lavfi=[transpose=cclock,transpose=cclock]",
+"partes": [
+"transpose=cclock",
+"transpose=cclock"
+]
+},
+"troca-sint-indice-alto-flags1-21.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-indice-alto-flags1-22.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-indice-alto-flags1-23.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-indice-alto-flags1-24.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-indice-alto-flags1-25.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-indice-alto-flags1-26.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-indice-alto-flags1-27.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-indice-alto-flags1-28.heic": {
+"filtro": "lavfi=[transpose=cclock,vflip,transpose=cclock]",
+"partes": [
+"transpose=cclock",
+"vflip",
+"transpose=cclock"
+]
+},
+"troca-sint-indice-alto-flags1-29.heic": {
+"filtro": "lavfi=[transpose=cclock,vflip,transpose=cclock]",
+"partes": [
+"transpose=cclock",
+"vflip",
+"transpose=cclock"
+]
+},
+"troca-sint-ipma-antes-da-ipco-00.heic": {
+"filtro": "lavfi=[transpose=cclock]",
+"partes": [
+"transpose=cclock"
+]
+},
+"troca-sint-ipma-antes-da-ipco-01.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip"
+]
+},
+"troca-sint-ipma-antes-da-ipco-02.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-antes-da-ipco-03.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-antes-da-ipco-04.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip"
+]
+},
+"troca-sint-ipma-antes-da-ipco-05.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-antes-da-ipco-06.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-antes-da-ipco-07.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-antes-da-ipco-08.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-antes-da-ipco-09.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip"
+]
+},
+"troca-sint-ipma-antes-da-ipco-10.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-antes-da-ipco-11.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-antes-da-ipco-12.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-antes-da-ipco-13.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip"
+]
+},
+"troca-sint-ipma-antes-da-ipco-14.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-antes-da-ipco-15.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-antes-da-ipco-16.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip"
+]
+},
+"troca-sint-ipma-antes-da-ipco-17.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-antes-da-ipco-18.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip"
+]
+},
+"troca-sint-ipma-antes-da-ipco-19.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-antes-da-ipco-20.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-antes-da-ipco-21.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-antes-da-ipco-22.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-antes-da-ipco-23.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-antes-da-ipco-24.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip"
+]
+},
+"troca-sint-ipma-antes-da-ipco-25.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip"
+]
+},
+"troca-sint-ipma-antes-da-ipco-26.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-antes-da-ipco-27.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-antes-da-ipco-28.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-antes-da-ipco-29.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-le-alem-da-caixa-00.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip"
+]
+},
+"troca-sint-ipma-le-alem-da-caixa-01.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip"
+]
+},
+"troca-sint-ipma-le-alem-da-caixa-02.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip"
+]
+},
+"troca-sint-ipma-le-alem-da-caixa-03.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip"
+]
+},
+"troca-sint-ipma-le-alem-da-caixa-04.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-le-alem-da-caixa-05.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-le-alem-da-caixa-06.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-le-alem-da-caixa-07.heic": {
+"filtro": "lavfi=[transpose=cclock]",
+"partes": [
+"transpose=cclock"
+]
+},
+"troca-sint-ipma-le-alem-da-caixa-08.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-le-alem-da-caixa-09.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip"
+]
+},
+"troca-sint-ipma-le-alem-da-caixa-10.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-le-alem-da-caixa-11.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-le-alem-da-caixa-12.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip"
+]
+},
+"troca-sint-ipma-le-alem-da-caixa-13.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip"
+]
+},
+"troca-sint-ipma-le-alem-da-caixa-14.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-le-alem-da-caixa-15.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-le-alem-da-caixa-16.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip"
+]
+},
+"troca-sint-ipma-le-alem-da-caixa-17.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-le-alem-da-caixa-18.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip"
+]
+},
+"troca-sint-ipma-le-alem-da-caixa-19.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip"
+]
+},
+"troca-sint-ipma-le-alem-da-caixa-20.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-le-alem-da-caixa-21.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-le-alem-da-caixa-22.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-le-alem-da-caixa-23.heic": {
+"filtro": "lavfi=[transpose=cclock]",
+"partes": [
+"transpose=cclock"
+]
+},
+"troca-sint-ipma-le-alem-da-caixa-24.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-le-alem-da-caixa-25.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-le-alem-da-caixa-26.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip"
+]
+},
+"troca-sint-ipma-le-alem-da-caixa-27.heic": {
+"filtro": "",
+"partes": []
+},
+"troca-sint-ipma-le-alem-da-caixa-28.heic": {
+"filtro": "lavfi=[transpose=cclock,hflip]",
+"partes": [
+"transpose=cclock",
+"hflip"
+]
+},
+"troca-sint-ipma-le-alem-da-caixa-29.heic": {
+"filtro": "",
+"partes": []
+}
+},
+"python": "3.12.10"
+}
